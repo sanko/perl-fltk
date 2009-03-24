@@ -1,0 +1,11 @@
+#include <fltk/ToggleButton.H>
+
+MODULE = FLTK               PACKAGE = FLTK::ToggleButton
+
+ToggleButton *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new ToggleButton(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

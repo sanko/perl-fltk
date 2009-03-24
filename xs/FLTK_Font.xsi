@@ -1,0 +1,66 @@
+#include <fltk/Font.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Font
+
+void
+Font::DESTROY ( )
+
+const char *
+Font::name ( ... )
+    CASE: items == 0
+        CODE:
+            RETVAL = THIS->name ( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        int * attributes = (int *)SvIV(ST(1));
+        CODE:
+            RETVAL = THIS->name( attributes );
+        OUTPUT:
+            RETVAL
+
+Font *
+Font::plus ( int attributes )
+
+Font *
+Font::bold ( )
+
+Font *
+Font::italic ( )
+
+int
+Font::sizes ( sizep )
+    int * sizep = (int *)SvIV(ST(1));
+    CODE:
+        RETVAL = THIS->sizes( sizep );
+    OUTPUT:
+        RETVAL
+
+int
+Font::encodings ( const char ** arrayp )
+
+const char *
+Font::system_name ( )
+
+const char *
+Font::current_name ( )
+
+ # int
+ # list_fonts ( AV * arrayp )
+
+Font *
+Font::font( ... )
+    CASE: items == 1
+        int i = (int)SvIV(ST(1));
+        CODE:
+            RETVAL = fltk::font( i );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        char * name    = (char *)SvPV_nolen(ST(1));
+        int attributes = (int)SvIV(ST(2));
+        CODE:
+            RETVAL = fltk::font( name, attributes );
+        OUTPUT:
+            RETVAL
+

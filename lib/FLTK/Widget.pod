@@ -1,0 +1,108 @@
+=pod
+
+=head1 NAME
+
+FLTK::Widget - The base class for all FLTK Widgets
+
+=head1 Description
+
+The basic L<Widget|FLTK::Widget> draws an empty box() and the label(),
+and ignores all events. This can be useful for making decorations or
+providing areas that pop up a tooltip().
+
+C<FLTK::Widget> is a subclass of L<C<FLTK::Rectangle>|FLTK::Rectangle>
+and, as such, inherits all methods from that class.
+
+=head1 Constructor
+
+This class supports only one basic constructor.
+
+=over
+
+=item C<new ( x, y, w, h, [label = ''] )>
+
+The default constructor takes a value for x(), y(), w(), and h(), and an
+optional value for label(). All subclasses must provide an identical
+constructor in order to work with Fluid. They may also provide
+alternative constructors.
+
+If L<C<FLTK::Group::begin( )>|FLTK::Group/"begin ( )"> has been called,
+this widget is added as a new child of that group, and parent() is set to
+the group. If L<C<FLTK::Group::begin( )>|FLTK::Group/"begin ( )"> has not
+been called, or L<C<FLTK::Group::end( )>|FLTK::Group/"end ( )"> has been
+called, or L<C<FLTK::Group::current( 0 )>|FLTK::Group/"current ( )">,
+then the parent() is set to C<undef>. In this case you must add the
+widget yourself in order to see it.
+
+=back
+
+=head1 Methods
+
+C<FLTK::Widget> is a sublcass of L<C<FLTK::Rectangle>|FLTK::Rectangle>
+and, in addition to the following methods, inherits those supporeted by
+L<C<FLTK::Rectangle>|FLTK::Rectangle>.
+
+=over
+
+=begin TODO
+
+=item C<send ( event )>
+
+This should be called to send events to the C<Widget>. It does a few
+things:
+
+=over
+
+=item * It calculates L<event_x()>/L<event_y()> to be relative to the
+widget. The previous values are restored before this returns.
+
+=item * It makes sure the widget is active and/or visible if the event
+requres this.
+
+=item * If this is not the L<FLTK::belowmouse( )|FLTK/"belowmouse( )">
+widget then it changes L<FLTK::MOVE|FLTK/MOVE> into
+L<FLTK::ENTER|FLTK/ENTER> and turns L<FLTK::DND_DRAG|FLTK/DND_DRAG> into
+L<FLTK::DND_ENTER|FLTK/DND_ENTER>. If this is the
+L<FLTK::belowmouse( )|FLTK/"belowmouse( )"> widget then the opposite
+conversion is done.
+
+=item * For move, focus, and push events if C<handle( )> returns C<true>
+it sets the L<FLTK::belowmouse( )|FLTK/"belowmouse( )"> or
+L<FLTK::focus( )|FLTK/"focus( )"> or L<FLTK::pushed( )|FLTK/"pushed( )">
+widget to reflect this.
+
+=end TODO
+
+=back
+
+=head1 Disclaimer
+
+This document and the specification behind it are subject to change.
+All modifications will be documented in the Changes file included with
+this distribution.  All versions of this file can be found in the
+project's git repository.
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id: Widget.pod d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $ forgot=
+
+=cut

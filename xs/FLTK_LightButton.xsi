@@ -1,0 +1,11 @@
+#include <fltk/LightButton.H>
+
+MODULE = FLTK               PACKAGE = FLTK::LightButton
+
+LightButton *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new LightButton(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,23 @@
+#include <fltk/Style.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Style
+
+Style *
+Style::new( )
+
+void
+Style::DESTROY( )
+
+Box *
+Style::box ()
+
+Box *
+Style::buttonbox ()
+
+
+
+
+
+
+ # INCLUDE: FLTK_Group.xsi
+ # INCLUDE: FLTK_Button.xsi

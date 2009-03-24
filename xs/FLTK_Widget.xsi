@@ -1,0 +1,584 @@
+#include <fltk/Widget.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
+
+Widget *
+Widget::new( x, y, w, h, l = PL_origfilename)
+    int x
+    int y
+    int w
+    int h
+    char * l
+    CODE:
+        RETVAL = new Widget(x, y, w, h, l);
+    OUTPUT:
+        RETVAL
+
+void
+Widget::DESTROY( )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void
+Widget::activate( )
+    CODE:
+        THIS->activate( );
+
+bool
+Widget::active( )
+    CODE:
+        RETVAL = THIS->active( );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::active_r( )
+    CODE:
+        RETVAL = THIS->active_r( );
+    OUTPUT:
+        RETVAL
+
+void
+Widget::add( ... )
+    CODE:
+        warn( "TODO: THIS->add()" );
+
+bool
+Widget::add_shorcut( unsigned key )
+    CODE:
+        THIS->add_shortcut( key );
+    OUTPUT:
+        RETVAL
+
+void
+Widget::add_timeout( float time )
+    CODE:
+        THIS->add_timeout( time );
+
+bool
+Widget::all_of( unsigned f )
+    CODE:
+        RETVAL = THIS->all_of( f );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::any_of( unsigned f )
+    CODE:
+        RETVAL = THIS->any_of( f );
+    OUTPUT:
+        RETVAL
+
+void
+Widget::argument( long v )
+    CODE:
+        THIS->argument( v );
+
+bool
+Widget::belowmouse( )
+    CODE:
+        RETVAL = THIS->belowmouse( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::callback( ... )
+    CASE: items >= 2
+    CODE:
+        AV *arr = newAV();
+        av_store(arr, 0, newSVsv((SV*)ST(1)));
+        av_store(arr, 1, newSVsv((SV*)ST(0)));
+        for (int i = 2; i < items; i++) {
+            av_store(arr, i, newSVsv((SV*)ST(i)));
+        }
+        THIS->callback(cb, (void*)arr);
+        RETVAL = THIS->callback() ? 1 : 0; // TODO - check sub == callback()[1]
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::clear( )
+    CODE:
+        RETVAL = THIS->clear();
+    OUTPUT:
+        RETVAL
+
+void
+Widget::clear_flag( unsigned f )
+    CODE:
+        THIS->clear_flag(f);
+
+bool
+Widget::contains( const Widget * b )
+    CODE:
+        RETVAL = THIS->contains(b);
+    OUTPUT:
+        RETVAL
+
+void
+Widget::copy_label( const char * s )
+    CODE:
+        THIS->copy_label(s);
+
+bool
+Widget::copy_style( const Style * t )
+    CODE:
+        RETVAL = THIS->copy_style(t);
+    OUTPUT:
+        RETVAL
+
+void
+Widget::cursor( Cursor * c )
+    CODE:
+        THIS->cursor(c);
+
+uchar
+Widget::damage( )
+    CODE:
+        RETVAL = THIS->damage();
+    OUTPUT:
+        RETVAL
+
+void
+Widget::deactivate( )
+    CODE:
+        THIS->deactivate();
+
+void
+Widget::do_callback( )
+    CODE:
+        THIS->do_callback();
+
+void
+Widget::draw_background( )
+    CODE:
+        THIS->draw_background();
+
+void
+Widget::draw_box( )
+    CODE:
+        THIS->draw_box();
+
+void
+Widget::draw_frame( )
+    CODE:
+        THIS->draw_frame();
+
+void
+Widget::draw_glyph( ...)
+    CODE:
+        warn ("TODO: THIS->draw_label(...)");
+
+void
+Widget::draw_label( ...)
+    CODE:
+        warn ("TODO: THIS->draw_label(...)");
+
+bool
+Widget::flag( unsigned f)
+    CODE:
+        THIS->flag(f);
+
+void
+Widget::flags( ...)
+    CODE:
+        warn("TODO: THIS->flags(...)");
+
+bool
+Widget::focused( )
+    CODE:
+        RETVAL = THIS->focused();
+    OUTPUT:
+        RETVAL
+
+void *
+Widget::foreach( ...)
+    CODE:
+        warn("TODO: THIS->foreach(...)");
+
+void *
+Widget::get( ...)
+    CODE:
+        warn("TODO: THIS->get(...)");
+
+void
+Widget::get_absolute_rect( ...)
+    CODE:
+        warn("TODO: THIS->get_absolute_rect(...)");
+
+void
+Widget::hide( )
+    CODE:
+        THIS->hide();
+
+bool
+Widget::horizontal( )
+    CODE:
+        RETVAL = THIS->horizontal();
+    OUTPUT:
+        RETVAL
+
+void
+Widget::invert_flag( unsigned f)
+    CODE:
+        THIS->invert_flag(f);
+
+bool
+Widget::is_group( )
+    CODE:
+        RETVAL = THIS->is_group();
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::is_window( )
+    CODE:
+        RETVAL = THIS->is_window();
+    OUTPUT:
+        RETVAL
+
+const char *
+Widget::label( char * label = NO_INIT)
+    CODE:
+        // NOTE: This is how the rest should look
+        if (items > 1) {
+            THIS->label(label);
+            RETVAL = (label == THIS->label()) ? label : NULL;
+        }
+        else
+            RETVAL = THIS->label();
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
+ # From fltk::Rectangle
+
+int
+Widget::x ( int x = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->x( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->x( x );
+            RETVAL = THIS->x( ) == x ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::y ( int y = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->y( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->y( y );
+            RETVAL = THIS->y( ) == y ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::w ( int w = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->w( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->w( w );
+            RETVAL = THIS->w( ) == w ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::h ( int h = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->h( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->h( h );
+            RETVAL = THIS->h( ) == h ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::r ( ... )
+    CODE:
+        RETVAL = THIS->r( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::b ( ... )
+    CODE:
+        RETVAL = THIS->b( );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_x ( int v )
+    CODE:
+        THIS->set_x( v );
+        RETVAL = THIS->x( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_y ( int v )
+    CODE:
+        THIS->set_y( v );
+        RETVAL = THIS->y( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_r ( int v )
+    CODE:
+        THIS->set_r( v );
+        RETVAL = THIS->r( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_b ( int v )
+    CODE:
+        THIS->set_b( v );
+        RETVAL = THIS->b( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+ # bool
+ # Widget::set(int x, int y, int w, int h)
+ #     CODE:
+ #         THIS->set(x, y, w, h);
+ #         RETVAL = (
+ #             (THIS->x( ) == x) and
+ #             (THIS->y( ) == y) and
+ #             (THIS->w( ) == w) and
+ #             (THIS->h( ) == h)) ? true : false;
+ #     OUTPUT:
+ #         RETVAL
+
+
+bool
+Widget::move_x ( int v )
+    CODE:
+        int pre_x = THIS->x( );
+        THIS->move_x( v );
+        RETVAL = THIS->x( ) == pre_x + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_y ( int v )
+    CODE:
+        int pre_y = THIS->y( );
+        THIS->move_y( v );
+        RETVAL = THIS->y( ) == pre_y + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_r ( int v )
+    CODE:
+        int pre_r = THIS->r( );
+        THIS->move_r( v );
+        RETVAL = THIS->r( ) == pre_r + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_b ( int v )
+    CODE:
+        int pre_b = THIS->b( );
+        THIS->move_b( v );
+        RETVAL = THIS->b( ) == pre_b + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::inset ( int v )
+    CODE:
+        int pre_w = THIS->w( );
+        int pre_h = THIS->h( );
+        THIS->inset( v );
+        RETVAL = (
+            (THIS->w( ) == pre_w - (v * 2)) and
+            (THIS->h( ) == pre_h - (v * 2))
+          ) ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move ( int dx, int dy )
+    CODE:
+        int pre_x = THIS->x( );
+        int pre_y = THIS->y( );
+        THIS->move( dx, dy );
+        RETVAL = (
+            (THIS->x( ) == pre_x + dx) and
+            (THIS->y( ) == pre_y + dy)
+          ) ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::empty ( )
+    CODE:
+        RETVAL = THIS->empty( );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::not_empty ( )
+    CODE:
+        RETVAL = THIS->not_empty( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::center_y ( )
+    CODE:
+        RETVAL = THIS->center_y( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::baseline_y ( )
+    CODE:
+        RETVAL = THIS->baseline_y( );
+    OUTPUT:
+        RETVAL
+
+ # bool
+ # Widget::contains ( int x, int y )
+ #    CODE:
+ #        RETVAL = THIS->contains( x, y );
+ #    OUTPUT:
+ #         RETVAL
+
+ # TODO: void fltk::Rectangle::merge  (  const Rectangle &   r   )
+ # Replace the value with the union of this rectangle and R (ie the rectangle
+ # that surrounds both of these rectangles). If one rectangle is empty(), the
+ # other is returned unchanged (ie it does not union in the degenerate point
+ # of that rectangle).
+
+ # TODO: void fltk::Rectangle::intersect  (  const Rectangle &   r   )
+ # Replace the value with the intersection of this rectangle and R. If the
+ # rectangles do not intersect, the result may have negative width and/or
+ # height, this means empty() will return true, but some code may still draw
+ # this rectangle.
+
+
+
+
+
+
+
+
+
+ # Unknown...
+int
+Widget::labelsize( int size)
+    CODE:
+        if (items > 1) {
+            THIS->labelsize(size);
+            RETVAL = (size == THIS->labelsize()) ? size : NULL;
+        }
+        else
+            RETVAL = THIS->labelsize();
+    OUTPUT:
+        RETVAL
+
+const char *
+Widget::tooltip( char *tooltip = NO_INIT)
+    CODE:
+        if (items > 1) {
+            THIS->tooltip(tooltip);
+            RETVAL = (tooltip == THIS->tooltip()) ? tooltip : NULL;
+        }
+        else
+            RETVAL = THIS->tooltip();
+    OUTPUT:
+        RETVAL
+
+int
+Widget::position( int XPos, int YPos)
+    CODE:
+        THIS->position(XPos, YPos);
+        RETVAL = (
+            (XPos == THIS->x()) && (YPos == THIS->y())
+        ) ? 1 : NULL;
+    OUTPUT:
+        RETVAL
+
+int
+Widget::color(int color = NO_INIT)
+    CODE:
+        if (items > 1) {
+            //group->box(lookup_box(color));
+            THIS->color(color);
+            RETVAL = (color == THIS->color()) ? color : NULL;
+        }
+        else
+            RETVAL = THIS->color();
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
+
+
+int
+Widget::redraw()
+    CODE:
+        THIS->redraw();
+        RETVAL = 1;
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
+Group *
+Widget::parent( )
+
+
+INCLUDE: FLTK_Group.xsi
+INCLUDE: FLTK_Button.xsi

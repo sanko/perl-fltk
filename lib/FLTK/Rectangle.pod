@@ -1,0 +1,242 @@
+=pod
+
+=head1 NAME
+
+FLTK::Rectangle - The base class of C<FLTK::Widget>
+
+=head1 Description
+
+C<FLTK::Rectangle>s describe an integer-sized rectangle. This is the base
+class of C<FLTK::Monitor|FLTK::Monitor> and L<FLTK::Widget|FLTK::Widget>,
+and is also used a lot to pass rectangular areas to drawing functions.
+
+Negative L<C<w( )>|/"w( [VALUE] )"> or L<C<h( )>|/"h( [VALUE] )"> is
+supposed to mean an empty and thus invisible rectangle, but some code
+will treat the rectangle as reflected about C<x> or C<y>. Set the size to
+zero to make sure you have an empty one.
+
+=head1 Constructor
+
+The constructor accepts a few different sets of parameters depending on
+your requirements:
+
+=over
+
+=item C<new ( )>
+
+The default constructor does not put anything into the fields. You must
+either call L<C<set( )>|/"set ( )"> or modify
+L<C<x( )>|/"x ( [VALUE] )">, L<C<y( )>|/"y ( [VALUE] )">,
+L<C<w( )>|/"w ( )">, and L<C<h( )>|/"h ( )"> directly.
+
+=item C<new ( x, y, w, h )>
+
+Constructor that sets L<C<x( )>|/"x ( [VALUE] )">,
+L<C<y( )>|/"y ( [VALUE] )">, L<C<w( )>|/"w ( )">, and
+L<C<h( )>|/"h ( )">.
+
+=item C<new ( w, h )>
+
+Constructor that sets L<C<x( )>|/"x ( [VALUE] )"> and L<C<y( )>|/"y ( [VALUE] )"> to zero
+(C<0>), and sets L<C<w( )>|/"w ( )">, and L<C<h( )>|/"h ( )">.
+
+=begin TODO
+
+=item C<new ( FLTL::Window object )>
+
+Copy constructor.
+
+=item C<new ( FLTL::Window object, w, h, flags = 0 )>
+
+This constructor calls L<C<set ( )>|"set ( )">.
+
+=end TODO
+
+=back
+
+=head1 Methods
+
+=over
+
+=item C<x ( [VALUE] )>
+
+Returns the left edge's position.
+
+If C<VALUE> is defined, the rectangle is moved so the left edge is at
+C<VALUE>.
+
+=item C<y ( [VALUE] )>
+
+Returns the top edge's position.
+
+If C<VALUE> is defined, the rectangle is moved so the top edge is at
+C<VALUE>.
+
+=item C<w ( [VALUE] )>
+
+Returns the distance between left and right edges.
+
+If C<VALUE> is defined, L<C<w ( )>|/"w ( [VALUE] )"> is changed
+by moving the right edge. L<C<x ( )>|/"x ( [VALUE] )"> does not
+change.
+
+=item C<h ( [VALUE] )>
+
+Returns the distance between top and bottom edges.
+
+If C<VALUE> is defined, L<C<h ( )>|/"h ( [VALUE] )"> is changed
+by moving the bottom edge. L<C<y ( )>|/"y ( [VALUE] )"> does not
+change.
+
+=item C<r ( )>
+
+Returns L<C<x ( )>|/"x ( [VALUE] )"> +
+L<C<w ( )>|/w ( [VALUE ] )>, the right edge of the rectangle.
+
+=item C<b ( )>
+
+Returns L<C<y ( )>|/"y ( [VALUE] )"> +
+L<C<h ( )>|/"h ( [VALUE] )">, the bottom edge of the rectangle.
+
+=item C<set_x ( VALUE ) >
+
+Changes x() without changing r(), by changing the width.
+
+=item C<set_y ( VALUE )>
+
+Change y() without changing b(), by changing the height.
+
+=item C<set_r ( VALUE )>
+
+Change r() without changing x(), by changing the width.
+
+=item C<set_b ( VALUE )>
+
+Change b() without changing y(), by changing the height.
+
+=item C<set ( x, y, w, h)>
+
+Set x(), y(), w(), and h() all at once.
+
+=begin TODO
+
+=item C<set ( FLTK::Rectangle r, w, h, flags)>
+
+Sets x, y, w, h so that's it's centered or aligned (if flags!=0) inside
+the source C<r>.
+
+Initialize to the size w,h. The rectangle is placed inside the source
+rectangle r either centered or against an edge depending on the ALIGN
+values in flags. For centered alignment if the difference in sizes is
+odd, it always rounds up and left. Default value for flags is to center
+in both directions.
+
+=end TODO
+
+=item C<move_x ( d )>
+
+Add C<d> to x() without changing r() (it reduces w() by C<d>).
+
+=item C<move_y ( d )>
+
+Add C<d> to y() without changing b() (it reduces h() by C<d>).
+
+=item C<move_r ( d )>
+
+Add C<d> to r() and w().
+
+=item C<move_b ( d )>
+
+Add C<d> to b() and h().
+
+=item C<inset ( d )>
+
+Move all edges in by C<d>.
+
+See also: L<FLTK::Sybmol::inset()|/"FLTK::Sybmol::inset( )">.
+
+=item C<move ( dx, dy)>
+
+Moves the entire rectangle by given distance in C<x> and C<y>.
+
+=item C<empty ( )>
+
+Returns C<true> if either w() or h() are less or equal to zero.
+
+=item C<not_empty ( )>
+
+Returns C<true> if both w() and h() are greater than zero. This is the
+same as C<!$rectangle->empty( )>.
+
+=item C<center_x ( )>
+
+Returns the integer center position rounded to the left if w() is odd.
+
+=item C<center_y ( )>
+
+Returns the center position rounded to the lower C<y> if h() is odd.
+
+=begin FAILS
+
+=item C<baseline_y ( )>
+
+Returns where to put baseline to center current font nicely.
+
+=end FAILS
+
+=item C<contains ( x, y )>
+
+Returns C<true> if rectangle contains the pixel who's upper-left corner
+is at C<x>, C<y>.
+
+=begin TODO
+
+=item C<merge ( FLTK::Rectangle )>
+
+Replace the value with the union of this rectangle and C<R> (ie. the
+rectangle that surrounds both of these rectangles). If one rectangle is
+L<empty|/"empty ( )">, the other is returned unchanged (ie. it does not
+union in the degenerate point of that rectangle).
+
+=item C<intersect ( FLTK::Rectangle )>
+
+Replace the value with the intersection of this rectangle and C<R>. If
+the rectangles do not intersext, the result may have negative width and/
+or height. This means L<C<empty ( )>|/"empty ( )"> will return C<true>,
+but some code may still draw this rectangle.
+
+=end TODO
+
+=back
+
+=head1 Disclaimer
+
+This document and the specification behind it are subject to change.
+All modifications will be documented in the Changes file included with
+this distribution.  All versions of this file can be found in the
+project's git repository.
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id: Rectangle.pod a404412 2009-03-24 05:36:10Z sanko@cpan.org $ forgot=
+
+=cut

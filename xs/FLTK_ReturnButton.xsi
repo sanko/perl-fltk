@@ -1,0 +1,11 @@
+#include <fltk/ReturnButton.H>
+
+MODULE = FLTK               PACKAGE = FLTK::ReturnButton
+
+ReturnButton *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new ReturnButton(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

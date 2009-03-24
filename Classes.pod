@@ -1,0 +1,349 @@
+=pod
+
+=head1 NAME
+
+FLTK::Classes - A listing of supported FLTK classes
+
+=head1 Description
+
+For now, this is more or less a TODO listIS.
+
+=head1 Supported classes
+
+  I = ISA, S = Supported, C = Code complete, D = Docs complete, T = Tests
+
+=over
+
+=item fltk::AssociationFunctor
+
+=item fltk::AssociationType
+
+=item fltk::CreatedWindow
+
+=item fltk::Font
+
+=item fltk::GSave
+
+=item fltk::Guard
+
+=item fltk::ImageType
+
+=item fltk::List
+
+=over
+
+=item    fltk::StringHierarchy
+
+=over
+
+=item        fltk::StringList
+
+=over
+
+=item            fltk::StringArray
+
+=back
+
+=back
+
+=back
+
+=item fltk::MenuSection
+
+=item fltk::Mutex
+
+=over
+
+=item    fltk::RecursiveMutex
+
+=item    fltk::SignalMutex
+
+=back
+
+=item fltk::Preferences
+
+=item FLTK::Rectangle                            ISCDT
+
+=over
+
+=item     FLTK::Monitor                          IS
+
+=item     FLTK::Widget                           ISCDT
+
+=over
+
+=item         FLTK::Button                       ISCDT
+
+=over
+
+=item             FLTK::CheckButton              ISCDT
+
+=over
+
+=item                 FLTK::LightButton          ISCDT
+
+=item                 FLTK::RadioButton          ISCDT
+
+=back
+
+=item             FLTK::HighlightButton          ISCDT
+
+=item             FLTK::RepeatButton             ISCDT
+
+=item             FLTK::ReturnButton             ISCDT
+
+=item             FLTK::ToggleButton             ISCDT
+
+=back
+
+=item         FLTK::ClockOutput                  I
+
+=over
+
+=item             FLTK::Clock                    I
+
+=back
+
+=item         FLTK::Divider                      I
+
+=item         FLTK::Group                        I
+
+=over
+
+=item             FLTK::Menu                     I
+
+=over
+
+=item                 FLTK::Browser              I
+
+=over
+
+=item                     FLTK::MultiBrowser     I
+
+=back
+
+=item                 FLTK::Choice               I
+
+=item                 FLTK::CycleButton          I
+
+=item                 FLTK::ItemGroup            I
+
+=item                 FLTK::MenuBar              I
+
+=item                 FLTK::PopupMenu            I
+
+=back
+
+=item             FLTK::PackedGroup              I
+
+=item             FLTK::ScrollGroup              I
+
+=item             FLTK::StatusBarGroup           I
+
+=item             FLTK::TabGroup                 I
+
+=item             FLTK::TextDisplay              I
+
+=over
+
+=item                 FLTK::TextEditor           I
+
+=back
+
+=item             FLTK::Window                   ISCD
+
+=over
+
+=item                 FLTK::GlWindow             I
+
+=over
+
+=item                     FLTK::GlutWindow       I
+
+=back
+
+=item                 FLTK::MenuWindow           I
+
+=over
+
+=item                     FLTK::Tooltip          I
+
+=back
+
+=item                 FLTK::ShapedWindow         I
+
+=back
+
+=item             FLTK::WizardGroup              I
+
+=back
+
+=item         FLTK::Input                        I
+
+=over
+
+=item             FLTK::NumericInput             I
+
+=over
+
+=item                 FLTK::FloatInput           I
+
+=over
+
+=item                     FLTK::IntInput         I
+
+=back
+
+=back
+
+=item             FLTK::Output                   I
+
+=over
+
+=item                 FLTK::MultiLineOutput      I
+
+=item                 FLTK::WordwrapOutput       I
+
+=back
+
+=back
+
+=item         FLTK::InvisibleBox                 I
+
+=item         FLTK::Item                         I
+
+=over
+
+=item             FLTK::RadioItem                I
+
+=item             FLTK::ToggleItem               I
+
+=back
+
+=item         FLTK::ProgressBar                  I
+
+=item         FLTK::Valuator                     I
+
+=over
+
+=item             FLTK::Adjuster                 I
+
+=item             FLTK::Dial                     I
+
+=over
+
+=item                 FLTK::FillDial             I
+
+=item                 FLTK::LineDial             I
+
+=back
+
+=item             FLTK::Slider                   I
+
+=over
+
+=item                 FLTK::FillSlider           I
+
+=item                 FLTK::Scrollbar            I
+
+=item                 FLTK::ValueSlider          I
+
+=back
+
+=item             FLTK::ThumbWheel               I
+
+=item             FLTK::ValueInput               I
+
+=item             FLTK::ValueOutput              I
+
+=back
+
+=back
+
+=back
+
+=item FLTK::Style                                I
+
+=over
+
+=item    FLTK::NamedStyle                        I
+
+=back
+
+=item FLTK::StyleSet                             I
+
+=item FLTK::Symbol                               I
+
+=over
+
+=item    FLTK::FlatBox                           I
+
+=over
+
+=item        FLTK::HighlightBox                  I
+
+=back
+
+=item    FLTK::FrameBox                          I
+
+=item    FLTK::Image                             I
+
+=over
+
+=item        FLTK::SharedImage                   I
+
+=over
+
+=item            FLTK::gifImage                  I
+
+=item            FLTK::xpmFileImage              I
+
+=back
+
+=item        FLTK::xbmImage                      I
+
+=item        FLTK::xpmImage                      I
+
+=back
+
+=item    FLTK::MultiImage                        I
+
+=item    FLTK::TiledImage                        I
+
+=back
+
+=item FLTK::TabGroupPager                        I
+
+=item FLTK::TextBuffer                           I
+
+=back
+
+=head1 See Also
+
+L<TODO|TODO>
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut
+

@@ -1,0 +1,146 @@
+#include <fltk/Group.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Group
+
+void
+Group::add(Widget * o)
+    CODE:
+        THIS->add( o );
+
+void
+Group::begin( )
+    CODE:
+        THIS->begin( );
+
+Widget *
+Group::child(int n)
+    CODE:
+        RETVAL = THIS->child( n );
+    OUTPUT:
+        RETVAL
+
+int
+Group::children( )
+    CODE:
+        RETVAL = THIS->children( );
+    OUTPUT:
+        RETVAL
+
+void
+Group::clear( )
+    CODE:
+        THIS->clear( );
+
+void
+Group::draw()
+    CODE:
+        THIS->draw( );
+
+void
+Group::end( )
+    CODE:
+        THIS->end( );
+
+int
+Group::find(const Widget * widget)
+    CODE:
+        RETVAL = THIS->find( widget );
+    OUTPUT:
+        RETVAL
+
+void
+Group::fix_old_positions()
+    CODE:
+        THIS->fix_old_positions( );
+
+int
+Group::focus_index(...)
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->focus_index( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int    v   = (int)SvIV(ST(1));
+        CODE:
+            THIS->focus_index( v );
+            RETVAL = THIS->focus_index( ) == v ? THIS->focus_index( ) : NULL;
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            croak("You're doing it wrong."); // ...yeah, this is bad
+
+int
+Group::handle(int handle)
+    CODE:
+        RETVAL = THIS->handle( handle );
+    OUTPUT:
+        RETVAL
+
+void
+Group::init_sizes()
+    CODE:
+        THIS->init_sizes( );
+
+void
+Group::layout()
+    CODE:
+        THIS->layout( );
+
+void
+Group::remove(...)
+    CODE:
+        warn ("TODO: Widget->remove( ... )");
+
+void
+Group::remove_all( )
+    CODE:
+        THIS->remove_all();
+
+void
+Group::replace(...)
+    CODE:
+        warn ("TODO: Widget->replace( ... )");
+
+Widget *
+Group::resizable( widget = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->resizable( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        INPUT:
+            Widget * widget
+        CODE:
+            THIS->resizable( widget );
+            RETVAL = THIS->resizable( ) == widget ? widget : NULL;
+        OUTPUT:
+            RETVAL
+
+Flags
+Group::resize_align()
+    CODE:
+        RETVAL = THIS->resize_align( );
+    OUTPUT:
+        RETVAL
+
+void
+Group::set_focus(Widget * w)
+    CODE:
+        THIS->set_focus( w );
+
+void
+Group::swap(int indexA, int indexB)
+    CODE:
+        THIS->swap(indexA, indexB);
+
+
+
+
+
+ # Children
+INCLUDE: FLTK_Window.xsi
+
+ # $Id: FLTK_Group.xsi d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $

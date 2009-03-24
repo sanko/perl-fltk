@@ -1,0 +1,84 @@
+# Avoid version control files.
+\B\.git\b
+\B\.gitnore$
+.gitignore$
+
+# Avoid self
+^MANIFEST\.SKIP$
+
+# Avoid Module::Build generated and utility files.
+\bBuild$
+\bBuild.bat$
+\b_build
+\bBuild.COM$
+\bBUILD.COM$
+\bbuild.com$
+\bblib
+
+# Avoid Devel::Cover generated files
+\bcover_db
+
+# Avoid temp and backup files.
+~$
+\.tmp$
+\.old$
+\.bak$
+\#$
+\.#
+\.rej$
+
+# Avoid OS-specific files/dirs
+#   Mac OSX metadata
+\B\.DS_Store
+#   Mac OSX SMB mount metadata files
+\B\._
+
+#
+\bFLTK-[\d\.\_]+
+
+# Created by sh ./configure
+src/FLTK-2.0.x-r.+/config.h$
+src/fltk-2.0.x-r.+/config.log$
+src/fltk-2.0.x-r.+/fltk2-config$
+src/fltk-2.0.x-r.+/fluid/makedepend$
+src/fltk-2.0.x-r.+/forms/makedepend$
+src/fltk-2.0.x-r.+/glut/makedepend$
+src/fltk-2.0.x-r.+/images/makedepend$
+src/fltk-2.0.x-r.+/OpenGL/makedepend$
+src/fltk-2.0.x-r.+/src/makedepend$
+src/fltk-2.0.x-r.+/test/makedepend$
+src/fltk-2.0.x-r.+/makeinclude$
+
+src/~.*
+\bFLTK2-[\d\.\_]+
+
+# Avoid objects, archives, and other build-related junk
+\.o$
+\.a$
+src/fltk-2.0.x/config\.status$
+src/fltk-2.0.x/makeinclude$
+src/fltk-2.0.x/fltk\.list$
+src/fltk-2.0.x/fltk-config$
+src/fltk-2.0.x/fltk\.spec$
+src/fltk-2.0.x/FL/Makefile$
+src/fltk-2.0.x/config.h$
+xs/.*.cxx
+xs/FLTK.def
+
+# Avoid random stuff from... who knows where
+\.orig$
+git\.pod$
+commitlog.txt$
+~todo/.+
+~compile.pl$
+xs/~FLTK.+$
+~find_compiler.pl
+~test.pl
+
+# perltidy
+\.tidy$
+# aspell
+\.spell$
+
+# created by doxygen
+/documentation/html/.+

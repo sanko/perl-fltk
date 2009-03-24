@@ -1,0 +1,23 @@
+#include <fltk/Symbol.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Symbol
+
+Symbol *
+Symbol::new( const char * name = 0 )
+
+void
+Symbol::DESTROY( )
+
+void
+Symbol::name ( const char * name )
+
+void
+Symbol::measure	( int w, int h )
+
+void
+Symbol::_draw (   fltk::Rectangle r )
+
+void
+Symbol::draw (   fltk::Rectangle r )
+
+

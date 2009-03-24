@@ -1,0 +1,42 @@
+#include <fltk/Button.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Button
+
+Button *
+Button::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new Button( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+void
+Button::draw( int glyph_width )
+
+bool
+Button::value( value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->value();
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        bool value
+        CODE:
+            THIS->value(value);
+            RETVAL = THIS->value();
+        OUTPUT:
+            RETVAL
+
+ # Children
+INCLUDE: FLTK_CheckButton.xsi
+INCLUDE: FLTK_HighlightButton.xsi
+INCLUDE: FLTK_RepeatButton.xsi
+INCLUDE: FLTK_ReturnButton.xsi
+INCLUDE: FLTK_ToggleButton.xsi

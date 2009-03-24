@@ -1,0 +1,21 @@
+#include <fltk/Monitor.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Monitor
+
+ #const Monitor
+ #all ( )
+ #    CODE:
+ #        RETVAL = Monitor::all();
+ #    OUTPUT:
+ #        RETVAL
+
+ #const Monitor
+ #find( x, y )
+ #    int x;
+ #    int y;
+ #    CODE:
+ #        RETVAL = Monitor::find(x, y);
+ #    OUTPUT:
+ #        RETVAL
+
+ # $Id: FLTK_Monitor.xsi d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $

@@ -1,0 +1,208 @@
+#include <fltk/Window.h>
+
+MODULE = FLTK               PACKAGE = FLTK::Window
+
+Window *
+new(package, ...)
+    CASE: items == 3 || items == 4
+        int    Width   = (int)SvIV(ST(1));
+        int    Height  = (int)SvIV(ST(2));
+        PREINIT:
+        char * Label =  PL_origfilename;
+        ALIAS:
+            new_wh = 1
+        CODE:
+            if (items == 4)
+                Label = (char *)SvPV_nolen(ST(3));
+            RETVAL = new Window(Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE: items == 5 || items == 6
+        int    XPos    = (int)SvIV(ST(1));
+        int    YPos    = (int)SvIV(ST(2));
+        int    Width   = (int)SvIV(ST(3));
+        int    Height  = (int)SvIV(ST(4));
+        PREINIT:
+            char * Label = PL_origfilename;
+        ALIAS:
+            new_xywh = 2
+        CODE:
+            if (items == 6)
+                Label = (char *)SvPV_nolen(ST(5));
+            RETVAL = new Window(XPos, YPos, Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = NULL;
+            warn("See perldoc %s for help.", "FLTK::Window", items);
+        OUTPUT:
+            RETVAL
+
+void
+Window::DESTROY ( )
+
+const char *
+Window::label( label = NO_INIT, iconlabel = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->label( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        INPUT:
+            char * label
+            char * iconlabel = NO_INIT
+        CODE:
+            THIS->label(label);
+            RETVAL = (label == THIS->label( )) ? label : NULL;
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        INPUT:
+            char * label
+            char * iconlabel
+        CODE:
+            THIS->label(label, iconlabel);
+            RETVAL = (
+                    (label     == THIS->label( )     ) and
+                    (iconlabel == THIS->iconlabel( ) )
+                ) ? label  : false;
+        OUTPUT:
+            RETVAL
+
+const char *
+Window::iconlabel( iconlabel = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->iconlabel( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        INPUT:
+            char * iconlabel
+        CODE:
+            THIS->iconlabel(iconlabel);
+            RETVAL = (iconlabel == THIS->iconlabel( )) ? iconlabel : NULL;
+        OUTPUT:
+            RETVAL
+
+bool
+Window::border( ... )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->border( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        bool set =  (bool)SvIV(ST(1));
+        CODE:
+            THIS->border(set);
+            RETVAL = THIS->border( ) == set ? true : false;
+        OUTPUT:
+            RETVAL
+
+void
+Window::child_of(const Window * parent)
+    ALIAS:
+        show = 1
+    CODE:
+        THIS->child_of(parent);
+
+bool
+Window::double_buffer( )
+    CODE:
+        RETVAL = THIS->double_buffer( );
+    OUTPUT:
+        RETVAL
+
+bool
+Window::set_double_buffer( )
+    CODE:
+        THIS->set_double_buffer( );
+        RETVAL = THIS->double_buffer( ) ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Window::clear_double_buffer( )
+    CODE:
+        THIS->clear_double_buffer( );
+        RETVAL = THIS->double_buffer( ) ? false : true;
+    OUTPUT:
+        RETVAL
+
+void
+Window::free_backbuffer( )
+
+void
+Window::draw_overlay( )
+
+void
+Window::redraw_overlay( )
+
+void
+Window::erase_overlay( )
+
+void
+Window::hotspot( ... )
+    CASE: sv_isobject(ST(1))
+        const Widget * widget = (Widget *)SvIV((SV*)SvRV(ST(1)));
+        bool        offscreen = (bool)    SvIV(ST(2));
+        CODE:
+            THIS->hotspot(widget, offscreen);
+    CASE: items == 3 || items == 4
+        int         cx = (int)SvIV(ST(1));
+        int         cy = (int)SvIV(ST(2));
+        bool offscreen = (bool)SvIV(ST(3));
+        CODE:
+            THIS->hotspot(cx, cy, offscreen);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bool
+Window::shown( )
+    CODE:
+        RETVAL = THIS->shown( );
+    OUTPUT:
+        RETVAL
+
+bool
+Window::show( )
+    CODE:
+        THIS->show( );
+        RETVAL = THIS->shown( );
+    OUTPUT:
+        RETVAL
+
+int
+Window::hide( )
+    CODE:
+        THIS->hide( );
+        RETVAL = !THIS->shown( );
+    OUTPUT:
+        RETVAL
+
+
+ # $Id: FLTK_Window.xsi 4600afd 2009-03-22 16:15:25Z sanko@cpan.org $
