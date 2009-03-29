@@ -15,7 +15,7 @@ Widget::new( x, y, w, h, l = PL_origfilename)
         RETVAL
 
 void
-Widget::DESTROY( )
+Widget::DESTROY ( )
 
 void
 Widget::draw ( )
@@ -120,13 +120,19 @@ Widget::test_shortcut ( TEST_LABEL )
 
  # TODO: Make this look more like the C++ version
 void
-Widget::callback( sub, ... )
+Widget::callback( SUB, ARGS = NO_INIT, ... )
     CODE:
         AV *arr = newAV();
         av_store(arr, 0, newSVsv((SV*)ST(1))); // coderef
-        av_store(arr, 1, newSVsv((SV*)ST(0))); // widget
+        SV * widget = newSVsv((SV*)ST(0));
+#ifdef SvWEAKREF
+        sv_rvweaken(widget);
+#else
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
+#endif
+        av_store(arr, 1, widget); // widget
         for (int i = 2; i < items; i++) {
-            warn ( "%d | %s", i, newSVsv((SV*)ST(i)));
             av_store(arr, i, newSVsv((SV*)ST(i)));
         }
         THIS->callback(cb);
