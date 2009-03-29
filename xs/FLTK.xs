@@ -4,8 +4,6 @@
 
 #include "./ppport.pl"
 
-#include <fltk/run.h>
-
 #include <fltk/Widget.h>
 
 void cb (fltk::Widget * widget, void * sub) {
@@ -18,7 +16,11 @@ void cb (fltk::Widget * widget, void * sub) {
     SAVETMPS;
 
     PUSHMARK(sp);
+
+    //warn("alen == %d", alen);
+
     for(int i = 1; i <= alen; i++) {
+        //warn ( "arg %d : %s", i, av_fetch(cbargs, i, 0) );
         XPUSHs(*av_fetch(cbargs, i, 0));
     }
 
@@ -32,6 +34,16 @@ void cb (fltk::Widget * widget, void * sub) {
 using namespace fltk;
 
 MODULE = FLTK               PACKAGE = FLTK
+
+INCLUDE: FLTK_ask.xsi
+INCLUDE: FLTK_styles.xsi
+
+
+
+INCLUDE: FLTK_color.xsi
+
+#include <fltk/run.h>
+
 
 int
 run()
@@ -47,15 +59,58 @@ check()
     OUTPUT:
         RETVAL
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  # Top level
+
 INCLUDE: FLTK_AssociationFunctor.xsi
+
 INCLUDE: FLTK_Font.xsi
 
-
-
-
 INCLUDE: FLTK_Rectangle.xsi
+
 INCLUDE: FLTK_Style.xsi
+
  # INCLUDE: FLTK_Symbol.xsi
 
- # $Id: FLTK.xs a404412 2009-03-24 05:36:10Z sanko@cpan.org $
+ # $Id: FLTK.xs 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $

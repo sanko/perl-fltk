@@ -1,6 +1,6 @@
 #include <fltk/Rectangle.H>
 
-MODULE = FLTK PACKAGE = FLTK::Rectangle
+MODULE = FLTK               PACKAGE = FLTK::Rectangle
 
 fltk::Rectangle *
 Rectangle::new( ... )
@@ -184,4 +184,4 @@ INCLUDE: FLTK_Monitor.xsi
 INCLUDE: FLTK_Widget.xsi
 
 
- # $Id: FLTK_Rectangle.xsi 4600afd 2009-03-22 16:15:25Z sanko@cpan.org $
+ # $Id: FLTK_Rectangle.xsi 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $

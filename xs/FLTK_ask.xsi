@@ -1,0 +1,68 @@
+#include <fltk/ask.h>
+
+void
+_message ( string )
+    const char * string;
+    CODE:
+        fltk::message( string );
+
+void
+_alert ( string )
+    char * string;
+    CODE:
+        fltk::alert( string );
+
+int
+_ask ( string )
+    const char * string;
+    CODE:
+        RETVAL = fltk::ask( string );
+    OUTPUT:
+        RETVAL
+
+int
+choice ( query, choice1, choice2, choice3 )
+    const char * query;
+    const char * choice1;
+    const char * choice2;
+    const char * choice3;
+
+int
+choice_alert ( query, choice1, choice2, choice3 )
+    const char * query;
+    const char * choice1;
+    const char * choice2;
+    const char * choice3;
+
+const char *
+_input ( query, DEFAULT = "" )
+    const char * query;
+    const char * DEFAULT;
+    CODE:
+        RETVAL = fltk::input(query, DEFAULT);
+    OUTPUT:
+        RETVAL
+
+const char *
+_password ( query, DEFAULT = "" )
+    const char * query;
+    const char * DEFAULT;
+    CODE:
+        RETVAL = fltk::password(query, DEFAULT);
+    OUTPUT:
+        RETVAL
+
+void
+beep ( int type = BEEP_DEFAULT )
+
+bool
+beep_on_dialog( value = NO_INIT )
+    CASE: items
+        bool value;
+        CODE:
+            fltk::beep_on_dialog();
+    CASE: !items
+        CODE:
+            RETVAL = fltk::beep_on_dialog();
+        OUTPUT:
+            RETVAL

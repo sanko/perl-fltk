@@ -38,8 +38,8 @@ widget yourself in order to see it.
 
 =head1 Methods
 
-C<FLTK::Widget> is a sublcass of L<C<FLTK::Rectangle>|FLTK::Rectangle>
-and, in addition to the following methods, inherits those supporeted by
+C<FLTK::Widget> is a subclass of L<C<FLTK::Rectangle>|FLTK::Rectangle>
+and, in addition to the following methods, inherits those supported by
 L<C<FLTK::Rectangle>|FLTK::Rectangle>.
 
 =over
@@ -103,6 +103,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: Widget.pod d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $ forgot=
+=for git $Id: Widget.pod 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $ forgot=
 
 =cut

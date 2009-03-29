@@ -21,7 +21,7 @@ This is the default, the callback is done after the user successfully
 clicks the button (i.e. they let it go with the mouse still pointing at
 it), or when a shortcut is typed.
 
-=item C<fltk::WHEN_CHANGED>
+=item C<FLTK::WHEN_CHANGED>
 
 The callback is done each time the value() changes (when the user pushes
 and releases the button, and as the mouse is dragged around in and out of
@@ -60,8 +60,8 @@ widget yourself in order to see it.
 
 =head1 Methods
 
-C<FLTK::Button> is a sublcass of L<C<FLTK::Widget>|FLTK::Widget>
-and, in addition to the following methods, inherits those supporeted by
+C<FLTK::Button> is a subclass of L<C<FLTK::Widget>|FLTK::Widget>
+and, in addition to the following methods, inherits those supported by
 L<C<FLTK::Widget>|FLTK::Widget>.
 
 =over
@@ -77,12 +77,12 @@ This is the same as L<C<FLTK::Widget::state( )>|FLTK::Widget/state ( )>.
 
 =item C<draw ( glyph_width )>
 
-This function provides a mess of back-compatabilty and Windows emulation
+This function provides a mess of back-compatibility and Windows emulation
 to subclasses of L<Button|FLTK::Button> to draw with. It will draw the
 button according to the current state of being pushed and it's
 L<C<state( )>|FLTK::Widget/state( )>. If non-zero is passed for
 C<glyph_width> then the glyph( ) is drawn in that space on the left (or
-on the right if negative), and it assummes the glyph indicates the
+on the right if negative), and it assumes the glyph indicates the
 L<C<state( )>|FLTK::Widget/state( )>, so the box is only used to indicate
 the pushed state.
 
@@ -117,6 +117,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: Widget.pod d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $ forgot=
+=for git $Id: Button.pod 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $ forgot=
 
 =cut

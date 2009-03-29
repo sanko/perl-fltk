@@ -2,15 +2,17 @@
 
 MODULE = FLTK               PACKAGE = FLTK::Group
 
+Group *
+Group::new( int x, int y, int w, int h, char * l = "", bool begin = false)
+
+void
+Group::DESTROY( )
+
 void
 Group::add(Widget * o)
-    CODE:
-        THIS->add( o );
 
 void
 Group::begin( )
-    CODE:
-        THIS->begin( );
 
 Widget *
 Group::child(int n)
@@ -21,37 +23,20 @@ Group::child(int n)
 
 int
 Group::children( )
-    CODE:
-        RETVAL = THIS->children( );
-    OUTPUT:
-        RETVAL
-
-void
-Group::clear( )
-    CODE:
-        THIS->clear( );
 
 void
 Group::draw()
-    CODE:
-        THIS->draw( );
 
 void
 Group::end( )
-    CODE:
-        THIS->end( );
 
 int
 Group::find(const Widget * widget)
-    CODE:
-        RETVAL = THIS->find( widget );
-    OUTPUT:
-        RETVAL
+
 
 void
 Group::fix_old_positions()
-    CODE:
-        THIS->fix_old_positions( );
+
 
 int
 Group::focus_index(...)
@@ -80,13 +65,9 @@ Group::handle(int handle)
 
 void
 Group::init_sizes()
-    CODE:
-        THIS->init_sizes( );
 
 void
 Group::layout()
-    CODE:
-        THIS->layout( );
 
 void
 Group::remove(...)
@@ -95,29 +76,26 @@ Group::remove(...)
 
 void
 Group::remove_all( )
-    CODE:
-        THIS->remove_all();
 
 void
 Group::replace(...)
     CODE:
         warn ("TODO: Widget->replace( ... )");
 
+void
+Group::clear( )
+
 Widget *
-Group::resizable( widget = NO_INIT )
+Group::resizable( WIDGET = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->resizable( );
         OUTPUT:
             RETVAL
     CASE: items == 2
-        INPUT:
-            Widget * widget
+        Widget * WIDGET
         CODE:
-            THIS->resizable( widget );
-            RETVAL = THIS->resizable( ) == widget ? widget : NULL;
-        OUTPUT:
-            RETVAL
+            THIS->resizable( WIDGET );
 
 Flags
 Group::resize_align()
@@ -128,19 +106,11 @@ Group::resize_align()
 
 void
 Group::set_focus(Widget * w)
-    CODE:
-        THIS->set_focus( w );
 
 void
 Group::swap(int indexA, int indexB)
-    CODE:
-        THIS->swap(indexA, indexB);
-
-
-
-
 
  # Children
 INCLUDE: FLTK_Window.xsi
 
- # $Id: FLTK_Group.xsi d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $
+ # $Id: FLTK_Group.xsi 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $

@@ -17,44 +17,443 @@ Widget::new( x, y, w, h, l = PL_origfilename)
 void
 Widget::DESTROY( )
 
+void
+Widget::draw ( )
+
+int
+Widget::handle( EVENT )
+    int EVENT
+
+ # int
+ # Widget::send ( EVENT )
+ #    int EVENT
+
+void
+Widget::layout ( )
+
+bool
+Widget::copy_style ( STYLE )
+    const Style * STYLE
+
+Group *
+Widget::parent ( )
+
+Window *
+Widget::window ( )
+
+uchar
+Widget::type ( )
+
+bool
+Widget::is_group ( )
+
+bool
+Widget::is_window ( )
+
+bool
+Widget::resize ( X, Y, W, H )
+    CASE: items == 2
+        int X
+        int Y
+        C_ARGS: X, Y
+    CASE: items == 4
+        int X
+        int Y
+        int W
+        int H
+
+bool
+Widget::position ( X, Y )
+    int X
+    int Y
+
+const char *
+Widget::label ( STRING = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->label( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        const char * STRING
+        CODE:
+            THIS->label( STRING );
+
+void
+Widget::copy_label( STRING )
+    const char * STRING
+
+unsigned
+Widget::shortcut ( KEY )
+    CASE: ! items
+        C_ARGS:
+    CASE: items == 1
+        unsigned KEY
+        CODE:
+            THIS->shortcut( KEY );
+
+bool
+Widget::add_shortcut ( KEY )
+    unsigned KEY
+
+bool
+Widget::remove_shortcut ( KEY )
+    unsigned KEY
+
+void
+Widget::remove_shortcuts ( )
+
+unsigned
+Widget::label_shortcut ( )
+
+bool
+Widget::test_label_shortcut ( )
+
+bool
+Widget::test_shortcut ( TEST_LABEL )
+    CASE: ! items
+        CODE:
+            THIS->test_shortcut( );
+    CASE: items == 1
+        bool TEST_LABEL
 
 
+ # TODO: Make this look more like the C++ version
+void
+Widget::callback( sub, ... )
+    CODE:
+        AV *arr = newAV();
+        av_store(arr, 0, newSVsv((SV*)ST(1))); // coderef
+        av_store(arr, 1, newSVsv((SV*)ST(0))); // widget
+        for (int i = 2; i < items; i++) {
+            warn ( "%d | %s", i, newSVsv((SV*)ST(i)));
+            av_store(arr, i, newSVsv((SV*)ST(i)));
+        }
+        THIS->callback(cb);
+        THIS->user_data(arr);
 
+void
+Widget::user_data ( DATA )
+    void * DATA
 
+void
+Widget::argument ( VALUE )
+    long VALUE
 
+void
+Widget::when ( WHEN )
+    uchar WHEN
 
+ # TODO: Make this look more like the C++ version
+ # void
+ # Widget::default_callback ( WIDGET, CODE )
+ #     Widget * WIDGET
+ #     CODE:
+ #         AV *arr = newAV();
+ #         av_store(arr, 0, newSVsv((SV*)ST(1))); // coderef
+ #         av_store(arr, 1, newSVsv((SV*)ST(0))); // widget
+ #         for (int i = 2; i < items; i++) {
+ #             warn ( "%d | %s", i, newSVsv((SV*)ST(i)));
+ #             av_store(arr, i, newSVsv((SV*)ST(i)));
+ #         }
+ #         THIS->default_callback(WIDGET, cb);
+ #         THIS->user_data(arr);
 
+void
+Widget::do_callback ( WIDGET, ARG = 0 )
+    CASE: ! items
+        CODE:
+            THIS->do_callback( );
+    CASE: ! SvNOK(ST(1)) && ( items == 1 || items == 2 )
+        Widget * WIDGET
+        void   * ARG
+    CASE:
+        Widget * WIDGET
+        long     ARG
 
+bool
+Widget::contains ( WIDGET )
+    const Widget * WIDGET
 
+bool
+Widget::pushed ( )
 
+bool
+Widget::focused ( )
 
+bool
+Widget::belowmouse ( )
 
+Flags
+Widget::flags ( FLAGS = NO_INIT )
+    CASE: ! items
+        CODE:
+            RETVAL = THIS->flags( );
+    CASE: items == 1
+        Flags FLAGS
+        CODE:
+            THIS->flags ( FLAGS );
 
+void
+Widget::set_flag ( FLAG, VALUE = true )
+    CASE: items == 1
+        unsigned FLAG
+        C_ARGS: FLAG
+    CASE: items == 2
+        unsigned FLAG
+        bool     VALUE
+
+void
+Widget::clear_flag ( FLAG )
+    unsigned FLAG
+
+void
+Widget::invert_flag ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::flag ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::any_of ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::all_of ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::state ( STATE )
+    CASE: ! items
+        CODE:
+            RETVAL = THIS->state( );
+    CASE:
+        bool STATE;
+
+bool
+Widget::clear ( )
+
+void
+Widget::setonly ( )
+
+bool
+Widget::visible_r ( )
+
+void
+Widget::show ( )
+
+void
+Widget::hide ( )
+
+bool
+Widget::active ( )
+
+bool
+Widget::active_r ( )
+
+void
+Widget::activate ( )
+
+void
+Widget::deactivate ( )
+
+bool
+Widget::output ( )
+
+bool
+Widget::horizontal ( )
+
+bool
+Widget::vertical ( )
+
+void
+Widget::set_horizontal ( )
+
+void
+Widget::set_vertical ( )
+
+bool
+Widget::take_focus ( )
+
+void
+Widget::throw_focus ( )
+
+void
+Widget::redraw ( FLAGS = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->redraw( );
+    # CASE: items == 2 && sv_isobject(ST(1)) && (SvTYPE(SvRV(ST(1))) == SVt_PVMG)
+    #     const fltk::Rectangle * FLAGS
+    CASE: items == 2
+        uchar FLAGS
+
+void
+Widget::redraw_label ( )
+
+void
+Widget::redraw_highlight ( )
+
+uchar
+Widget::damage ( )
+
+void
+Widget::set_damage ( VALUE )
+    uchar VALUE
+
+void
+Widget::relayout ( )
+
+uchar
+Widget::layout_damage ( VALUE )
+    CASE: ! items
+        PROTOTYPE: $;$
+        CODE:
+            RETVAL = THIS->layout_damage( );
+    CASE:
+        uchar VALUE
+        CODE:
+            THIS->layout_damage( VALUE );
 
 
 void
-Widget::activate( )
-    CODE:
-        THIS->activate( );
-
-bool
-Widget::active( )
-    CODE:
-        RETVAL = THIS->active( );
-    OUTPUT:
-        RETVAL
-
-bool
-Widget::active_r( )
-    CODE:
-        RETVAL = THIS->active_r( );
-    OUTPUT:
-        RETVAL
+Widget::add_timeout ( TIME )
+    float TIME
 
 void
-Widget::add( ... )
-    CODE:
-        warn( "TODO: THIS->add()" );
+Widget::repeat_timeout ( TIME )
+    float TIME
+
+void
+Widget::remove_timeout (  )
+
+void
+Widget::make_current ( )
+
+void
+Widget::draw_background ( )
+
+void
+Widget::draw_frame ( )
+
+void
+Widget::draw_box ( )
+
+void
+Widget::draw_label ( RECTANGLE, FLAGS )
+    CASE: ! items
+        PROTOTYPE: $;$$
+        CODE:
+            THIS->draw_label( );
+    CASE: items == 2
+        const fltk::Rectangle * RECTANGLE
+        Flags                   FLAGS
+        C_ARGS: (const fltk::Rectangle &) RECTANGLE, FLAGS
+
+void
+Widget::draw_glyph ( WHICH, RECTANGLE )
+    int WHICH
+    const fltk::Rectangle * RECTANGLE
+    C_ARGS: WHICH, (const fltk::Rectangle &) RECTANGLE
+
+void
+Widget::cursor ( CURSOR )
+    Cursor * CURSOR
+
+void
+Widget::measure_label ( W, H )
+    int W
+    int H
+    OUTPUT:
+        W
+        H
+
+ # TODO: Make these work...
+
+ # void
+ # Widget::add ( ATYPE, DATA )
+ #     const AssociationType * ATYPE
+ #     void * DATA
+ #     C_ARGS: (const AssociationType) ATYPE, DATA
+ #     OUTPUT:
+ #         ATYPE
+ #
+ # bool
+ # Widget::set ( ATYPE, DATA )
+ #     CASE: ! items
+ #         PROTOTYPE: $;$$
+ #         CODE:
+ #             RETVAL = THIS->set( );
+ #     CASE:
+ #           AssociationType * ATYPE
+ #         void * DATA
+ #         C_ARGS: (const AssociationType) ATYPE, DATA
+ #         OUTPUT:
+ #             ATYPE
+ #
+ # void *
+ # Widget::get ( ATYPE )
+ #     const AssociationType ATYPE
+ #     OUTPUT:
+ #         ATYPE
+ #
+ # void *
+ # Widget::foreach (   AssociationType & AT, AssociationFunctor & FKT )
+ #
+ # bool
+ # Widget::remove (   AssociationType & AT, void * DATA )
+ #
+ # bool
+ # Widget::find (   AssociationType & AT, void * DATA )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 bool
 Widget::add_shorcut( unsigned key )
@@ -63,207 +462,11 @@ Widget::add_shorcut( unsigned key )
     OUTPUT:
         RETVAL
 
-void
-Widget::add_timeout( float time )
-    CODE:
-        THIS->add_timeout( time );
-
-bool
-Widget::all_of( unsigned f )
-    CODE:
-        RETVAL = THIS->all_of( f );
-    OUTPUT:
-        RETVAL
-
-bool
-Widget::any_of( unsigned f )
-    CODE:
-        RETVAL = THIS->any_of( f );
-    OUTPUT:
-        RETVAL
-
-void
-Widget::argument( long v )
-    CODE:
-        THIS->argument( v );
-
-bool
-Widget::belowmouse( )
-    CODE:
-        RETVAL = THIS->belowmouse( );
-    OUTPUT:
-        RETVAL
-
-int
-Widget::callback( ... )
-    CASE: items >= 2
-    CODE:
-        AV *arr = newAV();
-        av_store(arr, 0, newSVsv((SV*)ST(1)));
-        av_store(arr, 1, newSVsv((SV*)ST(0)));
-        for (int i = 2; i < items; i++) {
-            av_store(arr, i, newSVsv((SV*)ST(i)));
-        }
-        THIS->callback(cb, (void*)arr);
-        RETVAL = THIS->callback() ? 1 : 0; // TODO - check sub == callback()[1]
-    OUTPUT:
-        RETVAL
-
-bool
-Widget::clear( )
-    CODE:
-        RETVAL = THIS->clear();
-    OUTPUT:
-        RETVAL
-
-void
-Widget::clear_flag( unsigned f )
-    CODE:
-        THIS->clear_flag(f);
-
-bool
-Widget::contains( const Widget * b )
-    CODE:
-        RETVAL = THIS->contains(b);
-    OUTPUT:
-        RETVAL
-
-void
-Widget::copy_label( const char * s )
-    CODE:
-        THIS->copy_label(s);
-
-bool
-Widget::copy_style( const Style * t )
-    CODE:
-        RETVAL = THIS->copy_style(t);
-    OUTPUT:
-        RETVAL
-
-void
-Widget::cursor( Cursor * c )
-    CODE:
-        THIS->cursor(c);
-
-uchar
-Widget::damage( )
-    CODE:
-        RETVAL = THIS->damage();
-    OUTPUT:
-        RETVAL
-
-void
-Widget::deactivate( )
-    CODE:
-        THIS->deactivate();
-
-void
-Widget::do_callback( )
-    CODE:
-        THIS->do_callback();
-
-void
-Widget::draw_background( )
-    CODE:
-        THIS->draw_background();
-
-void
-Widget::draw_box( )
-    CODE:
-        THIS->draw_box();
-
-void
-Widget::draw_frame( )
-    CODE:
-        THIS->draw_frame();
-
-void
-Widget::draw_glyph( ...)
-    CODE:
-        warn ("TODO: THIS->draw_label(...)");
-
-void
-Widget::draw_label( ...)
-    CODE:
-        warn ("TODO: THIS->draw_label(...)");
-
-bool
-Widget::flag( unsigned f)
-    CODE:
-        THIS->flag(f);
-
-void
-Widget::flags( ...)
-    CODE:
-        warn("TODO: THIS->flags(...)");
-
-bool
-Widget::focused( )
-    CODE:
-        RETVAL = THIS->focused();
-    OUTPUT:
-        RETVAL
-
-void *
-Widget::foreach( ...)
-    CODE:
-        warn("TODO: THIS->foreach(...)");
-
-void *
-Widget::get( ...)
-    CODE:
-        warn("TODO: THIS->get(...)");
 
 void
 Widget::get_absolute_rect( ...)
     CODE:
         warn("TODO: THIS->get_absolute_rect(...)");
-
-void
-Widget::hide( )
-    CODE:
-        THIS->hide();
-
-bool
-Widget::horizontal( )
-    CODE:
-        RETVAL = THIS->horizontal();
-    OUTPUT:
-        RETVAL
-
-void
-Widget::invert_flag( unsigned f)
-    CODE:
-        THIS->invert_flag(f);
-
-bool
-Widget::is_group( )
-    CODE:
-        RETVAL = THIS->is_group();
-    OUTPUT:
-        RETVAL
-
-bool
-Widget::is_window( )
-    CODE:
-        RETVAL = THIS->is_window();
-    OUTPUT:
-        RETVAL
-
-const char *
-Widget::label( char * label = NO_INIT)
-    CODE:
-        // NOTE: This is how the rest should look
-        if (items > 1) {
-            THIS->label(label);
-            RETVAL = (label == THIS->label()) ? label : NULL;
-        }
-        else
-            RETVAL = THIS->label();
-    OUTPUT:
-        RETVAL
-
-
 
 
 
@@ -505,17 +708,41 @@ Widget::baseline_y ( )
 
 
  # Unknown...
-int
-Widget::labelsize( int size)
-    CODE:
-        if (items > 1) {
-            THIS->labelsize(size);
-            RETVAL = (size == THIS->labelsize()) ? size : NULL;
-        }
-        else
-            RETVAL = THIS->labelsize();
-    OUTPUT:
-        RETVAL
+float
+Widget::labelsize( SIZE = 0 )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labelsize( );
+       OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int SIZE;
+        CODE:
+            THIS->labelsize(SIZE);
+
+LabelType *
+Widget::labeltype ( TYPE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labeltype( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        LabelType * TYPE
+        CODE:
+            THIS->labeltype( TYPE );
+
+Font *
+Widget::labelfont ( TYPE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labelfont( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        Font * TYPE
+        CODE:
+            THIS->labelfont( TYPE );
 
 const char *
 Widget::tooltip( char *tooltip = NO_INIT)
@@ -526,16 +753,6 @@ Widget::tooltip( char *tooltip = NO_INIT)
         }
         else
             RETVAL = THIS->tooltip();
-    OUTPUT:
-        RETVAL
-
-int
-Widget::position( int XPos, int YPos)
-    CODE:
-        THIS->position(XPos, YPos);
-        RETVAL = (
-            (XPos == THIS->x()) && (YPos == THIS->y())
-        ) ? 1 : NULL;
     OUTPUT:
         RETVAL
 
@@ -552,32 +769,9 @@ Widget::color(int color = NO_INIT)
     OUTPUT:
         RETVAL
 
-
-
-
-
-
-
-
-
-
-int
-Widget::redraw()
-    CODE:
-        THIS->redraw();
-        RETVAL = 1;
-    OUTPUT:
-        RETVAL
-
-
-
-
-
-
-
-
-Group *
-Widget::parent( )
+void
+Widget::box( TYPE )
+    Box * TYPE
 
 
 INCLUDE: FLTK_Group.xsi

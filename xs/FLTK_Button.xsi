@@ -17,6 +17,9 @@ Button::new(x, y, w, h, label = 0)
         RETVAL
 
 void
+Button::DESTROY ( )
+
+void
 Button::draw( int glyph_width )
 
 bool

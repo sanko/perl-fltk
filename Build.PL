@@ -25,21 +25,22 @@ use File::Find qw[find];
 use File::Path 2.07 qw[make_path];
 use Module::Build qw[];
 use Devel::PPPort;
-
 my (@fltk_location, $VERBOSE);
+
 sub fltk_location {
-    @fltk_location = ('src', 'FLTK-2.0.x-r' . Module::Build->current->notes('fltk_svn'))
+    @fltk_location
+        = ('src', 'FLTK-2.0.x-r' . Module::Build->current->notes('fltk_svn'))
         if !@fltk_location;
-        #die _abs(_dir(@fltk_location));
+
+    #die _abs(_dir(@fltk_location));
     return @fltk_location;
 }
 
 sub VERBOSE {
-    return if ! eval{ Module::Build->current};
+    return if !eval { Module::Build->current };
     $VERBOSE = Module::Build->current->notes('verbose') if !defined $VERBOSE;
     return $VERBOSE;
 }
-
 my $c = ExtUtils::CBuilder::Subclass->new(
     config => {
         ld      => 'g++',
@@ -52,12 +53,10 @@ my $c = ExtUtils::CBuilder::Subclass->new(
     },
     quiet => !VERBOSE
 );
-
 my $Orig_CWD = Cwd::cwd();
-
 my %LIBS = (
     'images/libjpeg' => {
-        fltk2_jpeg => [
+        libfltk2_jpeg => [
             qw[ jmemnobs.c
                 jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c
                 jchuff.c jcinit.c jcmainct.c jcmarker.c jcmaster.c jcomapi.c
@@ -78,11 +77,11 @@ my %LIBS = (
         ]
     },
     'images/zlib' => {
-         libfltk2_z => [
-             qw[ adler32.c   compress.c  crc32.c gzio.c  uncompr.c   deflate.c
-                 trees.c     zutil.c     inflate.c       inftrees.c  inffast.c]
-         ]
-     },
+        libfltk2_z => [
+            qw[ adler32.c   compress.c  crc32.c gzio.c  uncompr.c   deflate.c
+                trees.c     zutil.c     inflate.c       inftrees.c  inffast.c]
+        ]
+    },
     images => {
         libfltk2_images => [
             qw[ FileIcon2.cxx  Fl_Guess_Image.cxx fl_jpeg.cxx  fl_png.cxx
@@ -90,57 +89,64 @@ my %LIBS = (
                 xpmFileImage.cxx                                              ]
         ]
     },
-     src => { # XXX - GL
-         libfltk2 => [
-             qw[ add_idle.cxx   addarc.cxx      addcurve.cxx Adjuster.cxx
-                 AlignGroup.cxx AnsiWidget.cxx  args.cxx     BarGroup.cxx
-                 bmpImage.cxx   Browser.cxx     Browser_load.cxx
-                 Button.cxx     CheckButton.cxx Choice.cxx
-                 clip.cxx       Clock.cxx       Color.cxx    color_chooser.cxx
-                 ComboBox.cxx   compose.cxx     Cursor.cxx   CycleButton.cxx
-                 default_glyph.cxx              Dial.cxx     DiamondBox.cxx
-                 dnd.cxx        drawtext.cxx    EngravedLabel.cxx
-                 error.cxx      event_key_state.cxx          file_chooser.cxx
-                 FileBrowser.cxx                FileChooser.cxx
-                 FileChooser2.cxx               FileIcon.cxx
-                 FileInput.cxx  filename_absolute.cxx        filename_ext.cxx
-                 filename_isdir.cxx             filename_list.cxx
-                 filename_match.cxx             filename_name.cxx
-                 fillrect.cxx   Fl_Menu_Item.cxx             FloatInput.cxx
-                 fltk_theme.cxx Font.cxx        gifImage.cxx Group.cxx
-                 GSave.cxx      HelpView.cxx    HighlightButton.cxx
-                 Image.cxx      Input.cxx       InputBrowser.cxx
-                 InvisibleWidget.cxx            Item.cxx     key_name.cxx
-                 LightButton.cxx                list_fonts.cxx
-                 load_plugin.cxx                lock.cxx     Menu.cxx
-                 Menu_add.cxx   Menu_global.cxx Menu_popup.cxx
-                 MenuBar.cxx    MenuWindow.cxx  message.cxx  MultiImage.cxx
-                 NumericInput.cxx               numericsort.cxx
-                 Output.cxx     OvalBox.cxx     overlay_rect.cxx
-                 own_colormap.cxx               PackedGroup.cxx
-                 path.cxx       PlasticBox.cxx  PopupMenu.cxx
-                 Preferences.cxx                ProgressBar.cxx
-                 RadioButton.cxx                readimage.cxx
-                 RepeatButton.cxx               ReturnButton.cxx
-                 RoundBox.cxx   RoundedBox.cxx  run.cxx      Scrollbar.cxx
-                 ScrollGroup.cxx                scrollrect.cxx
-                 setcolor.cxx   setdisplay.cxx  setvisual.cxx
-                 ShadowBox.cxx  ShapedWindow.cxx             SharedImage.cxx
-                 ShortcutAssignment.cxx         show_colormap.cxx
-                 Slider.cxx     StatusBarGroup.cxx           StringList.cxx
-                 Style.cxx      StyleSet.cxx    Symbol.cxx   SystemMenuBar.cxx
-                 TabGroup.cxx   TabGroup2.cxx   TextBuffer.cxx
-                 TextDisplay.cxx                TextEditor.cxx
-                 ThumbWheel.cxx TiledGroup.cxx  TiledImage.cxx
-                 Tooltip.cxx    UpBox.cxx       Valuator.cxx ValueInput.cxx
-                 ValueOutput.cxx                ValueSlider.cxx
-                 Widget.cxx     Widget_draw.cxx WidgetAssociation.cxx
-                 Window.cxx     Window_fullscreen.cxx
-                 Window_hotspot.cxx             Window_iconize.cxx
-                 WizardGroup.cxx                xbmImage.cxx xpmImage.cxx
-                 scandir.c      string.c        utf.c        vsnprintf.c      ]
-         ]
-     }
+    src => {
+        libfltk2 => [
+            qw[ add_idle.cxx   addarc.cxx      addcurve.cxx Adjuster.cxx
+                AlignGroup.cxx AnsiWidget.cxx  args.cxx     BarGroup.cxx
+                bmpImage.cxx   Browser.cxx     Browser_load.cxx
+                Button.cxx     CheckButton.cxx Choice.cxx
+                clip.cxx       Clock.cxx       Color.cxx    color_chooser.cxx
+                ComboBox.cxx   compose.cxx     Cursor.cxx   CycleButton.cxx
+                default_glyph.cxx              Dial.cxx     DiamondBox.cxx
+                dnd.cxx        drawtext.cxx    EngravedLabel.cxx
+                error.cxx      event_key_state.cxx          file_chooser.cxx
+                FileBrowser.cxx                FileChooser.cxx
+                FileChooser2.cxx               FileIcon.cxx
+                FileInput.cxx  filename_absolute.cxx        filename_ext.cxx
+                filename_isdir.cxx             filename_list.cxx
+                filename_match.cxx             filename_name.cxx
+                fillrect.cxx   Fl_Menu_Item.cxx             FloatInput.cxx
+                fltk_theme.cxx Font.cxx        gifImage.cxx Group.cxx
+                GSave.cxx      HelpView.cxx    HighlightButton.cxx
+                Image.cxx      Input.cxx       InputBrowser.cxx
+                InvisibleWidget.cxx            Item.cxx     key_name.cxx
+                LightButton.cxx                list_fonts.cxx
+                load_plugin.cxx                lock.cxx     Menu.cxx
+                Menu_add.cxx   Menu_global.cxx Menu_popup.cxx
+                MenuBar.cxx    MenuWindow.cxx  message.cxx  MultiImage.cxx
+                NumericInput.cxx               numericsort.cxx
+                Output.cxx     OvalBox.cxx     overlay_rect.cxx
+                own_colormap.cxx               PackedGroup.cxx
+                path.cxx       PlasticBox.cxx  PopupMenu.cxx
+                Preferences.cxx                ProgressBar.cxx
+                RadioButton.cxx                readimage.cxx
+                RepeatButton.cxx               ReturnButton.cxx
+                RoundBox.cxx   RoundedBox.cxx  run.cxx      Scrollbar.cxx
+                ScrollGroup.cxx                scrollrect.cxx
+                setcolor.cxx   setdisplay.cxx  setvisual.cxx
+                ShadowBox.cxx  ShapedWindow.cxx             SharedImage.cxx
+                ShortcutAssignment.cxx         show_colormap.cxx
+                Slider.cxx     StatusBarGroup.cxx           StringList.cxx
+                Style.cxx      StyleSet.cxx    Symbol.cxx   SystemMenuBar.cxx
+                TabGroup.cxx   TabGroup2.cxx   TextBuffer.cxx
+                TextDisplay.cxx                TextEditor.cxx
+                ThumbWheel.cxx TiledGroup.cxx  TiledImage.cxx
+                Tooltip.cxx    UpBox.cxx       Valuator.cxx ValueInput.cxx
+                ValueOutput.cxx                ValueSlider.cxx
+                Widget.cxx     Widget_draw.cxx WidgetAssociation.cxx
+                Window.cxx     Window_fullscreen.cxx
+                Window_hotspot.cxx             Window_iconize.cxx
+                WizardGroup.cxx                xbmImage.cxx xpmImage.cxx
+                scandir.c      string.c        utf.c        vsnprintf.c      ]
+        ]
+    },
+    OpenGL => {
+        libfltk2_gl => [
+            qw[ Fl_Gl_Choice.cxx    Fl_Gl_Overlay.cxx   Fl_Gl_Window.cxx
+                gl_draw.cxx         gl_start.cxx]
+        ]
+    },
+    glut => {libfltk2_glut => [qw[glut_compatability.cxx glut_font.cxx]]}
 );
 ############################################### FLTK building begins... here #
 sub ACTION_dist {
@@ -152,74 +158,83 @@ sub ACTION_dist {
     $self->SUPER::ACTION_dist(@_);
 }
 
+sub _find_lib {
+    my ($find) = @_;
+    my $lib;
+    find(
+        sub {
+            $lib = $File::Find::name
+                if $_ =~ qr[lib$find$Config{'_a'}];
+        },
+        split ' ',
+        $Config{'libpth'}
+    );
+    return $lib;
+}
+
+
+
 sub ACTION_code {
     my ($self, $args) = @_;
-
     my @libs = _build_fltk($self) or do { print 'Cannot build FLTK'; exit 0 };
 
     #
     my @xs;
     find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
-    my $libcomctl32;
-    find(
-        sub {
-            $libcomctl32 = $File::Find::name
-                if $_ =~ qr[libcomctl32$Config{'_a'}];
-        },
-        split ' ',
-        $Config{'libpth'}
-    );
+
+    my @_local_libs = map { _find_lib($_) } qw[comctl32 msimg32
+    msvcrt moldname kernel32 user32 gdi32 winspool comdlg32 advapi32
+    shell32 ole32 oleaut32 netapi32 uuid ws2_32 mpr winmm version
+    odbc32 odbccp32];
 
     #
     my @obj;
-    XS: for my $XS (@xs) {
+XS: for my $XS (@xs) {
         my $cpp = _xs_to_cpp($self, $XS)
             or do { printf 'Cannot Parse %s', $XS; exit 0 };
-
-        if ($self->up_to_date($cpp,$c->object_file($cpp))) {
+        if ($self->up_to_date($cpp, $c->object_file($cpp))) {
             push @obj, $c->object_file($cpp);
             next XS;
         }
-
         push @obj, $c->compile(
             source => $cpp,
             include_dirs =>
                 [_dir($Config{'archlibexp'}, 'CORE'), _dir(fltk_location)],
             extra_compiler_flags => [
                 qw[ -fno-exceptions -fno-strict-aliasing
-                    -Wunused -Wno-format-y2k
+                    -Wno-format-y2k
                     -c -O3
                     -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
-                    -Wno-non-virtual-dtor                    ]
+                    -Wno-non-virtual-dtor], (VERBOSE() ? '-Wunused' : ())
             ]
         );
     }
-    make_path(_dir(qw[blib arch auto FLTK]), {verbose => VERBOSE, mode => 0711});
-
-    if (!
-            $self->up_to_date(
-                [@obj, @libs],
-                _dir(
-                    qw[blib arch auto FLTK], 'FLTK.' . $Config{'so'}
-                )
-            )
-    ) {
-    my ($dll, @cleanup) = $c->link(
-        objects => [@obj, @libs, $libcomctl32],
-        lib_file    => _dir(qw[blib arch auto FLTK], 'FLTK.' . $Config{'so'}),
-        module_name => 'FLTK',
-        extra_linker_flags => [
-            $Config{ldflags},
-            $Config{'libs'},
-            qw[-Wunused -Wno-format-y2k  -fno-exceptions -fno-strict-aliasing],
-            ($^O eq 'MSWin32' ? qw[-mwindows -mno-cygwin] : [])
-        ]
-    );
-
-      @cleanup = map {s["][]g; _abs($_); } @cleanup;
-      $self->add_to_cleanup(@cleanup);
-      $self->add_to_cleanup(@obj);
-      $self->add_to_cleanup(@libs);
+    make_path(_dir(qw[blib arch auto FLTK]),
+              {verbose => VERBOSE, mode => 0711});
+    if (!$self->up_to_date([@obj, @libs],
+                           _dir(qw[blib arch auto FLTK],
+                                'FLTK.' . $Config{'so'}
+                           )
+        )
+        )
+    {   my ($dll, @cleanup)
+            = $c->link(
+            objects => [@obj, @libs, @_local_libs],
+            lib_file =>
+                _dir(qw[blib arch auto FLTK], 'FLTK.' . $Config{'so'}),
+            module_name        => 'FLTK',
+            extra_linker_flags => [
+                $Config{ldflags},
+                $Config{'libs'},
+                qw[-Wno-format-y2k  -fno-exceptions -fno-strict-aliasing -Wno-non-virtual-dtor],
+                ($^O eq 'MSWin32' ? qw[-mwindows -mno-cygwin] : ()),
+                (VERBOSE() ? qw[-Wunused] : ())
+            ]
+            );
+        @cleanup = map { s["][]g; _abs($_); } @cleanup;
+        $self->add_to_cleanup(@cleanup);
+        $self->add_to_cleanup(@obj);
+        $self->add_to_cleanup(@libs);
     }
     $self->SUPER::ACTION_code;
 }
@@ -230,36 +245,32 @@ sub _xs_to_cpp {
     $cpp     =~ s[\.xs$][\.cxx];
     $typemap =~ s[\.xs$][\.tm];
     $typemap = '~typemap' if !-e $typemap;
-
     my @xsi;
-    find sub{ push @xsi, $File::Find::name if m[\.xsi$]} , _dir('xs');
-
+    find sub { push @xsi, $File::Find::name if m[\.xsi$] }, _dir('xs');
     $self->add_to_cleanup($cpp);
-
     return $cpp if $self->up_to_date([@xsi, $xs, _dir('xs', $typemap)], $cpp);
-
     printf "%s -> %s (%s)\n", $xs, $cpp, $typemap;
-    ExtUtils::ParseXS->process_file(
-        filename     => $xs,
-        output       => $cpp,
-        'C++'        => 1,
-        hiertype     => 1,
-        typemap      => $typemap,
-        prototypes   => 1
+    ExtUtils::ParseXS->process_file(filename   => $xs,
+                                    output     => $cpp,
+                                    'C++'      => 1,
+                                    hiertype   => 1,
+                                    typemap    => $typemap,
+                                    prototypes => 1
     ) or return;
     return $cpp;
 }
 
 sub _build_fltk {
-    my ($self)=@_;
+    my ($self) = @_;
     _config_h($self);
     my @libs;
 DIR: for my $dir (keys %LIBS) {
-        my @INC_DIRS =(
-        (map { _abs(_dir(fltk_location, 'images', $_)) } '',
-            qw[libpng libjpeg zlib]),_abs(_dir(fltk_location, qw[fltk compat])),
-            _abs(_dir(fltk_location))
-            );
+        my @INC_DIRS = ((map { _abs(_dir(fltk_location, 'images', $_)) } '',
+                         qw[libpng libjpeg zlib]
+                        ),
+                        _abs(_dir(fltk_location, qw[fltk compat])),
+                        _abs(_dir(fltk_location))
+        );
         _chdir_to_fltk($dir)
             or do {
             print 'Failed to change directory to [...]' . $dir;
@@ -268,7 +279,7 @@ DIR: for my $dir (keys %LIBS) {
     LIB: for my $_lib (keys %{$LIBS{$dir}}) {
             my @objects;
             my $lib = _rel(
-                    _dir($Orig_CWD, fltk_location, 'lib', $_lib . $Config{'_a'}));
+                _dir($Orig_CWD, fltk_location, 'lib', $_lib . $Config{'_a'}));
             push @libs, _abs($lib);
             $self->add_to_cleanup(_abs($lib));
             next LIB if -e $lib;
@@ -277,24 +288,27 @@ DIR: for my $dir (keys %LIBS) {
                 my $obj = $c->object_file($file);
                 $self->add_to_cleanup(_abs($obj));
                 push @objects, $obj;
-                if(!$self->up_to_date($file, $obj)) {
+                if (!$self->up_to_date($file, $obj)) {
                     $c->compile(
-                        source               => $file,
-                        include_dirs         => \@INC_DIRS,
-                        extra_compiler_flags =>
-                            [qw[-O2 -Wall -Wunused], ($file =~ m[\.c$] ? ():'-Wno-non-virtual-dtor')]
-                    ) or do{
+                         source               => $file,
+                         include_dirs         => \@INC_DIRS,
+                         extra_compiler_flags => [
+                              '-O2',
+                              (VERBOSE() ? qw[-Wall -Wunused] : ()),
+                              ($file =~ m[\.c$] ? () : '-Wno-non-virtual-dtor'
+                              )
+                         ]
+                        )
+                        or do {
                         printf 'Failed to compile %s.\n', $file;
                         return 0;
-                    };
+                        };
                 }
             }
             next LIB if $self->up_to_date(\@objects, [$lib]);
-
             printf "# Archiving %s...\n", $lib;
             unlink $lib;
-                        $self->add_to_cleanup(_abs($lib));
-
+            $self->add_to_cleanup(_abs($lib));
             _run($Config{'ar'}, 'cr', qq["$lib"], @objects) or do {
                 printf 'Archiving %s failed.', $lib;
                 exit 0;
@@ -331,6 +345,7 @@ sub _find_h {
     return $found;
 }
 {
+
     # Including perl's CORE directory messes up building FLTK2
     package ExtUtils::CBuilder::Subclass;
     use base 'ExtUtils::CBuilder';
@@ -352,9 +367,11 @@ sub _run {
 
 sub _config_h {
     my $self = shift;
-    if (!-e _dir(fltk_location,  'config.status')
+    if (!-e _dir(fltk_location, 'config.status')
         and not $self->up_to_date(_dir(fltk_location, 'config.status'),
-                                _dir('~blib', fltk_location, 'config.status')
+                                  _dir('~blib', fltk_location,
+                                       'config.status'
+                                  )
         )
         )
     {   _chdir_to_fltk();
@@ -370,9 +387,7 @@ sub _config_h {
         _chdir_back();
     }
 }
-
 ############################################################ Developer Stuff #
-
 # TODO: add pod
 sub ACTION_profile {
     my ($self) = @_;
@@ -413,7 +428,7 @@ sub ACTION_tidy {
     }
     require Perl::Tidy;
     my $demo_files
-        = $self->rscan_dir(File::Spec->catdir('tatoeba'), qr[\.pl$]);
+        = $self->rscan_dir(File::Spec->catdir('examples'), qr[\.pl$]);
     for my $files ([keys(%{$self->script_files})],       # scripts first
                    [values(%{$self->find_pm_files})],    # modules
                    [@{$self->find_test_files}],          # test suite next
@@ -471,22 +486,24 @@ sub ACTION_wastetime {
     my $_quiet = $self->quiet(1);
     mkdir _dir('archive') if !-d _dir('archive');
     my $dist_dir = q[];
-
     for my $i (1 .. 999) {
         $self->SUPER::ACTION_distdir();
         $dist_dir = $self->dist_dir;
         $self->make_tarball($dist_dir, $dist_dir, 1);
+
         #File::Copy::copy(_dir($dist_dir . '.tar.gz',
         #     'X:/archive/' . $dist_dir . '.tar.gz' . sprintf('.%03d', $i)));
-        rename _dir($dist_dir . '.tar.gz'), _dir(qw[. archive] , $dist_dir . '.tar.gz')
-            if !-f _dir(qw[. archive] , $dist_dir . '.tar.gz')
+        rename _dir($dist_dir . '.tar.gz'),
+            _dir(qw[. archive], $dist_dir . '.tar.gz')
+            if !-f _dir(qw[. archive], $dist_dir . '.tar.gz')
                 or -s _dir($dist_dir . '.tar.gz')
-                 < -s _dir(qw[. archive] , $dist_dir . '.tar.gz');
-        printf "dist #%03d ... %d bytes\n", $i, -s _dir($dist_dir . '.tar.gz');
+                < -s _dir(qw[. archive], $dist_dir . '.tar.gz');
+        printf "dist #%03d ... %d bytes\n", $i,
+            -s _dir($dist_dir . '.tar.gz');
         unlink _dir($dist_dir . '.tar.gz');
         $self->delete_filetree(_dir($dist_dir));
     }
-    File::Copy::copy(_dir(qw[. archive] , $dist_dir . '.tar.gz'),
+    File::Copy::copy(_dir(qw[. archive], $dist_dir . '.tar.gz'),
                      _dir($dist_dir . '.tar.gz'));
     return $self->quiet($_quiet);
 }
@@ -494,7 +511,7 @@ sub ACTION_wastetime {
 sub ACTION_spellcheck {
     my ($self) = @_;
     my $demo_files
-        = $self->rscan_dir(File::Spec->catdir('tatoeba'), qr[\.pl$]);
+        = $self->rscan_dir(File::Spec->catdir('examples'), qr[\.pl$]);
     for my $files (
         [keys(%{$self->script_files})],       # scripts first
         [values(%{$self->find_pm_files})],    # modules
@@ -574,7 +591,8 @@ END
             || die sprintf 'Failed to rename Changes (%s)', $^E;
 
         # open and lock the file
-        sysopen(my ($CHANGES_W), 'Changes', Fcntl::O_WRONLY() | Fcntl::O_CREAT())
+        sysopen(my ($CHANGES_W),
+                'Changes', Fcntl::O_WRONLY() | Fcntl::O_CREAT())
             || die 'Failed to open Changes for reading';
         sysseek($CHANGES_W, 0, Fcntl::SEEK_SET())
             || die 'Failed to seek in Changes';
@@ -590,17 +608,17 @@ END
     {
         print 'Fake SVN...';
         my @manifest_files = sort grep {
-                   ! m[\.jpg$]
-                && ! m[\.yml$]i
-                && ! m[^src/.+$]
-                && ! m[^README$]
-                && ! m[^Build.PL$]
-                && ! m[\.gz$]
-               #&& ! m[^Changes$]
+                   !m[\.jpg$]
+                && !m[\.yml$]i
+                && !m[^src/.+$]
+                && !m[^README$]
+                && !m[^Build.PL$]
+                && !m[\.gz$]
+
+                #&& ! m[^Changes$]
         } keys %{$self->_read_manifest('MANIFEST')};
     FILE: for my $file (@manifest_files) {
             VERBOSE || print '.';
-
             my $mode = (stat $file)[2];
             chmod($mode | oct(222), $file)
                 or die "Can't make $file writable: $!";
@@ -622,14 +640,15 @@ END
             my (@bits) = split q[,],
                 qx[git log --pretty=format:"%at,%H,%x25%x73 %h %x25%x2E%x32%x30%x73 %ce" -n 1 $file];
             next FILE if !@bits;
+
             #my $Mod = qx[git log -n 1 --pretty=format:"%cr"];
             my $Date = POSIX::strftime('%Y-%m-%d %H:%M:%SZ (%a, %d %b %Y)',
                                        gmtime($bits[0]));
             my $Commit = $bits[1];
+
             #die $bits[2];
             my $Id = sprintf $bits[2], (File::Spec->splitpath($file))[2],
                 $Date;
-
             printf "\n%.6s|%.19s|%s%.47s", $Commit, $Date,
                 (length $file > 47 ? '...' : ''), substr($file, -47)
                 if VERBOSE();
@@ -640,7 +659,8 @@ END
             $CHANGES_D =~ s[\$Id(:[^\$]*)?\$][\$Id: $Id \$]ig;
             $CHANGES_D
                 =~ s[\$Url(:[^\$]*)?\$][\$Url: http://github.com/sanko/net-bittorrent/raw/$Commit/$file \$]ig;
-            $CHANGES_D =~ s[\$(Rev(:?ision)?)(:[^\$]*)?\$][\$$1: $Commit \$]ig;
+            $CHANGES_D
+                =~ s[\$(Rev(:?ision)?)(:[^\$]*)?\$][\$$1: $Commit \$]ig;
 
             #$CHANGES_D =~ s[\$Mod:.+\$][\$Mod: $Mod \$]ig;
             # Skip to the next file if this one wasn't updated
@@ -653,7 +673,8 @@ END
                 || die sprintf 'Failed to rename %s (%s)', $file, $^E;
 
             # open and lock the file
-            sysopen(my ($CHANGES_W), $file, Fcntl::O_WRONLY() | Fcntl::O_CREAT())
+            sysopen(my ($CHANGES_W),
+                    $file, Fcntl::O_WRONLY() | Fcntl::O_CREAT())
                 || warn(sprintf q[Failed to open %s for reading: %s], $file,
                         $^E)
                 && next FILE;
@@ -678,16 +699,15 @@ sub ACTION_testkwalitee {
     my ($self) = @_;
     use Test::More;
     eval { require Test::Kwalitee; Test::Kwalitee->import() };
-    plan( skip_all => 'Test::Kwalitee not installed; skipping' ) if $@;
+    plan(skip_all => 'Test::Kwalitee not installed; skipping') if $@;
 }
-
 
 sub ACTION_testpod {
     my ($self) = @_;
     use Test::More;
     eval "use Test::Pod 1.00";
     plan skip_all => "Test::Pod 1.00 required for testing POD" if $@;
-    all_pod_files_ok(all_pod_files(qw[lib scripts tatoeba t]));
+    all_pod_files_ok(all_pod_files(qw[lib scripts examples t]));
 }
 
 sub ACTION_distmeta {
@@ -706,6 +726,7 @@ sub make_tarball {
     $self->do_system("gzip -9 -f -n $file.tar");
     return 1;
 }
+
 1;
 #SUBCLASS
 my $mb = $class->new(
@@ -749,7 +770,7 @@ my $mb = $class->new(
     create_readme      => 1,
     no_index           => {
 
-        #directory => [qw[tatoeba]],
+        #directory => [qw[examples]],
         #file => [qw[scripts/net-bittorrent.pl]]
     },
 

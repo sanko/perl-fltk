@@ -1,0 +1,74 @@
+#include <fltk/draw.h>
+
+void
+push_matrix ( )
+
+void
+pop_matrix ( )
+
+void
+scale ( x, y = NO_INIT )
+    CASE: items == 1
+        float x
+        C_ARGS: x
+    CASE: items == 2
+        float x
+        float y
+        C_ARGS: x, y
+
+void
+translate ( x, y )
+    CASE: SvNOK(ST(1)) || SvNOK(ST(2))
+        float x
+        float y
+    CASE:
+        int x
+        int y
+
+ # ...
+
+void
+setcolor ( COLOR )
+    Color COLOR
+
+
+ # ... I think
+
+void
+addvertex ( x, y )
+    CASE: SvNOK(ST(1)) || SvNOK(ST(2))
+        float x
+        float y
+    CASE:
+        int x
+        int y
+
+
+ # ... I think
+
+void drawtext ( TEXT, BYTES, X, Y )
+    CASE: items == 4
+        const char * TEXT
+        int          BYTES
+        float        X
+        float        Y
+        C_ARGS: TEXT, BYTES, X, Y
+    CASE: items == 3
+        const char * TEXT
+        float        X
+        float        Y
+        C_ARGS: TEXT, X, Y
+
+
+ # ...
+
+void
+fillstrokepath ( COLOR )
+    Color COLOR
+
+void
+fillrect ( X, Y, W, H )
+    int X
+    int Y
+    int W
+    int H

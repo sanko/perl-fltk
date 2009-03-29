@@ -82,3 +82,25 @@ xs/~FLTK.+$
 
 # created by doxygen
 /documentation/html/.+
+
+xs/SciTE.properties
+\.exe$
+
+
+
+
+
+
+
+examples/button.pl
+examples/callback.pl
+examples/demo.menu
+examples/demo.pl
+examples/~testing.pl
+lib/FLTK/Constants.pm
+lib/FLTK/InvisibleBox.pod
+examples/message.pl
+examples/pack.pl
+
+~Build.pm
+~configure.pl

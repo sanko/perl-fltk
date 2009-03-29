@@ -9,7 +9,7 @@ void
 Style::DESTROY( )
 
 Box *
-Style::box ()
+Style::box ( )
 
 Box *
 Style::buttonbox ()
@@ -18,6 +18,3 @@ Style::buttonbox ()
 
 
 
-
- # INCLUDE: FLTK_Group.xsi
- # INCLUDE: FLTK_Button.xsi
