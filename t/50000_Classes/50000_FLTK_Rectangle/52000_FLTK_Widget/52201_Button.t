@@ -26,7 +26,7 @@ my @btn_types = map { 'FLTK::' . $_ } qw[Button CheckButton LightButton
     RadioButton HighlightButton RepeatButton ReturnButton ToggleButton];
 
 #
-plan tests => (scalar(@btn_types) * 7) + 1 + 1;
+plan tests => (scalar(@btn_types) * 9) + 1 + 1;
 my $win = new_ok('FLTK::Window' => [160, (scalar(@btn_types) * 25) + 5],
                  'new FLTK::Window(200, 100)');
 $win->show;
@@ -47,6 +47,12 @@ for my $class (@btn_types) {
     is($btn->label(), $class, sprintf 'Label is okay (%s)', $class);
     ok($btn->label('Update'), 'Changed label.');
     is($btn->label(), 'Update', 'Verify label was changed.');
+    $btn->callback(
+        sub {
+            isa_ok(shift, $class, 'Callback triggered. First param');
+        }
+    );
+    ok($btn->do_callback(), sprintf '%s->do_callback()', $class);
     push @btns, $btn;
 }
 $win->end();
@@ -76,4 +82,4 @@ the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-$Id: 52201_Button.t d78cf2a 2009-03-22 03:21:33Z sanko@cpan.org $
+$Id: 52201_Button.t 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $

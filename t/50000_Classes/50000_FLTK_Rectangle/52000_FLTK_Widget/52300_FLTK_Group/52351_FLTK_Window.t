@@ -3,7 +3,7 @@
 #
 use strict;
 use warnings;
-use Test::More tests => 167;
+use Test::More tests => 169;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use FLTK qw[];
@@ -119,6 +119,8 @@ warn 'TODO: bool FLTK::Window->child_of( FLTK::Window )';
 {    # From fltk::Widget
     ok($win->is_window, 'is_window() returns true');
     ok($win->is_group,  'is_group() returns true');
+    $win->callback(sub { is(shift, $win, 'Callback triggered'); });
+    ok($win->do_callback(), '...->do_callback()');
 }
 {    # From fltk::Rectangle
     is($win_kid->x, 50,  'Window\'s left edge is at 50 [x( )].');
@@ -404,5 +406,5 @@ the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-$Id: 52351_FLTK_Window.t a404412 2009-03-24 05:36:10Z sanko@cpan.org $
+$Id: 52351_FLTK_Window.t 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $
 

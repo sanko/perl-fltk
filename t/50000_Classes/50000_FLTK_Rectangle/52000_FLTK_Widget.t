@@ -3,7 +3,7 @@
 #
 use strict;
 use warnings;
-use Test::More tests => 16;
+use Test::More tests => 18;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use FLTK qw[];
@@ -42,6 +42,14 @@ ok(!$wid->is_group,      '$wid_lbl->is_group() returns false');
 is($wid_lbl->label, 'label!', '$wid_lbl->label() eq "label!"');
 is($wid->label, __FILE__, sprintf '$wid->label() eq "%s"', __FILE__);
 
+#
+$wid->callback(
+    sub {
+        isa_ok(shift, 'FLTK::Widget', 'Callback triggered. First param ');
+    }
+);
+ok($wid->do_callback(), sprintf 'FLTK::Widget->do_callback()');
+
 # From FLTK::Rectangle
 is($wid->x,     50,  '$wid->x() == 50');
 is($wid->y,     80,  '$wid->y() == 80');
@@ -65,6 +73,6 @@ the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-$Id: 52000_FLTK_Widget.t a404412 2009-03-24 05:36:10Z sanko@cpan.org $
+$Id: 52000_FLTK_Widget.t 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $
 
 
