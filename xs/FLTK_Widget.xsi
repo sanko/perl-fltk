@@ -166,8 +166,8 @@ Widget::when ( WHEN )
  #         THIS->user_data(arr);
 
 void
-Widget::do_callback ( WIDGET, ARG = 0 )
-    CASE: ! items
+Widget::do_callback ( WIDGET = NO_INIT, ARG = 0 )
+    CASE: items == 1
         CODE:
             THIS->do_callback( );
     CASE: ! SvNOK(ST(1)) && ( items == 1 || items == 2 )
