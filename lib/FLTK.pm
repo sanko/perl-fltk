@@ -15,6 +15,22 @@ use parent 'DynaLoader';
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
 %EXPORT_TAGS = (
+    align => [
+        qw[ NO_FLAGS
+            ALIGN_TOP ALIGN_BOTTOM ALIGN_LEFT ALIGN_RIGHT ALIGN_CENTER
+            ALIGN_INSIDE ALIGN_CLIP ALIGN_WRAP ALIGN_MASK
+            ALIGN_POSITIONMASK
+            ALIGN_TOPLEFT ALIGN_BOTTOMLEFT ALIGN_TOPRIGHT
+            ALIGN_BOTTOMRIGHT ALIGN_CENTERLEFT ALIGN_CENTERRIGHT
+            ALIGN_INSIDE_TOP ALIGN_INSIDE_BOTTOM ALIGN_INSIDE_LEFT
+            ALIGN_INSIDE_TOPLEFT ALIGN_INSIDE_BOTTOMLEFT
+            ALIGN_INSIDE_RIGHT ALIGN_INSIDE_TOPRIGHT
+            ALIGN_INSIDE_BOTTOMRIGHT ALIGN_MENU ALIGN_BROWSER
+            INACTIVE OUTPUT STATE SELECTED INVISIBLE HIGHLIGHT CHANGED
+            COPIED_LABEL RAW_LABEL LAYOUT_VERTICAL TAB_TO_FOCUS
+            CLICK_TO_FOCUS INACTIVE_R FOCUSED PUSHED RESIZE_NONE
+            RESIZE_FIT RESIZE_FILL OPENED ]
+    ],
     box => [
         qw[ UP_BOX  DOWN_BOX    THIN_UP_BOX THIN_DOWN_BOX   ENGRAVED_BOX
             EMBOSSED_BOX    BORDER_BOX  FLAT_BOX    HIGHLIGHT_UP_BOX
@@ -35,6 +51,13 @@ use Exporter qw[import];
             color   parsecolor  lerp    inactive    contrast split_color
             set_color_index get_color_index set_background nearest_index
             color_chooser
+            ]
+    ],
+    cursor => [
+        qw[ CURSOR_DEFAULT  CURSOR_ARROW    CURSOR_CROSS    CURSOR_WAIT
+            CURSOR_INSERT   CURSOR_HAND     CURSOR_HELP     CURSOR_MOVE
+            CURSOR_NS       CURSOR_WE       CURSOR_NWSE     CURSOR_NESW
+            CURSOR_NO       CURSOR_NONE
             ]
     ],
     draw => [
@@ -260,6 +283,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: FLTK.pm 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $ for got=
+=for git $Id: FLTK.pm 09297d7 2009-03-29 04:17:42Z sanko@cpan.org $ for got=
 
 =cut

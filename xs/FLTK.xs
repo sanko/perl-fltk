@@ -36,14 +36,12 @@ using namespace fltk;
 MODULE = FLTK               PACKAGE = FLTK
 
 INCLUDE: FLTK_ask.xsi
+
 INCLUDE: FLTK_styles.xsi
-
-
 
 INCLUDE: FLTK_color.xsi
 
 #include <fltk/run.h>
-
 
 int
 run()
@@ -82,25 +80,6 @@ check()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  # Top level
 
 INCLUDE: FLTK_AssociationFunctor.xsi
@@ -111,6 +90,22 @@ INCLUDE: FLTK_Rectangle.xsi
 
 INCLUDE: FLTK_Style.xsi
 
- # INCLUDE: FLTK_Symbol.xsi
+# INCLUDE: FLTK_Symbol.xsi
 
- # $Id: FLTK.xs 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $
+ #
+ # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of The Artistic License 2.0.  See the LICENSE file
+ # included with this distribution or
+ # http://www.perlfoundation.org/artistic_license_2_0.  For
+ # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+ #
+ # When separated from the distribution, all POD documentation is covered by
+ # the Creative Commons Attribution-Share Alike 3.0 License.  See
+ # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+ # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ #
+ # $Id$
+ #
+

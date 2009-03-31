@@ -1,16 +1,7 @@
 Color
-color ( ... )
-    CASE: ! items
-        CODE:
-            RETVAL = fltk::color( "" );
-        OUTPUT:
-            RETVAL
-    CASE: items == 1
-        const char * color = (const char *)SvPV_nolen(ST(0));
-        CODE:
-            RETVAL = fltk::color ( color );
-        OUTPUT:
-            RETVAL
+color ( COLOR = "", ... )
+    CASE: items == 1 || ! items
+        const char * COLOR
     CASE: items == 3
         int r = (int)SvIV(ST(0));
         int g = (int)SvIV(ST(1));
@@ -21,11 +12,11 @@ color ( ... )
             RETVAL
 
 Color
-parsecolor ( name = "", length = strlen(name) )
-    const char * name;
-    unsigned length;
+parsecolor ( NAME = "", LENGTH = strlen(NAME) )
+    const char * NAME;
+    unsigned LENGTH;
     CODE:
-        RETVAL = fltk::parsecolor( name, length );
+        RETVAL = fltk::parsecolor( NAME, LENGTH );
     OUTPUT:
         RETVAL
 
@@ -69,7 +60,8 @@ void
 set_background ( COLOR )
     Color COLOR;
 
-Color nearest_index ( COLOR )
+Color
+nearest_index ( COLOR )
     Color COLOR;
 
 #include <fltk/ColorChooser.h>
@@ -132,3 +124,20 @@ color_chooser ( NAME, R, G = 0, B = 0, A = 0 )
             G
             B
             A
+
+ #
+ # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of The Artistic License 2.0.  See the LICENSE file
+ # included with this distribution or
+ # http://www.perlfoundation.org/artistic_license_2_0.  For
+ # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+ #
+ # When separated from the distribution, all POD documentation is covered by
+ # the Creative Commons Attribution-Share Alike 3.0 License.  See
+ # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+ # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ #
+ # $Id$
+ #

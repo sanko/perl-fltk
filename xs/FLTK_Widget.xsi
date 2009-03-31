@@ -14,8 +14,8 @@ Widget::new( x, y, w, h, l = PL_origfilename)
     OUTPUT:
         RETVAL
 
-void
-Widget::DESTROY ( )
+#bool
+#Widget::DESTROY ( )
 
 void
 Widget::draw ( )
@@ -780,5 +780,41 @@ Widget::box( TYPE )
     Box * TYPE
 
 
+
+
+ # From my own searching
+
+Flags
+Widget::align ( ALIGN = NO_INIT )
+    CASE: items == 2
+        unsigned ALIGN
+        CODE:
+            THIS->align( ALIGN );
+    CASE:
+        CODE:
+            RETVAL = THIS->align( );
+        OUTPUT:
+            RETVAL
+
+ # Children
+
 INCLUDE: FLTK_Group.xsi
+
 INCLUDE: FLTK_Button.xsi
+
+ #
+ # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of The Artistic License 2.0.  See the LICENSE file
+ # included with this distribution or
+ # http://www.perlfoundation.org/artistic_license_2_0.  For
+ # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+ #
+ # When separated from the distribution, all POD documentation is covered by
+ # the Creative Commons Attribution-Share Alike 3.0 License.  See
+ # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+ # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ #
+ # $Id$
+ #

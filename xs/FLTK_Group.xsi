@@ -3,23 +3,36 @@
 MODULE = FLTK               PACKAGE = FLTK::Group
 
 Group *
-Group::new( int x, int y, int w, int h, char * l = "", bool begin = false)
+Group::new( X, Y, W, H, LABEL = "", BEGIN = false )
+    int X
+    int Y
+    int W
+    int H
+    char * LABEL
+    bool BEGIN
+    CODE:
+        RETVAL = new Group(X, Y, W, H, LABEL, BEGIN);
+        ST(0) = sv_newmortal();
+        warn ("CLASS == %s", CLASS);
+        sv_setref_pv( ST(0), CLASS, (void*) RETVAL );
+        //sv_setref_pv( ST(0), "FLTK::Group", (void*) RETVAL );
+
+#bool
+#Group::DESTROY( )
+#     CODE:
+#        warn ( "Bye, Group (%s)!", THIS->label());
+#        delete THIS;
 
 void
-Group::DESTROY( )
-
-void
-Group::add(Widget * o)
+Group::add( WIDGET )
+    Widget * WIDGET
 
 void
 Group::begin( )
 
 Widget *
-Group::child(int n)
-    CODE:
-        RETVAL = THIS->child( n );
-    OUTPUT:
-        RETVAL
+Group::child( INDEX )
+    int INDEX
 
 int
 Group::children( )
@@ -111,6 +124,22 @@ void
 Group::swap(int indexA, int indexB)
 
  # Children
+
 INCLUDE: FLTK_Window.xsi
 
- # $Id: FLTK_Group.xsi 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $
+ #
+ # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of The Artistic License 2.0.  See the LICENSE file
+ # included with this distribution or
+ # http://www.perlfoundation.org/artistic_license_2_0.  For
+ # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+ #
+ # When separated from the distribution, all POD documentation is covered by
+ # the Creative Commons Attribution-Share Alike 3.0 License.  See
+ # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+ # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ #
+ # $Id$
+ #

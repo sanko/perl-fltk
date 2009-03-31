@@ -3,7 +3,7 @@ package FLTK::Version;
     use strict;
     use warnings;
     use version qw[qv];
-    our $VERSION_BASE = 0; our $FLTK_SVN = 6671; our $UNSTABLE_RELEASE = 2; our $VERSION = sprintf(($UNSTABLE_RELEASE ? q[%1d.%04d_%03d] : q[%1d.%04d]), $VERSION_BASE, $FLTK_SVN, $UNSTABLE_RELEASE);
+    our $VERSION_BASE = 0; our $FLTK_SVN = 6671; our $UNSTABLE_RELEASE = 3; our $VERSION = sprintf(($UNSTABLE_RELEASE ? q[%1d.%04d_%03d] : q[%1d.%04d]), $VERSION_BASE, $FLTK_SVN, $UNSTABLE_RELEASE);
     our $PRODUCT_TOKEN
         = sprintf
         'FLTK.pm %s based on the Feather Light Toolkit <http://fltk.org/>.',
@@ -86,6 +86,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: Version.pm 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $ for got=
+=for git $Id: Version.pm 09297d7 2009-03-29 04:17:42Z sanko@cpan.org $ for got=
 
 =cut
