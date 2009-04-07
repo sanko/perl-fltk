@@ -15,7 +15,7 @@ use parent 'DynaLoader';
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
 %EXPORT_TAGS = (
-    align => [
+    flags => [
         qw[ NO_FLAGS
             ALIGN_TOP ALIGN_BOTTOM ALIGN_LEFT ALIGN_RIGHT ALIGN_CENTER
             ALIGN_INSIDE ALIGN_CLIP ALIGN_WRAP ALIGN_MASK
@@ -30,6 +30,15 @@ use Exporter qw[import];
             COPIED_LABEL RAW_LABEL LAYOUT_VERTICAL TAB_TO_FOCUS
             CLICK_TO_FOCUS INACTIVE_R FOCUSED PUSHED RESIZE_NONE
             RESIZE_FIT RESIZE_FILL OPENED ]
+    ],
+    ask => [
+        qw[ BEEP_DEFAULT BEEP_MESSAGE BEEP_ERROR BEEP_QUESTION BEEP_PASSWORD
+            BEEP_NOTIFICATION
+            alert ask beep beep_on_dialog choice choice_alert input message
+            password
+            ok yes no cancel message_window_timeout message_window_scrollable
+            message_window_label message_style icon_style
+            ]
     ],
     box => [
         qw[ UP_BOX  DOWN_BOX    THIN_UP_BOX THIN_DOWN_BOX   ENGRAVED_BOX
@@ -80,7 +89,16 @@ use Exporter qw[import];
         qw[ NO_LABEL NORMAL_LABEL SYMBOL_LABEL SHADOW_LABEL ENGRAVED_LABEL
             EMBOSSED_LABEL ]
     ],
-    default => [qw[run message alert ask input password ]]
+    default => [qw[run message alert ask input password %FLTK]],
+    run     => [
+        qw[ READ WRITE EXCEPT
+            help
+            awake
+            ready
+            flush
+            run
+            ]
+    ]
 );
 @EXPORT_OK = sort map {@$_} values %EXPORT_TAGS;
 $EXPORT_TAGS{'all'} = \@EXPORT_OK;
@@ -161,128 +179,98 @@ sub password ($;$@) {    # XXX - translate to C
     $l =~ s[%][\%\%]g;
     _password($l, $default ? $default : ());
 }
-##########
+__END__
 
 =pod
 
-=head1 NAME
-
-FLTK - Perl interface to the (experimental) 2.0.x branch of the FLTK GUI toolkit
-
-=head1 Description
-
-Uh... Stuff goes here.
-
-=head1 Functions
+=begin comments
 
 
-=over
+# Magic? Abuse of C pointers? Yes. ###########################################
+for my $what (qw[no ok cancel yes
+                message_window_label
+                message_window_scrollable
+                message_window_timeout], # Read/Write
+              qw[help] # Read only
+    )
+{   eval sprintf '$FLTK::%s = FLTK::_%s();
+    FLTK::_%s($FLTK::%s) if $FLTK::%s;', $what, $what,
+        $what,
+        $what, $what;
+}
 
-=item C<FLTK::message ( STRING )>
-
-Displays a message in a pop-up box with an "OK" button and waits for the
-user to hit the button. The message will wrap to fit the window, or may
-be many lines by putting C<\n> characters into it. The enter key is a
-shortcut for the OK button.
-
-=for Comments | This is a cheap interace to fltk::message( STRING )
-
-=item C<FLTK::alert ( STRING )>
-
-Same as L<C<FLTK::message( )>|/"FLTK::message ( STRING )"> except for the
-"!" symbol.
-
-=for Comments | This is a cheap interace to fltk::alert(fmt, ...)
-
-=item C<FLTK::ask( STRING )>
-
-Displays a message in a pop-up box with "Yes" and "No" buttons and waits
-for the user to hit a button. The return value is C<1> if the user hits
-Yes, C<0> if they pick No. The enter key is a shortcut for Yes and C<ESC>
-is a shortcut for No.
-
-If L<C<FLTK::message_window_timeout>|/"message_window_timeout"> is used,
-then C<-1> will be returned if the timeout expires.
-
-=item C<FLTK::choice( QUERY, CHOICE1, CHOICE2, CHOICE3 )>
-
-Shows the message with three buttons below it marked with the strings
-C<CHOICE1>, C<CHOICE2>, and C<CHOICE3>. Returns C<0>, C<1>, or C<2>
-depending on which button is hit. If one of the strings begins with the
-special character 'C<*>' then the associated button will be the default
-which is selected when the enter key is pressed. C<ESC> is a shortcut for
-C<CHOICE2>.
-
-If L<C<FLTK::message_window_timeout>|/"message_window_timeout"> is used,
-then C<-1> will be returned if the timeout expires.
-
-=item C<FLTK::choice_alert( QUERY, CHOICE1, CHOICE2, CHOICE3  )>
-
-Same as
-L<C<choice( )>|/"FLTK::choice( QUERY, CHOICE1, CHOICE2, CHOICE3 )">
-except a "!" icon is used instead of a "?".
-
-=item C<FLTK::input( QUERY, [DEFAULT] [, ... ] )>
-
-Pops up a window displaying a string, lets the user edit it, and return
-the new value. The cancel button returns C<undef>. The returned pointer
-is only valid until the next time C<FLTK::input( )> is called. Due to
-back-compatibility, the arguments to any printf commands in the label are
-after the default value.
-
-If L<C<FLTK::message_window_timeout>|/"message_window_timeout"> is used,
-then C<-1> will be returned if the timeout expires.
-
-=item C<FLTK::password( QUERY, [DEFAULT] [, ... ] )>
-
-Same as L<C<FLTK::input( )>|/FLTK::input( QUERY, [DEFAULT] [, ... ] )>
-except an L<FLTK::SecretInput|FLTK::SecretInput> field is used.
-
-=item C<FLTK::beep( [TYPE] )>
-
-Generates a simple beep message.
-
-=item C<beep_on_dialog( [BEEP] )>
-
-You get the enable state of beep on default message dialogs (like
-L<ask|/"FLTK::ask( STRING )">,
-L<ask|/"FLTK::choice( QUERY, CHOICE1, CHOICE2, CHOICE3 )">,
-L<ask|/"FLTK::input( QUERY, [DEFAULT] [, ... ] )">, ...) by using this
-function with C<true> (default is C<false>).
-
-If C<BEEP> is defined, you set the enable state.
-
-=back
-
-=head1 Constants
-
-TODO
-
-=head1 Installation
-
-More stuff goes here.
-
-=head1 Author
-
-Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-CPAN ID: SANKO
-
-=head1 License and Legal
-
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of The Artistic License 2.0.  See the F<LICENSE>
-file included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered
-by the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-=for git $Id: FLTK.pm 09297d7 2009-03-29 04:17:42Z sanko@cpan.org $ for got=
+=end comments
 
 =cut
+
+################################
+for my $var (qw[yes no ok cancel]) {
+    eval sprintf q[tie our $%s, 'FLTK::Variable', $var;], $var, $var;
+}
+for my $var (qw[help]) {
+    eval sprintf q[tie our $%s, 'FLTK::Variable::ReadOnly', $var;], $var,
+        $var;
+}
+{
+
+    package FLTK::Variable;
+    use strict;
+    use warnings;
+    use Carp;
+    sub TIESCALAR { my ($class, $what) = @_; return bless \$what, $class; }
+
+    sub FETCH {
+        my $self = shift;
+        confess "wrong type" unless ref $self;
+        croak "usage error" if @_;
+        my $return;
+        local ($!) = 0;
+        my $line = sprintf 'FLTK::%s();', $$self;
+        $return = eval $line;
+        if ($!) { croak sprintf 'FETCH %s failed: %s', $$self, $! }
+        return $return;
+    }
+
+    sub STORE {
+        my ($self, $value) = @_;
+        confess "wrong type" unless ref $self;
+        croak "usage error" if scalar @_ > 2;
+        local ($!) = 0;
+        my $line = sprintf 'FLTK::%s("%s");', $$self, $value;
+        warn $line;
+        my $return = eval $line;
+        if ($!) { croak sprintf 'FETCH %s failed: %s', $$self, $! }
+        return $return;
+    }
+
+    sub DESTROY {
+        my $self = shift;
+        confess "wrong type" unless ref $self;
+    }
+}
+{
+
+    package FLTK::Variable::ReadOnly;
+    use strict;
+    use warnings;
+    BEGIN { our @ISA = qw[FLTK::Variable]; }
+    sub STORE { return 0 }
+}
+1;
+
+#
+# Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of The Artistic License 2.0.  See the LICENSE file
+# included with this distribution or
+# http://www.perlfoundation.org/artistic_license_2_0.  For
+# clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+#
+# When separated from the distribution, all POD documentation is covered by
+# the Creative Commons Attribution-Share Alike 3.0 License.  See
+# http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+# clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+#
+# $Id$
+#
