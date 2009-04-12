@@ -1,0 +1,211 @@
+MODULE = FLTK               PACKAGE = FLTK::Button
+
+=pod
+
+=head1 Description
+
+Buttons generate callbacks when they are clicked by the user. You control
+exactly when and how by changing the values for L<C<when()>|/"when">:
+
+=over 8
+
+=item C<FLTK::WHEN_NEVER>
+The callback is not done, instead L<C<changed()>|/"changed"> is turned on.
+
+=item C<FLTK::WHEN_RELEASE>
+This is the default, the callback is done after the user successfully clicks
+the button (i.e. they let it go with the mouse still pointing at it), or when
+a shortcut is typed.
+
+=item C<FLTK::WHEN_CHANGED>
+The callback is done each time the L<C<value()>|/"value"> changes (when the
+user pushes and releases the button, and as the mouse is dragged around in and
+out of the button).
+
+=back
+
+Buttons can also generate callbacks in response to
+L<C<FLTK::SHORTCUT>|FLTK/"SHORTCUT"> events. The button can either have an
+explicit L<C<shortcut()>|/"shortcut"> value or a letter shortcut can be
+indicated in the L<C<label()>|/"label"> with an C<&> character before it. For
+the label shortcut it does not matter if C<Alt> is held down, but if you have
+an input field in the same window, the user will have to hold down the C<Alt>
+key so that the input field does not eat the event first as an
+L<C<FLTK::KEY>|FLTK/"KEY"> event.
+
+Inherits L<FLTK::Widget|FLTK::Widget>.
+
+Inherited by L<BButton|FLTK::BButton>, L<FLTK::CheckButton|FLTK::CheckButton>,
+L<FLTK::HighlightButton|FLTK::HighlightButton>,
+L<FLTK::RepeatButton|FLTK::RepeatButton>,
+L<FLTK::ReturnButton|FLTK::ReturnButton>, and
+L<FLTK::ToggleButton|FLTK::ToggleButton>.
+
+=cut
+
+#include <fltk/Button.H>
+
+=for apidoc ||FLTK::Button|new
+
+Creates a new C<FLTK::Button> object. Obviously.
+
+=cut
+
+fltk::Button *
+fltk::Button::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::Button( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Button::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Button (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc e||int|HIDDEN|
+
+NFI
+
+=cut
+
+int
+HIDDEN ( )
+    CODE:
+        RETVAL = fltk::Button::HIDDEN;
+    OUTPUT:
+        RETVAL
+
+
+=for apidoc |||draw|GLYPH_WIDTH
+
+This function provides a mess of back-compatabilty and Windows emulation to
+subclasses of Button to draw with. It will draw the button according to the
+current state of being pushed and it's L<C<state()>|/"state">. If non-zero is
+passed for C<GLYPH_WIDTH> then the L<C<glyph()>|/"glyph"> is drawn in that
+space on the left (or on the right if negative), and it assummes the glyph
+indicates the L<C<state()>|/"state">, so the box is only used to indicate the
+pushed state.
+
+=cut
+
+void
+fltk::Button::draw( GLYPH_WIDTH )
+    int GLYPH_WIDTH
+
+=for apidoc ||int|handle|EVENT|FLTK::Rectangle
+
+NFI
+
+=cut
+
+=for apidoc ||int|handle|EVENT
+
+NFI
+
+=cut
+
+int
+fltk::Button::handle ( EVENT, RECT = NO_INIT )
+    CASE: items == 2
+        int EVENT
+        C_ARGS: EVENT
+    CASE:
+        int                     EVENT
+        const fltk::Rectangle * RECT
+        C_ARGS: EVENT, (const fltk::Rectangle &) RECT
+
+=for apidoc ||bool|value|VALUE
+
+Change the L<C<value()>|/"value">. Redraws the button and returns true if the
+new value is different. This is the same function as
+L<C<Widget::state()>|FLTK::Widget/"state">. See also
+L<C<Widget::set()>|FLTK::Widget/"set">,
+L<C<Widget::clear()>|FLTK::Widget/"clear">, and
+L<C<Widget::setonly()>|FLTK::Widget/"setonly">.
+
+If you turn it on, a normal button will draw pushed-in, until the user clicks
+it and releases it.
+
+=cut
+
+=for apidoc ||bool|value|
+
+The current value. C<true> means it is pushed down, C<false> means it is not
+pushed down. The L<ToggleButton|FLTK::ToggleButton> subclass provides the
+ability for the user to change this value permanently, otherwise it is just
+temporary while the user is holding the button down.
+
+This is the same as L<Widget::state()|FLTK::Widget/"state">.
+
+=cut
+
+bool
+fltk::Button::value ( VALUE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->value( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        bool VALUE
+
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+fltk::NamedStyle *
+fltk::Button::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

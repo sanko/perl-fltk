@@ -1,0 +1,161 @@
+MODULE = FLTK               PACKAGE = FLTK::Choice
+
+=pod
+
+=head1 Description
+
+Subclass of fltk::Menu that provides a button that pops up the menu, and also
+displays the text of the most-recently selected menu item.
+
+The appearance is designed to look like an "uneditable ComboBox" in Windows,
+but it is somewhat different in that it does not contain a text editor, also
+the menu pops up with the current item under the cursor, which is immensely
+easier to use once you get used to it. This is the same UI as the Macintosh
+and Motif, which called this an OptionButton.
+
+The user can change the value by popping up the menu by clicking anywhere in
+the widget and moving the cursor to a different item, or by typing up and down
+arrow keys to cycle amoung the items. Typing the
+L<C<FLTK::Widget::shortcut()>|FLTK::Widget/"shortcut"> of any of the items will
+also change the value to that item.
+
+If you set a L<C<shortcut()>|/"shortcut"> on this widget itself or put C<&x>
+in the label, that shortcut will pop up the menu. The user can then use arrow
+keys or the mouse to change the selected item.
+
+When the user changes the L<C<value()>|/"value"> the callback is done.
+
+If you wish to display text that is different than any of the menu items, you
+may instead want an L<FLTK::PopupMenu|FLTK::PopupMenu>. It works identically
+but instead displays an empty box with the L<C<label()>|/"label"> inside it,
+you can then change the L<C<label()>|/"label"> as needed.
+
+If you want a "real" ComboBox where the user edits the text, this is a planned
+addition to the L<FLTK::Input|FLTK::Input> widget. All text input will have
+menus of possible replacements and completions. Not yet implemented,
+unfortunately.
+
+Inherits L<FLTK::Menu|FLTK::Menu>.
+
+Inherited by L<FLTK::ComboBox|FLTK::ComboBox>.
+
+=cut
+
+#include <fltk/Choice.H>
+
+=for apidoc ||FLTK::Choice|new
+
+Creates a new C<FLTK::Choice> object. Obviously.
+
+The constructor makes the menu empty. See L<Menu|FLTK::Menu> and
+L<StringList|FLTK::StringList> for information on how to set the menu to a
+list of items.
+
+=cut
+
+fltk::Choice *
+fltk::Choice::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::Choice( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Choice::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Choice (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc h|||draw|
+
+You can change the icon drawn on the right edge by setting
+L<C<glyph()>|/"glyph"> to your own function that draws whatever you want.
+
+Reimplemented from L<FLTK::Group|FLTK::Group>.
+
+=cut
+
+void
+fltk::Choice::draw ( )
+
+
+=for apidoc ||int|handle|int|FLTK::Rectangle
+
+NFI
+
+=cut
+
+=for apidoc ||int|handle|int
+
+NFI
+
+=cut
+
+int
+fltk::Choice::handle ( INT, RECT = NO_INIT )
+    CASE: items == 2
+        int INT
+        C_ARGS: INT
+    CASE:
+        int INT
+        const fltk::Rectangle * RECT
+        C_ARGS: INT, (const fltk::Rectangle &) RECT
+
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+fltk::NamedStyle *
+fltk::Choice::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

@@ -1,0 +1,186 @@
+MODULE = FLTK               PACKAGE = FLTK::FrameBox
+
+=pod
+
+=head1 Description
+
+This box class interprets a small string stored in L<C<data()>|/"data"> to
+indicate the gray shades to draw around the edge of the box and can be used to
+draw simple bezels.
+
+The box is drawn by calling L<C<drawframe()>|/"drawframe"> or
+L<C<drawframe2()>|/"drawframe2()"> if the string starts with a C<2>.
+
+The normal up box draws the pattern C<AAWWHHTT>
+
+The normal down_ box draws the pattern C<WWHHPPAA>
+
+The C<PUSHED> or C<STATE> flags will cause the pattern from
+L<C<down_()>|/"down_"> to be used instead, allowing you to draw a different
+bezel when pushed in.
+
+The C<INVISIBLE> flag will not draw the interior, which can make many widgets
+draw faster and with less blinking.
+
+Inherits L<FLTK::Symbol|FLTK::Symbol>.
+
+Inherited by L<FLTK::PlasticBox|FLTK::RoundBox>.
+
+=cut
+
+#include <fltk/Box.h>
+
+=for apidoc ||FLTK::FrameBox|new|NAME|DX|DY|DW|DH|PATTERN|DOWN = 0
+
+Creates a new C<FLTK::FrameBox> object. Obviously.
+
+You give the thickness of the borders used by L<C<<inset()>|/"inset">.
+
+=cut
+
+fltk::FrameBox *
+fltk::FrameBox::new( NAME, DX, DY, DW, DH, PATTERN, DOWN = 0 )
+    const char      * NAME
+    int               DX
+    int               DY
+    int               DW
+    int               DH
+    const char      * PATTERN
+    const fltk::Box * DOWN
+
+#if ALLOW_DESTROY
+
+bool
+fltk::FrameBox::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, FrameBox");
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc |||_draw|RECT
+
+NFI
+
+=cut
+
+void
+fltk::FrameBox::_draw ( RECT )
+    const fltk::Rectangle * RECT
+    C_ARGS: (const fltk::Rectangle &) RECT
+
+=for apidoc |||data|DATA
+
+NFI
+
+=cut
+
+=for apidoc ||const char *|data|
+
+NFI
+
+=cut
+
+const char *
+fltk::FrameBox::data ( DATA = NO_INIT  )
+    CASE: items == 2
+        const char * DATA
+        CODE:
+            THIS->data( DATA );
+    CASE:
+        CODE:
+            RETVAL = THIS->data( );
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||bool|fills_rectangle|
+
+NFI
+
+=cut
+
+bool
+fltk::FrameBox::fills_rectangle ( )
+
+=for apidoc |||inset|RECT
+
+NFI
+
+=cut
+
+void
+fltk::FrameBox::inset ( RECT )
+    fltk::Rectangle * RECT
+    C_ARGS: ( fltk::Rectangle & ) RECT
+
+=for apidoc ||bool|is_frame|
+
+NFI
+
+=cut
+
+bool
+fltk::FrameBox::is_frame ( )
+
+#if 0
+ # Protected Attributes
+
+=for apidoc H||const char *|data_|
+
+NFI
+
+=cut
+
+const char *
+fltk::FrameBox::data_ ( )
+    CODE:
+        RETVAL = THIS->data_;
+    OUTPUT:
+        RETVAL
+
+=for apidoc H||FLTK::Box|down_|
+
+NFI
+
+=cut
+
+const fltk::Box *
+fltk::FrameBox::down_ ( )
+    CODE:
+        RETVAL = THIS->down_;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

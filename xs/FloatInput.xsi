@@ -1,0 +1,157 @@
+MODULE = FLTK               PACKAGE = FLTK::FloatInput
+
+=pod
+
+=head1 Description
+
+A subclass of L<NumericInput|FLTK::NumericInput> that only allows the user to
+type floating point numbers (sign, digits, decimal point, more digits, C<E> or
+C<e>, sign, digits), or hex constants that start with C<0x>. This is done by
+overriding the L<C<replace()>|/"replace"> method. Besides editing the text the
+user can use the up/down arrow keys to change the digits.
+
+You may want a L<ValueInput|FLTK::ValueInput> widget instead. It has up/down
+buttons (what is called a "Spinner" in some toolkits).
+
+If you change L<C<when()>|/"when"> to
+L<C<FLTK::WHEN_ENTER_KEY>|FLTK/"WHEN_ENTER_KEY"> the callback is only done
+when the user hits the up/down arrow keys or when the user types the C<Enter>
+key. This may be more useful than the default setting of
+L<C<FLTK::WHEN_CHANGED>|FLTK/"WHEN_CHANGED"> which can make the callback
+happen when partially-edited numbers are in the field.
+
+The L<C<type()>|/"type"> can either be either
+L<C<FloatInput::FLOAT>|FLTK::FloatInput/"FLOAT"> or
+L<C<FloatInput::INT>|FLTK::FloatInput/"INT">. Setting it to
+L<C<INT>|FLTK::FloatInput/"INT"> makes this act like the
+L<FLTK::IntInput|FLTK::IntInput> subclass.
+
+Inherits L<FLTK::NumericInput|FLTK::NumericInput>.
+
+Inherited by L<FLTK::IntInput|FLTK::IntInput>.
+
+=cut
+
+#include <fltk/FloatInput.h>
+
+=for apidoc ||FLTK::FloatInput|new|N
+
+Creates a new C<FLTK::FloatInput> object. Obviously.
+
+=cut
+
+fltk::FloatInput *
+fltk::FloatInput::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::FloatInput( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::FloatInput::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, FloatInput");
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+
+ # Public Types
+
+=for e||int|FLOAT|
+
+This is the default behavior.
+
+=cut
+
+int
+FLOAT ( )
+    CODE:
+        RETVAL = fltk::FloatInput::FLOAT;
+    OUTPUT:
+        RETVAL
+
+=for e||int|INT|
+
+Setting L<C<type()>|/"type"> to
+L<C<INT>|FLTK::FloatInput/"INT"> makes the object act like the
+L<FLTK::IntInput|FLTK::IntInput> subclass.
+
+=cut
+
+int
+INT ( )
+    CODE:
+        RETVAL = fltk::FloatInput::INT;
+    OUTPUT:
+        RETVAL
+
+ # Public Member Functions
+
+=for apidoc ||double|fvalue|
+
+Convert the string to a double using C<strtod()>.
+
+=cut
+
+double
+fltk::FloatInput::fvalue ( )
+
+=for apidoc ||int|ivalue|
+
+Convert the string to an integer, using C<int(strtol())>.
+
+=cut
+
+bool
+fltk::FloatInput::ivalue( )
+
+=for apidoc ||long|lvalue|
+
+Convert the string to a long using C<strtol()>.
+
+=cut
+
+bool
+fltk::FloatInput::lvalue ( )
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

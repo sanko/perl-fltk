@@ -160,6 +160,7 @@ sub ACTION_dist {
 
 sub _find_lib {
     my ($find) = @_;
+    $find =~ s[([\+\*\.])][\\$1]g;
     my $lib;
     find(
         sub {
@@ -172,8 +173,6 @@ sub _find_lib {
     return $lib;
 }
 
-
-
 sub ACTION_code {
     my ($self, $args) = @_;
     my @libs = _build_fltk($self) or do { print 'Cannot build FLTK'; exit 0 };
@@ -182,10 +181,18 @@ sub ACTION_code {
     my @xs;
     find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
 
-    my @_local_libs = map { _find_lib($_) } qw[comctl32 msimg32
-    msvcrt moldname kernel32 user32 gdi32 winspool comdlg32 advapi32
-    shell32 ole32 oleaut32 netapi32 uuid ws2_32 mpr winmm version
-    odbc32 odbccp32];
+    my @_local_libs = map { _find_lib($_)||('-l'.$_) } sort
+    (($self->is_windowsish)  ? qw[msimg32 ole32 uuid comctl32 wsock32] : ()),
+    ($self->notes('use_gl')? qw[glu32 opengl32]: ());
+
+    #qw[comctl32 msimg32
+    #msvcrt moldname kernel32 user32 gdi32 winspool comdlg32 advapi32
+    #shell32 ole32 oleaut32 netapi32 uuid ws2_32 mpr winmm version
+    #odbc32 odbccp32
+    #supc++];
+
+#use Data::Dump qw[pp];
+#warn pp \@_local_libs;
 
     #
     my @obj;
@@ -205,7 +212,8 @@ XS: for my $XS (@xs) {
                     -Wno-format-y2k
                     -c -O3
                     -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
-                    -Wno-non-virtual-dtor], (VERBOSE() ? '-Wunused' : ())
+                    -Wno-non-virtual-dtor],
+                    (VERBOSE() ? '-Wall -W -pedantic' : ())
             ]
         );
     }
@@ -224,11 +232,11 @@ XS: for my $XS (@xs) {
                 _dir(qw[blib arch auto FLTK], 'FLTK.' . $Config{'so'}),
             module_name        => 'FLTK',
             extra_linker_flags => [
-                $Config{ldflags},
-                $Config{'libs'},
-                qw[-Wno-format-y2k  -fno-exceptions -fno-strict-aliasing -Wno-non-virtual-dtor],
-                ($^O eq 'MSWin32' ? qw[-mwindows -mno-cygwin] : ()),
-                (VERBOSE() ? qw[-Wunused] : ())
+                $Config{ldflags},           $Config{'libs'},
+                qw[ -Wno-format-y2k         -fno-exceptions
+                    -fno-strict-aliasing    -Wno-non-virtual-dtor ],
+                ($self->is_windowsish() ?   qw[-mwindows -mno-cygwin] : ()),
+                (VERBOSE() ? qw[-Wall -W -pedantic] : ())
             ]
             );
         @cleanup = map { s["][]g; _abs($_); } @cleanup;
@@ -265,6 +273,15 @@ sub _build_fltk {
     _config_h($self);
     my @libs;
 DIR: for my $dir (keys %LIBS) {
+        if (($dir eq 'OpenGL') && !$self->notes('use_gl')) {
+            print "Skipping OpenGL...\n" if $VERBOSE ;
+            next DIR;
+        }
+        if (($dir eq 'glut') && !$self->notes('use_glut')) {
+            print "Skipping GLUT...\n" if $VERBOSE ;
+            next DIR;
+        }
+
         my @INC_DIRS = ((map { _abs(_dir(fltk_location, 'images', $_)) } '',
                          qw[libpng libjpeg zlib]
                         ),
@@ -727,16 +744,35 @@ sub make_tarball {
     return 1;
 }
 
+
+sub ACTION_define {
+    my ($self) = @_;
+    return printf <<'END', ($VERBOSE ? 3 : 0),
+
+#define VERBOSE   %d // Talkative mode 0..3
+
+#define USE_GL    %d
+#define USE_GLUT  %d
+#define USE_CAIRO %d
+#define USE_X     %d // TODO
+
+END
+    ( $self->notes('use_gl')    ? 1 : 0 ),
+    ( $self->notes('use_glut')  ? 1 : 0 ),
+    ( $self->notes('use_cairo') ? 1 : 0 ),
+    ( $self->notes('use_x')     ? 1 : 0 )
+}
+
 1;
 #SUBCLASS
 my $mb = $class->new(
-    module_name        => 'FLTK',
-    license            => 'artistic_2',
-    dist_author        => 'Sanko Robinson <sanko@cpan.org>',
-    dist_version_from  => 'lib/FLTK/Version.pm',
-    dist_abstract      => 'Perl interface to the (experimental) 2.0.x branch of the FLTK GUI toolkit',
-    requires           => {
-                 perl                 => '5.8.0',    # 5.8.0 is too old IMO...
+    module_name       => 'FLTK',
+    license           => 'artistic_2',
+    dist_author       => 'Sanko Robinson <sanko@cpan.org>',
+    dist_version_from => 'lib/FLTK/Version.pm',
+    dist_abstract =>
+        'Perl interface to the (experimental) 2.0.x branch of the FLTK GUI toolkit',
+    requires => {perl                 => '5.8.0',    # 5.8.0 is too old IMO...
                  parent               => 0,
                  'Test::More'         => 0,
                  Config               => 0,
@@ -824,6 +860,13 @@ $mb->notes(
             ->()
     )
 );
+
+# TODO #######################################################################
+$mb->notes(use_cairo => 0); # TODO
+$mb->notes(use_x     => 0); # TODO
+$mb->notes(use_glut  => 0); # TODO
+$mb->notes(use_gl    => 0);
+##################################################################### TODO ###
 $mb->notes(automated_testing => $automated_testing             ? 1 : 0);
 $mb->notes(release_testing   => $is_developer);
 $mb->notes(verbose           => $mb->args('messy'));
@@ -836,7 +879,6 @@ exit 0;
 
 #use Data::Dump qw[pp];
 #warn pp $mb;
-
 sub find_cb {
     return if -d $_ or -l $_;
     return unless -T $_;

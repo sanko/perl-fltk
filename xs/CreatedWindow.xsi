@@ -1,0 +1,297 @@
+MODULE = FLTK               PACKAGE = FLTK::CreatedWindow
+
+#if USE_X
+
+=pod
+
+=head1 Description
+
+When fltk tells X about a window, one of these objects is created.
+
+B<Warning: this object is highly subject to change! It's definition is only
+here so that L<C<xid(Window)>|/"xid"> can be declared inline.>
+
+=cut
+
+#include <fltk/CreatedWindow.H>
+
+#if ALLOW_DESTROY
+
+bool
+fltk::CreatedWindow::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Clock (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Public Member Functions
+
+=for apidoc |X||expose|RECT
+
+NFI
+
+=cut
+
+void
+fltk::CreatedWindow::expose ( RECT )
+    const fltk::Rectangle * RECT
+    C_ARGS: (const fltk::Rectangle &) RECT
+
+=for apidoc |X||sendxjunk|
+
+NFI
+
+=cut
+
+void
+fltk::CreatedWindow::sendxjunk ( )
+
+ # Static Public Member Functions
+
+=for apidoc |X||create|WINDOW|VISUAL|COLORMAP|BACKGROND = -1
+
+This function calls C<XCreateWindow> and sets things up so that
+L<C<xid(window)>|/"xid"> returns the created X window id. This also does a lot
+of other ugly X stuff, including setting the label, resize limitations, etc.
+The background is a pixel to use for X's automatic fill color, use C<-1> to
+indicate that no background filling should be done.
+
+=cut
+
+static void
+fltk::CreatedWindow::create( WINDOW, VISUAL, COLORMAP, BACKGROUND = -1 )
+    fltk::Window * WINDOW
+    XVisualInfo  * VISUAL
+    Colormap       COLORMAP
+    int            BACKGROND
+
+=for apidoc |X|FLTK::CreatedWindow|find|WINDOW
+
+NFI
+
+=cut
+
+static fltk::CreatedWindow *
+fltk::CreatedWindow::find ( WINDOW )
+    const fltk::Window * WINDOW
+
+=for apidoc |X|FLTK::CreatedWindow|set_xid|WINDOW|XWINDOW
+
+Set things up so that L<C<xid(window)>|/"xid"> returns winxid. Thus you will
+make that Window draw into an existing X window.
+
+=cut
+
+static fltk::CreatedWindow *
+fltk::CreatedWindow::set_xid ( WINDOW, XWINDOW )
+    const fltk::Window * WINDOW
+    XWindow              XWINDOW
+
+ # Public Attibutes
+ # TODO: Make these R/W
+
+=for apidoc |X|XWindow|backbuffer|
+
+NFI
+
+=cut
+
+XWindow
+fltk::CreatedWindow::backbuffer ( )
+    CODE:
+        RETVAL = THIS->backbuffer;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|bool|backbuffer_bad|
+
+NFI
+
+=cut
+
+bool
+fltk::CreatedWindow::backbuffer_bad ( )
+    CODE:
+        RETVAL = THIS->backbuffer_bad;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|FLTK::Rectangle|current_size|
+
+NFI
+
+=cut
+
+fltk::Rectangle *
+fltk::CreatedWindow::current_size ( )
+    CODE:
+        RETVAL = THIS->current_size;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|Cursor|cursor|
+
+NFI
+
+=cut
+
+Cursor
+fltk::CreatedWindow::cursor ( )
+    CODE:
+        RETVAL = THIS->cursor;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|FLTK::Widget|cursor_for|
+
+NFI
+
+=cut
+
+fltk::Widget *
+fltk::CreatedWindow::cursor_for ( )
+    CODE:
+        RETVAL = THIS->cursor_for;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|XWindow|frontbuffer|
+
+NFI
+
+=cut
+
+XWindow
+fltk::CreatedWindow::frontbuffer ( )
+    CODE:
+        RETVAL = THIS->frontbuffer;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|FLTK::CreatedWindow|next|
+
+NFI
+
+=cut
+
+fltk::CreatedWindow *
+fltk::CreatedWindow::next ( )
+    CODE:
+        RETVAL = THIS->next;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|bool|overlay|
+
+NFI
+
+=cut
+
+bool
+fltk::CreatedWindow::overlay ( )
+    CODE:
+        RETVAL = THIS->overlay;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|Region|region|
+
+NFI
+
+=cut
+
+Region
+fltk::CreatedWindow::region ( )
+    CODE:
+        RETVAL = THIS->region;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|bool|wait_for_expose|
+
+NFI
+
+=cut
+
+bool
+fltk::CreatedWindow::wait_for_expose ( )
+    CODE:
+        RETVAL = THIS->wait_for_expose;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|FLTK::Window|window|
+
+NFI
+
+=cut
+
+fltk::Window *
+fltk::CreatedWindow::window ( )
+    CODE:
+        RETVAL = THIS->window;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |X|XWindow|xid|
+
+NFI
+
+=cut
+
+XWindow
+fltk::CreatedWindow::xid ( )
+    CODE:
+        RETVAL = THIS->xid;
+    OUTPUT:
+        RETVAL
+
+ # Static Public Attributes
+
+=for apidoc |X|FLTK::CreatedWindow|first|
+
+NFI
+
+=cut
+
+fltk::CreatedWindow *
+fltk::CreatedWindow::first ( )
+    CODE:
+        RETVAL = THIS->first;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

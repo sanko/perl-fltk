@@ -1,0 +1,137 @@
+MODULE = FLTK               PACKAGE = FLTK::CycleButton
+
+=pod
+
+=head1 Description
+
+This widget lets the user select one of a set of choices by clicking on it.
+Each click cycles to the next choice. Holding down any shift key or using the
+middle or right mouse button cycles backwards.
+
+Notice that the number of items can be C<2>. In this case this widget serves
+the common purpose of a "toggle" button that shows the current on/off state by
+changing it's label.
+
+This is a subclass of L<Menu|FLTK::Menu>. The possible states are defined by
+using L<C<Menu::add()>|FLTK::Menu/"add"> or other methods that define the menu
+items. You can also put a different callback on each item. Or you can replace
+this widget's callback with your own and use L<C<value()>|/"value"> to get the
+index of the current setting. Items that are not L<C<visible()>|/"visible"> or
+are not L<C<active()>|/"active"> are skipped by the cycling.
+
+If you set L<C<buttonbox()>|/"buttonbox"> to L<C<NO_BOX>|/"NO_BOX"> then you
+must define your items to draw identical-sized and fully opaque images, so
+that drawing one completely obscures any other one. This was done to avoid
+blinking when drawing "artistic" user interfaces where all the entire button
+is an image.
+
+Inherits L<FLTK::Menu|FLTK::Menu>.
+
+=cut
+
+#include <fltk/CycleButton.H>
+
+=for apidoc ||FLTK::CycleButton|new
+
+Creates a new C<FLTK::CycleButton> object. Obviously.
+
+=cut
+
+fltk::CycleButton *
+fltk::CycleButton::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::CycleButton( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::CycleButton::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, CycleButton (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Public Member Functions
+
+=for apidoc ||int|handle|HANDLE
+
+NFI
+
+=cut
+
+int
+fltk::CycleButton::handle ( HANDLE )
+    int HANDLE
+
+
+ # Protected Member Functions
+
+#if 0
+
+=for apidoc h|||draw|
+
+NFI
+
+=cut
+
+void
+fltk::CycleButton::draw ( )
+
+#endif
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+fltk::NamedStyle *
+fltk::CycleButton::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

@@ -1,0 +1,66 @@
+MODULE = FLTK               PACKAGE = FLTK::AssociationFunctor
+
+ # TODO
+
+#if 0
+
+#include <fltk/WidgetAssociation.h>
+
+=pod
+
+=head1 Description
+
+Class used by the L<foreach()|FLTK::AssociationType/"foreach"> functions. Base
+class for the association functor that is used in
+L<foreach()|FLTK::AssociationType/"foreach">. If you want to supply your
+specific actions to do with the associated data found by the
+L<foreach()|FLTK::AssociationType/"foreach"> functions you need to derive from
+this class and provide a new handle function.
+
+Inherited by L<FLTK::keyCompareFunctor|FLTK::GlueFunctor>, and
+L<FLTK::keyCompareFunctor|FLTK::keyCompareFunctor>.
+
+=cut
+
+=for apidoc xh||bool|handle|FLTL::AssociationType|FLTK::Widget|CODE
+
+For each found association this function is called. If the function returns
+true the loop is aborted and the data pointer for the current association is
+returned.
+
+=cut
+
+bool
+fltk::AssociationFunctor::handle( ASSTYPE, WIDGET, CODE )
+    const fltk::AssociationType & ASSTYPE
+    const fltk::Widget          * WIDGET
+    void                        * CODE
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut
+
+#endif

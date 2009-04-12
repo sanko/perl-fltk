@@ -1,0 +1,127 @@
+#if ALLOW_DEPRECATED
+
+MODULE = FLTK               PACKAGE = FLTK::Adjuster
+
+=pod
+
+=head1 Description
+
+L<Valuator|FLTK::Valuator> widget that displays three buttons. The user pushes
+down the button and drags left/right to adjust, or clicks the button to step,
+or shift-clicks to step backwards. One button moves in the
+L<C<step()>|FLTK::Valuator/"step"> values, the next in
+C<10 * >L<C<step()>|FLTK::Valuator/"step">, and the third in
+C<100 * >L<C<step()>|FLTK::Valuator/"step">. Holding down shift makes the
+buttons move in the opposite way.
+
+B<Note: This is a depreciated widget. Please see
+L<FLTK::Notes|FLTK::Notes/"NotesDepPol">.>
+
+=cut
+
+=for apidoc d|||new|X|Y|Width|Height|Label = ''
+
+Creates a new C<FLTK::Adjuster> object.
+
+=cut
+
+#include <fltk/Adjuster.H>
+
+fltk::Adjuster *
+fltk::Adjuster::new ( X, Y, Width, Height, Label = "" )
+    int     X
+    int     Y
+    int     Width
+    int     Height
+    char *  Label
+    CODE:
+        RETVAL = new fltk::Adjuster( X, Y, Width, Height, Label );
+        RETVAL->copy_label( Label );
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Adjuster::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Adjuster (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc d||int|handle|EVENT
+
+See L<C<handle()>|FLTK::Valuator/handle> in
+L<FLTK::Valuator|FLTK::Valuator>.
+
+=cut
+
+int
+fltk::Adjuster::handle ( EVENT )
+    int EVENT
+
+=for apidoc d||[int]|soft|[int]
+
+TODO
+
+=cut
+
+int
+fltk::Adjuster::soft ( X = NO_INIT )
+    CASE: items
+        int X
+        CODE:
+            THIS->soft( X );
+    CASE:
+        CODE:
+            RETVAL = THIS->soft( );
+        OUTPUT:
+            RETVAL
+
+=for apidoc d||FLTK::NamedStyle|default_style|
+
+TODO
+
+=cut
+
+fltk::NamedStyle *
+fltk::Adjuster::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

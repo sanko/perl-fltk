@@ -1,0 +1,164 @@
+MODULE = FLTK               PACKAGE = FLTK::GlutWindow
+
+#if USE_GLUT
+
+#include <fltk/glut.h>  // changed for fltk
+#ifdef __APPLE__
+# include <OpenGL/glu.h>
+#else
+# include <GL/glu.h> // added for fltk
+#endif
+
+=pod
+
+=head1 Description
+
+L<Window|FLTK::Window> subclass used to emulate GLUT. See the F<glut.h> header
+file for more details on GLUT emulation.
+
+Each GLUT window is an instance of this class. You may find it useful to
+manipulate instances directly rather than use GLUT window id's. These may be
+created without opening the display, and thus can fit better into FLTK's
+method of creating windows.
+
+The current GLUT window is available in the global variable
+L<glut_window|FLTK/"glut_window">.
+
+Inherits L<FLTK::GlWindow|FLTK::GlWindow>.
+
+=cut
+
+
+
+=for apidoc ||FLTK::GlutWindow|new|X|Y|W|H|LABEL = ""
+
+Creates a new C<FLTK::GlutWindow> object. Obviously.
+
+=cut
+
+=for apidoc |G|FLTK::GlutWindow|new|W|H|LABEL
+
+The constructor is the same as L<C<glutCreateWindow()>/"glutCreateWindow">
+except it does not L<C<show()>|/"show"> the window or make the window current.
+
+=cut
+
+fltk::GlutWindow *
+fltk::GlutWindow::new(x = 0, y = 0, w = 0, h = 0, label = 0)
+    CASE: items >= 5
+        int x
+        int y
+        int w
+        int h
+        char * label
+        CODE:
+            RETVAL = new fltk::GlutWindow( x, y, w, h, label);
+            RETVAL->copy_label(label);
+            /* warn("%s|%s", RETVAL->label(), label); */
+        OUTPUT:
+            RETVAL
+    CASE: items == 4
+        int x
+        int y
+        const char * w
+        CODE:
+            RETVAL = new fltk::GlutWindow ( x, y, w );
+        OUTPUT:
+            RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::GlutWindow::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, GlutWindow");
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+
+ # Public Member Functions
+
+=for apidoc |G||make_current|
+
+L<C<make_current()>|/"make_current"> is the same as
+L<C<glutSetWindow(number)>|/"glutSetWindow">. If the window has not had
+L<C<show()>|/"show"> called on it yet, some functions that assumme an OpenGL
+context will not work. If you do L<C<show()>|/"show"> the window, call
+L<C<make_current()>|/"make_current"> again to set the context.
+
+Reimplemented from L<FLTK::GlWindow|FLTK::GlWindow>.
+
+=cut
+
+void
+fltk::GlutWindow::make_current ( )
+
+ # Public Attibutes
+
+ # TODO: make these lvalue subs
+    # void(* 	display )()
+    # void(* 	entry )(int)
+    # void(* 	keyboard )(uchar, int x, int y)
+    # int 	menu [3]
+    # void(* 	motion )(int x, int y)
+    # void(* 	mouse )(int b, int state, int x, int y)
+
+=for apidoc ||int|number|
+
+NFI
+
+=cut
+
+int
+fltk::GlutWindow::number ( )
+    CODE:
+        RETVAL = THIS->number;
+    OUTPUT:
+        RETVAL
+
+ # TODO
+    # void(* 	overlaydisplay )()
+    # void(* 	passivemotion )(int x, int y)
+    # void(* 	reshape )(int w, int h)
+    # void(* 	special )(int, int x, int y)
+    # void(* 	visibility )(int)
+
+ # Protected Member Functions
+    # void 	draw ()
+    # void 	draw_overlay ()
+    # int 	handle (int)
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut
+
+#endif

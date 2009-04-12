@@ -1,0 +1,101 @@
+MODULE = FLTK               PACKAGE = FLTK::CheckButton
+
+=pod
+
+=head1 Description
+
+This button turns the L<C<value()>|/"value"> on and off each release of a
+click inside of it, and displays a checkmark to show the user this.
+
+You can control the color of the checkbox with L<Ccolor()>|/"color"> and the
+color of the checkmark with L<C<textcolor()>|/"color">. You can make it draw
+different colors when turned on by setting
+L<C<selection_color()>|/"selection_color"> and
+L<C<selection_textcolor()>|/"selection_textcolor"> on the widget (these are
+ignored if set in an inherited L<C<style()>|/"style">).
+
+Inherits L<FLTK::Button|FLTK::Button>.
+
+Inherited by L<FLTK::LightButton|FLTK::LightButton>, and
+L<FLTK::RadioButton|FLTK::RadioButton>.
+
+=cut
+
+#include <fltk/CheckButton.H>
+
+=for apidoc ||FLTK::CheckButton|new
+
+Creates a new C<FLTK::CheckButton> object. Obviously.
+
+=cut
+
+fltk::CheckButton *
+fltk::CheckButton::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::CheckButton( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::CheckButton::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, CheckButton (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+fltk::NamedStyle *
+fltk::CheckButton::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut

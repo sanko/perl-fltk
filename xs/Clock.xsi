@@ -1,0 +1,130 @@
+MODULE = FLTK               PACKAGE = FLTK::Clock
+
+=pod
+
+=head1 Description
+
+This widget provides a round analog clock display and is provided for Forms
+compatibility. It installs a C<1>-second timeout callback using
+L<C<FLTK::add_timeout()>|FLTK/"add_timeout">.
+
+The L<C<color()>|/"color"> fills the background. The
+L<C<selectioncolor()>|/"selectioncolor"> (which defaults to
+L<C<GRAY85>|FLTK/"GRAY85">) fills the hands. The
+L<C<textcolor()>|/"textcolor"> is used to color in the tick marks and outline
+the hands.
+
+LC<Ctype()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
+See the base class L<ClockOutput|FLTK::ClockOutput> for some other methods.
+
+Design credits: Original clock display written by Paul Haeberli at SGI.
+Modifications by Mark Overmars for Forms Further changes by Bill Spitzak for
+fltk.
+
+Inherits L<FLTK::ClockOutput|FLTK::ClockOutput>.
+
+=cut
+
+#include <fltk/Clock.H>
+
+=for apidoc ||FLTK::Clock|new
+
+Creates a new C<FLTK::Clock> object. Obviously.
+
+=cut
+
+fltk::Clock *
+fltk::Clock::new(x, y, w, h, label = 0)
+    int x
+    int y
+    int w
+    int h
+    char * label
+    CODE:
+        RETVAL = new fltk::Clock( x, y, w, h, label);
+        RETVAL->copy_label(label);
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Clock::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Clock (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc ||int|handle|int
+
+NFI
+
+=cut
+
+int
+fltk::Clock::handle ( INT )
+    int INT
+
+#if 0
+
+ # Something's buggy here. I'll figure it out later...
+
+=for apidoc h|||update|
+
+NFI
+
+=cut
+
+void
+fltk::Clock::update ( )
+
+#endif
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+fltk::NamedStyle *
+fltk::Clock::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$ for got=
+
+=cut
