@@ -9,7 +9,8 @@ use version qw[qv];
 our $VERSION_BASE = 0; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? q[%.3f_%03d] : q[%.3f]), (version->new(($VERSION_BASE))->numify / 1000), $UNSTABLE_RELEASE);
 
 #
-use parent 'DynaLoader';
+#use parent 'DynaLoader';
+use base 'DynaLoader';    # Testing for clean perl5.8
 
 #
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
@@ -98,6 +99,12 @@ use Exporter qw[import];
             flush
             run
             ]
+    ],
+    visual => [
+        qw[ RGB_COLOR INDEXED_COLOR SINGLE_BUFFER DOUBLE_BUFFER ACCUM_BUFFER
+            ALPHA_BUFFER DEPTH_BUFFER STENCIL_BUFFER RGB24_COLOR MULTISAMPLE
+            STEREO
+            glVisual own_colormap visual ]
     ]
 );
 @EXPORT_OK = sort map {@$_} values %EXPORT_TAGS;
@@ -107,10 +114,75 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 
 #use Data::Dump qw[pp];
 #warn pp \@EXPORT;
-bootstrap FLTK $VERSION;
+bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 
 #sub END { warn "..." }
 # Classes ####################################################################
+@FLTK::Aduster::ISA            = qw[FLTK::Valuator];
+@FLTK::AssociationFunctor::ISA = qw[];
+@FLTK::AssociationType::ISA    = qw[];
+@FLTK::Box::ISA                = qw[FLTK::Symbol];
+@FLTK::Browser::ISA            = qw[FLTK::Menu];
+@FLTK::Button::ISA             = qw[FLTK::Widget];
+@FLTK::CheckButton::ISA        = qw[FLTK::Button];
+@FLTK::Choice::ISA             = qw[FLTK::Menu];
+@FLTK::Clock::ISA              = qw[FLTK::ClockOutput];
+@FLTK::ClockOutput::ISA        = qw[FLTK::Widget];
+@FLTK::CreatedWindow::ISA      = qw[];
+@FLTK::CycleButton::ISA        = qw[FLTK::Menu];
+@FLTK::Dial::ISA               = qw[FLTK::Valuator];
+@FLTK::Divider::ISA            = qw[FLTK::Widget];
+@FLTK::FillDial::ISA           = qw[FLTK::Dial];
+@FLTK::FillSlider::ISA         = qw[FLTK::Slider];
+@FLTK::FlatBox::ISA            = qw[FLTK::Symbol];
+@FLTK::FloatInput::ISA         = qw[FLTK::NumericInput];
+@FLTK::Font::ISA               = qw[];
+@FLTK::FrameBox::ISA           = qw[FLTK::Symbol];
+@FLTK::gifImage::ISA           = qw[FLTK::SharedImage];
+@FLTK::GlutWindow::ISA         = qw[FLTK::GlWindow];
+@FLTK::GlWindow::ISA           = qw[FLTK::Window];
+@FLTK::Group::ISA              = qw[FLTK::Widget];
+
+#
+#
+# According to fltk's docs
+@FLTK::GlueFunctor::ISA             = qw[FLTK::AssociationFunctor];
+@FLTK::keyCompareFunctor::ISA       = qw[FLTK::AssociationFunctor];
+@FLTK::shortcutAssociationType::ISA = qw[FLTK::AssociationType];
+@FLTK::ComboBrowser::ISA            = qw[FLTK::Browser];
+@FLTK::FileBrowser::ISA             = qw[FLTK::Browser];
+@FLTK::MultiBrowser::ISA            = qw[FLTK::Browser];
+@FLTK::BButton::ISA                 = qw[FLTK::Button];
+@FLTK::HighlightButton::ISA         = qw[FLTK::Button];
+@FLTK::RepeatButton::ISA            = qw[FLTK::Button];
+@FLTK::ReturnButton::ISA            = qw[FLTK::Button];
+@FLTK::ToggleButton::ISA            = qw[FLTK::Button];
+@FLTK::LightButton::ISA             = qw[FLTK::CheckButton];
+@FLTK::RadioButton::ISA             = qw[FLTK::CheckButton];
+@FLTK::ComboBox::ISA                = qw[FLTK::Choice];
+@FLTK::LineDial::ISA                = qw[FLTK::Dial];
+@FLTK::HighlightBox::ISA            = qw[FLTK::Symbol];
+@FLTK::IntInput::ISA                = qw[FLTK::FloatInput];
+@FLTK::PlasticBox::ISA              = qw[FLTK::FrameBox];
+@FLTK::RoundBox::ISA                = qw[FLTK::FrameBox];
+@FLTK::AlignGroup::ISA              = qw[FLTK::Group];
+@FLTK::BarGroup::ISA                = qw[FLTK::Group];
+@FLTK::ColorChooser::ISA            = qw[FLTK::Group];
+@FLTK::HelpView::ISA                = qw[FLTK::Group];
+@FLTK::Menu::ISA                    = qw[FLTK::Group];
+@FLTK::PackedGroup::ISA             = qw[FLTK::Group];
+@FLTK::ScrollGroup::ISA             = qw[FLTK::Group];
+@FLTK::StatusBarGroup::ISA          = qw[FLTK::Group];
+@FLTK::TabGroup::ISA                = qw[FLTK::Group];
+@FLTK::TextDisplay::ISA             = qw[FLTK::Group];
+@FLTK::TiledGroup::ISA              = qw[FLTK::Group];
+@FLTK::Window::ISA                  = qw[FLTK::Group];
+@FLTK::WizardGroup::ISA             = qw[FLTK::Group];
+
+=pod
+
+
+#
 ################################################ FLTK::Rectangle (top level) #
 @FLTK::Monitor::ISA = @FLTK::Widget::ISA = qw[FLTK::Rectangle];
 ############################################################### FLTK::Widget #
@@ -147,7 +219,21 @@ bootstrap FLTK $VERSION;
     = qw[FLTK::Image];
 ########################################################## FLTK::SharedImage #
 @FLTK::gifImage::ISA = @FLTK::xpmFileImage::ISA = qw[FLTK::SharedImage];
+################################################################# FLTK::Dial #
+@FLTK::FillDial::ISA = @FLTK::LineDial::ISA = qw[FLTK::Dial];
+############################################################### FLTK::Slider #
+@FLTK::FillSlider::ISA = qw[FLTK::Slider];
+######################################################### FLTK::NumericInput #
+@FLTK::FloatInput::ISA = qw[FLTK::NumericInput];
+########################################################### FLTK::FloatInput #
+@FLTK::IntInput::ISA = qw[FLTK::FloatInput];
+# Depreciated Widgets ########################################################
+############################################################# FLTK::Valuator #
+@FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
+
+=cut
+
 sub message ($;@) {    # XXX - translate to C
     my $l = sprintf(shift, @_);
     $l =~ s[%][\%\%]g;
@@ -272,5 +358,5 @@ for my $var (qw[help]) {
 # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 #
-# $Id$
+# $Id: FLTK.pm 831bfad 2009-04-07 04:37:31Z sanko@cpan.org $
 #

@@ -1123,6 +1123,7 @@ src/fltk-2.0.x-r6671/test/line_style.cxx
 src/fltk-2.0.x-r6671/test/linetype.cxx
 src/fltk-2.0.x-r6671/test/list.cxx
 src/fltk-2.0.x-r6671/test/list_visuals.cxx
+src/fltk-2.0.x-r6671/test/makedepend
 src/fltk-2.0.x-r6671/test/Makefile
 src/fltk-2.0.x-r6671/test/mandelbrot.cxx
 src/fltk-2.0.x-r6671/test/mandelbrot.h
@@ -1265,5 +1266,8 @@ xs/Font.xsi
 xs/FrameBox.xsi
 xs/gifImage.xsi
 xs/GlutWindow.xsi
+xs/GlWindow.xsi
+xs/Group.xsi
 xs/ppport.pl
+xs/subclass/GlWindow.h
 xs/~typemap

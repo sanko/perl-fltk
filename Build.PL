@@ -865,7 +865,7 @@ $mb->notes(
 $mb->notes(use_cairo => 0); # TODO
 $mb->notes(use_x     => 0); # TODO
 $mb->notes(use_glut  => 0); # TODO
-$mb->notes(use_gl    => 0);
+$mb->notes(use_gl    => 1);
 ##################################################################### TODO ###
 $mb->notes(automated_testing => $automated_testing             ? 1 : 0);
 $mb->notes(release_testing   => $is_developer);

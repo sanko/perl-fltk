@@ -1,0 +1,516 @@
+MODULE = FLTK               PACKAGE = FLTK::Group
+
+=pod
+
+=head1 Description
+
+The L<FLTK::Group|FLTK::Group> class is the FLTK container widget. It
+maintains an array of child widgets. These children can themselves be any
+widget including L<FLTK::Group|FLTK::Group>, nesting groups allows much more
+control over layout and resize behavior. Nested groups are also necessary to
+group radio buttons together.
+
+By default L<FLTK::Group|FLTK::Group> preserves the positions and sizes of all
+it's children, they do not move no matter what sizes or other children are
+added or removed.
+
+Setting L<C<resizable()>|/"resizable"> will change the layout behavior so that
+it responds to resizing by moving or resizing the children to fit. See below
+for details.
+
+You may want to use an L<FLTK::Pack|FLTK::Pack> or a
+L<FLTK::Scroll|FLTK::Scroll> to get other common layout behavior that can
+respond to changes in the sizes of child widgets.
+
+The most-used subclass of L<FLTK::Group|FLTK::Group> is
+L<FLTK::Window|FLTK::Window>, all the rules about resizing apply to windows.
+Setting L<C<resizable()>|/"resizable"> on a window will allow the user to
+resize it. If you want different behavior (such as from
+L<FLTK::Pack|FLTK::Pack>) for your window you should make the window have that
+as a single resizable child that fills it.
+
+L<FLTK::Menu|FLTK::Menu> is a subclass and thus all menus and browsers are
+groups and the items in them are widgets.
+
+Inherits L<FLTK::Widget|FLTK::Widget>.
+
+Inherited by L<FLTK::AlignGroup|FLTK::AlignGroup>,
+L<FLTK::BarGroup|FLTK::BarGroup>, L<FLTK::ColorChooser|FLTK::ColorChooser>,
+L<FLTK::HelpView|FLTK::HelpView>, L<FLTK::Menu|FLTK::Menu>,
+L<FLTK::PackedGroup|FLTK::PackedGroup>,
+L<FLTK::ScrollGroup|FLTK::ScrollGroup>,
+L<FLTK::StatusBarGroup|FLTK::StatusBarGroup>,
+L<FLTK::TabGroup|FLTK::TabGroup>, L<FLTK::TextDisplay|FLTK::TextDisplay>,
+L<FLTK::TiledGroup|FLTK::TiledGroup>, L<FLTK::Window|FLTK::Window>, and
+L<FLTK::WizardGroup|FLTK::WizardGroup>.
+
+=cut
+
+#include <fltk/Group.H>
+
+MODULE = FLTK               PACKAGE = FLTK::Group
+
+fltk::Group *
+fltk::Group::new ( X, Y, W, H, LABEL = 0, BEGIN = false )
+    int X
+    int Y
+    int W
+    int H
+    char * LABEL
+    bool BEGIN
+    CODE:
+        RETVAL = new fltk::Group(X, Y, W, H, LABEL, BEGIN);
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Group::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Group (label: %s)", THIS->label() );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc |||add|FLTK::Widget
+
+The widget is removed from it's current group (if any) and then added to the
+end of this group.
+
+References L<C<insert()>|/"insert">.
+
+=cut
+
+void
+fltk::Group::add ( WIDGET )
+    fltk::Widget * WIDGET
+
+=for apidoc |||add_resizable|
+
+NFI
+
+=cut
+
+void
+fltk::Group::add_resizable ( WIDGET )
+    fltk::Widget * WIDGET
+    C_ARGS: (fltk::Widget &) WIDGET
+
+=for apidoc |||begin|
+
+L<C<begin()>|/"begin"> sets the current group so you can build the widget tree
+by just constructing the widgets. L<C<begin()>|/"begin"> is exactly the same
+as L<C<current(this)>|/"current">.
+
+B<Don't forget to L<C<end()>|/"end"> the group or window!>
+
+=cut
+
+void
+fltk::Group::begin ( )
+
+=for apidoc ||FLTK::Widget|child|INDEX
+
+Returns a child, C<INDEX >= 0 && INDEX < L<children()|/"children">>. B<No
+range checking is done!>
+
+Reimplemented in L<FLTK::Menu|FLTK::Menu>.
+
+=cut
+
+fltk::Widget *
+fltk::Group::child ( INDEX )
+    int INDEX
+
+=for apidor ||int|children|
+
+Returns how many child widgets the group has.
+
+Reimplemented in L<FLTK::Menu|FLTK::Menu>.
+
+=cut
+
+int
+fltk::Group::children ( )
+
+=for apidoc |||clear|
+
+I<Deletes> all children from the group and makes it empty. This calls the
+destructor on all the children!!!
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+=cut
+
+void
+fltk::Group::clear ( )
+
+=for apidoc |||draw|
+
+NFI
+
+=cut
+
+void
+fltk::Group::draw ( )
+
+=for apidoc |||end|
+
+L<C<end()>|/"end"> is exactly the same as
+C<L<current($self->L<parent()|/"parent">)|/"current">. Any new widgets added
+to the widget tree will be added to the parent of the group.
+
+=cut
+
+void
+fltk::Group::end( )
+
+=for apidoc |||fint|WIDGET
+
+Searches the children for C<WIDGET>, returns the index of C<WIDGET> or of a
+parent of widget that is a L<C<child()>|/"child"> of this. Returns
+L<C<children()>|/"children"> if the widget is C<NULL> or not found.
+
+References L<C<FLTK::Widget::parent()>|FLTK::Widget/"parent">.
+
+=cut
+
+int
+fltk::Group::find ( WIDGET )
+    const fltk::Widget * WIDGET
+
+=for apidoc |||fix_old_positons|
+
+If this is a L<Group|FLTK::Group> and not a L<Window|FLTK::Window>, subtract
+L<C<x()>|/"x"> and L<C<y()>|/"y"> from the position of all children. This will
+fix the positions of widgets created for fltk1.1 that are inside a group.
+
+=cut
+
+void
+fltk::Group::fix_old_positions()
+
+=for apidoc ||int|focus_index|
+
+The index of the widget that contains the focus. You can initialize this
+before the group is displayed. Changing it while it is displayed does not
+work, use
+C<L<$widget|FLTK::Widget>->L<take_focus()|FLTK::Widget/"take_focus">> instead.
+
+For some subclasses such as L<FLTK::TabGroup|FLTK::TabGroup>, a negative
+number indicates that the group itself has the focus. In most cases any
+illegal value means it will search for any widget that accepts focus.
+
+This is also used by L<FLTK::Menu|FLTK::Menu> to locate the item selected by
+the user. See L<C<FLTK::Menu::get_item()>|FLTK::Menu/"get_item">.
+
+Reimplemented in L<FLTK::Browser|FLTK::Browser/"focus_index">.
+
+=cut
+
+=for apidoc |||focus_index|INDEX
+
+NFI
+
+=cut
+
+int
+fltk::Group::focus_index ( INDEX = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->focus_index( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int INDEX
+        CODE:
+            THIS->focus_index( INDEX );
+
+=for apidoc ||int|handle|EVENT
+
+Calls L<C<send()>|/"send"> on some or all of the children widgets.
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+Reimplemented in L<FLTK::ItemGroup|FLTK::ItemGroup>.
+
+=cut
+
+int
+fltk::Group::handle ( EVENT )
+    int EVENT
+
+=for apidoc |||init_sizes|
+
+Indicate that all the remembered child sizes should be reinitialized.
+
+The group remembers the initial size of itself and all it's children, so that
+the layout can be restored even if the group is resized so that some children
+go to zero or negative sizes.
+
+This can produce unwanted behavior if you try to rearrange the child widgets
+yourself, as the next resize will put them right back where they were
+initially. Call this to make it forget all the saved sizes and reinitialize them during the next layout().
+
+This is automatically done when any child is added or removed.
+
+=cut
+
+void
+fltk::Group::init_sizes ( )
+
+=for apidoc |||insert|WIDGET|INDEX
+
+NFI
+
+=cut
+
+=for apidoc |||insert|WIDGET|WIDGET2
+
+This does L<C<insert(w, L<find(WIDGET2)|/"find">)|/"insert">. This will
+append the widget if C<WIDGET2> is not in the group.
+
+=cut
+
+void
+fltk::Group::insert ( WIDGET, INDEX )
+    CASE: SvIOK( ST(2) )
+        fltk::Widget * WIDGET
+        int            INDEX
+        C_ARGS: ( fltk::Widget & ) WIDGET, INDEX
+    CASE:
+        fltk::Widget * WIDGET
+        fltk::Widget * INDEX
+        C_ARGS: ( fltk::Widget & ) WIDGET, INDEX
+
+=for apidoc |||layout|
+
+NFI
+
+=cut
+
+void
+fltk::Group::layout ( )
+
+=for apidoc |||remove|WIDGET
+
+Removes a widget from the group. This does nothing if the widget is not
+currently a child of this group.
+
+=cut
+
+=for apidoc |||remove|INDEX
+
+Remove the indexed widget from the group.
+
+=cut
+
+void
+fltk::Group::remove ( WHAT )
+    CASE: SvIOK( ST(1) )
+        int WHAT
+    CASE:
+        fltk::Widget * WHAT
+        C_ARGS: ( fltk::Widget & ) WHAT
+
+=for apidoc |||remove_all|
+
+Removes all widgets from the group. This does not call the destructor on the
+child widget (see L<C<clear()>|/"clear">).
+
+=cut
+
+void
+fltk::Group::remove_all( )
+
+=for apidoc |||replace|WIDGET|WIDGET2
+
+Find C<WIDGET>, remove it, and insert C<WIDGET2> it its place. If C<WIDGET> is
+not a child, C<WIDGET2> is appended to the end of the list.
+
+=cut
+
+=for apidoc |||replace|INDEX|WIDGET
+
+Remove the C<INDEX>th widget and insert the passed C<WIDGET> in its place.
+
+=cut
+
+void
+fltk::Group::replace ( WIDGET, WIDGET2 )
+    CASE: SvIOK( ST(1) )
+        int WIDGET
+        fltk::Widget * WIDGET2
+        C_ARGS: WIDGET, ( fltk::Widget & ) WIDGET2
+    CASE:
+        fltk::Widget * WIDGET
+        fltk::Widget * WIDGET2
+        C_ARGS: ( fltk::Widget & ) WIDGET, ( fltk::Widget & ) WIDGET2
+
+=for apidoc |||resizable|WIDGET
+
+The resizable widget defines the resizing box for the group. When the group is
+resized it calculates a new size and position for all of its children. Widgets
+that are horizontally or vertically inside the dimensions of the box are
+scaled to the new size. Widgets outside the box are moved.
+
+I<Please see fltk's docs for pretty pictures...>
+
+The resizable may be set to the group itself, in which case all the contents
+are resized. If the resizable is C<NULL> (the default) then all widgets remain
+a fixed size and distance from the top-left corner.
+
+It is possible to achieve any type of resize behavior by using an
+L<InvisibleBox|FLTK::InvisibleBox> as the resizable and/or by using a
+hierarchy of child L<FLTK::Group|FLTK::Group>'s.
+
+=cut
+
+=for apidoc ||FLTK::Widget|resizable|
+
+NFI
+
+=cut
+
+fltk::Widget *
+fltk::Group::resizable( WIDGET = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->resizable( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        fltk::Widget * WIDGET
+        CODE:
+            THIS->resizable( WIDGET );
+
+=for apidoc |||resize_align|Flags
+
+NFI
+
+=cut
+
+=for apidoc ||Flags|resize_align|
+
+NFI
+
+=cut
+
+fltk::Flags
+fltk::Group::resize_align( FLAGS = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->resize_align( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        fltk::Flags FLAGS
+        CODE:
+            THIS->resize_align( FLAGS );
+
+=for apidoc |||set_focus|WIDGET
+
+NFI
+
+=cut
+
+void
+fltk::Group::set_focus( WIDGET )
+    fltk::Widget * WIDGET
+
+=for apidoc |||swap|INDEXA|INDEXB
+
+void
+fltk::Group::swap( INDEXA, INDEXB )
+    int INDEXA
+    int INDEXB
+
+ # Static Public Member Functions
+
+=for apidoc |||current|GROUP
+
+NFI
+
+=cut
+
+=for apidoc ||FLTK::Group|current|
+
+Returns the group being currently built. The
+L<FLTK::Widget|FLTL::Widget/"new"> constructor automatically does
+C<L<current()|/"current"->L<add(widget)|/"add">> if this is not null. To
+prevent new widgets from being added to a group, call
+L<C<Group::current(0)>|FLTK::Group/"current">.
+
+=cut
+
+fltk::Group *
+fltk::Group::current ( GROUP = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->current( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        fltk::Group * GROUP
+        CODE:
+            THIS->current( GROUP );
+
+=for apidoc ||int|navigation_key|
+
+Turn C<Tab> into C<Right> or C<Left> for keyboard navigation
+
+=cut
+
+int
+fltk::Group::navigation_key ( )
+
+ # Protected Member Functions
+ #
+ # void 	draw_child (Widget &) const
+ # void 	draw_outside_label (Widget &) const
+ # void 	layout (const Rectangle &, int layout_damage)
+ # int * 	sizes ()
+ # void 	update_child (Widget &) const
+ #
+ # Protected Attributes
+ #
+ # int 	initial_h
+ # int 	initial_w
+ #
+ # Friends
+ #
+ # void 	end_group ()
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
+
