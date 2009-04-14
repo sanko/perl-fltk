@@ -147,6 +147,12 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::HighlightBox::ISA       = qw[FLTK::FlatBox];
 @FLTK::HighlightButton::ISA    = qw[FLTK::Button];
 @FLTK::Image::ISA              = qw[FLTK::Symbol];
+@FLTK::ImageType::ISA          = qw[];
+@FLTK::Input::ISA              = qw[FLTK::Widget];
+@FLTK::IntInput::ISA           = qw[FLTK::FloatInput];
+@FLTK::InvisibleBox::ISA       = qw[FLTK::Widget];
+@FLTK::Item::ISA               = qw[FLTK::Widget];
+@FLTK::ItemGroup::ISA          = qw[FLTK::Menu];
 
 #
 #
@@ -165,8 +171,6 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::RadioButton::ISA             = qw[FLTK::CheckButton];
 @FLTK::ComboBox::ISA                = qw[FLTK::Choice];
 @FLTK::LineDial::ISA                = qw[FLTK::Dial];
-@FLTK::HighlightBox::ISA            = qw[FLTK::Symbol];
-@FLTK::IntInput::ISA                = qw[FLTK::FloatInput];
 @FLTK::PlasticBox::ISA              = qw[FLTK::FrameBox];
 @FLTK::RoundBox::ISA                = qw[FLTK::FrameBox];
 @FLTK::AlignGroup::ISA              = qw[FLTK::Group];
@@ -186,6 +190,15 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::SharedImage::ISA             = qw[FLTK::Image];
 @FLTK::xbmImage::ISA                = qw[FLTK::Image];
 @FLTK::xpmImage::ISA                = qw[FLTK::Image];
+@FLTK::FileInput::ISA               = qw[FLTK::Input];
+@FLTK::MultiLineInput::ISA          = qw[FLTK::Input];
+@FLTK::NumericInput::ISA            = qw[FLTK::Input];
+@FLTK::Output::ISA                  = qw[FLTK::Input];
+@FLTK::SecretInput::ISA             = qw[FLTK::Input];
+@FLTK::WordwrapInput::ISA           = qw[FLTK::Input];
+@FLTK::FileItem::ISA                = qw[FLTK::Item];
+@FLTK::RadioItem::ISA               = qw[FLTK::Item];
+@FLTK::ToggleItem::ISA              = qw[FLTK::Item];
 
 =pod
 
@@ -366,5 +379,5 @@ for my $var (qw[help]) {
 # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 #
-# $Id: FLTK.pm 8e70d11 2009-04-13 23:01:53Z sanko@cpan.org $
+# $Id: FLTK.pm 9b2bc67 2009-04-14 02:18:15Z sanko@cpan.org $
 #

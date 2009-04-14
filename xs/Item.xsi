@@ -1,0 +1,222 @@
+MODULE = FLTK               PACKAGE = FLTK::Item
+
+=pod
+
+=head1 Description
+
+This widget is designed to be put into L<FLTK::Menu|FLTK::Menu> and
+L<FLTK::Browser|FLTK::Browser> widgets and draw plain-text items. All events
+are ignored, thus causing the menu and browser to set/clear the C<SELECTED>
+flag on these widgets. If they are selected they draw in the
+L<C<selection_color()>|/"selection_color">, otherwise in the
+L<C<color()>|/"color">.
+
+Inherits L<FLTK::Widget|FLTK::Widget>.
+
+Inherited by L<FileItem|FLTK::FileItem>, L<FLTK::RadioItem|FLTK::RadioItem>,
+and L<FLTK::ToggleItem|FLTK::ToggleItem>.
+
+=cut
+
+#include <fltk/Item.h>
+
+=for apidoc H||FLTK::Item|new|LABEL|SYMBOL|CB = 0|UD = 0|F = 0
+
+This constructor is provided to match the L<C<Menu::add()>|FLTK::Menu/"add">
+function arguments. See L<C<Menu::add()>|FLTK::Menu/"add"> for more details.
+
+...this is on my TODO list
+
+=cut
+
+=for apidoc ||FLTK::Item|new|LABEL|SYMBOL
+
+This constructor also sets the L<image()|/"image">, useful for a browser item.
+
+=cut
+
+=for apidoc ||FLTK::Item|new|LABEL = 0
+
+Unlike other widgets the constructor does not take any dimensions, since it is
+assummed the container widget will size this correctly.
+
+=cut
+
+fltk::Item *
+fltk::Item::new ( LABEL = 0, SYMBOL = NO_INIT, CALLBACK = 0, UD = 0, F = 0 )
+    CASE: items <= 2
+        const char * LABEL
+        CODE:
+            RETVAL = new fltk::Item( LABEL );
+            RETVAL->copy_label( LABEL );
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        const char         * LABEL
+        const fltk::Symbol * SYMBOL
+        CODE:
+            RETVAL = new fltk::Item( LABEL, SYMBOL );
+            RETVAL->copy_label( LABEL );
+        OUTPUT:
+            RETVAL
+ #TODO
+ #     CASE: items > 3
+ #       const char     * LABEL
+ #       int              SYMBOL
+ #       fltk::Callback * CB
+ #       void           * UD
+ #       int              F
+ #       CODE:
+ #           RETVAL = new fltk::Item( LABEL, SYMBOL, CALLBACK, UD, F );
+ #           RETVAL->copy_label( LABEL );
+ #       OUTPUT:
+ #           RETVAL
+
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Item::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Item" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc |||draw|
+
+The C<SELECTED> flag will cause it to draw using the selected colors.
+
+The current version can also draw check or radio buttons but this
+functionality may be removed.
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+=cut
+
+void
+fltk::Item::draw ( )
+
+=for apidoc ||int|handle|EVENT
+
+Returns C<0> always. Items do not accept any events. Any results of clicking
+on them is handled by the parent L<Menu|FLTK::Menu> or
+L<Browser|FLTK::Browser>.
+
+Reimplemented from L<FLTK::Widget>.
+
+=cut
+
+int
+fltk::Item::handle ( EVENT )
+    int EVENT
+
+=for apidoc |||layout|
+
+Measure the space the L<C<draw()>|/"draw"> will take and set L<C<w()>|/"w">
+and L<C<h()>|/"h">. Maybe this should be the default L<C<layout()>|/"layout">
+function for L<Widget|FLTK::Widget>?
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+=cut
+
+void
+fltk::Item::layout ( )
+
+ # Static Public Member Functions
+
+=for apidoc |||clear_style|
+
+NFI
+
+=cut
+
+void
+fltk::Item::clear_style ( )
+
+=for apidoc H|||set_style|WIDGET|BOOL
+
+NFI
+
+=cut
+
+=for apidoc |||set_style|STYLE|MENUBAR
+
+Modify the parent of the L<C<Item::default_style>|FLTK::Item/"default_style">
+to this style. If no style settings have been done to an L<Item|FLTK::Item>,
+it will use the textfont, textsize, textcolor, and possibly other settings
+inherited from this style to draw itself. This is used by menus and browsers
+to cause all the elements inside them to draw using their settings.
+
+The C<MENUBAR> flag causes it to mangle the style so that the buttonbox of
+style is used as the box, and the L<C<highlight_color>|/"highlight_color"> is
+used as the L<C<selection_color>|/"selection_color">. This is done to
+replicate the rather inconsistent appearance on Windows of menubars.
+
+Use L<C<Item::clear_style()>|FLTK::Item/"clear_style"> to put this back so
+that style can be deleted. This is the same as setting it to
+L<C<Widget::default_style>|FLTK::Widget/"default_style">.
+
+=cut
+
+void
+fltk::Item::set_style ( STYLE, MENUBAR )
+    const fltk::Style * STYLE
+    bool                MENUBAR
+
+
+
+
+
+
+
+ # Static Public Attributes
+
+=for apidoc d||FLTK::NamedStyle|default_style|
+
+The default style sets C<FLAT_BOX>. Changing this will mess up the appearance
+of both menus and browsers. All the rest of the style is blank, and normally
+it inherits from the current browser or menu, which should call
+L<C<set_style()>|/"set_style"> before drawing any items.
+
+=cut
+
+fltk::NamedStyle *
+fltk::Item::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

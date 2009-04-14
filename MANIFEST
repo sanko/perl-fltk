@@ -1275,6 +1275,10 @@ xs/HighlightButton.xsi
 xs/Image.xsi
 xs/ImageType.xsi
 xs/Input.xsi
+xs/IntInput.xsi
+xs/InvisibleBox.xsi
+xs/Item.xsi
+xs/ItemGroup.xsi
 xs/ppport.pl
 xs/subclass/GlWindow.h
 xs/~typemap
