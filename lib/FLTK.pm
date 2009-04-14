@@ -142,6 +142,11 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::GlutWindow::ISA         = qw[FLTK::GlWindow];
 @FLTK::GlWindow::ISA           = qw[FLTK::Window];
 @FLTK::Group::ISA              = qw[FLTK::Widget];
+@FLTK::GSave::ISA              = qw[];
+@FLTK::Guard::ISA              = qw[];
+@FLTK::HighlightBox::ISA       = qw[FLTK::FlatBox];
+@FLTK::HighlightButton::ISA    = qw[FLTK::Button];
+@FLTK::Image::ISA              = qw[FLTK::Symbol];
 
 #
 #
@@ -153,7 +158,6 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::FileBrowser::ISA             = qw[FLTK::Browser];
 @FLTK::MultiBrowser::ISA            = qw[FLTK::Browser];
 @FLTK::BButton::ISA                 = qw[FLTK::Button];
-@FLTK::HighlightButton::ISA         = qw[FLTK::Button];
 @FLTK::RepeatButton::ISA            = qw[FLTK::Button];
 @FLTK::ReturnButton::ISA            = qw[FLTK::Button];
 @FLTK::ToggleButton::ISA            = qw[FLTK::Button];
@@ -178,6 +182,10 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::TiledGroup::ISA              = qw[FLTK::Group];
 @FLTK::Window::ISA                  = qw[FLTK::Group];
 @FLTK::WizardGroup::ISA             = qw[FLTK::Group];
+@FLTK::rgbImage::ISA                = qw[FLTK::Image];
+@FLTK::SharedImage::ISA             = qw[FLTK::Image];
+@FLTK::xbmImage::ISA                = qw[FLTK::Image];
+@FLTK::xpmImage::ISA                = qw[FLTK::Image];
 
 =pod
 
@@ -358,5 +366,5 @@ for my $var (qw[help]) {
 # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 #
-# $Id: FLTK.pm 831bfad 2009-04-07 04:37:31Z sanko@cpan.org $
+# $Id: FLTK.pm 8e70d11 2009-04-13 23:01:53Z sanko@cpan.org $
 #

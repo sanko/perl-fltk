@@ -34,6 +34,7 @@ void cb_w (fltk::Widget * WIDGET, void * CODE) {
 #endif
 }
 
+
 /* Alright, let's get things started, shall we? */
 MODULE = FLTK               PACKAGE = FLTK
 
@@ -102,6 +103,8 @@ INCLUDE: gifImage.xsi
 
 INCLUDE: GlutWindow.xsi
 
+INCLUDE: GlWindow.xsi
+
 #ifdef PERL_ENTER
 #undef ENTER
 #define ENTER PERL_ENTER
@@ -114,6 +117,17 @@ INCLUDE: GlutWindow.xsi
 #undef PERL_LEAVE
 #endif /* ifdef PERL_LEAVE */
 
+INCLUDE: Group.xsi
+
+INCLUDE: GSave.xsi
+
+INCLUDE: Guard.xsi
+
+INCLUDE: HighlightBox.xsi
+
+INCLUDE: HighlightButton.xsi
+
+INCLUDE: Image.xsi
 
 =pod
 
@@ -138,6 +152,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id$ for got=
+=for git $Id: FLTK.xs 041f1da 2009-04-12 02:55:35Z sanko@cpan.org $ for got=
 
 =cut

@@ -1,0 +1,81 @@
+MODULE = FLTK               PACKAGE = FLTK::Guard
+
+#if HAVE_PTHREAD || defined(WIN32)
+
+=pod
+
+=head1 Description
+
+C++ convienence object for locking a L<Mutex|FLTK::Mutex>. Creating a local
+one of these will L<C<lock()>|FLTK::Mutex/"lock"> the mutex and it means
+L<C<unlock()>|FLTK::Mutex/"unlock"> will be called no matter how a function
+exits, because the destructor does an L<C<unlock()>|FLTK::Mutex/"unlock">.
+
+  my $mutex = FLTK::Mutex->new( );
+  sub {
+    my $guard = FLTK::Guard->new( $mutex );
+    do_stuff();
+    throw_exceptions();
+    return if test();
+    etc();
+  }->();
+
+B<DO NOT USE THIS YET!>
+
+=cut
+
+#include <fltk/Threads.h>
+
+=for apidoc
+
+Creates a new L<FLTK::Guard|FLTK::Guard> object. Obviously.
+
+=cut
+
+fltk::Guard *
+fltk::Guard::new ( MUTEX )
+    fltk::Mutex * MUTEX
+
+ #if ALLOW_DESTROY // This object's basic functionality _requires_ destruction
+
+bool
+fltk::Guard::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Guard" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+ #endif
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
+
+#endif

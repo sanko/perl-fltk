@@ -1268,6 +1268,11 @@ xs/gifImage.xsi
 xs/GlutWindow.xsi
 xs/GlWindow.xsi
 xs/Group.xsi
+xs/GSave.xsi
+xs/Guard.xsi
+xs/HighlightBox.xsi
+xs/HighlightButton.xsi
+xs/Image.xsi
 xs/ppport.pl
 xs/subclass/GlWindow.h
 xs/~typemap
