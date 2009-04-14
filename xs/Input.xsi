@@ -1,0 +1,872 @@
+MODULE = FLTK               PACKAGE = FLTK::Input
+
+=pod
+
+=head1 Description
+
+This is the FLTK text input widget. It displays a single line of text and lets
+the user edit it. The text may contain any bytes (even C<\0>). The bytes
+C<0..31> are displayed in C<^X> notation, the rest are interpreted as UTF-8
+(see L<C<FLTK::utf8decode()>|FLTK/"utf8decode">).
+
+The default L<C<when()>|/"when"> is L<C<WHEN_RELEASE>|/"WHEN_RELEASED">. This
+is fine for a popup control panel where nothing happens until the panel is
+closed. But for most other uses of the input field you want to change it.
+Useful values are:
+
+=over 8
+
+=item C<FLTK::WHEN_NEVER>
+The callback is not done, but L<C<changed()>|/"changed"> is turned on.
+
+=item C<FLTK::WHEN_CHANGED>
+The callback is done each time the text is changed by the user.
+
+=item C<FLTK::WHEN_ENTER_KEY>
+Hitting the enter key after changing the text will cause the callback.
+
+=item C<FLTK::WHEN_ENTER_KEY_ALWAYS>
+The Enter key will do the callback even if the text has not changed. Useful
+for command fields. Also you need to do this if you want both the enter key
+and either L<C<WHEN_CHANGED>|/"WHEN_CHANGED"> or
+L<C<WHEN_RELEASE>|/"WHEN_RELEASE">, in this case you can tell if Enter was
+typed by testing C<L<FLTK::event_key()|FLTK/"event_key"> == fltkEnterKey>.
+
+=item C<FLTK::WHEN_RELEASE>
+Depreciated. The callback is done if the text has changed and the user clicks
+on another widget or the focus moves (which can happen due to the window this
+widget is on being closed).
+
+=back
+
+If you wish to restrict the text the user can type (such as limiting it to
+numbers, a particular length, etc), you should subclass this and override the
+L<C<replace()>|/"replace"> function with a version that rejects changes you
+don't want to allow.
+
+If you don't like the keybindings you can override L<C<handle()>|/"handle"> to
+change them.
+
+All arguments that are lengths or offsets into the strings are in bytes, not
+the UTF-8 characters they represent.
+
+Inherits L<FLTK::Widget|FLTK::Widget>.
+
+Inherited by L<FLTK::FileInput|FLTK::FileInput>,
+L<FLTK::MultiLineInput|FLTK::MultiLineInput>,
+L<FLTK::NumericInput|FLTK::NumericInput>, L<FLTK::Output|FLTK::Output>,
+L<FLTK::SecretInput|FLTK::SecretInput>, and
+L<FLTK::WordwrapInput|FLTK::WordwrapInput>.
+
+=cut
+
+#include <fltk/Input.h>
+
+=for apidoc ||FLTK::Input|new|X|Y|WIDTH|HEIGHT|LABEL = 0
+
+The constructor initializes:
+
+=over 8
+
+=item label alignment to L<C<ALIGN_LEFT>|/ALIGN_LEFT> (puts label to left)
+
+=item value to C<"">
+
+=back
+
+=cut
+
+fltk::Input *
+fltk::Input::new ( X, Y, WIDTH, HEIGHT, LABEL = 0)
+    int          X
+    int          Y
+    int          WIDTH
+    int          HEIGHT
+    const char * LABEL
+    CODE:
+        RETVAL = new fltk::Input( X, Y, WIDTH, HEIGHT, LABEL );
+        RETVAL->copy_label( LABEL );
+        /* warn("%s|%s", RETVAL->label(), label); */
+    OUTPUT:
+        RETVAL
+
+
+#if ALLOW_DESTROY
+
+bool
+fltk::Input::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Input" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Public Types
+
+=for apidoc e||int|NORMAL|
+
+NFI
+
+=cut
+
+int
+NORMAL ( )
+    CODE:
+        RETVAL = fltk::Input::NORMAL;
+    OUTPUT:
+        RETVAL
+
+=for apidoc e||int|FLOAT_INPUT|
+
+NFI
+
+=cut
+
+int
+FLOAT_INPUT ( )
+    CODE:
+        RETVAL = fltk::Input::FLOAT_INPUT;
+    OUTPUT:
+        RETVAL
+
+=for apidoc e||int|INT_INPUT|
+
+NFI
+
+=cut
+
+int
+INT_INPUT ( )
+    CODE:
+        RETVAL = fltk::Input::INT_INPUT;
+    OUTPUT:
+        RETVAL
+
+=for apidoc e||int|SECRET|
+
+NFI
+
+=cut
+
+int
+SECRET ( )
+    CODE:
+        RETVAL = fltk::Input::SECRET;
+    OUTPUT:
+        RETVAL
+
+=for apidoc e||int|MULTILINE|
+
+NFI
+
+=cut
+
+int
+MULTILINE ( )
+    CODE:
+        RETVAL = fltk::Input::MULTILINE;
+    OUTPUT:
+        RETVAL
+
+=for apidoc e||int|WORDWRAP|
+
+NFI
+
+=cut
+
+int
+WORDWRAP ( )
+    CODE:
+        RETVAL = fltk::Input::WORDWRAP;
+    OUTPUT:
+        RETVAL
+
+ # Public Member Functions
+
+=for apidoc ||char|at|INDEX
+
+Same as C<L<text()|/"text">->[INDEX]>, but may be faster in plausible
+implementations. No bounds checking is done.
+
+=cut
+
+char
+fltk::Input::at ( INDEX )
+    int INDEX
+
+=for apidoc ||bool|copy|CLIPBOARD = true
+
+Put the current selection between L<C<mark()>|/"mark"> and
+L<C<position()>|/"position"> into the selection or clipboard by calling
+L<C<FLTK::copy()>|FLTK/"copy">. If L<C<position()>|/"position"> and
+L<C<mark()>|/"mark"> are equal this does nothing (ie it does not clear the
+clipboard).
+
+If clipboard is C<true> the text is put into the user-visible cut and paste
+clipboard (this is probably what you want). If clipboard is C<false> it is put
+into the less-visible selection buffer that is used to do middle-mouse paste
+and drag and drop.
+
+To paste the clipboard, call L<C<FLTK::paste(true)>|FLTK/"paste"> and fltk
+will send the widget a L<C<FLTK::PASTE>|FLTK/"PASTE"> event with the text,
+which will cause it to be inserted.
+
+=cut
+
+bool
+fltk::Input::copy ( CLIPBOARD = true )
+    bool CLIPBOARD
+
+=for apidoc ||bool|cut|BEGIN|END
+
+Wrapper around L<C<replace()>|/"replace"> this deletes the characters between
+C<BEGIN> and C<END>. The values are clamped to the ends of the string, and
+C<END> can be less than C<BEGIN>.
+
+=cut
+
+=for apidoc ||bool|cut|LENGTH
+
+Wrapper around L<C<replace()>|/"replace"> this deletes up to C<LENGTH>
+characters after the point, or before the point if C<LENGTH> is negative.
+L<LENGTH> is bounds checked.
+
+=cut
+
+=for apidoc ||bool|cut|
+
+Wrapper around L<C<replace()>|/"replace">, this deletes the region between the
+point and the mark. It does nothing if they are equal.
+
+=cut
+
+bool
+fltk::Input::cut ( BEGIN = NO_INIT, END = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->cut( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int BEGIN
+        C_ARGS: BEGIN
+    CASE: items == 3
+        int BEGIN
+        int END
+
+=for apidoc |||draw|RECT
+
+Draw the text, where the passed rectangle is the area the text is to be drawn
+into. This method is provided so a subclass can place the text into a
+subrectangle.
+
+If C<L<damage()|/"damage">&L<FLTK::DAMAGE_ALL>|FLTK/"DAMAGE_ALL"> is C<true>,
+this assummes the area has already been erased to L<C<color()>|/"color">.
+Otherwise it does minimal update and erases the area itself.
+
+=cut
+
+=for apidoc |||draw|
+
+The default version draws the box and calls L<C<draw(x,y,w,h)>|/"draw"> with
+the area inside the box. It also draws any inside labels at the left of the
+text.
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+=cut
+
+void
+fltk::Input::draw ( RECT = NO_INIT )
+    CASE: items == 2
+        const fltk::Rectangle * RECT
+        C_ARGS: ( const fltk::Rectangle & ) RECT
+    CASE:
+        CODE:
+            THIS->draw( );
+
+=for apidoc ||int|handle|EVENT|RECT
+
+Default handler for all event types, where the passed rectangle is the area
+the text is to be drawn into. This method is provided so a subclass can place
+the text into a subrectangle.
+
+=over 8
+
+=item Handles C<FOCUS>, C<UNFOCUS>
+
+=item May do callback on C<HIDE>
+
+=item Any keystrokes call L<C<handle_key()>|/"handle_key">
+
+=item Handles C<PUSH>, C<DRAG>, C<RELEASE> to select regions of text, move the
+cursor, and start drag & drop. Double click selects words, triple click
+selects lines (triple click is broken on Windows).
+
+=item Receives drag&drop and accepts.
+
+=item Handles C<PASTE> events caused by accepting the drag&drop or by calling
+L<C<FLTK::paste()>|FLTK/"paste"> (which L<C<handle_key()>|/"handle_key"> does
+for C<^V>).
+
+=cut
+
+=for apidoc ||int|handle|EVENT
+
+Calls L<C<handle(x,y,w,h)>|/"handle"> with the area inside the
+L<C<box()>|/"box">.
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+Reimplemented in L<FLTK::NumericInput|FLTK::NumericInput>.
+
+=cut
+
+int
+fltk::Input::handle ( EVENT, RECT = NO_INIT)
+    CASE: items == 2
+        int EVENT
+        C_ARGS: EVENT
+    CASE:
+        int                     EVENT
+        const fltk::Rectangle * RECT
+        C_ARGS: EVENT, ( const fltk::Rectangle & ) RECT
+
+=for apidoc ||bool|handle_key|
+
+Handle C<KEY> events. The L<C<handle()>|/"handle"> method calls this. This
+provides an Emacs and Windows style of editing. Most Emacs commands are first
+run through L<C<FLTK::try_shortcut()>|FLTK/"try_shortcut"> to test if they are
+menu items for the program.
+
+=over 8
+
+=item Shift: do not move the mark when moving the point
+
+=item LeftKey, Ctrl+B: move left one character
+
+=item Ctrl+LeftKey, Alt+B: move left one word
+
+=item RightKey, Ctrl+F: move right one character
+
+=item Ctrl+RightKey, Alt+F: move right one word
+
+=item Ctrl+A: go to start of line, if already there select all text
+
+=item HomeKey: go to start of line
+
+=item EndKey, Ctrl+E: go to end of line
+
+=item Ctrl+Insert: copy
+
+=item Shift+Insert: paste
+
+=item Shift+Delete: cut
+
+=item Delete, Ctrl+D: delete region or one character
+
+=item Ctrl+Delete, Alt+D: delete region or one word
+
+=item BackSpace, Ctrl+H: delete region or left one character
+
+=item Ctrl+BackSpace, Alt+H: delete region or left one word
+
+=item Return, KeypadEnter: if C<when()&WHEN_ENTER_KEY>, and no shift keys held
+down, this selects all and does the callback. Otherwise key is ignored.
+
+=item Ctrl+K: cuts from the position to the end of line
+
+=item Ctrl+C: copy
+
+=item Ctrl+T: swap the two characters around point. If point is at end swap
+the last two characters.
+
+=item Ctrl+U: delete all the text
+
+=item Ctrl+V: paste
+
+=item Ctrl+X, Ctrl+W: cut
+
+=item Ctrl+Y: redo
+
+=item Ctrl+Z, Ctrl+/: undo
+
+=item All printing characters are run through
+L<C<FLTK::compose()>|FLTK/"compose"> and the result used to insert text.
+
+=back
+
+For the (obsolete) MULTILINE mode you can also do these:
+
+=over 8
+
+=item UpKey, Ctrl+P: move up one line (C<MULTILINE> only)
+
+=item DownKey, Ctrl+N: move down one line (C<MULTILINE> only)
+
+=item PageUpKey: move up 1 line less than the vertical widget size
+
+=item PageDownKey: move down 1 line less than the vertical widget size
+
+=item Ctrl+HomeKey, Alt+A: got to start of text
+
+=item Ctrl+EndKey, Alt+E: go to end of text
+
+=item Return, KeypadEnter: inserts a newline
+
+=item Ctrl+O: insert a newline and leave the cursor before it.
+
+=back
+
+=cut
+
+bool
+fltk::Input::handle_key ( )
+
+=for apidoc ||bool|insert|TEXT|LENGTH
+
+Wrapper around L<C<replace()>|/"replace">. This inserts C<LENGTH> characters
+from the text (including C<\0> characters!) at the point and leaves the point
+after it.
+
+=cut
+
+=for apidoc ||bool|insert|TEXT
+
+Wrapper around L<C<replace()>|/"replace">. This inserts the string at the
+point and leaves the point after it.
+
+=cut
+
+bool
+fltk::Input::insert ( TEXT, LENGTH = NO_INIT )
+    CASE: items == 3
+        const char * TEXT
+        int          LENGTH
+    CASE: items == 2
+        const char * TEXT
+        C_ARGS: TEXT
+
+=for apidoc ||int|line_end|INDEX
+
+Returns the location of the next newline or wordwrap space at or after
+position.
+
+=cut
+
+int
+fltk::Input::line_end ( INDEX )
+    int INDEX
+
+=for apidoc ||int|line_start|INDEX
+
+Returns the location of the start of the line containing the position.
+
+=cut
+
+int
+fltk::Input::line_start ( INDEX )
+    int INDEX
+
+=for apidoc |||mark|POSITION
+
+Same as L<C<positon(position(), POSITION)>|/"position">.
+
+=cut
+
+=for apidoc |||mark|
+
+NFI
+
+=cut
+
+void
+fltk::Input::mark ( POSITION = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->mark( );
+    CASE:
+        int POSITION
+
+#if 0 // No idea what's wrong with this...
+
+=for apidoc H|||maybe_do_callback|
+
+NFI
+
+=cut
+
+void
+fltk::Input::maybe_do_callback ( )
+
+#endif
+
+=for apidoc ||int|mouse_position|RECT
+
+Figure out what character the most recent mouse event would be pointing at,
+assumming you drew the text by calling L<C<draw()>|/"draw"> with the same
+rectangle. Returns C<0> if the mouse is before the first character, and
+L<C<size()>|/"size"> if it is after the last one.
+
+=cut
+
+int
+fltk::Input::mouse_position ( RECT )
+    const fltk::Rectangle * RECT
+    C_ARGS: ( const fltk::Rectangle & ) RECT
+
+=for apidoc |||position|NEW_POSITION
+
+Same as L<C<position( NEW_POSITION, NEW_POSITION )>/"position">.
+
+=cut
+
+=for apidoc |||position|NEW_POSITION|NEW_MARK
+
+The input widget maintains two pointers into the string. The "position" is
+where the cursor is. The "mark" is the other end of the selected text. If they
+are equal then there is no selection. Changing this does not affect the X
+selection, call L<C<copy()>|/"copy"> if you want that.
+
+Changing these values causes a L<C<redraw()>|/"redraw">. The new values are
+bounds checked and limited to the size of the string.
+
+It is up to the caller to make sure the position and mark are at the borders
+of UTF-8 characters!
+
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
+
+=cut
+
+=for apidoc |||position|
+
+NFI
+
+=cut
+
+void
+fltk::Input::position ( NEW_POSITION = NO_INIT , NEW_MARK = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->position( );
+    CASE: items == 2
+        int NEW_POSITION
+        C_ARGS: NEW_POSITION
+    CASE:
+        int NEW_POSITION
+        int NEW_MARK
+
+=for apidoc ||bool|replace|START|END|TEXT
+
+Wrapper around L<C<replace()>|/"replace">. Deletes the characters between
+C<START> and C<END> and then inserts the single byte C<TEXT>.
+
+=cut
+
+=for apidoc ||bool|replace|START|END|TEXT|LENGTH
+
+This call does all editing of the text. It deletes the region between C<START>
+and C<END> (either one may be less or equal to the other), and then inserts
+C<LENGTH> (which may be zero) characters from the string C<TEXT> at that point
+and leaves the L<C<mark()>|/"mark"> and L<C<position()>|/"position"> after the
+insertion. If the text is changed the callback is done if the
+L<C<when()>|/"when"> flags indicate it should be done.
+
+Subclasses of L<Input|FLTK::Input> can override this method to control what
+characters can be inserted into the text. A typical implementation will check
+the characters in the insertion for legality and then call
+L<C<Input::replace()>|FLTK::Input/"replace"> only if they are all ok.
+
+C<START> and C<END> are bounds checked so don't worry about sending values
+outside the length of the string.
+
+Subclasses should return C<true> if the keystroke that produced this call
+should be "eaten". If C<false> is returned the keystroke is allowed to be
+tested as a shortcut for other widgets. In our experience it is best to return
+C<true> even if you don't make changes. The base class version returns C<true>
+always.
+
+=cut
+
+bool
+fltk::Input::replace ( START, END, TEXT, LENGTH = NO_INIT )
+    CASE: items == 4
+        int  START
+        int  END
+        char TEXT
+        C_ARGS: START, END, TEXT
+    CASE:
+        int          START
+        int          END
+        const char * TEXT
+        int          LENGTH
+        C_ARGS: START, END, TEXT, LENGTH
+
+=for apidoc |||reserve|LENGTH
+
+Reserve the interal private buffer of at least C<LENGTH> bytes, even if the
+current L<C<text()>|/"text"> is not that long. Can be used to avoid
+unnecessary memory reallocations if you know you will be replacing the
+L<C<text()>|/"text"> with a longer one later.
+
+=cut
+
+void
+fltk::Input::reserve ( LENGTH )
+    int LENGTH
+
+=for apidoc ||int|size|
+
+Returns the number of characters in L<C<text()>|/"text">. This may be greater
+than C<strlen(L<text()|/"text">)> if there are C<NUL> characters in it.
+
+=cut
+
+int
+fltk::Input::size ( )
+
+=for apidoc ||bool|static_text|STRING|LENGTH
+
+Same as L<C<text(STRING, LENGTH)>|/"text">, except it does not copy the
+string, instead it makes LC<Ctext()>|/"text"> return a pointer to str (unless
+len is C<0>, in which case it makes it point to a zero-length string).
+
+C<STRING> must point to static memory that will not be altered until at least
+the L<Input|FLTK::Input> widget is destroyed or the L<C<text()>|/"text"> is
+changed again. If the user attempts to edit the string it is then copied to
+the internal buffer and the editing done there. This can save a lot of time
+and memory if your program is changing the string to various constants a lot
+but the user rarely edits it.
+
+=cut
+
+=for apidoc ||bool|static_text|STRING
+
+Same as L<C<static_text(str, str ? strlen(str) : 0 )>|/"static_text">.
+
+=cut
+
+bool
+fltk::Input::static_text ( STRING, LENGTH = NO_INIT )
+    CASE: items == 2
+        const char * STRING
+        C_ARGS: STRING
+    CASE:
+        const char * STRING
+        int          LENGTH
+        C_ARGS: STRING, LENGTH
+
+=for apidoc ||const char *|text|
+
+The current string, as edited by the user. There is an extra C<NUL> character
+at the end, so this returned pointer can be used directly by C functions.
+L<C<size()>|/"size"> returns how many bytes are in the string, which is useful
+if you want to look at embedded C<NUL> characters.
+
+Pointer is to an internal buffer and is only value until the next event is
+handled by the L<Input|FLTK::Input> widget.
+
+=cut
+
+=for apidoc ||bool|text|STRING|LENGTH
+
+Change the L<C<text()>|/"text"> to return the first C<LENGTH> bytes of
+C<STRING> and L<C<size()>|/"size"> to return C<LENGTH>, and set the
+L<C<position()>|/"position"> to len and the L<C<mark()>|/"mark"> to zero (thus
+highlighting the entire value).
+
+Returns C<true> if the bytes in the new string are different than the old
+string.
+
+=cut
+
+=for apidoc ||bool|text|STRING
+
+Same as L<C<text(str, str ? strlen(str) : 0)>|/"text">.
+
+=cut
+
+const char *
+fltk::Input::text ( STRING = NO_INIT, LENGTH = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->text( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        const char * STRING
+        CODE:
+            RETVAL = ( const char * ) THIS->text( STRING );
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        const char * STRING
+        int          LENGTH
+        CODE:
+            RETVAL = ( const char * ) THIS->text( STRING, LENGTH );
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||bool|undo|
+
+If this is the most recent widget on which L<C<replace()>|/"replace"> was done
+on, this will undo that L<C<replace()>|/"replace"> and probably several others
+(ie if the user has typed a lot of text it will undo all of it even though
+that was probably many calls to L<C<replace()>|/"replace">). Returns C<true>
+if any change was made.
+
+=cut
+
+bool
+fltk::Input::undo ( )
+
+=for apidoc |||up_down_position|INDEX|KEEPMARK
+
+Do the correct thing for arrow keys. <INDEX> must be the location of the start
+of a line. Sets the position (and mark if C<KEEPMARK> is C<false>) to
+somewhere after C<INDEX>, such that pressing the arrows repeatedly will cause
+the point to move up and down.
+
+=cut
+
+void
+fltk::Input::up_down_position ( INDEX, KEEPMARK )
+    int  INDEX
+    bool KEEPMARK
+
+
+=for apidoc ||const char *|value|
+
+The current string, as edited by the user. There is an extra C<NUL> character
+at the end, so this returned pointer can be used directly by C functions.
+L<C<size()>|/"size"> returns how many bytes are in the string, which is useful
+if you want to look at embedded C<NUL> characters.
+
+Pointer is to an internal buffer and is only value until the next event is
+handled by the L<Input|FLTK::Input> widget.
+
+=cut
+
+=for apidoc ||bool|value|STRING|LENGTH
+
+Change the L<C<text()>|/"text"> to return the first C<LENGTH> bytes of
+C<STRING> and L<C<size()>|/"size"> to return C<LENGTH>, and set the
+L<C<position()>|/"position"> to len and the L<C<mark()>|/"mark"> to zero (thus
+highlighting the entire value).
+
+Returns C<true> if the bytes in the new string are different than the old
+string.
+
+=cut
+
+=for apidoc ||bool|value|STRING
+
+Same as L<C<text(str, str ? strlen(str) : 0)>|/"text">.
+
+=cut
+
+const char *
+fltk::Input::value ( STRING = NO_INIT, LENGTH = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->value( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        const char * STRING
+        CODE:
+            RETVAL = ( const char * ) THIS->value( STRING );
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        const char * STRING
+        int          LENGTH
+        CODE:
+            RETVAL = ( const char * ) THIS->value( STRING, LENGTH );
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||int|word_end|INDEX
+
+Returns the location of the next word boundary at or after position.
+
+=cut
+
+int
+fltk::Input::word_end ( INDEX )
+    int INDEX
+
+=for apidoc ||int|word_start|INDEX
+
+Returns the location of the first word boundary at or before position.
+
+=cut
+
+int
+fltk::Input::word_start ( INDEX )
+    int INDEX
+
+=for apidoc ||int|xscroll|
+
+NFI
+
+=cut
+
+int
+fltk::Input::xscroll ( )
+
+=for apidoc ||int|yscroll|
+
+NFI
+
+=cut
+
+int
+fltk::Input::yscroll ( )
+
+ # Static Public Attributes
+
+=for apidoc d||FLTK::NamedStyle|default_style|
+
+TODO
+
+=cut
+
+fltk::NamedStyle *
+fltk::Adjuster::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

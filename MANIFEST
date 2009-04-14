@@ -1273,6 +1273,8 @@ xs/Guard.xsi
 xs/HighlightBox.xsi
 xs/HighlightButton.xsi
 xs/Image.xsi
+xs/ImageType.xsi
+xs/Input.xsi
 xs/ppport.pl
 xs/subclass/GlWindow.h
 xs/~typemap

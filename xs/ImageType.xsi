@@ -1,0 +1,92 @@
+MODULE = FLTK               PACKAGE = FLTK::ImageType
+
+=pod
+
+=head1 Description
+
+Description of an L<Image|FLTK::Image> file format.
+
+=cut
+
+#include <fltk/SharedImage.h>
+
+ # Construtor is protected on purpose, use the get function instead.
+
+#if ALLOW_DESTROY
+
+bool
+fltk::ImageType::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, ImageType" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Public Attributes
+
+=for apidoc H||FLTK::SharedImage|get|NAME|DATAS
+
+NFI
+
+=cut
+
+fltk::SharedImage *
+fltk::ImageType::get ( NAME, DATAS )
+    const  char * NAME
+    const uchar * DATAS
+
+=for apidoc H||const char *|name|
+
+Used to indentify the image, and as filename.
+
+=cut
+
+const char *
+fltk::ImageType::name ( )
+    CODE:
+        RETVAL = THIS->name;
+    OUTPUT:
+        RETVAL
+
+=for apioc H||bool|test|DATAS|SIZE
+
+Function to test the filetype.
+
+=cut
+
+bool
+fltk::ImageType::test ( DATAS, SIZE )
+    const uchar * DATAS
+    unsigned      SIZE
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
