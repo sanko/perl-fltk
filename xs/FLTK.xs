@@ -129,6 +129,24 @@ INCLUDE: HighlightButton.xsi
 
 INCLUDE: Image.xsi
 
+INCLUDE: ImageType.xsi
+
+INCLUDE: Input.xsi
+
+INCLUDE: IntInput.xsi
+
+INCLUDE: InvisibleBox.xsi
+
+INCLUDE: Item.xsi
+
+INCLUDE: ItemGroup.xsi
+
+INCLUDE: LightButton.xsi
+
+INCLUDE: LineDial.xsi
+
+INCLUDE: List.xsi
+
 =pod
 
 =head1 Author
@@ -152,6 +170,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: FLTK.xs 041f1da 2009-04-12 02:55:35Z sanko@cpan.org $ for got=
+=for git $Id: FLTK.xs 9b2bc67 2009-04-14 02:18:15Z sanko@cpan.org $ for got=
 
 =cut

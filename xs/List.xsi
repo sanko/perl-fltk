@@ -1,0 +1,226 @@
+MODULE = FLTK               PACKAGE = FLTK::List
+
+=pod
+
+=head1 Description
+
+Allows a L<Browser|FLTK::Browser> or L<Choice|FLTK::Choice> or other subclass
+of L<Menu|FLTK::Menu> to display a hierarchy of data that is managed by the
+application rather than FLTK.
+
+This is done by making a subclass of List which creats a "dummy" widget,
+typically a subclass of L<Item|FLTK::Item>, that describes a particular item
+that the browser or menu should display. Only one item is examined at any time
+and thus the dummy widget can be reused, so there is very little space
+overhead.
+
+This is designed for data formats where finding the Nth child of a parent is a
+very quick operation, ie an array. If your data is a list you can search it,
+the performance is probably acceptable for small lists with less than a
+hundred or so items. For a bidirectional list it may be useful to cache the
+last request and do a relative search, a Browser and Menu will usually ask for
+adjoining items.
+
+If you wish to use a L<MultiBrowser|FLTK::MultiBrowser> you must also have
+space in your data to store the state of the
+L<C<FLTK::SELECTED>|FLTK/"SELECTED"> flag on each item, and and must implement
+the L<C<flags_changed()>|/"flags_changed"> method.
+
+If you wish to make a hierarcial L<Browser|FLTK::Browser>, you may want to
+have space in your data to store the state of the L<FLTK::STATE|FLTK/"STATE">
+flag on each parent item, and implement the
+L<C<flags_changed()>|/"flags_changed"> method. If you don't do this the
+browser is only able to keep one item open at each level.
+
+The base L<List|FLTK::List> class returns the child widgets from the
+L<Menu|FLTK::Menu> that owns it. All Menus share a single instance of this by
+default, so the default behavior is that child widgets appear as items in the
+menu or browser. Subclasses of L<List|FLTK::List> may want to call the base
+class to allow normal widgets to be prepended to whatever they return.
+
+Inherited by L<FLTK::StringHierarchy|FLTK::StringHierarchy>, and
+L<FLTK::Share_List|FLTK::Share_List>.
+
+=cut
+
+#include <fltk/Menu.h>
+
+#if ALLOW_DESTROY
+
+bool
+fltk::List::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, List" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc ||FLTK::Widget|child|MENU|INDEXES|LEVEL
+
+Return a given child as a widget. L<C<draw()>|/"draw"> and
+L<C<measure()>|/"measure"> will be called on this widget to figure out where
+to place it and to draw it. Typical implementations create a reusable
+L<FLTK::Item|FLTK::Item> and fill it in with the correct data. This should
+return C<NULL> if there is anything illegal about the indexes.
+
+Here is a sample implementation, where C<Node> is a data type that you have
+defined. This demonstrates how to create the dummy widget:
+
+  package My_List;
+
+  # ...
+
+  sub child  {
+    my ($self, $menu, $indexes, $level) = @_;
+    my $node = $self->root;
+    for my $l ( 0 ... $level ) {
+        return 0 if ! $node->is_parent();
+        return 0 if  $indexes->[$l] >= $node->children_count();
+        $node = $node->child($indexes->[$l]);
+    }
+
+    my $widget = FLTK::Widget->new();
+    if ( ! $widget ) {
+        FLTK::Group::current( 0 );
+        $widget = FLTK::Item->new();
+    }
+
+    $widget->label($node->text());
+    $widget->w(0); # cause measure() to be called
+    $widget->user_data(node);
+    if ($node->selected) { $widget->set_flag(FLTK::SELECTED) }
+    else { $widget->clear_flag(FLTK::SELECTED) }
+    if ($node->is_parent() && $node->open) { $widget->set_flag(FLTK::STATE) }
+    else { $widget->clear_flag(fltk::STATE) }
+    return $widget;
+  }
+
+B<Code has not been tested. It's just a quick C++ to perl translation.>
+
+=cut
+
+fltk::Widget *
+fltk::List::child ( MENU, INDEXES, LEVEL )
+    const fltk::Menu * MENU
+    AV * INDEXES
+    int LEVEL
+    CODE:
+        int * REAL_INDEXES;
+        for ( int i = 0; i < av_len(INDEXES); i++ )
+            REAL_INDEXES[i] = (int)(av_fetch(INDEXES, i, 0));
+        RETVAL = THIS->child( MENU, ( const int * ) REAL_INDEXES, LEVEL );
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||int|children|MENU|INDEXES|LEVEL
+
+Return how many children are under a given item. If level is zero, this should
+return how many items are at the top level. Otherwise indexes is an array of
+level numbers indicating the index of an item at the top level, the index of
+the an item that is the child of that, and so on.
+
+This should return C<-1> if the item is not a "parent" item or the index array
+is illegal. It is not necessary to return the correct value until the parent
+is "open", which means the L<C<FLTK::STATE>|FLTK/"STATE"> flag was set in it,
+so if it is expensive to calculate the number you can return 1 for any closed
+parent.
+
+Here is a sample implementation, where C<Node> is a data type that you have
+defined:
+
+  package My_List;
+
+  # ...
+
+  sub children {
+    my ($self, $menu, $indexes, $level) = @_;
+    my $node = $self->root;
+
+    for my $l ( 0 .. level ) {
+        return -1 if $indexes->[$l] >= $node->children_count();
+        $node = $node->child($indexes->[$l]);
+        return -1 if ! $node->is_parent();
+    }
+    return $node->children_count();
+  }
+
+B<Code has not been tested. It's just a quick C++ to perl translation.>
+
+=cut
+
+int
+fltk::List::children ( MENU, INDEXES, LEVEL )
+    const fltk::Menu * MENU
+    AV * INDEXES
+    int LEVEL
+    CODE:
+        int * REAL_INDEXES;
+        for ( int i = 0; i < av_len(INDEXES); i++ )
+            REAL_INDEXES[i] = (int)(av_fetch(INDEXES, i, 0));
+        RETVAL = THIS->children( MENU, ( const int * ) REAL_INDEXES, LEVEL );
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||flags_changed|MENU|WIDGET
+
+This is called if the browser changes any flags on a widget, so that you can
+copy the values to permanent storage, and perhaps change other displays of the
+selection.
+
+Currently only the L<C<FLTK::OPENED>|FLTK/"OPENED"> and
+L<C<FLTK::SELECTED>|FLTK/"SELECTED"> flags are ever changed.
+
+Here is a sample implementation, where Node is a data type that you have
+defined:
+
+  package My_List;
+
+  # ...
+
+  sub flags_changed {
+    my ($self, $menu, $widget) = @_;
+    my $node = $widget->user_data();
+    $node->open = $widget->flag(FLTK::OPENED);
+    $node->selected = $widget->flag(FLTK::SELECTED);
+  }
+
+B<Code has not been tested. It's just a quick C++ to perl translation.>
+
+=cut
+
+void
+fltk::List::flags_changed ( MENU, WIDGET )
+    fltk::Menu   * MENU
+    fltk::Widget * WIDGET
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
