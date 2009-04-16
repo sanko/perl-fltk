@@ -811,163 +811,43 @@ fltk::Menu::value ( VALUE = NO_INIT )
         int VALUE
         C_ARGS: VALUE
 
+ #  Static Public Member Functions
 
+=for apidoc |||default_callback|WIDGET|CODEREF
 
+The default callback for L<Menu|FLTK::Menu> calls
+C<L<item()|/"item">-E<gt>L<do_callback()|FLTK::Widget/"do_callback">> but if
+L<C<user_data()>|FLTK::Widget/"user_data"> is not null it is used instead of
+the item's L<C<user_data()>|FLTK::Item/"user_data">.
 
+Reimplemented from L<FLTK::Widget|FLTK::Widget>.
 
+=cut
 
+void
+fltk::Menu::default_callback ( WIDGET, CODEREF )
+    fltk::Widget * WIDGET
+    void * CODEREF
+    CODE:
+        AV * arr;
+        av_store(arr, 0, newSVsv((SV*)ST(3))); // coderef
+        WIDGET->user_data( arr );
+        THIS->default_callback( WIDGET, cb_w );
 
+ # Static Public Attributes
 
+=for apidoc d||FLTK::NamedStyle|default_style|
 
+TODO
 
+=cut
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fltk::NamedStyle *
+fltk::Menu::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
 
 =pod
 
