@@ -153,6 +153,8 @@ INCLUDE: MenuBar.xsi
 
 INCLUDE: MenuSection.xsi
 
+INCLUDE: MenuWindow.xsi
+
 =pod
 
 =head1 Author

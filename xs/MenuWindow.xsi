@@ -1,0 +1,180 @@
+MODULE = FLTK               PACKAGE = FLTK::MenuWindow
+
+=pod
+
+=head1 Description
+
+This is the window type used by L<Menu|FLTK::Menu> to make the pop-ups, and
+for tooltip popups. It will send special information to the window server to
+indicate that the windows are temporary, won't move, and should not have any
+decorations.
+
+On X this turns on override_redirect and save-under and thus avoids the window
+manager.
+
+Inherits L<FLTK::Window|FLTK::Window>.
+
+Inherited by L<ColorMenu|FLTK::ColorMenu>,
+L<FLTK::ComboWindow|FLTK::ComboWindow>, L<FLTK::Tooltip|FLTK::Tooltip>,
+L<MenuTitle|FLTK::MenuTitle>, and L<MWindow|FLTK::MWindow>.
+
+=cut
+
+#include <fltk/MenuWindow.h>
+
+=for apidoc H||FLTK::MenuWindow|new|X|Y|W|H|LABEL = 0
+
+Creates a new object.
+
+=cut
+
+=for apidoc H||FLTK::MenuWindow|new|W|H|LABEL = 0
+
+Creates a new object
+
+=cut
+
+fltk::MenuWindow *
+fltk::MenuWindow::new ( X, Y, W = 0, H = 0, LABEL = 0 )
+    CASE: items >= 4
+        int          X
+        int          Y
+        int          W
+        int          H
+        const char * LABEL
+        CODE:
+            RETVAL = new fltk::MenuWindow( X, Y, W, H, LABEL );
+            RETVAL->copy_label( LABEL );
+        OUTPUT:
+            RETVAL
+    CASE:
+        int          X
+        int          Y
+        const char * W
+        CODE:
+            RETVAL = new fltk::MenuWindow( X, Y, W );
+            RETVAL->copy_label( W );
+        OUTPUT:
+            RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::MenuWindow::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, MenuWindow" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+ # Public Member Functions
+
+=for apidoc |||clear_overlay|
+
+Tells FLTK to not try to use the overlay hardware planes. This is disabled
+except on Irix. On Irix you will have to call this if you want to draw colored
+images in the popup.
+
+=cut
+
+void
+fltk::MenuWindow::clear_overlay ( )
+
+=for apidoc |||create|
+
+NFI
+
+=cut
+
+void
+fltk::MenuWindow::create ( )
+
+=for apidoc |||destroy|
+
+NFI
+
+=cut
+
+void
+fltk::MenuWindow::destroy ( )
+
+=for apidoc |||flush|
+
+NFI
+
+=cut
+
+void
+fltk::MenuWindow::flush ( )
+
+=for apidoc ||int|overlay|
+
+NFI
+
+=cut
+
+int
+fltk::MenuWindow::overlay ( )
+
+=for apidoc |||set_overlay|
+
+Undoes L<C<clear_overlay()>|/"clear_overlay">.
+
+=cut
+
+void
+fltk::MenuWindow::set_overlay ( )
+
+
+
+ # Static Public Attributes
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+The default style sets L<C<box()>|/"box"> to C<UP_BOX>. This box is used
+around all popup menus.
+
+Reimplemented from L<FLTK::Window|FLTK::Window>.
+
+Reimplemented in L<FLTK::Tooltip|FLTK::Tooltip>.
+
+=cut
+
+fltk::NamedStyle *
+fltk::MenuBar::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

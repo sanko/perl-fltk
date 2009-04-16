@@ -158,6 +158,7 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::Menu::ISA               = qw[FLTK::Group];
 @FLTK::MenuBar::ISA            = qw[FLTK::Menu];
 @FLTK::MenuSection::ISA        = qw[];
+@FLTK::MenuWindow::ISA         = qw[FLTK::Window];
 
 #
 #
@@ -208,6 +209,11 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::Share_List::ISA              = qw[FLTK::List];
 @FLTK::InputBrowser::ISA            = qw[FLTK::Menu];
 @FLTK::PopupMenu::ISA               = qw[FLTK::Menu];
+@FLTK::ColorMenu::ISA               = qw[FLTK::MenuWindow];
+@FLTK::ComboWindow::ISA             = qw[FLTK::MenuWindow];
+@FLTK::Tooltip::ISA                 = qw[FLTK::MenuWindow];
+@FLTK::MenuTitle::ISA               = qw[FLTK::MenuWindow];
+@FLTK::MWindow::ISA                 = qw[FLTK::MenuWindow];
 
 =pod
 
