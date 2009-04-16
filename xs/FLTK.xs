@@ -147,6 +147,8 @@ INCLUDE: LineDial.xsi
 
 INCLUDE: List.xsi
 
+INCLUDE: Menu.xsi
+
 =pod
 
 =head1 Author
