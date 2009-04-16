@@ -1282,6 +1282,7 @@ xs/ItemGroup.xsi
 xs/LightButton.xsi
 xs/LineDial.xsi
 xs/List.xsi
+xs/Menu.xsi
 xs/ppport.pl
 xs/subclass/GlWindow.h
 xs/~typemap

@@ -155,6 +155,7 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::ItemGroup::ISA          = qw[FLTK::Menu];
 @FLTK::LightButton::ISA        = qw[FLTK::CheckButton];
 @FLTK::LineDial::ISA           = qw[FLTK::Dial];
+@FLTK::Menu::ISA               = qw[FLTK::Group];
 
 #
 #
@@ -202,8 +203,12 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::RadioItem::ISA               = qw[FLTK::Item];
 @FLTK::ToggleItem::ISA              = qw[FLTK::Item];
 @FLTK::RadioLightButton::ISA        = qw[FLTK::LightButton];
-@FLTK::StringHierarchy::ISA = qw[FLTK::List];
-@FLTK::Share_List::ISA = qw[FLTK::List];
+@FLTK::StringHierarchy::ISA         = qw[FLTK::List];
+@FLTK::Share_List::ISA              = qw[FLTK::List];
+@FLTK::InputBrowser::ISA            = qw[FLTK::Menu];
+@FLTK::MenuBar::ISA                 = qw[FLTK::Menu];
+@FLTK::PopupMenu::ISA               = qw[FLTK::Menu];
+
 =pod
 
 

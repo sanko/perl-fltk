@@ -48,8 +48,6 @@ L<FLTK::WizardGroup|FLTK::WizardGroup>.
 
 #include <fltk/Group.H>
 
-MODULE = FLTK               PACKAGE = FLTK::Group
-
 fltk::Group *
 fltk::Group::new ( X, Y, W, H, LABEL = 0, BEGIN = false )
     int X
@@ -426,6 +424,10 @@ fltk::Group::set_focus( WIDGET )
 
 =for apidoc |||swap|INDEXA|INDEXB
 
+NFI
+
+=cut
+
 void
 fltk::Group::swap( INDEXA, INDEXB )
     int INDEXA
@@ -510,7 +512,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id$
+=for git $Id: Group.xsi 8e70d11 2009-04-13 23:01:53Z sanko@cpan.org $
 
 =cut
-
