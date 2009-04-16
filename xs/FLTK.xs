@@ -149,6 +149,8 @@ INCLUDE: List.xsi
 
 INCLUDE: Menu.xsi
 
+INCLUDE: MenuBar.xsi
+
 =pod
 
 =head1 Author

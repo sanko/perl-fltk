@@ -832,7 +832,7 @@ fltk::Menu::default_callback ( WIDGET, CODEREF )
         AV * arr;
         av_store(arr, 0, newSVsv((SV*)ST(3))); // coderef
         WIDGET->user_data( arr );
-        THIS->default_callback( WIDGET, cb_w );
+        THIS->default_callback( WIDGET, ( void * ) cb_w );
 
  # Static Public Attributes
 
@@ -848,6 +848,10 @@ fltk::Menu::default_style ( )
         RETVAL = THIS->default_style;
     OUTPUT:
         RETVAL
+
+ # Protected Member Functions
+
+ # Widget *	try_popup (const Rectangle &, const char *title=0, bool menubar=false)
 
 =pod
 
