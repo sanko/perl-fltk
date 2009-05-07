@@ -155,6 +155,10 @@ INCLUDE: MenuSection.xsi
 
 INCLUDE: MenuWindow.xsi
 
+INCLUDE: Monitor.xsi
+
+INCLUDE: MultiBrowser.xsi
+
 =pod
 
 =head1 Author
@@ -178,6 +182,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id: FLTK.xs 9b2bc67 2009-04-14 02:18:15Z sanko@cpan.org $ for got=
+=for git $Id$ for got=
 
 =cut

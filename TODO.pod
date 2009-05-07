@@ -32,7 +32,10 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * None yet
+=item * Somehow control order of object destruction...
+
+...to kill child elements first. This way, I can clean up perl objects as they
+go out of scope.
 
 =back
 
@@ -57,5 +60,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=cut
+=for git $Id$ for got=
 
+=cut

@@ -135,7 +135,7 @@ Widget::callback( SUB, ARGS = NO_INIT, ... )
         for (int i = 2; i < items; i++) {
             av_store(arr, i, newSVsv((SV*)ST(i)));
         }
-        THIS->callback(cb);
+        THIS->callback(cb_w);
         THIS->user_data(arr);
 
 void

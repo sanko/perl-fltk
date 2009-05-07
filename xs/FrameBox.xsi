@@ -116,7 +116,7 @@ NFI
 void
 fltk::FrameBox::inset ( RECT )
     fltk::Rectangle * RECT
-    C_ARGS: ( fltk::Rectangle & ) RECT
+    C_ARGS: (fltk::Rectangle &) RECT
 
 =for apidoc ||bool|is_frame|
 
@@ -181,6 +181,6 @@ by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-=for git $Id$ for got=
+=for git $Id$
 
 =cut

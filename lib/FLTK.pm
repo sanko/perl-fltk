@@ -114,7 +114,9 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 
 #use Data::Dump qw[pp];
 #warn pp \@EXPORT;
-bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
+our $NOXS ||= $0 eq __FILE__;
+warn $NOXS;
+bootstrap FLTK $VERSION if !$FLTK::NOXS;    # for testing
 
 #sub END { warn "..." }
 # Classes ####################################################################
@@ -159,6 +161,8 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::MenuBar::ISA            = qw[FLTK::Menu];
 @FLTK::MenuSection::ISA        = qw[];
 @FLTK::MenuWindow::ISA         = qw[FLTK::Window];
+@FLTK::Monitor::ISA            = qw[FLTK::Rectangle];
+@FLTK::MultiBrowser::ISA       = qw[FLTK::Browser];
 
 #
 #
@@ -168,7 +172,6 @@ bootstrap FLTK $VERSION if !($FLTK::NOXS && $FLTK::NOXS);    # for testing
 @FLTK::shortcutAssociationType::ISA = qw[FLTK::AssociationType];
 @FLTK::ComboBrowser::ISA            = qw[FLTK::Browser];
 @FLTK::FileBrowser::ISA             = qw[FLTK::Browser];
-@FLTK::MultiBrowser::ISA            = qw[FLTK::Browser];
 @FLTK::BButton::ISA                 = qw[FLTK::Button];
 @FLTK::RepeatButton::ISA            = qw[FLTK::Button];
 @FLTK::ReturnButton::ISA            = qw[FLTK::Button];
@@ -394,5 +397,5 @@ for my $var (qw[help]) {
 # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 #
-# $Id: FLTK.pm 9b2bc67 2009-04-14 02:18:15Z sanko@cpan.org $
+# $Id$
 #

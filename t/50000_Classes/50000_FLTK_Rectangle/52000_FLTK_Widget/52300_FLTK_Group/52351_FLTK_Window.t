@@ -406,5 +406,5 @@ the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
-$Id: 52351_FLTK_Window.t 43c1956 2009-03-24 16:25:46Z sanko@cpan.org $
+$Id$
 
