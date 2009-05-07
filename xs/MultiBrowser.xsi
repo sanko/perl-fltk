@@ -1,0 +1,101 @@
+MODULE = FLTK               PACKAGE = FLTK::MultiBrowser
+
+=pod
+
+=head1 Description
+
+The L<FLTK::MultiBrowser|FLTK::MultiBrowser> class is a subclass of
+L<FLTK::Browser|FLTK::Browser> which lets the user select any set of the
+lines. Clicking on an item selects only that one. C<Ctrl>+click toggles items
+on/off. C<Shift>+drag (or C<shift>+arrows) will extend selections. Normally
+the callback is done when any item changes it's state, but you can change this
+with L<C<when()>>|/"when ( )">.
+
+See L<FLTK::Browser|FLTK::Browser> for methods to control the display and
+"current item", and L<FLTK::Menu|FLTK::Menu> for methods to add and remove
+lines from the browser.
+
+The methods on L<FLTK::Browser|FLTK::Browser> for controlling the "value"
+control which item has the keyboard focus in a multi-browser. You must use the
+"select" methods described here to change what items are turned on:
+
+=over 8
+
+=item L<C<set_item_selected()>|FLTK::Browser/"set_items_selected ( )">
+
+=item L<C<select_only_this()>|FLTK::Browser/"select_only_this ( )">
+
+=item L<C<deselect()>|FLTK::Browser/"deselect ( )">
+
+=item L<C<select()>|FLTK::Browser/"select ( )">
+
+=item L<C<selected()>|FLTK::Browser/"selected ( )">
+
+=back
+
+Inherits from L<FLTK::Browser|FLTK::Browser>.
+
+=cut
+
+#include <fltk/MultiBrowser.h>
+
+=for apidoc d||FLTK::LMultiBrowser|new|X|Y|Width|Height|Label = ''
+
+Creates a new C<FLTK::MultiBrowser> object.
+
+=cut
+
+fltk::MultiBrowser *
+fltk::MultiBrowser::new ( X, Y, Width, Height, Label = "" )
+    int     X
+    int     Y
+    int     Width
+    int     Height
+    char *  Label
+    CODE:
+        RETVAL = new fltk::MultiBrowser( X, Y, Width, Height, Label );
+        RETVAL->copy_label( Label );
+    OUTPUT:
+        RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+fltk::MultiBrowser::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, MultiBrowser" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
