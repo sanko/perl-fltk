@@ -1,5 +1,4 @@
-#!perl5.11.0.exe -p -w
-exit;
+#!perl -p -w
 use POSIX qw(strftime);
 $branch = `git-symbolic-ref HEAD`; chomp($branch);
 $rev = `git-rev-list -n 1 $branch`; chomp($rev);

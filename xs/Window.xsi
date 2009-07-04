@@ -1,0 +1,326 @@
+#ifndef DISABLE_WINDOW
+
+MODULE = FLTK               PACKAGE = FLTK::Window
+
+=pod
+
+=head1 Description
+
+This widget produces an actual window. This can either be a main window, with
+a border and title and all the window management controls, or a "subwindow"
+inside a window. This is controlled by whether or not the window has a
+L<C<parent()>|FLTK::Widget/"parent">. Internally there are now significant
+differences between "main" windows and "subwindows" and these really should be
+different classes, they are the same for historic reasons.
+
+Once you create a window, you usually add children Widgets to it by using
+L<C<add(child)>|FLTK::Group/add> or by using L<C<begin()>|FLTK::Group/begin>
+and then constructing the children. See L<C<FLTK::Group>|FLTK::Group> for more
+information on how to add and remove children.
+
+There are several subclasses of L<C<FLTK::Window>|FLTK::Window> that provide
+double-buffering, overlay, menu, and OpenGL support.
+
+The window's callback is done if the user tries to close a window using the
+window manager and L<C<FLTK::modal()>|FLTK/"modal"> is zero or equal to the
+window. Window has a default callback that calls
+L<C<hide()>|FLTK::Widget/"hide"> and calls L<C<exit(0)>|FLTK/"exit"> if this
+is the last top-level window.
+
+You can set the L<C<shortcut()>|FLTK::Widget/"shortcut"> and then that key
+will call the callback. If you don't change it then that key will close the
+window.
+
+=head2 Inheritance
+
+Inherits methods from L<C<FLTK::Group>|FLTK::Group>.
+
+Methods are in turn inherited by
+L<C<FLTK::DoubleBufferWindow>|FLTK::DoubleBufferWindow>,
+L<C<FLTK::GlWindow>|FLTK::GlWindow>, L<C<FLTK::MenuWindow>|FLTK::MenuWindow>,
+and L<C<FLTK::ShapedWindow>|FLTK::ShapedWindow>.
+
+=head1 Synopsis
+
+  my $window = FLTK::Window->new(100, 100, 500, 800);
+  $window->show();
+  FLTK::run();
+
+=cut
+
+=for apidoc d|||new|X|Y|Width|Height|Label = ''
+
+Creates a new C<FLTK::Adjuster> object.
+
+=cut
+
+#include <fltk/Window.h>
+
+Window *
+Window::new(package, ...)
+    CASE: items == 3 || items == 4
+        int    Width   = (int)SvIV(ST(1));
+        int    Height  = (int)SvIV(ST(2));
+        PREINIT:
+        char * Label =  PL_origfilename;
+        ALIAS:
+            new_wh = 1
+        CODE:
+            if (items == 4)
+                Label = (char *)SvPV_nolen(ST(3));
+            RETVAL = new Window(Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE: items == 5 || items == 6
+        int    XPos    = (int)SvIV(ST(1));
+        int    YPos    = (int)SvIV(ST(2));
+        int    Width   = (int)SvIV(ST(3));
+        int    Height  = (int)SvIV(ST(4));
+        PREINIT:
+            char * Label = PL_origfilename;
+        ALIAS:
+            new_xywh = 2
+        CODE:
+            if (items == 6)
+                Label = (char *)SvPV_nolen(ST(5));
+            RETVAL = new Window(XPos, YPos, Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = NULL;
+            warn("See perldoc %s for help.", "FLTK::Window", items);
+        OUTPUT:
+            RETVAL
+
+#if ALLOW_DESTROY
+
+bool
+Window::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Window (label: '%s')", THIS->label());
+#endif // #if VERBOSE >=2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #if ALLOW_DESTROY
+
+=for apidoc d||FLTK::Window|border|bool set
+
+If C<set> is a true value, then a window border will be set, otherwise the
+window will have neither border nor caption.
+
+=cut
+
+void
+Window::border(bool set)
+    ALIAS:
+    CODE:
+        switch (ix) {
+            case 0: THIS->border(set);   break;
+            //case 1: THIS->(set);  break;
+            default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
+        }
+
+=for apidoc d||FLTK::Window|borders|FLTK::Rectangle r
+
+C<r> is set to the the size of the borders that will be added around this
+window. This is done by querying the window system. Because it is more
+convienent for most code the result is actually the rectangle that would be
+around the border if this window was zero in size and placed at C<0,0>. C<x,y>
+are typically negative and C<w,h> are typically positive. To get the actual
+rectangle around your window, add these values to the window's size.
+
+=cut
+
+void
+Window::borders(fltk::Rectangle * r)
+
+=for apidoc d||FLTK::Window|child_of|FLTK::Window parent
+
+Tell the system that this window will not have an icon, it will dissappear and
+reappear when C<parent> is iconized or shown, and it is forced to always be
+above C<parent>. On X this is called a "Transient window", and Windows calls
+this a "overlapping child". C<parent> is different than the
+L<C<parent()>|FLTK::Widget/"parent">, which must be zero.
+
+Changing this value causes L<C<DESTROY()>|/"DESTROY"> to be called, due to
+stupid limitations in X and Windows.
+
+Win32 and some X window managers have an annoying bug where calling
+L<C<show()>|/"show"> on this will also raise the parent window to right below
+this, making many useful user interface designs impossible!
+
+If you want a dialog that blocks interaction with the other windows of your
+application or with all other applications, you need to look at
+L<C<exec()>|/"exec"> (or possibly L<C<FLTK::modal()>|FLTK/"modal">).
+
+=cut
+
+void
+Window::child_of(const Window * parent)
+
+
+
+=for apidoc d||FLTK::Window|clear_double_border|
+
+Turn off double buffering, so that drawing directly goes to the visible image
+on the screen. Not all systems can do this, they will remain double buffered
+even if this is off.
+
+=cut
+
+=for apidoc d||FLTK::Window|erase_overlay|
+
+Indicate that the overlay drawn with L<C<draw_overlay()>|/"draw_overlay"> is
+blank. L<C<draw_overlay()>|/"draw_overlay"> will not be called until
+L<C<redraw_overlay()>|/"redraw_overlay"> is called again.
+
+=cut
+
+=for apidoc d||FLTK::Window|free_backbuffer|
+
+Get rid of extra storage created by drawing when
+L<C<double_buffer()>|/"double_buffer"> was turned on.
+
+=cut
+
+=for apidoc d||FLTK::Window|show|
+
+TODO
+
+=cut
+
+=for apidoc d||FLTK::Window|hide|
+
+TODO
+
+=cut
+
+
+void
+Window::clear_double_buffer()
+    ALIAS:
+        erase_overlay = 1
+        free_backbuffer = 2
+
+        hide                = 3
+        show = 4
+        draw_overlay        = 5
+    CODE:
+        switch (ix) {
+            case 0: THIS->clear_double_buffer();    break;
+            case 1: THIS->erase_overlay();          break;
+            case 2: THIS->free_backbuffer();        break;
+
+            case 3: THIS->hide();                   break;
+            case 4: THIS->show();    break;
+            case 5: THIS->draw_overlay();           break;
+            default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
+        }
+
+
+=for apidoc d|bool|FLTK::Window|double_buffer|
+
+Returns a true value if C<L<set_double_buffer()>|/"set_double_buffer"> was
+called, returns a false value if
+L<C<clear_double_buffer()>|/"clear_double_buffer"> was called. If neither has
+been called, this returns a machine-dependant state (systems where double
+buffering is efficient turn it on by default).
+
+=cut
+
+bool
+Window::double_buffer( )
+
+
+=for apidoc FLTK::Window|drawing_window|FLTK::Window|
+
+Returns the L<Window|FLTK::Window> currently being drawn into. To set this use
+L<C<make_current()>|FLTK::Widget/"make_current">. It will already be set when
+C<draw()> is called.
+
+=cut
+
+const Window *
+Window::drawing_window( )
+
+=for apidoc d|bool|FLTK::Window|exec|FLTK::Window parent = 0|bool grab = 0
+
+The window is popped up and this function does not return until
+L<C<make_exec_return()>|/"make_exec_return"> is called, or the window is
+destroyed or L<C<hide()>|FLTK::Widget/"hide"> is called, or
+L<C<FLTK::exit_modal()>|FLTK/"exit_modal"> is called. During this time events
+to other windows in this application are either thrown away or redirected to
+this window.
+
+This does L<C<child_of(parent)>|/"child_of"> (using first() if parent is
+undefined), so this window is a floating panel that is kept above the parent.
+It then uses L<C<FLTK::modal(this,grab)>|FLTK/"modal"> to make all events go
+to this window.
+
+The return value is the argument to
+L<C<make_exec_return()>|/"make_exec_return">, or a false value if any other
+method is used to exit the loop.
+
+If C<parent> is undefined, the window that last received an event is used as
+the parent. This is convenient for popups that appear in response to a mouse
+or key click.
+
+See L<C<FLTK::modal()>|FLTK/"modal"> for what grab does. This is useful for
+popup menus.
+
+=cut
+
+bool
+Window::exec( const Window * parent = 0, bool grab = 0 )
+
+=for apidoc d||FLTK::Window|fullscreen|FLTK::Monitor monitor
+
+=cut
+
+#include <fltk/Monitor.h>
+
+void
+Window::fullscreen( monitor )
+    CASE: items == 1
+        int monitor = 0;
+        CODE:
+            THIS->fullscreen( );
+    CASE: items == 2
+        Monitor * monitor;
+        CODE:
+            THIS->fullscreen((const Monitor &) monitor );
+
+
+#endif // ifndef DISABLE_WINDOW
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

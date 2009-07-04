@@ -1,0 +1,50 @@
+TYPEMAP
+
+# Defaults
+const char *  T_PV
+const char ** T_PV
+uchar         T_U_CHAR
+uchar *       T_PV
+float         T_FLOAT
+const void *  T_PTR
+int *         T_IPTR
+const int *   T_IPTR
+const uchar * T_PV
+
+# Objects
+fltk::Rectangle *           O_FLTK
+Monitor  *             O_FLTK
+
+      Window *              O_FLTK
+const Window *              O_FLTK
+
+
+OUTPUT
+O_FLTK
+  sv_setref_pv($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\", (void*)$var); /* ${ntype} */
+
+INPUT
+O_FLTK
+  if (sv_isobject($arg) && sv_derived_from($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")) /* ${ntype} */
+    $var = INT2PTR($type,SvIV((SV*)SvRV($arg)));
+  else
+    Perl_croak(aTHX_ \"%s: %s is not of type %s\",
+      ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")
+/*
+ #
+ # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of The Artistic License 2.0.  See the LICENSE file
+ # included with this distribution or
+ # http://www.perlfoundation.org/artistic_license_2_0.  For
+ # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+ #
+ # When separated from the distribution, all POD documentation is covered by
+ # the Creative Commons Attribution-Share Alike 3.0 License.  See
+ # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+ # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ #
+ # $Id$
+ #
+*/

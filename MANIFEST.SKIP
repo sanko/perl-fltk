@@ -33,38 +33,18 @@
 #   Mac OSX SMB mount metadata files
 \B\._
 
-#
+# Dist related stuff
 \bFLTK-[\d\.\_]+
-
-# Created by sh ./configure
-src/fltk-2.0.x-r\d+/config.h$
-src/fltk-2.0.x-r\d+/config.log$
-src/fltk-2.0.x-r\d+/config.status$
-src/fltk-2.0.x-r\d+/fltk.list$
-src/fltk-2.0.x-r\d+/fltk2-config$
-src/fltk-2.0.x-r\d+/fluid/makedepend$
-src/fltk-2.0.x-r\d+/glut/makedepend$
-src/fltk-2.0.x-r\d+/images/makedepend$
-src/fltk-2.0.x-r\d+/makeinclude$
-src/fltk-2.0.x-r\d+/OpenGL/makedepend$
-src/fltk-2.0.x-r\d+/src/makedepend$
+src/
 
 # Created by me...
-src/fltk-2.0.x-r\d+(:?/.*)?/make.bat
 
-src/~.*
+^~.*
 \bFLTK2-[\d\.\_]+
 
 # Avoid objects, archives, and other build-related junk
 \.o$
 \.a$
-#src/fltk-2.0.x/config\.status$
-#src/fltk-2.0.x/makeinclude$
-#src/fltk-2.0.x/fltk\.list$
-#src/fltk-2.0.x/fltk-config$
-#src/fltk-2.0.x/fltk\.spec$
-#src/fltk-2.0.x/FL/Makefile$
-#src/fltk-2.0.x/config.h$
 xs/.*.cxx
 xs/FLTK.def
 
@@ -121,6 +101,7 @@ lib/FLTK/Window.pod
 
 xs/FLTK_.+
 xs/fltk/.+
+xs/~old/.+
 
 ~autodoc.pl
 ~pod.pl
@@ -132,9 +113,19 @@ xs/fltk/.+
 left.session
 right.session
 
-
 # Just for me
 .gitattributes
 .gitclean.pl
 .gitignore
 .gitsmudge.pl
+
+
+
+# temp
+Classes.pod
+Compatability.pod
+examples/hello.pl
+examples/helloask.pl
+examples/message.pl
+inc/MBX/---FLTK.pm
+lib/FLTK/Version.pm

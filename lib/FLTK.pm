@@ -9,8 +9,8 @@ use version qw[qv];
 our $VERSION_BASE = 0; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? q[%.3f_%03d] : q[%.3f]), (version->new(($VERSION_BASE))->numify / 1000), $UNSTABLE_RELEASE);
 
 #
-#use parent 'DynaLoader';
-use base 'DynaLoader';    # Testing for clean perl5.8
+
+use XSLoader;
 
 #
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
@@ -113,11 +113,12 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
     qw[:box :label :font :default];
 
 #use Data::Dump qw[pp];
-#warn pp \@EXPORT;
-our $NOXS ||= $0 eq __FILE__;
-warn $NOXS;
-bootstrap FLTK $VERSION if !$FLTK::NOXS;    # for testing
+#warn pp \@EXPORT_OK;
 
+
+our $NOXS ||= $0 eq __FILE__;
+#warn $NOXS;
+XSLoader::load 'FLTK';#, $VERSION ;#if $FLTK::NOXS;  # for testing
 #sub END { warn "..." }
 # Classes ####################################################################
 @FLTK::Aduster::ISA            = qw[FLTK::Valuator];
@@ -163,6 +164,7 @@ bootstrap FLTK $VERSION if !$FLTK::NOXS;    # for testing
 @FLTK::MenuWindow::ISA         = qw[FLTK::Window];
 @FLTK::Monitor::ISA            = qw[FLTK::Rectangle];
 @FLTK::MultiBrowser::ISA       = qw[FLTK::Browser];
+@FLTK::MultiImage::ISA         = qw[FLTK::Symbol];
 
 #
 #

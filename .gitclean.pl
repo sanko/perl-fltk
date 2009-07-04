@@ -1,4 +1,4 @@
-#!perl5.11.0.exe -p -w
+#!perl -p -w
 s[\$Date$]*\$][\$Date$]g;
 s[\$Id$]*\$][\$Id$]g;
 s[\$Ver$]*\$][\$Ver$]g;

@@ -1,11 +1,25 @@
+#include <fltk/run.h>
+#include <fltk/Window.h>
+
+
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
 #include "./ppport.pl"
 
+
+
+using namespace fltk;
+
+
 #define ALLOW_CALLBACKS  1
-#define ALLOW_DESTROY    1 // Introduce pointless bugs :D
-#define ALLOW_DEPRECATED 1 // Depreciated widgets, etc.
+#define ALLOW_DESTROY    0 // Introduce pointless bugs :D
+#define ALLOW_DEPRECATED 0 // Depreciated widgets, etc.
+#define USE_IMAGE 0
+#define USE_GL    0
+#define USE_GLUT  0
+#define USE_CAIRO 0
+#define USE_X     0 // TODO
 
 =for apidoc H|||cb_w|fltk::Widget|CODE
 
@@ -14,7 +28,6 @@ L<FLTK::Widget::callback()>.
 
 =cut
 
-#include <fltk/Widget.h>
 void cb_w (fltk::Widget * WIDGET, void * CODE) {
 #if ALLOW_CALLBACKS
     AV *cbargs = (AV *)CODE;
@@ -36,128 +49,27 @@ void cb_w (fltk::Widget * WIDGET, void * CODE) {
 
 
 /* Alright, let's get things started, shall we? */
+
 MODULE = FLTK               PACKAGE = FLTK
 
-INCLUDE: perl ../Build define |
+void
+test_window ( )
+    CODE:
+        Window *window = new Window(300, 180);
+        window->begin();
+        Widget *box = new Widget(20, 40, 260, 100, "Hello, World!");
+        box->box(UP_BOX);
+        box->labelfont(HELVETICA_BOLD_ITALIC);
+        box->labelsize(36);
+        box->labeltype(SHADOW_LABEL);
+        window->end();
+        window->show();
 
-INCLUDE: Adjuster.xsi
+void
+run ()
 
-INCLUDE: AssociationFunctor.xsi
 
-INCLUDE: AssociationType.xsi
-
-#ifdef NORMAL /* NORMAL is carelessly redefined in fltk/Browser.h */
-#define PERL_NORMAL NORMAL
-#undef NORMAL
-#endif
-
-INCLUDE: Browser.xsi
-
-#ifdef PERL_NORMAL /* Reverse the hack */
-#undef NORMAL
-#define NORMAL PERL_NORMAL
-#undef PERL_NORMAL
-#endif
-
-INCLUDE: Button.xsi
-
-INCLUDE: CheckButton.xsi
-
-INCLUDE: Choice.xsi
-
-INCLUDE: Clock.xsi
-
-INCLUDE: ClockOutput.xsi
-
-INCLUDE: CreatedWindow.xsi
-
-INCLUDE: CycleButton.xsi
-
-INCLUDE: Dial.xsi
-
-INCLUDE: Divider.xsi
-
-INCLUDE: FillDial.xsi
-
-INCLUDE: FillSlider.xsi
-
-INCLUDE: FlatBox.xsi
-
-INCLUDE: FloatInput.xsi
-
-INCLUDE: Font.xsi
-
-INCLUDE: FrameBox.xsi
-
-INCLUDE: gifImage.xsi
-
-#ifdef ENTER
-#define PERL_ENTER ENTER
-#undef ENTER
-#endif /* ifdef ENTER */
-
-#ifdef LEAVE
-#define PERL_LEAVE LEAVE
-#undef LEAVE
-#endif /* ifdef LEAVE */
-
-INCLUDE: GlutWindow.xsi
-
-INCLUDE: GlWindow.xsi
-
-#ifdef PERL_ENTER
-#undef ENTER
-#define ENTER PERL_ENTER
-#undef PERL_ENTER
-#endif /* ifdef PERL_ENTER */
-
-#ifdef PERL_LEAVE
-#undef LEAVE
-#define LEAVE PERL_LEAVE
-#undef PERL_LEAVE
-#endif /* ifdef PERL_LEAVE */
-
-INCLUDE: Group.xsi
-
-INCLUDE: GSave.xsi
-
-INCLUDE: Guard.xsi
-
-INCLUDE: HighlightBox.xsi
-
-INCLUDE: HighlightButton.xsi
-
-INCLUDE: Image.xsi
-
-INCLUDE: ImageType.xsi
-
-INCLUDE: Input.xsi
-
-INCLUDE: IntInput.xsi
-
-INCLUDE: InvisibleBox.xsi
-
-INCLUDE: Item.xsi
-
-INCLUDE: ItemGroup.xsi
-
-INCLUDE: LightButton.xsi
-
-INCLUDE: LineDial.xsi
-
-INCLUDE: List.xsi
-
-INCLUDE: Menu.xsi
-
-INCLUDE: MenuBar.xsi
-
-INCLUDE: MenuSection.xsi
-
-INCLUDE: MenuWindow.xsi
-
-INCLUDE: Monitor.xsi
-
-INCLUDE: MultiBrowser.xsi
+INCLUDE: Window.xsi
 
 =pod
 
