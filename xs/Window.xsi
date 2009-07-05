@@ -188,6 +188,21 @@ L<C<double_buffer()>|/"double_buffer"> was turned on.
 
 =cut
 
+=for apidoc d||FLTK::Window|iconize|
+
+Iconifies the window. If you call this when L<C<shown()>|/"shown"> is false it
+will L<C<show()>|/"show"> it as an icon. If the window is already iconified
+this does nothing.
+
+Call L<C<show()>|/"show"> to restore the window.
+
+Currently there are only X and Win32 system-specific ways to control what is
+drawn in the icon. You should not rely on window managers displaying the
+icons.
+
+=cut
+
+
 =for apidoc d||FLTK::Window|show|
 
 TODO
@@ -202,23 +217,26 @@ TODO
 
 
 void
-Window::clear_double_buffer()
+Window::clear_double_buffer( )
     ALIAS:
-        erase_overlay = 1
+        erase_overlay   = 1
         free_backbuffer = 2
+        iconize         = 3
 
-        hide                = 3
-        show = 4
-        draw_overlay        = 5
+        hide                = 30
+        show                = 40
+        draw_overlay        = 50
     CODE:
         switch (ix) {
             case 0: THIS->clear_double_buffer();    break;
             case 1: THIS->erase_overlay();          break;
             case 2: THIS->free_backbuffer();        break;
+            case 3: THIS->iconize();                break;
 
-            case 3: THIS->hide();                   break;
-            case 4: THIS->show();    break;
-            case 5: THIS->draw_overlay();           break;
+
+            case 30: THIS->hide();                   break;
+            case 40: THIS->show();    break;
+            case 50: THIS->draw_overlay();           break;
             default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
         }
 
@@ -280,20 +298,123 @@ Window::exec( const Window * parent = 0, bool grab = 0 )
 
 =for apidoc d||FLTK::Window|fullscreen|FLTK::Monitor monitor
 
+Make the window completely fill the monitor, without any window manager border
+or taskbar or anything else visible. Use
+L<C<fullscreen_off()>|/"fullscreen_off"> to undo this.
+
+Known bugs:
+
+=over
+
+=item *
+
+Older versions of both Linux and Windows will refuse to hide the taskbar.
+Proposed solutions for this tend to have detrimental effects, such as making
+it impossible to switch tasks or to put another window atop this one. It
+appears that newer versions of both Linux and Windows work correctly, so we
+will not fix this.
+
+=item *
+
+Many older X window managers will refuse to position the window correctly and
+instead place them so the top-left of the border in the screen corner. You may
+be able to fix this by calling L<C<hide()>|FLTK::Widget/"hide"> first, then
+L<C<fullscreen()>|/"fullscreen">, then L<C<show()>|/"show">. We don't do this
+because it causes newer window systems to blink unnecessarily.
+
+=item *
+
+Some X window managers will raise the window when you change the size.
+
+=item *
+
+Calling L<C<resize()>|FLTK::Widget/"resize"> before calling
+L<C<fullscreen_off()>|/"fullscreen_off"> will result in unpredictable effects,
+and should be avoided.
+
+=back
+
 =cut
+
+=for apidoc d||FLTK::Window|fullscreen|
+
+Chooses the L<Monitor|FLTK::Monitor> that the center of the window is on to be
+the one to resize to.
+
+=cut
+
 
 #include <fltk/Monitor.h>
 
 void
-Window::fullscreen( monitor )
+Window::fullscreen( monitor = 0 )
     CASE: items == 1
-        int monitor = 0;
+        int monitor;
         CODE:
             THIS->fullscreen( );
     CASE: items == 2
         Monitor * monitor;
         CODE:
-            THIS->fullscreen((const Monitor &) monitor );
+           THIS->fullscreen((const Monitor &) monitor );
+
+=for apidoc d||FLTK::Window|fullscreen_off|X|Y|W|H
+
+Turns off any side effects of L<C<fullscreen()>|/"fullscreen">, then does
+C<resize(x,y,w,h)>.
+
+=cut
+
+void
+Window::fullscreen_off ( X, Y, Width, Height )
+    int X
+    int Y
+    int Width
+    int Height
+
+=for apidoc d||FLTK::Window|hotspot|widget|offscreen = 0
+
+L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
+pointing at the center of the widget, which may be the window itself. If
+C<offscreen> is a true value, the window is allowed to extend off the
+L<Monitor|FLTK::Monitor> (some X window managers do not allow this).
+
+=cut
+
+=for apidoc d||FLTK::Window|hotspot|CX|CY|offscreen = 0
+
+L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
+pointing at the C<cx,cy> position. If C<offscreen> is a true value, the window
+is allowed to extend off the Monitor (some X window managers do not allow
+this.
+
+=cut
+
+void
+Window::hotspot ( A, B = false, C = false )
+    CASE: items <= 2 && sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Widget")
+        Widget * A
+        bool B;
+        C_ARGS: (const Widget *) A, B
+    CASE:
+        int A;
+        int B;
+        bool C;
+        C_ARGS: A, B, C
+
+=for apidoc d||FLTK::Window|iconic|
+
+Returns a true value if the window is currently displayed as an icon. Returns
+a false value if the window is not L<C<shown()>|/"shown"> or
+L<C<hide()>|FLTK::Widget/"hide"> has been called.
+
+I<On X this will return true in the time between when L<C<show()>|/"show"> is called and when the window manager finally puts the window on the screen and causes an expose event.>
+
+Returns true if the window is shown but is iconized.
+
+=cut
+
+bool
+Window::iconic( )
 
 
 #endif // ifndef DISABLE_WINDOW
