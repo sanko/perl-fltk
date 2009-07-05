@@ -160,10 +160,32 @@ L<C<exec()>|/"exec"> (or possibly L<C<FLTK::modal()>|FLTK/"modal">).
 
 =cut
 
+=for apidoc d||FLTK::Window|show_inside|parent
+
+Make the window with a normal system border and behavior, but place it inside
+the C<parent> as though that was the desktop. This is what Windows calls
+"MDI". Typically the other window (which must already be shown) is a child
+window so that space can remain around it for a menu/tool bar.
+
+Notice that L<C<parent()>|FLTK::Widget/"parent"> of the window must be zero
+and it will remain zero after this is called. Fltk uses a zero parent to
+indicate that the system is managing the window.
+
+On systems that don't support nested desktops (i.e. X) this does
+L<C<child_of(parent)>|/"child_of"> and L<C<show()>|/"show">, which produces an
+overlapping window that will remain above the frame window.
+
+=cut
+
 void
 Window::child_of(const Window * parent)
-
-
+    ALIAS:
+        show_inside     = 1
+    CODE:
+        switch ( ix )  {
+            case 0: THIS->child_of(parent);     break;
+            case 1: THIS->show_inside(parent);  break;
+        }
 
 =for apidoc d||FLTK::Window|clear_double_border|
 
@@ -202,29 +224,46 @@ icons.
 
 =cut
 
+=for apidoc d||FLTK::Window|redraw_overlay|
 
-=for apidoc d||FLTK::Window|show|
+Indicate that the image made by L<C<draw_overlay()>|/"draw_overlay"> has
+changed and must be drawn or redrawn. If the image is blank you should call
+L<C<erase_overlay()>|/"erase_overlay">.
 
-TODO
-
-=cut
-
-=for apidoc d||FLTK::Window|hide|
-
-TODO
+This does nothing if the window is not L<C<shown()>|/"shown">, it is assummed
+that overlays are only drawn in response to user input.
 
 =cut
 
+=for apidoc d||FLTK::Window|set_double_buffer|
+
+If the window is double-buffered, all drawing is done first to some offscreen
+image, and then copied to the screen as a single block. This eliminates
+blinking as the window is updated, and often the application looks faster,
+even if it actually is slower.
+
+=cut
+
+=for apidoc d||FLTK::Window|system_layout|
+
+Resizes the actual system window to match the current size of the fltk widget.
+You should call this in your C<layout()> method if xywh have changed. The
+L<C<layout_damage()>|FLTK::Widget/"layout_damage"> flags must be on or it
+won't work.
+
+=cut
 
 void
 Window::clear_double_buffer( )
     ALIAS:
-        erase_overlay   = 1
-        free_backbuffer = 2
-        iconize         = 3
+        erase_overlay       = 1
+        free_backbuffer     = 2
+        iconize             = 3
+        redraw_overlay      = 4
+        set_double_buffer   = 5
+        system_layout       = 6
 
         hide                = 30
-        show                = 40
         draw_overlay        = 50
     CODE:
         switch (ix) {
@@ -232,10 +271,12 @@ Window::clear_double_buffer( )
             case 1: THIS->erase_overlay();          break;
             case 2: THIS->free_backbuffer();        break;
             case 3: THIS->iconize();                break;
+            case 4: THIS->redraw_overlay();         break;
+            case 5: THIS->set_double_buffer();      break;
+            case 6: THIS->system_layout();      break;
 
 
             case 30: THIS->hide();                   break;
-            case 40: THIS->show();    break;
             case 50: THIS->draw_overlay();           break;
             default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
         }
@@ -364,12 +405,30 @@ C<resize(x,y,w,h)>.
 
 =cut
 
+=for apidoc d||FLTK::Window|resize|X|Y|W|H
+
+Change the size and position of the window. If L<C<shown()>|/"shown"> is true,
+these changes are communicated to the window server (which may refuse that
+size and cause a further resize). If L<C<shown()>|/"shown"> is false, the size
+and position are used when L<C<show()>|/"show"> is called. See
+L<FLTK::Group|FLTK::Group> for the effect of resizing on the child widgets.
+
+The special value C<FLTK::USEDEFAULT> may be used for C<X> and C<Y> indicate
+that the system should choose the window's position. This will only work
+before L<C<show()>|/"show"> is called.
+
+=cut
+
 void
-Window::fullscreen_off ( X, Y, Width, Height )
-    int X
-    int Y
-    int Width
-    int Height
+Window::fullscreen_off ( int X, int Y, int Width, int Height )
+    ALIAS:
+        resize = 1
+    CODE:
+        switch( ix ) {
+            case 0: THIS->fullscreen_off( X, Y, Width, Height ); break;
+            case 1: THIS->resize(        X, Y, Width, Height ); break;
+        }
+
 
 =for apidoc d||FLTK::Window|hotspot|widget|offscreen = 0
 
@@ -401,21 +460,236 @@ Window::hotspot ( A, B = false, C = false )
         bool C;
         C_ARGS: A, B, C
 
-=for apidoc d||FLTK::Window|iconic|
+=for apidoc d|bool|FLTK::Window|iconic|
 
 Returns a true value if the window is currently displayed as an icon. Returns
 a false value if the window is not L<C<shown()>|/"shown"> or
 L<C<hide()>|FLTK::Widget/"hide"> has been called.
 
-I<On X this will return true in the time between when L<C<show()>|/"show"> is called and when the window manager finally puts the window on the screen and causes an expose event.>
+I<On X this will return true in the time between when L<C<show()>|/"show"> is
+called and when the window manager finally puts the window on the screen and
+causes an expose event.>
 
-Returns true if the window is shown but is iconized.
+Returns true if the window is L<C<shown>|/"shown"> but is
+L<C<iconized>|/"iconize">.
+
+=cut
+
+=for apidco d|bool|FLTK::Window|shown|
+
+Returns non-zero if L<C<show()>|/"show"> has been called, but C<DESTROY()> has
+not been called. Note that this returns true if L<C<hide()>|/"hide"> was
+called or if the user has iconized the window.
 
 =cut
 
 bool
 Window::iconic( )
+    ALIAS:
+        shown = 1
+    CODE:
+        switch (ix) {
+            case 0: RETVAL = THIS->iconic(); break;
+            case 1: RETVAL = THIS->shown();  break;
+        }
 
+=for apidoc d||FLTK::Window|iconlabel|iname
+
+Sets the text displayed below the icon (or in the taskbar). If you don't set
+this it defaults to the L<C<label()>|/"label"> but if that appears to be a
+filename, it defaults to the last portion after the last C</> character.
+
+=cut
+
+void
+Window::iconlabel( iname )
+    const char * iname
+
+=for apidoc d||FLTK::Window|label|name|iname
+
+Sets both the L<C<label()>|/"label"> and the L<C<iconlabel()>|/"iconlabel">.
+
+=cut
+
+=for apidoc d||FLTK::Window|label|name
+
+Sets the window title, which is drawn in the titlebar by the system.
+
+=cut
+
+void
+Window::label( name, iname = "" )
+    CASE: items == 1
+        const char * name
+        C_ARGS: name
+    CASE: items == 2
+        const char * name
+        const char * iname
+
+=for apidoc d||FLTK::Window|make_exec_return|return_value
+
+If L<C<exec()>|/"exec"> is currently being called, make it hide this window
+and return C<return_value>.
+
+Does nothing if L<C<exec()>|/"exec"> is not being called.
+
+Results are undefined if the innermost L<C<exec()>|/"exec"> is being called on
+a window other than this one. Current behavior is to cause that exec to return
+false.
+
+=cut
+
+void
+Window::make_exec_return ( return_value )
+    bool return_value
+
+=for apidoc d||FLTK::Window|show|parent
+
+Same as C<child_of(parent); show()>.
+
+=cut
+
+=for apidoc d||FLTK::Window|show|argc|argv
+
+This must be called after L<C<FLTK::args(argc,argv)>|FLTK/"args"> to show the
+"main" window, this indicates which window should be affected by any
+C<-geometry> switches. In addition if L<C<FLTK::args()>|FLTK/"args"> has not
+been called yet this does so, this is a useful shortcut for the main window in
+a small program.
+
+=cut
+
+=for apidoc d||FLTK::Window|show|
+
+Cause the window to become visible. It is harmless to call this multiple
+times.
+
+For subwindows (with a L<C<parent()>|FLTK::Widget/"parent">) this just causes
+the window to appear. Currently no guarantee about stacking order is made.
+
+For a outer window (one with no L<C<parent()>|FLTK::Widget/"parent">) this
+causes the window to appear on the screen, be de-iconized, and be raised to
+the top. Depending on L<C<child_of()>|/"child_of"> settings of this window and
+of windows pointing to it, and on system and window manager settings, this may
+cause other windows to also be deiconized and raised, or if this window is a
+L<C<child_of()>|/"child_of"> then this window may remain iconized.
+
+I<L<C<Window::show()>|/"show"> is not a virtual override of
+L<C<Widget::show()>|FLTK::Widget/"show">.> You can call either one. The only
+difference is that if an outer window has had L<C<show()>|/"show"> called
+already, L<C<Window::show()>|/"show"> will raise and deiconize it, while
+L<C<Widget::show()>|FLTK::Widget/"show"> will only
+un-L<hide()|FLTK::Widget/"hide"> it, making it appear in the same stacking
+order as before but not changing the iconization state (on some X window
+managers it will deiconize anyway).
+
+The first time this is called is when the actual "system" window (ie the X
+window) is created. Before that an fltk window is simply an internal data
+structure and is not visible outside your program. To return to the
+non-system-window state call C<DESTROY()>. L<C<hide()>|FLTK::Widget/"hide">
+will "unmap" the system window.
+
+The first time L<C<show()>|/"show"> is called on any window is when fltk will
+call L<C<FLTK::open_display()>|FLTK/"open_display"> and
+L<C<FLTK::load_theme()>|FLTK/"load_theme">, unless you have already called
+them. This allows these expensive operations to be deferred as long as
+possible, and allows fltk programs to be written that will run without an X
+server as long as they don't actually show a window.
+
+=cut
+
+void
+Window::show( arga = NO_INIT, argb = NO_INIT )
+    CASE: items == 1
+        CODE:
+            warn ("0 items");
+            THIS->show( );
+
+    CASE: items == 2 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2))) == SVt_PVAV
+        int arga
+        AV* argb
+        CODE:
+            warn ("2 items");
+            char ** REAL_INDEXES;
+            for ( int i = 0; i < av_len(argb); i++ )
+                REAL_INDEXES[i] = (char *)(av_fetch(argb, i, 0));
+            THIS->show( arga, (char ** ) REAL_INDEXES );
+    CASE: items == 2
+        Window * arga
+        CODE:
+            warn ("items == 1");
+            THIS->show((const Window *) arga);
+
+=for apidoc d||FLTK::Window|size_range|minW|minH|maxW = 0|maxH = 0|dw = 0|dh = 0
+
+Set the allowable range the user can resize this window to. This only works
+for top-level windows.
+
+=over
+
+=item C<minW> and C<minH> are the smallest the window can be.
+
+=item C<maxW> and C<maxH> are the largest the window can be. If either is
+equal to the minimum then you cannot resize in that direction. If either is
+zero then FLTK picks a maximum size in that direction such that the window
+will fill the screen.
+
+=item C<dw> and C<dh> are size increments. The window will be constrained to
+widths of C<minW+N*dw>, where C<N> is any non-negative integer. If these are
+less or equal to 1 they are ignored. (this is ignored on WIN32)
+
+=back
+
+It is undefined what happens if the current size does not fit in the
+constraints passed to L<C<size_range()>|/"size_range">.
+
+If this function is not called, FLTK tries to figure out the range from the
+setting of C<resizeable()>:
+
+=over
+
+=item If L<C<resizeable()>|/"resizable"> is undefined (this is the default),
+then the window cannot be resized.
+
+=item If either dimension of L<C<resizeable()>|/"resizable"> is less than
+C<100>, then that is considered the minimum size. Otherwise the
+L<C<resizeable()>|/"resizable"> has a minimum size of C<100>.
+
+=item If either dimension of L<C<resizeable()>|/"resizable"> is zero, then
+that is also the maximum size (so the window cannot resize in that direction).
+
+=back
+
+=cut
+
+void
+Window::size_range ( minW, minH, maxW = 0, maxH = 0, dw = 0, dh = 0)
+    int minW
+    int minH
+    int maxW
+    int maxH
+    int dw
+    int dh
+
+=for apidoc d|FLTK::NamedStyle|default_style|
+
+By default a window has box() set to C<FLAT_BOX>, and the color() set to
+C<GRAY75>, which is a special color cell that is altered by
+L<C<FLTK::set_background()>|FLTK/"set_background">.
+
+If you plan to turn the L<C<border()>|/"border"> off you may want to change
+the box() to C<UP_BOX>. You can also produce something that looks like an
+arbitrary shape (though really it is showing the original screen contents in
+the "outside" area, so the window had better be temporary and the user cannot
+move it) by setting the box() to NO_BOX and making draw() only draw the opaque
+part.
+
+=cut
+
+NamedStyle *
+Window::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
 
 #endif // ifndef DISABLE_WINDOW
 

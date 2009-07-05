@@ -3,6 +3,7 @@ TYPEMAP
 # Defaults
 const char *  T_PV
 const char ** T_PV
+char ** T_PV
 uchar         T_U_CHAR
 uchar *       T_PV
 float         T_FLOAT
@@ -12,12 +13,12 @@ const int *   T_IPTR
 const uchar * T_PV
 
 # Objects
-fltk::Rectangle *           O_FLTK
-Monitor  *             O_FLTK
-Widget  *             O_FLTK
-
-      Window *              O_FLTK
-const Window *              O_FLTK
+fltk::Rectangle *   O_FLTK
+Monitor         *   O_FLTK
+Widget          *   O_FLTK
+NamedStyle      *   O_FLTK
+      Window    *   O_FLTK
+const Window    *   O_FLTK
 
 
 OUTPUT
