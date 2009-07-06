@@ -47,7 +47,7 @@ L<FLTK::ToggleButton|FLTK::ToggleButton>.
 
 #include <fltk/Button.H>
 
-=for apidoc ||FLTK::Button|new
+=for apidoc ||FLTK::Button|new|X|Y|W|H|[LABEL]
 
 Creates a new C<FLTK::Button> object. Obviously.
 
@@ -133,8 +133,8 @@ Button::handle ( EVENT, RECT = NO_INIT )
         C_ARGS: EVENT
     CASE:
         int               EVENT
-        fltk::Rectangle * RECT
-        C_ARGS: EVENT, (const fltk::Rectangle &) RECT
+        const fltk::Rectangle * RECT
+        C_ARGS: EVENT, *RECT
 
 =for apidoc ||bool|value|VALUE
 

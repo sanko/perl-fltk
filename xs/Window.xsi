@@ -48,9 +48,9 @@ and L<C<FLTK::ShapedWindow>|FLTK::ShapedWindow>.
 
 =cut
 
-=for apidoc d|||new|X|Y|Width|Height|Label = ''
+=for apidoc ||FLTK::Window|new|X|Y|Width|Height|Label = ''
 
-Creates a new C<FLTK::Adjuster> object.
+Creates a new C<FLTK::Window> object.
 
 =cut
 
@@ -103,7 +103,7 @@ Window::DESTROY ( )
 
 #endif // #if ALLOW_DESTROY
 
-=for apidoc d||FLTK::Window|border|bool set
+=for apidoc |||border|bool set
 
 If C<set> is a true value, then a window border will be set, otherwise the
 window will have neither border nor caption.
@@ -120,7 +120,7 @@ Window::border(bool set)
             default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
         }
 
-=for apidoc d||FLTK::Window|borders|FLTK::Rectangle r
+=for apidoc |||borders|FLTK::Rectangle r
 
 C<r> is set to the the size of the borders that will be added around this
 window. This is done by querying the window system. Because it is more
@@ -134,7 +134,7 @@ rectangle around your window, add these values to the window's size.
 void
 Window::borders(fltk::Rectangle * r)
 
-=for apidoc d||FLTK::Window|child_of|FLTK::Window parent
+=for apidoc |||child_of|FLTK::Window parent
 
 Tell the system that this window will not have an icon, it will dissappear and
 reappear when C<parent> is iconized or shown, and it is forced to always be
@@ -155,7 +155,7 @@ L<C<exec()>|/"exec"> (or possibly L<C<FLTK::modal()>|FLTK/"modal">).
 
 =cut
 
-=for apidoc d||FLTK::Window|show_inside|parent
+=for apidoc |||show_inside|parent
 
 Make the window with a normal system border and behavior, but place it inside
 the C<parent> as though that was the desktop. This is what Windows calls
@@ -182,7 +182,7 @@ Window::child_of(const Window * parent)
             case 1: THIS->show_inside(parent);  break;
         }
 
-=for apidoc d||FLTK::Window|clear_double_border|
+=for apidoc |||clear_double_border|
 
 Turn off double buffering, so that drawing directly goes to the visible image
 on the screen. Not all systems can do this, they will remain double buffered
@@ -190,7 +190,7 @@ even if this is off.
 
 =cut
 
-=for apidoc d||FLTK::Window|erase_overlay|
+=for apidoc |||erase_overlay|
 
 Indicate that the overlay drawn with L<C<draw_overlay()>|/"draw_overlay"> is
 blank. L<C<draw_overlay()>|/"draw_overlay"> will not be called until
@@ -198,14 +198,14 @@ L<C<redraw_overlay()>|/"redraw_overlay"> is called again.
 
 =cut
 
-=for apidoc d||FLTK::Window|free_backbuffer|
+=for apidoc |||free_backbuffer|
 
 Get rid of extra storage created by drawing when
 L<C<double_buffer()>|/"double_buffer"> was turned on.
 
 =cut
 
-=for apidoc d||FLTK::Window|iconize|
+=for apidoc |||iconize|
 
 Iconifies the window. If you call this when L<C<shown()>|/"shown"> is false it
 will L<C<show()>|/"show"> it as an icon. If the window is already iconified
@@ -219,7 +219,7 @@ icons.
 
 =cut
 
-=for apidoc d||FLTK::Window|redraw_overlay|
+=for apidoc |||redraw_overlay|
 
 Indicate that the image made by L<C<draw_overlay()>|/"draw_overlay"> has
 changed and must be drawn or redrawn. If the image is blank you should call
@@ -230,7 +230,7 @@ that overlays are only drawn in response to user input.
 
 =cut
 
-=for apidoc d||FLTK::Window|set_double_buffer|
+=for apidoc |||set_double_buffer|
 
 If the window is double-buffered, all drawing is done first to some offscreen
 image, and then copied to the screen as a single block. This eliminates
@@ -239,7 +239,7 @@ even if it actually is slower.
 
 =cut
 
-=for apidoc d||FLTK::Window|system_layout|
+=for apidoc |||system_layout|
 
 Resizes the actual system window to match the current size of the fltk widget.
 You should call this in your C<layout()> method if xywh have changed. The
@@ -277,9 +277,9 @@ Window::clear_double_buffer( )
         }
 
 
-=for apidoc d|bool|FLTK::Window|double_buffer|
+=for apidoc |bool|FLTK::Window|double_buffer|
 
-Returns a true value if C<L<set_double_buffer()>|/"set_double_buffer"> was
+Returns a true value if L<C<set_double_buffer()>|/"set_double_buffer"> was
 called, returns a false value if
 L<C<clear_double_buffer()>|/"clear_double_buffer"> was called. If neither has
 been called, this returns a machine-dependant state (systems where double
@@ -290,8 +290,7 @@ buffering is efficient turn it on by default).
 bool
 Window::double_buffer( )
 
-
-=for apidoc FLTK::Window|drawing_window|FLTK::Window|
+=for apidoc |FLTK::Window|FLTK::Window|drawing_window|
 
 Returns the L<Window|FLTK::Window> currently being drawn into. To set this use
 L<C<make_current()>|FLTK::Widget/"make_current">. It will already be set when
@@ -302,7 +301,7 @@ C<draw()> is called.
 const Window *
 Window::drawing_window( )
 
-=for apidoc d|bool|FLTK::Window|exec|FLTK::Window parent = 0|bool grab = 0
+=for apidoc |bool|FLTK::Window|exec|FLTK::Window parent = 0|bool grab = 0
 
 The window is popped up and this function does not return until
 L<C<make_exec_return()>|/"make_exec_return"> is called, or the window is
@@ -332,7 +331,7 @@ popup menus.
 bool
 Window::exec( const Window * parent = 0, bool grab = 0 )
 
-=for apidoc d||FLTK::Window|fullscreen|FLTK::Monitor monitor
+=for apidoc |||fullscreen|FLTK::Monitor monitor
 
 Make the window completely fill the monitor, without any window manager border
 or taskbar or anything else visible. Use
@@ -372,7 +371,7 @@ and should be avoided.
 
 =cut
 
-=for apidoc d||FLTK::Window|fullscreen|
+=for apidoc |||fullscreen|
 
 Chooses the L<Monitor|FLTK::Monitor> that the center of the window is on to be
 the one to resize to.
@@ -389,18 +388,18 @@ Window::fullscreen( monitor = 0 )
         CODE:
             THIS->fullscreen( );
     CASE: items == 2
-        Monitor * monitor;
+        const Monitor * monitor;
         CODE:
-           THIS->fullscreen((const Monitor &) monitor );
+           THIS->fullscreen( *monitor );
 
-=for apidoc d||FLTK::Window|fullscreen_off|X|Y|W|H
+=for apidoc |||fullscreen_off|X|Y|W|H
 
 Turns off any side effects of L<C<fullscreen()>|/"fullscreen">, then does
 C<resize(x,y,w,h)>.
 
 =cut
 
-=for apidoc d||FLTK::Window|resize|X|Y|W|H
+=for apidoc |||resize|X|Y|W|H
 
 Change the size and position of the window. If L<C<shown()>|/"shown"> is true,
 these changes are communicated to the window server (which may refuse that
@@ -425,7 +424,7 @@ Window::fullscreen_off ( int X, int Y, int Width, int Height )
         }
 
 
-=for apidoc d||FLTK::Window|hotspot|widget|offscreen = 0
+=for apidoc |||hotspot|widget|offscreen = 0
 
 L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
 pointing at the center of the widget, which may be the window itself. If
@@ -434,7 +433,7 @@ L<Monitor|FLTK::Monitor> (some X window managers do not allow this).
 
 =cut
 
-=for apidoc d||FLTK::Window|hotspot|CX|CY|offscreen = 0
+=for apidoc |||hotspot|CX|CY|offscreen = 0
 
 L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
 pointing at the C<cx,cy> position. If C<offscreen> is a true value, the window
@@ -455,7 +454,7 @@ Window::hotspot ( A, B = false, C = false )
         bool C;
         C_ARGS: A, B, C
 
-=for apidoc d|bool|FLTK::Window|iconic|
+=for apidoc |bool|FLTK::Window|iconic|
 
 Returns a true value if the window is currently displayed as an icon. Returns
 a false value if the window is not L<C<shown()>|/"shown"> or
@@ -470,7 +469,7 @@ L<C<iconized>|/"iconize">.
 
 =cut
 
-=for apidco d|bool|FLTK::Window|shown|
+=for apidco |bool|FLTK::Window|shown|
 
 Returns non-zero if L<C<show()>|/"show"> has been called, but C<DESTROY()> has
 not been called. Note that this returns true if L<C<hide()>|/"hide"> was
@@ -488,7 +487,7 @@ Window::iconic( )
             case 1: RETVAL = THIS->shown();  break;
         }
 
-=for apidoc d||FLTK::Window|iconlabel|iname
+=for apidoc |||iconlabel|iname
 
 Sets the text displayed below the icon (or in the taskbar). If you don't set
 this it defaults to the L<C<label()>|/"label"> but if that appears to be a
@@ -500,13 +499,13 @@ void
 Window::iconlabel( iname )
     const char * iname
 
-=for apidoc d||FLTK::Window|label|name|iname
+=for apidoc |||label|name|iname
 
 Sets both the L<C<label()>|/"label"> and the L<C<iconlabel()>|/"iconlabel">.
 
 =cut
 
-=for apidoc d||FLTK::Window|label|name
+=for apidoc |||label|name
 
 Sets the window title, which is drawn in the titlebar by the system.
 
@@ -521,7 +520,7 @@ Window::label( name, iname = "" )
         const char * name
         const char * iname
 
-=for apidoc d||FLTK::Window|make_exec_return|return_value
+=for apidoc |||make_exec_return|return_value
 
 If L<C<exec()>|/"exec"> is currently being called, make it hide this window
 and return C<return_value>.
@@ -538,13 +537,13 @@ void
 Window::make_exec_return ( return_value )
     bool return_value
 
-=for apidoc d||FLTK::Window|show|parent
+=for apidoc |||show|parent
 
 Same as C<child_of(parent); show()>.
 
 =cut
 
-=for apidoc d||FLTK::Window|show|argc|argv
+=for apidoc |||show|argc|argv
 
 This must be called after L<C<FLTK::args(argc,argv)>|FLTK/"args"> to show the
 "main" window, this indicates which window should be affected by any
@@ -554,7 +553,7 @@ a small program.
 
 =cut
 
-=for apidoc d||FLTK::Window|show|
+=for apidoc |||show|
 
 Cause the window to become visible. It is harmless to call this multiple
 times.
@@ -611,7 +610,7 @@ Window::show( arga = NO_INIT, argb = NO_INIT )
         CODE:
             THIS->show((const Window *) arga);
 
-=for apidoc d||FLTK::Window|size_range|minW|minH|maxW = 0|maxH = 0|dw = 0|dh = 0
+=for apidoc |||size_range|minW|minH|maxW = 0|maxH = 0|dw = 0|dh = 0
 
 Set the allowable range the user can resize this window to. This only works
 for top-level windows.
@@ -662,7 +661,7 @@ Window::size_range ( minW, minH, maxW = 0, maxH = 0, dw = 0, dh = 0)
     int dw
     int dh
 
-=for apidoc d|FLTK::NamedStyle|default_style|
+=for apidoc |FLTK::NamedStyle|FLTK::Window|default_style|
 
 By default a window has box() set to C<FLAT_BOX>, and the color() set to
 C<GRAY75>, which is a special color cell that is altered by

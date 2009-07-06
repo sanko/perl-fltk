@@ -12,10 +12,15 @@ int *         T_IPTR
 const int *   T_IPTR
 const uchar * T_PV
 
+# Enum
+Flags         T_INT
+
 # Objects
+const fltk::Rectangle *   O_FLTK
 fltk::Rectangle *   O_FLTK
 Button          *   O_FLTK
 Callback        *   O_FLTK
+const Monitor         *   O_FLTK
 Monitor         *   O_FLTK
 Widget          *   O_FLTK
 NamedStyle      *   O_FLTK

@@ -1,16 +1,12 @@
 #include <fltk/run.h>
 #include <fltk/Window.h>
 
-
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
 #include "./ppport.pl"
 
-
-
 using namespace fltk;
-
 
 #define ALLOW_CALLBACKS  1
 #define ALLOW_DESTROY    0 // Introduce pointless bugs :D
@@ -21,7 +17,7 @@ using namespace fltk;
 #define USE_CAIRO 0
 #define USE_X     0 // TODO
 
-=for apidoc H|||cb_w|fltk::Widget|CODE
+=for apidoc H||FLTK|cb_w|fltk::Widget|CODE
 
 This is the function called by FLTK whenever callbacks are triggered. See
 L<FLTK::Widget::callback()>.
