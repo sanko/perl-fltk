@@ -6,7 +6,6 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 META.yml
-pod/FLTK/Notes.pod
 README
 t/00000_Basic/00001_use_ok.t
 t/20000_Types/20001_Color.t
@@ -18,7 +17,9 @@ t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget/52300_FLTK_Group/52351_FL
 t/50000_Classes/50001_FLTK_Rectangle.t
 t/50000_Classes/~50002_FLTK_Style.t
 TODO.pod
+xs/Button.xsi
 xs/FLTK.xs
+xs/Group.xsi
 xs/ppport.pl
 xs/type.map
 xs/Window.xsi
