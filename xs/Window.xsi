@@ -86,12 +86,7 @@ Window::new(package, ...)
             RETVAL = new Window(XPos, YPos, Width, Height, Label);
         OUTPUT:
             RETVAL
-    CASE:
-        CODE:
-            RETVAL = NULL;
-            warn("See perldoc %s for help.", "FLTK::Window", items);
-        OUTPUT:
-            RETVAL
+
 
 #if ALLOW_DESTROY
 
@@ -602,14 +597,11 @@ void
 Window::show( arga = NO_INIT, argb = NO_INIT )
     CASE: items == 1
         CODE:
-            warn ("0 items");
             THIS->show( );
-
     CASE: items == 2 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2))) == SVt_PVAV
         int arga
         AV* argb
         CODE:
-            warn ("2 items");
             char ** REAL_INDEXES;
             for ( int i = 0; i < av_len(argb); i++ )
                 REAL_INDEXES[i] = (char *)(av_fetch(argb, i, 0));
@@ -617,7 +609,6 @@ Window::show( arga = NO_INIT, argb = NO_INIT )
     CASE: items == 2
         Window * arga
         CODE:
-            warn ("items == 1");
             THIS->show((const Window *) arga);
 
 =for apidoc d||FLTK::Window|size_range|minW|minH|maxW = 0|maxH = 0|dw = 0|dh = 0

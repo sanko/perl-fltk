@@ -14,9 +14,14 @@ const uchar * T_PV
 
 # Objects
 fltk::Rectangle *   O_FLTK
+Button          *   O_FLTK
+Callback        *   O_FLTK
 Monitor         *   O_FLTK
 Widget          *   O_FLTK
 NamedStyle      *   O_FLTK
+Menu            *   O_FLTK
+List            *   O_FLTK
+Group           *   O_FLTK
       Window    *   O_FLTK
 const Window    *   O_FLTK
 
