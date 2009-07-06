@@ -4,12 +4,9 @@ use strict;
 use warnings;
 
 #
-use FLTK::Version;
-use version qw[qv];
-our $VERSION_BASE = 0; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? q[%.3f_%03d] : q[%.3f]), (version->new(($VERSION_BASE))->numify / 1000), $UNSTABLE_RELEASE);
+our $VERSION_BASE = 1; our $FLTK_SVN = 6793; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf('%d.%05d' . ($UNSTABLE_RELEASE ? '_%03d' : ''), $VERSION_BASE, $FLTK_SVN, $UNSTABLE_RELEASE);
 
 #
-
 use XSLoader;
 
 #
@@ -114,11 +111,11 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 
 #use Data::Dump qw[pp];
 #warn pp \@EXPORT_OK;
-
-
 our $NOXS ||= $0 eq __FILE__;
+
 #warn $NOXS;
-XSLoader::load 'FLTK';#, $VERSION ;#if $FLTK::NOXS;  # for testing
+XSLoader::load 'FLTK';    #, $VERSION ;#if $FLTK::NOXS;  # for testing
+
 #sub END { warn "..." }
 # Classes ####################################################################
 @FLTK::Aduster::ISA            = qw[FLTK::Valuator];
