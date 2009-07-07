@@ -1,0 +1,1104 @@
+#ifndef DISABLE_WIDGET
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
+
+=pod
+
+=head1 Description
+
+The base class for all widgets in FLTK. The basic Widget draws an empty
+L<C<box()>|/"box"> and the L<C<label()>|/"label">, and ignores all events.
+This can be useful for making decorations or providing areas that pop up a
+L<C<tooltip()>|/"tooltip">.
+
+Inherits L<FLTK::Widget|FLTK::Widget>.
+
+Inherited by L<BButton|FLTK::BButton>, L<FLTK::CheckButton|FLTK::CheckButton>,
+L<FLTK::HighlightButton|FLTK::HighlightButton>,
+L<FLTK::RepeatButton|FLTK::RepeatButton>,
+L<FLTK::ReturnButton|FLTK::ReturnButton>, and
+L<FLTK::ToggleButton|FLTK::ToggleButton>.
+
+=cut
+
+#include <fltk/Widget.H>
+
+=for apidoc ||FLTK::Widget|new|x|y|w|h|label = ''
+
+The default constructor takes a value for L<C<x()>|/"x">, L<C<y()>|/"y">,
+L<C<w()>|/"w">, and L<C<h()>|/"h">, and an optional value for
+L<C<label()>|/"label">. Not that all subclasses provide an identical
+constructor and may also provide alternative constructors.
+
+If L<C<FLTK::Group->begin()>|FLTK::Group/"begin"> has been called, this widget
+is added as a new child of that group, and L<C<parent()>|/"parent"> is set to
+the group. If L<C<FLTK::Group->begin()>|FLTK::Group/"begin"> has not been
+called, or L<C<FLTK::Group->end()>|FLTK::Group/"end"> has been called,
+or L<C<FLTK::Group->current(0)>|FLTK::Group/"current">, then the
+L<C<parent()>|/"parent"> is undef. In this case you must add the widget
+yourself in order to see it.
+
+=cut
+
+Widget *
+Widget::new( int x, int y, int w, int h, char *label = 0)
+    CODE:
+        RETVAL = new Widget( x, y, w, h, label);
+        RETVAL->copy_label(label);
+#if VERBOSE >= 2
+        warn("%s|%s", RETVAL->label(), label);
+#endif
+    OUTPUT:
+        RETVAL
+
+#if ENABLE_DESTROY
+
+bool
+Widget::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Widget (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif
+
+=for apidoc ||FLTK::Group|parent|
+
+Returns the parent widget. Usually this is a L<FLTK::Group|FLTK::Group> or
+L<FLTK::Window|FLTK::Window>. Returns C<undef> if this is an orphan widget.
+
+=cut
+
+Group *
+Widget::parent ( )
+
+=for apidoc ||bool|contains|child
+
+Returns a true value if L<widget|FLTK::Widget> C<child> is a child of this
+widget, or is equal to this widget. Returns a false value if C<child> is
+undefined.
+
+=for apidoc ||bool|inside|parent
+
+Returns true if this is a child of C<parent>, or is equal to C<parent>.
+Returns false if C<parent> is undef.
+
+=cut
+
+bool
+Widget::contains ( Widget * child )
+    ALIAS:
+        inside = 1
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->contains(child); break;
+            case 1: RETVAL = THIS->inside(child);   break;
+        }
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||get_absolute_rect|rect
+
+Fills the L<FLTK::Rectangle|FLTK::Rectangle> pointed to by C<rect> with the
+widget's rectangle expressed in absolute (i.e. screen) coordinates.
+
+=cut
+
+void
+Widget::get_absolute_rect( fltk::Rectangle * rect )
+
+=for apidoc |||label|string
+
+Sets the label directly to a string. The label is printed somewhere on the
+widget or next to it. The string passed to label() is I<not> copied, instead
+the pointer to the string is stored. If L<C<copy_label()>|/"copy_label"> was
+called earlier the old string's memory is freed.
+
+=for apidoc |||tooltip|string
+
+Set the string used as the pop-up tooltip. The pointer to the passed string
+is stored, it is not copied! Passing null indicates that the tooltip of the
+L<C<parent()>|/"parent"> should be used (or no tooltip if no parent has one).
+If you want to disable the tooltip but let the parent have one, set this
+tooltip to C<"">.
+
+Putting C<@> commands in to bring up L<Symbol|FLTK::Symbol> objects will allow
+a lot of interesting things to be put into the tooltip.
+
+=cut
+
+const char *
+Widget::label ( char * STRING = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch( ix ) {
+                case 0: RETVAL = THIS->label( );   break;
+                case 1: RETVAL = THIS->tooltip( ); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0: THIS->label( STRING );   break;
+                case 1: THIS->tooltip( STRING ); break;
+            }
+    ALIAS:
+        tooltip = 1
+
+=for apidoc |||copy_label|string
+
+Sets the label to a copy of the string. The passed string is copied to private
+storage and used to set the L<C<label()>|/"label">. The memory will be freed
+when the widget is destroyed or when L<C<copy_label()>|/"copy_label"> is
+called again, or L<C<label(const char*)>|/"label"> is called.
+
+Passing C<undef> will set L<C<label()>|/"label"> to C<undef>.
+
+=cut
+
+void
+Widget::copy_label( char * STRING )
+
+=for apidoc |||image|image
+
+Sets the image. The C<image> is drawn as part of the label, usually to the
+left of the text. This is designed for icons on menu items. If you want to
+replace the entire background of the widget with a picture you should set
+L<C<box()>|/"box"> instead. Notice that you can also get images into labels by
+putting C<@> commands into the L<C<label()>|/"label">.
+
+=cut
+
+#include <fltk/Image.h>
+
+void
+Widget::image ( Image * image )
+
+=for apidoc |||callback|coderef|args
+
+Each widget has a single callback. You can set it or examine it with these
+methods. The callback is called with the widget as the first argument and any
+data in C<args> as the second argument. It is called in response to user
+events, but exactly when depends on the widget. For instance a button calls it
+when the button is released.
+
+B<NOTE>: To make use of callbacks, your perl must be recent enough to support
+weak references.
+
+=for apidoc |||callback|coderef|
+
+For convenience you can also define the callback as taking only the Widget as
+an argument.
+
+B<NOTE>: This may not be portable to some machines.
+
+=cut
+
+void
+Widget::callback( SUB, ARGS = NO_INIT, ... )
+    CODE:
+#ifdef ENABLE_CALLBACKS
+        AV *arr = newAV();
+        av_push(arr, newSVsv((SV*)ST(1))); // coderef
+        SV * widget = newSVsv((SV*)ST(0));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::_cb_w()
+        sv_rvweaken(widget);
+#else // ifdef SvWEAKREF
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+        THIS->callback(_cb_w);
+        av_push(arr, widget); // widget
+        for (int i = 2; i < items; i++) {
+            av_push(arr, newSVsv((SV*)ST(i)));
+        }
+        THIS->user_data(arr);
+#else  // ifdef ENABLE_CALLBACKS
+        warn("Callbacks have been disabled."); // TODO: Expain why in POD
+#endif // ifdef ENABLE_CALLBACKS
+
+=for apidoc |||user_data|args
+
+Set the second argument to the callback.
+
+See Also: L<C<callback>|/"callback">, L<C<argument>|/"argument">.
+
+=for apidoc |||argument|arg
+
+Set the second argument to the callback to a number.
+
+See Also: L<C<callback>|/"callback">, L<C<user_data>|/"user_data">.
+
+=cut
+
+void
+Widget::user_data ( args )
+    ALIAS:
+        argument    = 1
+    CODE:
+        AV * arr = newAV();
+        av_push(arr, av_shift((AV*)THIS->user_data()));
+        SV * widget = newSVsv((SV*)ST(0));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
+        sv_rvweaken(widget);
+#else // ifdef SvWEAKREF
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+        av_push(arr, widget); // widget
+        for (int i = 1; i < items; i++) {
+            av_push(arr, newSVsv((SV*)ST(i)));
+        }
+        THIS->user_data(arr);
+
+=for apidoc |||do_callback|
+
+You can cause a widget to do its callback at any time.
+
+=for apidoc xH|||do_callback|args
+
+You can also call the callback function with arbitrary arguments.
+
+=cut
+
+void
+Widget::do_callback( widget = NO_INIT, ... )
+    CASE: items == 1
+        CODE:
+            THIS->do_callback( );
+#if 0 // TODO
+    CASE:
+        CODE:
+            AV * arr = newAV();
+            AV * arr_old = (AV*) THIS->user_data();
+            av_push(arr, SvRV(*av_fetch(arr_old, 0, 0)));
+            av_push(arr, (CV *) SvRV(*av_fetch(arr_old, 1, 0)));
+            SV * widget = newSVsv((SV*)ST(0));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
+            sv_rvweaken(widget);
+#else // ifdef SvWEAKREF
+            croak("weak references are not implemented in this release of perl");
+            XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+            av_push(arr, widget); // widget
+            for (int i = 1; i < items; i++) {
+                av_push(arr, newSVsv((SV*)ST(i)));
+            }
+            THIS->user_data(arr);
+            THIS->do_callback( );
+            THIS->user_data(arr_old);
+#endif // if 0 // TODO
+
+=for apidoc ||uchar|type|
+
+C<8>-bit identifier that controls how widget works. This value had to be
+provided for Forms compatibility, but you can use it for any purpose you want
+(mostly for "bad object oriented programming" where you insert some subclass
+functionality into the base class). Widget subclasses may store values in the
+range C<0-99> here (larger values are reserved for use by FLTK).
+
+The L<FLTK::PackedGroup|FLTK::PackedGroup> widget uses the low bit of the
+L<C<type()>|/"type"> of each child to indicate C<HORIZONTAL (1)> or
+C<VERTICAL (0)>.
+
+For portability, FLTK does not use RTTI (Run Time Typing Infomation)
+internally (you are free to use it, though). If you don't have RTTI you can
+use the clumsy FLTK mechanisim, by having L<C<type()>|/"type"> use a unique
+value. These unique values must be greater than the symbol
+C<FLTK::Widget::RESERVED_TYPE> (which is C<100>). Look through the header
+files for C<FLTK::Widget::RESERVED_TYPE> to find an unused number. If you
+make a subclass of L<FLTK::Window|FLTK::Window>, you must use
+C<FLTK::Widget::WINDOW_TYPE + N> (C<N> must be in the range C<1> to C<7>) so
+that L<C<is_window()>|/"is_window"> will work, if you make a subclass of
+L<FLTK::Group|FLTK::Group>, you must use C<FLTK::Widget::GROUP_TYPE + N> (C<N>
+must be in the range C<1> to C<7>) so that L<C<is_group()>|/"is_group"> will
+work.
+
+=cut
+
+uchar
+Widget::type( )
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||bool|is_group|
+
+Returns a true value for subclasses of L<FLTK::Group|FLTK::Group>.
+
+=for apidoc ||bool|is_window|
+
+Returns a true value for subclasses of L<FLTK::Window|FLTK::Window>. If this
+is true, L<C<is_group()>|/"is_group"> is also true.
+
+=cut
+
+bool
+Widget::is_group( )
+    ALIAS:
+        is_window = 1
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->is_group();  break;
+            case 1: RETVAL = THIS->is_window(); break;
+        }
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void
+Widget::draw ( )
+
+int
+Widget::handle( EVENT )
+    int EVENT
+
+ # int
+ # Widget::send ( EVENT )
+ #    int EVENT
+
+void
+Widget::layout ( )
+
+bool
+Widget::copy_style ( STYLE )
+    const Style * STYLE
+
+
+
+Window *
+Widget::window ( )
+
+bool
+Widget::resize ( X, Y, W, H )
+    CASE: items == 2
+        int X
+        int Y
+        C_ARGS: X, Y
+    CASE: items == 4
+        int X
+        int Y
+        int W
+        int H
+
+bool
+Widget::position ( X, Y )
+    int X
+    int Y
+
+
+unsigned
+Widget::shortcut ( KEY )
+    CASE: ! items
+        C_ARGS:
+    CASE: items == 1
+        unsigned KEY
+        CODE:
+            THIS->shortcut( KEY );
+
+bool
+Widget::add_shortcut ( KEY )
+    unsigned KEY
+
+bool
+Widget::remove_shortcut ( KEY )
+    unsigned KEY
+
+void
+Widget::remove_shortcuts ( )
+
+unsigned
+Widget::label_shortcut ( )
+
+bool
+Widget::test_label_shortcut ( )
+
+bool
+Widget::test_shortcut ( TEST_LABEL )
+    CASE: ! items
+        CODE:
+            THIS->test_shortcut( );
+    CASE: items == 1
+        bool TEST_LABEL
+
+void
+Widget::when ( WHEN )
+    uchar WHEN
+
+ # TODO: Make this look more like the C++ version
+ # void
+ # Widget::default_callback ( WIDGET, CODE )
+ #     Widget * WIDGET
+ #     CODE:
+ #         AV *arr = newAV();
+ #         av_store(arr, 0, newSVsv((SV*)ST(1))); // coderef
+ #         av_store(arr, 1, newSVsv((SV*)ST(0))); // widget
+ #         for (int i = 2; i < items; i++) {
+ #             warn ( "%d | %s", i, newSVsv((SV*)ST(i)));
+ #             av_store(arr, i, newSVsv((SV*)ST(i)));
+ #         }
+ #         THIS->default_callback(WIDGET, cb);
+ #         THIS->user_data(arr);
+
+
+bool
+Widget::pushed ( )
+
+bool
+Widget::focused ( )
+
+bool
+Widget::belowmouse ( )
+
+Flags
+Widget::flags ( FLAGS = NO_INIT )
+    CASE: ! items
+        CODE:
+            RETVAL = THIS->flags( );
+    CASE: items == 1
+        Flags FLAGS
+        CODE:
+            THIS->flags ( FLAGS );
+
+void
+Widget::set_flag ( FLAG, VALUE = true )
+    CASE: items == 1
+        unsigned FLAG
+        C_ARGS: FLAG
+    CASE: items == 2
+        unsigned FLAG
+        bool     VALUE
+
+void
+Widget::clear_flag ( FLAG )
+    unsigned FLAG
+
+void
+Widget::invert_flag ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::flag ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::any_of ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::all_of ( FLAG )
+    unsigned FLAG
+
+bool
+Widget::state ( STATE )
+    CASE: ! items
+        CODE:
+            RETVAL = THIS->state( );
+    CASE:
+        bool STATE;
+
+bool
+Widget::clear ( )
+
+void
+Widget::setonly ( )
+
+bool
+Widget::visible_r ( )
+
+void
+Widget::show ( )
+
+void
+Widget::hide ( )
+
+bool
+Widget::active ( )
+
+bool
+Widget::active_r ( )
+
+void
+Widget::activate ( )
+
+void
+Widget::deactivate ( )
+
+bool
+Widget::output ( )
+
+bool
+Widget::horizontal ( )
+
+bool
+Widget::vertical ( )
+
+void
+Widget::set_horizontal ( )
+
+void
+Widget::set_vertical ( )
+
+bool
+Widget::take_focus ( )
+
+void
+Widget::throw_focus ( )
+
+void
+Widget::redraw ( FLAGS = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->redraw( );
+    # CASE: items == 2 && sv_isobject(ST(1)) && (SvTYPE(SvRV(ST(1))) == SVt_PVMG)
+    #     const fltk::Rectangle * FLAGS
+    CASE: items == 2
+        uchar FLAGS
+
+void
+Widget::redraw_label ( )
+
+void
+Widget::redraw_highlight ( )
+
+uchar
+Widget::damage ( )
+
+void
+Widget::set_damage ( VALUE )
+    uchar VALUE
+
+void
+Widget::relayout ( )
+
+uchar
+Widget::layout_damage ( VALUE )
+    CASE: ! items
+        PROTOTYPE: $;$
+        CODE:
+            RETVAL = THIS->layout_damage( );
+    CASE:
+        uchar VALUE
+        CODE:
+            THIS->layout_damage( VALUE );
+
+
+void
+Widget::add_timeout ( TIME )
+    float TIME
+
+void
+Widget::repeat_timeout ( TIME )
+    float TIME
+
+void
+Widget::remove_timeout (  )
+
+void
+Widget::make_current ( )
+
+void
+Widget::draw_background ( )
+
+void
+Widget::draw_frame ( )
+
+void
+Widget::draw_box ( )
+
+void
+Widget::draw_label ( RECTANGLE, FLAGS )
+    CASE: ! items
+        PROTOTYPE: $;$$
+        CODE:
+            THIS->draw_label( );
+    CASE: items == 2
+        const fltk::Rectangle * RECTANGLE
+        Flags                   FLAGS
+        C_ARGS: (const fltk::Rectangle &) RECTANGLE, FLAGS
+
+void
+Widget::draw_glyph ( WHICH, RECTANGLE )
+    int WHICH
+    const fltk::Rectangle * RECTANGLE
+    C_ARGS: WHICH, (const fltk::Rectangle &) RECTANGLE
+
+void
+Widget::cursor ( CURSOR )
+    Cursor * CURSOR
+
+void
+Widget::measure_label ( W, H )
+    int W
+    int H
+    OUTPUT:
+        W
+        H
+
+ # TODO: Make these work...
+
+ # void
+ # Widget::add ( ATYPE, DATA )
+ #     const AssociationType * ATYPE
+ #     void * DATA
+ #     C_ARGS: (const AssociationType) ATYPE, DATA
+ #     OUTPUT:
+ #         ATYPE
+ #
+ # bool
+ # Widget::set ( ATYPE, DATA )
+ #     CASE: ! items
+ #         PROTOTYPE: $;$$
+ #         CODE:
+ #             RETVAL = THIS->set( );
+ #     CASE:
+ #           AssociationType * ATYPE
+ #         void * DATA
+ #         C_ARGS: (const AssociationType) ATYPE, DATA
+ #         OUTPUT:
+ #             ATYPE
+ #
+ # void *
+ # Widget::get ( ATYPE )
+ #     const AssociationType ATYPE
+ #     OUTPUT:
+ #         ATYPE
+ #
+ # void *
+ # Widget::foreach (   AssociationType & AT, AssociationFunctor & FKT )
+ #
+ # bool
+ # Widget::remove (   AssociationType & AT, void * DATA )
+ #
+ # bool
+ # Widget::find (   AssociationType & AT, void * DATA )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bool
+Widget::add_shorcut( unsigned key )
+    CODE:
+        THIS->add_shortcut( key );
+    OUTPUT:
+        RETVAL
+
+
+
+
+ # From fltk::Rectangle
+
+int
+Widget::x ( int x = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->x( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->x( x );
+            RETVAL = THIS->x( ) == x ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::y ( int y = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->y( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->y( y );
+            RETVAL = THIS->y( ) == y ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::w ( int w = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->w( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->w( w );
+            RETVAL = THIS->w( ) == w ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::h ( int h = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->h( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->h( h );
+            RETVAL = THIS->h( ) == h ? true : false;
+        OUTPUT:
+            RETVAL
+
+int
+Widget::r ( ... )
+    CODE:
+        RETVAL = THIS->r( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::b ( ... )
+    CODE:
+        RETVAL = THIS->b( );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_x ( int v )
+    CODE:
+        THIS->set_x( v );
+        RETVAL = THIS->x( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_y ( int v )
+    CODE:
+        THIS->set_y( v );
+        RETVAL = THIS->y( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_r ( int v )
+    CODE:
+        THIS->set_r( v );
+        RETVAL = THIS->r( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::set_b ( int v )
+    CODE:
+        THIS->set_b( v );
+        RETVAL = THIS->b( ) == v ? true : false;
+    OUTPUT:
+        RETVAL
+
+ # bool
+ # Widget::set(int x, int y, int w, int h)
+ #     CODE:
+ #         THIS->set(x, y, w, h);
+ #         RETVAL = (
+ #             (THIS->x( ) == x) and
+ #             (THIS->y( ) == y) and
+ #             (THIS->w( ) == w) and
+ #             (THIS->h( ) == h)) ? true : false;
+ #     OUTPUT:
+ #         RETVAL
+
+
+bool
+Widget::move_x ( int v )
+    CODE:
+        int pre_x = THIS->x( );
+        THIS->move_x( v );
+        RETVAL = THIS->x( ) == pre_x + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_y ( int v )
+    CODE:
+        int pre_y = THIS->y( );
+        THIS->move_y( v );
+        RETVAL = THIS->y( ) == pre_y + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_r ( int v )
+    CODE:
+        int pre_r = THIS->r( );
+        THIS->move_r( v );
+        RETVAL = THIS->r( ) == pre_r + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move_b ( int v )
+    CODE:
+        int pre_b = THIS->b( );
+        THIS->move_b( v );
+        RETVAL = THIS->b( ) == pre_b + v ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::inset ( int v )
+    CODE:
+        int pre_w = THIS->w( );
+        int pre_h = THIS->h( );
+        THIS->inset( v );
+        RETVAL = (
+            (THIS->w( ) == pre_w - (v * 2)) and
+            (THIS->h( ) == pre_h - (v * 2))
+          ) ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::move ( int dx, int dy )
+    CODE:
+        int pre_x = THIS->x( );
+        int pre_y = THIS->y( );
+        THIS->move( dx, dy );
+        RETVAL = (
+            (THIS->x( ) == pre_x + dx) and
+            (THIS->y( ) == pre_y + dy)
+          ) ? true : false;
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::empty ( )
+    CODE:
+        RETVAL = THIS->empty( );
+    OUTPUT:
+        RETVAL
+
+bool
+Widget::not_empty ( )
+    CODE:
+        RETVAL = THIS->not_empty( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::center_y ( )
+    CODE:
+        RETVAL = THIS->center_y( );
+    OUTPUT:
+        RETVAL
+
+int
+Widget::baseline_y ( )
+    CODE:
+        RETVAL = THIS->baseline_y( );
+    OUTPUT:
+        RETVAL
+
+
+ # TODO: void fltk::Rectangle::merge  (  const Rectangle &   r   )
+ # Replace the value with the union of this rectangle and R (ie the rectangle
+ # that surrounds both of these rectangles). If one rectangle is empty(), the
+ # other is returned unchanged (ie it does not union in the degenerate point
+ # of that rectangle).
+
+ # TODO: void fltk::Rectangle::intersect  (  const Rectangle &   r   )
+ # Replace the value with the intersection of this rectangle and R. If the
+ # rectangles do not intersect, the result may have negative width and/or
+ # height, this means empty() will return true, but some code may still draw
+ # this rectangle.
+
+
+
+
+
+
+
+
+
+ # Unknown...
+float
+Widget::labelsize( SIZE = 0 )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labelsize( );
+       OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int SIZE;
+        CODE:
+            THIS->labelsize(SIZE);
+
+LabelType *
+Widget::labeltype ( TYPE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labeltype( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        LabelType * TYPE
+        CODE:
+            THIS->labeltype( TYPE );
+
+Font *
+Widget::labelfont ( TYPE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labelfont( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        Font * TYPE
+        CODE:
+            THIS->labelfont( TYPE );
+
+
+int
+Widget::color(int color = NO_INIT)
+    CODE:
+        if (items > 1) {
+            //group->box(lookup_box(color));
+            THIS->color(color);
+            RETVAL = (color == THIS->color()) ? color : NULL;
+        }
+        else
+            RETVAL = THIS->color();
+    OUTPUT:
+        RETVAL
+
+void
+Widget::box( TYPE )
+    Box * TYPE
+
+
+
+
+ # From my own searching
+
+Flags
+Widget::align ( ALIGN = NO_INIT )
+    CASE: items == 2
+        unsigned ALIGN
+        CODE:
+            THIS->align( ALIGN );
+    CASE:
+        CODE:
+            RETVAL = THIS->align( );
+        OUTPUT:
+            RETVAL
+
+
+#endif
+
+#endif // ifndef DISABLE_WIDGET
+

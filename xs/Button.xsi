@@ -69,7 +69,7 @@ Button::new(x, y, w, h, label = 0)
     OUTPUT:
         RETVAL
 
-#if ALLOW_DESTROY
+#if ENABLE_DESTROY
 
 bool
 Button::DESTROY ( )
@@ -118,8 +118,6 @@ Button::draw( GLYPH_WIDTH )
 
 NFI
 
-=cut
-
 =for apidoc ||int|handle|EVENT
 
 NFI
@@ -147,8 +145,6 @@ L<C<Widget::setonly()>|FLTK::Widget/"setonly">.
 
 If you turn it on, a normal button will draw pushed-in, until the user clicks
 it and releases it.
-
-=cut
 
 =for apidoc ||bool|value|
 

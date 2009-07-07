@@ -88,7 +88,7 @@ Window::new(package, ...)
             RETVAL
 
 
-#if ALLOW_DESTROY
+#if ENABLE_DESTROY
 
 bool
 Window::DESTROY ( )
@@ -101,7 +101,7 @@ Window::DESTROY ( )
     OUTPUT:
         RETVAL
 
-#endif // #if ALLOW_DESTROY
+#endif // #if ENABLE_DESTROY
 
 =for apidoc |||border|bool set
 

@@ -8,9 +8,9 @@
 
 using namespace fltk;
 
-#define ALLOW_CALLBACKS  1
-#define ALLOW_DESTROY    0 // Introduce pointless bugs :D
-#define ALLOW_DEPRECATED 0 // Depreciated widgets, etc.
+#define ENABLE_CALLBACKS  1 // Depends on weak refs... see FLTK::_cb_w
+#define ENABLE_DESTROY    0 // Introduce pointless bugs :D
+#define ENABLE_DEPRECATED 1 // Depreciated widgets, etc.
 #define USE_IMAGE 0
 #define USE_GL    0
 #define USE_GLUT  0
@@ -24,8 +24,12 @@ L<FLTK::Widget::callback()>.
 
 =cut
 
-void cb_w (fltk::Widget * WIDGET, void * CODE) {
-#if ALLOW_CALLBACKS
+#ifndef SvWEAKREF           // Callbacks use weak references to the widget
+#undef  ENABLE_CALLBACKS    // TODO: Explain this better :)
+#endif // #ifndef SvWEAKREF
+
+void _cb_w (fltk::Widget * WIDGET, void * CODE) {
+#ifdef ENABLE_CALLBACKS
     AV *cbargs = (AV *)CODE;
     I32 alen = av_len(cbargs);
     CV *thecb = (CV *)SvRV(*av_fetch(cbargs, 0, 0));
@@ -38,9 +42,9 @@ void cb_w (fltk::Widget * WIDGET, void * CODE) {
     call_sv((SV*)thecb, G_DISCARD);
         FREETMPS;
     LEAVE;
-#else
+#else // ifdef ENABLE_CALLBACKS
     warn( "Callbacks have been disabled. ¬.¬ " );
-#endif
+#endif // ifdef ENABLE_CALLBACKS
 }
 
 
@@ -51,9 +55,13 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 run ()
 
+INCLUDE: Adjuster.xsi
+
 INCLUDE: Button.xsi
 
 INCLUDE: Group.xsi
+
+INCLUDE: Widget.xsi
 
 INCLUDE: Window.xsi
 

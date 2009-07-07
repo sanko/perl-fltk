@@ -14,19 +14,34 @@ const uchar * T_PV
 
 # Enum
 Flags         T_INT
+const Mark    T_INT
+Mark          T_INT
+linepos       T_INT
 
 # Objects
+Adjuster * O_FLTK
+Browser * O_FLTK
 const fltk::Rectangle *   O_FLTK
 fltk::Rectangle *   O_FLTK
+Box             *   O_FLTK
 Button          *   O_FLTK
 Callback        *   O_FLTK
-const Monitor         *   O_FLTK
+Cursor          *   O_FLTK
+Font            *   O_FLTK
+Image           *   O_FLTK
+LabelType       *   O_FLTK
+const Monitor   *   O_FLTK
+
 Monitor         *   O_FLTK
-Widget          *   O_FLTK
 NamedStyle      *   O_FLTK
 Menu            *   O_FLTK
 List            *   O_FLTK
+Scrollbar           O_FLTK
+const Style     *   O_FLTK
+const Symbol    *   O_FLTK
 Group           *   O_FLTK
+Widget          *   O_FLTK
+const Widget    *   O_FLTK
       Window    *   O_FLTK
 const Window    *   O_FLTK
 

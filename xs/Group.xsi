@@ -59,7 +59,7 @@ Group::new ( X, Y, W, H, LABEL = 0, BEGIN = false )
     char * LABEL
     bool BEGIN
 
-#if ALLOW_DESTROY
+#if ENABLE_DESTROY
 
 bool
 Group::DESTROY ( )
