@@ -8,7 +8,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * None yet.
+=item * Finish all widgets, etc.
 
 =back
 
@@ -16,7 +16,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * None yet.
+=item * SUBCLASSING!!!!!
 
 =back
 
