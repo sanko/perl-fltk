@@ -801,14 +801,40 @@ will still be on when L<C<draw()>|/"draw"> is called.
 void
 Widget::redraw( uchar flags = DAMAGE_ALL )
 
+=for apidoc |||redraw_label|
 
+Indicates that the L<C<label()>|/"label"> should be redrawn. This does nothing
+if there is no label. If it is an outside label (see L<C<align()>|/"align">)
+then the L<C<parent()>|/"parent"> is told to redraw it. Otherwise
+L<C<redraw()>|/"redraw"> is called.
 
+=for apidoc |||redraw_highlight|
 
+Causes a redraw if highlighting changes.
 
+Calls L<C<redraw(DAMAGE_HIGHLIGHT)>|/"redraw"> if this widget has a non-zero
+L<C<highlight_color()>|/"hightlight_color">. This is designed to be called in
+response to C<ENTER >and C<EXIT> events and not redraw the widget if the no
+highlight color is being used.
 
+=cut
 
+void
+Widget::redraw_label( )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->redraw_label();     break;
+            case 1: THIS->redraw_highlight(); break;
+        }
+    ALIAS:
+        redraw_highlight = 1
 
+=for apidoc H|||draw|
 
+I really need to get around to fully subclassing everything. It's on my todo
+list.
+
+=cut
 
 
 
