@@ -784,7 +784,22 @@ void
 Widget::set_damage( uchar c )
 
 
+=for apidoc |||redraw|
 
+Same as L<C<redraw(L<C<DAMAGE_ALL>|/"DAMAGE_ALL">)>|/"redraw">. This bit is
+used by most widgets to indicate that they should not attempt any incremental
+update, and should instead completely draw themselves.
+
+=for apidoc |||redraw|flags
+
+Indicates that L<C<draw()>|/"draw"> should be called, and turns on the given
+bits in L<C<damage()>|/"damage">. At least these bits, and possibly others,
+will still be on when L<C<draw()>|/"draw"> is called.
+
+=cut
+
+void
+Widget::redraw( uchar flags = DAMAGE_ALL )
 
 
 
@@ -988,19 +1003,6 @@ Widget::take_focus ( )
 
 void
 Widget::throw_focus ( )
-
-void
-Widget::redraw ( FLAGS = NO_INIT )
-    CASE: items == 1
-        CODE:
-            THIS->redraw( );
-    # CASE: items == 2 && sv_isobject(ST(1)) && (SvTYPE(SvRV(ST(1))) == SVt_PVMG)
-    #     const fltk::Rectangle * FLAGS
-    CASE: items == 2
-        uchar FLAGS
-
-void
-Widget::redraw_label ( )
 
 void
 Widget::redraw_highlight ( )
