@@ -28,7 +28,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =back
 
-=head1 Duke Nukem: Forever
+=head1 Production Ready Perl 6
 
 =over
 
