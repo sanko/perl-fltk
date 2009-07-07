@@ -8,9 +8,9 @@
 
 using namespace fltk;
 
-#define ENABLE_CALLBACKS  1 // Depends on weak refs... see FLTK::_cb_w
-#define ENABLE_DESTROY    0 // Introduce pointless bugs :D
-#define ENABLE_DEPRECATED 1 // Depreciated widgets, etc.
+#define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
+//#define ENABLE_DESTROY    // Introduce pointless bugs :D
+//#define ENABLE_DEPRECATED // Depreciated widgets, etc.
 #define USE_IMAGE 0
 #define USE_GL    0
 #define USE_GLUT  0

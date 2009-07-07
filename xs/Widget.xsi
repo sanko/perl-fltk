@@ -51,20 +51,20 @@ Widget::new( int x, int y, int w, int h, char *label = 0)
     OUTPUT:
         RETVAL
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 Widget::DESTROY ( )
     CODE:
 #if VERBOSE >= 2
         warn ( "Bye, Widget (label: '%s')", THIS->label());
-#endif
+#endif // #if VERBOSE >= 2
         delete THIS;
         RETVAL = true;
     OUTPUT:
         RETVAL
 
-#endif
+#endif // #ifdef ENABLE_DESTROY
 
 =for apidoc ||FLTK::Group|parent|
 

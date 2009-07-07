@@ -59,20 +59,20 @@ Group::new ( X, Y, W, H, LABEL = 0, BEGIN = false )
     char * LABEL
     bool BEGIN
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 Group::DESTROY ( )
     CODE:
 #if VERBOSE >= 2
         warn ( "Bye, Group (label: %s)", THIS->label() );
-#endif
+#endif // #if VERBOSE >= 2
         delete THIS;
         RETVAL = true;
     OUTPUT:
         RETVAL
 
-#endif
+#endif // #ifdef ENABLE_DESTROY
 
 =for apidoc |||begin|
 

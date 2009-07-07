@@ -1,4 +1,4 @@
-#ifndef ALLOW_DEPRECATED
+#ifdef ENABLE_DEPRECATED
 
 #ifndef DISABLE_ADJUSTER
 
@@ -99,7 +99,7 @@ Adjuster::default_style ( )
     OUTPUT:
         RETVAL
 
-#endif // ifndef ENABLE_DEPRECATED
+#endif // ifdef ENABLE_DEPRECATED
 
 #endif // ifndef DISABLE_ADJUSTER
 

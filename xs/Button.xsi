@@ -69,20 +69,20 @@ Button::new(x, y, w, h, label = 0)
     OUTPUT:
         RETVAL
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 Button::DESTROY ( )
     CODE:
 #if VERBOSE >= 2
         warn ( "Bye, Button (label: '%s')", THIS->label());
-#endif
+#endif // #if VERBOSE >= 2
         delete THIS;
         RETVAL = true;
     OUTPUT:
         RETVAL
 
-#endif
+#endif // #ifdef ENABLE_DESTROY
 
 =for apidoc e||int|HIDDEN|
 
