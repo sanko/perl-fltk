@@ -15,7 +15,7 @@ my $mb = MBX::FLTK->new(
     module_name       => 'FLTK',
     license           => 'artistic_2',
     dist_author       => 'Sanko Robinson <sanko@cpan.org>',
-    dist_version_from => 'lib/FLTK/Version.pm',
+    dist_version_from => 'lib/FLTK.pm',
     dist_abstract =>
         'Perl interface to the (experimental) 2.0.x branch of the FLTK GUI toolkit',
     requires => {perl                 => '5.8.0',    # 5.8.0 is too old IMO...

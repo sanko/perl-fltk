@@ -3,13 +3,17 @@
 #
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More #tests => 18,
+import => [qw[!ok]];
+*okay = \&Test::More::ok;
+Test::More::use_ok('FLTK', qw[:all]);
 use Module::Build qw[];
 use Time::HiRes qw[];
 use FLTK qw[];
 use File::Spec qw[];
 my $test_builder = Test::More->builder;
 chdir '../../../' if not -d '_build';
+use lib 'inc';
 my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
@@ -33,23 +37,31 @@ isa_ok($wid_lbl, 'FLTK::Widget',
 warn 'TODO: send(event)';
 
 #
-ok(!$wid->is_window,     '$wid->is_window() returns false');
-ok(!$wid->is_group,      '$wid->is_group() returns false');
-ok(!$wid_lbl->is_window, '$wid_lbl->is_window() returns false');
-ok(!$wid->is_group,      '$wid_lbl->is_group() returns false');
+okay(!$wid->is_window,     '$wid->is_window() returns false');
+okay(!$wid->is_group,      '$wid->is_group() returns false');
+okay(!$wid_lbl->is_window, '$wid_lbl->is_window() returns false');
+okay(!$wid->is_group,      '$wid_lbl->is_group() returns false');
 
 #
 is($wid_lbl->label, 'label!', '$wid_lbl->label() eq "label!"');
-is($wid->label, __FILE__, sprintf '$wid->label() eq "%s"', __FILE__);
+is($wid->label,     undef,    sprintf '$wid->label() eq undef by default');
 
 #
 $wid->callback(
     sub {
-        isa_ok(shift, 'FLTK::Widget', 'Callback triggered. First param ');
+        isa_ok(shift, 'FLTK::Widget', 'Callback triggered. First param');
     }
 );
-ok($wid->do_callback(), sprintf 'FLTK::Widget->do_callback()');
-
+$wid->do_callback();
+$wid->callback(sub { my ($self, $data) = @_; $data->($self); });    # coderef
+$wid->user_data(
+    sub {
+        isa_ok(shift, 'FLTK::Widget',
+               'Callback inside user_data. First param');
+    }
+);
+$wid->do_callback();
+done_testing(); exit;
 # From FLTK::Rectangle
 is($wid->x,     50,  '$wid->x() == 50');
 is($wid->y,     80,  '$wid->y() == 80');

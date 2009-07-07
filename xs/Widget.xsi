@@ -349,6 +349,367 @@ Widget::is_group( )
     OUTPUT:
         RETVAL
 
+=for apidoc ||FLTK::Flags|flags|
+
+Each Widget, and most drawing functions, take a bitmask of flags that indicate
+the current state and exactly how to draw things. See <fltk/Flags.h> for
+values.
+
+This is for copying the flag values, use L<C<flag(c)>|/"flag"> to test them.
+
+=for apidoc |||flags|f
+
+Replace L<C<flags()>|/"flags">. This is for constructors, don't use it
+elsewhere.
+
+=cut
+
+Flags
+Widget::flags( Flags f = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->flags( );
+            OUTPUT:
+                RETVAL
+    CASE:
+        CODE:
+            THIS->flags( f );
+
+
+=for apidoc |||set_flag|f
+
+Make L<C<flag(f)>|/"flag"> return true by turning on that bit. You can set
+more than one by or'ing them together.
+
+=for apidoc |||clear_flag|f
+
+Make L<C<flag(f)>|/"flag"> return false by turning off that bit. You can turn
+off multiple bits by or'ing them toegher.
+
+=for apidoc |||set_flag|f|b
+
+Make L<C<flag(f)>|/"flag"> return C<b>. Same as
+C<b ? set_flag(f) : clear_flag(f)>.
+
+=for apidoc |||invert_flag|f
+
+Flip the result of L<C<flag(f)>|/"flag"> if C<f> is a single bit. If you or
+together bits it will flip them all.
+
+=cut
+
+void
+Widget::set_flag( unsigned f, bool b = NO_INIT )
+    CASE: items == 2
+        CODE:
+            switch( ix ) {
+                case 0: THIS->set_flag( f );    break;
+                case 1: THIS->clear_flag( f );  break;
+                case 2: THIS->invert_flag( f ); break;
+            }
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0: THIS->set_flag( f, b ); break;
+            }
+    ALIAS:
+        clear_flag  = 1
+        invert_flag = 2
+
+=for apidoc ||bool|flag|f
+
+Returns true if the bit for C<f> is on.
+
+=for apidoc ||bool|any_of|f
+
+Returns true if I<any> of the bits in C<f> are on. Actually, this is the same
+function as L<C<flag(f)>|/"flag"> but using this may make the code more
+readable.
+
+=for apidoc ||bool|all_of|f
+
+Returns true if I<all> of the bits in C<f> are on. C<f> should be several bits
+or'd together, otherwise this is the same as L<C<flag(f)>|/"flag">.
+
+=cut
+
+bool
+Widget::flag( unsigned f )
+    ALIAS:
+        any_of = 1
+        all_of = 2
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->flag( f ); break;
+            case 1: RETVAL = THIS->any_of( f ); break;
+            case 2: RETVAL = THIS->all_of( f ); break;
+        }
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||align|flags
+
+Forces the values of all the C<FLTK::ALIGN_*> flags to the passed value. This
+determines how the label is printed next to or inside the widget. The default
+value is C<FLTK::ALIGN_CENTER>, which centers the label. The value can be any
+of the C<ALIGN> flags or'd together.
+
+=cut
+
+void
+Widget::align( Flags flags )
+
+
+=for apidoc |||when|flag
+
+Flags indicating when to do the L<C<callback()>|/"callback">. This field is in
+the base class so that you can scan a panel and
+L<C<do_callback()>|/"do_callback"> on all the ones that don't do their own
+callbacks in response to an C<OK> button.
+
+The following constants can be used, their exact meaning depends on the
+widget's implementation:
+
+=over
+
+=item C<FLTK::WHEN_NEVER>
+
+Never call the L<C<callback (0)>|/"callback">.
+
+=item C<FLTK::WHEN_CHANGED>
+
+Do the callback each time the widget's value is changed by the user (many
+callbacks may be done as the user drags the mouse)
+
+=item C<FLTK::WHEN_RELEASE>
+
+Each keystroke that modifies the value, or when the mouse is released and the
+value has changed, causes the callback (some widgets do not implement this and
+act like L<FLTK::WHEN_CHANGED>)
+
+=item C<FLTK::WHEN_RELEASE_ALWAYS>
+
+Each recognized keystroke and the mouse being released will cause the
+callback, even if the value did not change. (some widgets do not implement
+this and act like C<FLTK::WHEN_RELEASE>)
+
+=item C<FLTK::WHEN_ENTER_KEY>
+
+Do the callback when the user presses the C<ENTER> key and the value has
+chagned (used by L<FLTK::Input|FLTK::Input> and
+L<FLTK::Browser|FLTK::Browser>).
+
+=item C<FLTK::WHEN_ENTER_KEY_ALWAYS>
+
+Do the callback when the user presses the C<ENTER> key, even if the value has
+not changed.
+
+=item C<FLTK::WHEN_ENTER_KEY_CHANGED>
+
+Do the callback when the user presses the C<ENTER> key and each time the value
+changes.
+
+=back
+
+=cut
+
+void
+Widget::when ( uchar flag )
+
+=for apidoc ||bool|resize|X|Y|W|H
+
+Change the size or position of the widget. Nothing is done if the passed size
+and position are the same as before. If there is a change then
+L<C<relayout()>|/"relayout"> is called so that the virtual function
+L<C<layout()>|/"layout"> is called before the next L<C<draw()>|/"draw">.
+
+=for apidoc ||bool|resize|W|H
+
+Same as L<C<resize( x(), y(), W, H)>|/"resize">.
+
+=cut
+
+bool
+Widget::resize ( int X = NO_INIT, int Y = NO_INIT, int W, int H )
+    CASE: items == 3
+        CODE:
+            RETVAL = THIS->resize( X, Y, W, H );
+    CASE: items == 5
+        CODE:
+            RETVAL = THIS->resize( W, H );
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||bool|positon|X|Y
+
+Same as L<C<resize( X, Y, w(), h() )>|/"resize">
+
+=cut
+
+bool
+Widget::position ( int X, int Y )
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||relayout|
+
+Same as L<C<relayout(LAYOUT_DAMAGE)>|/"relayout">, indicates that data inside
+the widget may have changed, but the size did not change. This flag is also on
+when the widget is initially created.
+
+=for apidoc |||relayout|flags
+
+Cause L<C<layout()>|/"layout"> to be called later. Turns on the specified
+flags in L<C<layout_damage()>|/"layout_damage">, and turns on C<LAYOUT_CHILD>
+in all parents of this widget. C<flags> cannot be zero, the maaning of the
+flags is listed under F<fltk/layout.h>.
+
+=cut
+
+void
+Widget::relayout( uchar flags = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->relayout( );
+    CASE:
+        C_ARGS: flags
+
+=for apidoc ||uchar|layout_damage|
+
+The 'or' of all the calls to L<C<relayout()>|/"relayout"> or
+L<C<resize()>|/"resize"> done since the last time L<C<layout()>|/"layout"> was
+called.
+
+A typical layout function does not care about the widget moving, an easy way
+to skip it is as follows:
+
+    package MyWidget; # XXX - Untested
+    { # ... ISA stuff, etc. ...
+        sub layout {
+            my ($self) = @_;
+            return if !($self->layout_damage() & ~LAYOUT_XY);
+            do_expensive_layout();
+            $self->redraw();
+        }
+    }
+
+=for apidoc |||layout_damage|flag
+
+Directly change the value returned by L<C<layout_damage()>|/"layout_damage">.
+
+=cut
+
+uchar
+Widget::layout_damage ( uchar VALUE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->layout_damage( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->layout_damage( VALUE );
+
+=for apidoc ||bool|horizontal|
+
+Return true if this widget has a horizontal orientation and
+L<FLTK::Pack|FLTK::Pack> will position it agains the top or bottom edge. This
+is the default.
+
+See also: L<C<vertical()>|/"vertical">
+
+=for apidoc ||bool|vertical|
+
+Same as L<C<!horizontal()>|/"horizontal">
+
+=cut
+
+bool
+Widget::horizontal( )
+    ALIAS:
+        vertical = 1
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->horizontal(); break;
+            case 1: RETVAL = THIS->vertical();   break;
+        }
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||set_vertical||
+
+Makes L<C<vertical()>|/"vertical"> return true. This will affect how a
+surrounding L<FLTK::Pack|FLTK::Pack> (or similar group) will place the widget,
+but you must call L<C<relayout()>|/"relayout"> to indicate that this must be
+recalculated.
+
+Some widgets classes such as L<FLTK::MenuBar|FLTK::MenuBar> or
+L<FLTK::Slider|FLTK::Slider> will draw differently if this is turned on, in a
+vertical arrangement.
+
+=for apidoc ||set_horizontal||
+
+Undoes L<C<set_vertical()>|/"set_vertical"> and makes
+L<C<horizontal()>|/"horizontal"> return true. This will affect how a
+surrounding L<FLTK::Pack> (or similar group) will place the widget, but you
+must call L<C<relayout()>|/"relayout"> to indicate that this must be
+recalculated.
+
+=cut
+
+void
+Widget::set_vertical ( )
+    ALIAS:
+        set_horizontal = 1
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->set_vertical();   break;
+            case 1: THIS->set_horizontal(); break;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -435,22 +796,6 @@ Widget::copy_style ( STYLE )
 Window *
 Widget::window ( )
 
-bool
-Widget::resize ( X, Y, W, H )
-    CASE: items == 2
-        int X
-        int Y
-        C_ARGS: X, Y
-    CASE: items == 4
-        int X
-        int Y
-        int W
-        int H
-
-bool
-Widget::position ( X, Y )
-    int X
-    int Y
 
 
 unsigned
@@ -487,10 +832,6 @@ Widget::test_shortcut ( TEST_LABEL )
     CASE: items == 1
         bool TEST_LABEL
 
-void
-Widget::when ( WHEN )
-    uchar WHEN
-
  # TODO: Make this look more like the C++ version
  # void
  # Widget::default_callback ( WIDGET, CODE )
@@ -516,44 +857,7 @@ Widget::focused ( )
 bool
 Widget::belowmouse ( )
 
-Flags
-Widget::flags ( FLAGS = NO_INIT )
-    CASE: ! items
-        CODE:
-            RETVAL = THIS->flags( );
-    CASE: items == 1
-        Flags FLAGS
-        CODE:
-            THIS->flags ( FLAGS );
 
-void
-Widget::set_flag ( FLAG, VALUE = true )
-    CASE: items == 1
-        unsigned FLAG
-        C_ARGS: FLAG
-    CASE: items == 2
-        unsigned FLAG
-        bool     VALUE
-
-void
-Widget::clear_flag ( FLAG )
-    unsigned FLAG
-
-void
-Widget::invert_flag ( FLAG )
-    unsigned FLAG
-
-bool
-Widget::flag ( FLAG )
-    unsigned FLAG
-
-bool
-Widget::any_of ( FLAG )
-    unsigned FLAG
-
-bool
-Widget::all_of ( FLAG )
-    unsigned FLAG
 
 bool
 Widget::state ( STATE )
@@ -594,18 +898,6 @@ bool
 Widget::output ( )
 
 bool
-Widget::horizontal ( )
-
-bool
-Widget::vertical ( )
-
-void
-Widget::set_horizontal ( )
-
-void
-Widget::set_vertical ( )
-
-bool
 Widget::take_focus ( )
 
 void
@@ -633,21 +925,6 @@ Widget::damage ( )
 void
 Widget::set_damage ( VALUE )
     uchar VALUE
-
-void
-Widget::relayout ( )
-
-uchar
-Widget::layout_damage ( VALUE )
-    CASE: ! items
-        PROTOTYPE: $;$
-        CODE:
-            RETVAL = THIS->layout_damage( );
-    CASE:
-        uchar VALUE
-        CODE:
-            THIS->layout_damage( VALUE );
-
 
 void
 Widget::add_timeout ( TIME )
@@ -1082,20 +1359,6 @@ Widget::box( TYPE )
 
 
 
-
- # From my own searching
-
-Flags
-Widget::align ( ALIGN = NO_INIT )
-    CASE: items == 2
-        unsigned ALIGN
-        CODE:
-            THIS->align( ALIGN );
-    CASE:
-        CODE:
-            RETVAL = THIS->align( );
-        OUTPUT:
-            RETVAL
 
 
 #endif

@@ -486,6 +486,8 @@ Window::iconic( )
             case 0: RETVAL = THIS->iconic(); break;
             case 1: RETVAL = THIS->shown();  break;
         }
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||iconlabel|iname
 

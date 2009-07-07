@@ -85,19 +85,7 @@ examples/pack.pl
 
 xs/C\+P\.xsi
 
-lib/FLTK/Color.pod
-lib/FLTK/Group.pod
-lib/FLTK/HighlightButton.pod
-lib/FLTK/LightButton.pod
-lib/FLTK/Monitor.pod
-lib/FLTK/RadioButton.pod
-lib/FLTK/Rectangle.pod
-lib/FLTK/RepeatButton.pod
-lib/FLTK/ReturnButton.pod
-lib/FLTK/Style.pod
-lib/FLTK/ToggleButton.pod
-lib/FLTK/Widget.pod
-lib/FLTK/Window.pod
+.+\.pod
 
 xs/FLTK_.+
 xs/fltk/.+
@@ -129,3 +117,13 @@ examples/helloask.pl
 examples/message.pl
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
+
+
+# Tests for stuff I haven't (re)written yet
+t/00000_Basic/00001_use_ok.t
+t/20000_Types/20001_Color.t
+t/30000_FLTK/ask.t
+t/50000_Classes/50000_FLTK_Rectangle/51000_FLTK_Monitor.t
+t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget.t
+t/50000_Classes/50001_FLTK_Rectangle.t
+t/50000_Classes/~50002_FLTK_Style.t
