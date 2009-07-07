@@ -667,7 +667,7 @@ Widget::set_vertical ( )
             case 1: THIS->set_horizontal(); break;
         }
 
-    /* Push these into the top level */
+    # Push these into the top level
 
 MODULE = FLTK               PACKAGE = FLTK
 
@@ -758,8 +758,30 @@ DAMAGE_CHILD( )
 
 MODULE = FLTK               PACKAGE = FLTK::Widget
 
+    # ...and welcome back to the show.
 
+=for apidoc ||uchar|damage|
 
+The 'or' of all the calls to L<C<redraw()>|/"redraw"> done since the last
+L<C<draw()>|/"draw">. Cleared to zero after L<C<draw()>|/"draw"> is called.
+
+=cut
+
+uchar
+Widget::damage( )
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||set_damage|c
+
+Directly change the value returned by L<C<damage()>|/"damage">. Note that this
+I<replaces> the value, it does not turn bits on. Use L<C<redraw()>|/"redraw">
+to turn bits on.
+
+=cut
+
+void
+Widget::set_damage( uchar c )
 
 
 
@@ -982,13 +1004,6 @@ Widget::redraw_label ( )
 
 void
 Widget::redraw_highlight ( )
-
-uchar
-Widget::damage ( )
-
-void
-Widget::set_damage ( VALUE )
-    uchar VALUE
 
 void
 Widget::add_timeout ( TIME )
