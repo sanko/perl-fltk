@@ -636,7 +636,7 @@ Widget::horizontal( )
     OUTPUT:
         RETVAL
 
-=for apidoc ||set_vertical||
+=for apidoc |||set_vertical|
 
 Makes L<C<vertical()>|/"vertical"> return true. This will affect how a
 surrounding L<FLTK::Pack|FLTK::Pack> (or similar group) will place the widget,
@@ -647,7 +647,7 @@ Some widgets classes such as L<FLTK::MenuBar|FLTK::MenuBar> or
 L<FLTK::Slider|FLTK::Slider> will draw differently if this is turned on, in a
 vertical arrangement.
 
-=for apidoc ||set_horizontal||
+=for apidoc |||set_horizontal|
 
 Undoes L<C<set_vertical()>|/"set_vertical"> and makes
 L<C<horizontal()>|/"horizontal"> return true. This will affect how a
@@ -667,32 +667,96 @@ Widget::set_vertical ( )
             case 1: THIS->set_horizontal(); break;
         }
 
+    /* Push these into the top level */
 
+MODULE = FLTK               PACKAGE = FLTK
 
+=for apidoc e|||DAMAGE_CHILD|
 
+A child of this group widget needs to be redrawn (non-group widgets can use
+this bit for their own purposes).
 
+=for apidoc e|||DAMAGE_CHILD_LABEL|
 
+An outside label of this widget needs to be redrawn. This is handled (and this
+bit is cleared) by the parent group.
 
+Because anti-aliasing cannot be redrawn atop itself, this is not
+used anymore. Instead if an outside label needs to change the entire
+parent widget is redrawn.
 
+=for apidoc e|||DAMAGE_EXPOSE|
 
+Damage caused by L<C<damage()>|/"damage"> or by expose events from the
+operating system. If this and L<C<FLTK::DAMAGE_ALL>|/"DAMAGE_ALL"> is on the
+widget should draw every pixel inside it's region.
 
+=for apidoc e|||fltk::DAMAGE_ALL|
 
+This bit is set by L<C<redraw()>|/"redraw"> and indicates that all of the
+widget (but not "holes" where the background shows through) needs to be
+redraw.
 
+=for apidoc e|||DAMAGE_VALUE|
 
+A widget may use this to indicate that the displayed value has changed.
 
+=for apidoc e|||DAMAGE_PUSHED|
 
+A widget may use this to indicate that the user has pushed or released a
+button.
 
+=for apidoc e|||DAMAGE_SCROLL|
 
+A widget may use this to indicate that the displayed data has scrolled moved
+horizontally and/or vertically.
 
+=for apidoc e|||DAMAGE_OVERLAY|
 
+Same value as L<C<FLTK::DAMAGE_SCROLL>|/"FLTK::DAMAGE_SCROLL">.
 
+=for apidoc e|||DAMAGE_HIGHLIGHT
 
+A widget may use this to indicate that the mouse has entered/exited part of
+the widget.
 
+=for apidoc e|||DAMAGE_CONTENTS
 
+Same as L<C<FLTK::DAMAGE_EXPOSE>|/"DAMAGE_EXPOSE"> but if
+L<C<FLTK::DAMAGE_ALL>|/"FLTK::DAMAGE_ALL"> is off a widget can use this for
+it's own purposes.
 
+=cut
 
+#include <fltk/Damage.H>
 
+uchar
+DAMAGE_CHILD( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = DAMAGE_CHILD;       break;
+            case 1: RETVAL = DAMAGE_CHILD_LABEL; break;
+            case 2: RETVAL = DAMAGE_EXPOSE;      break;
+            case 3: RETVAL = DAMAGE_ALL;         break;
+            case 4: RETVAL = DAMAGE_VALUE;       break;
+            case 5: RETVAL = DAMAGE_SCROLL;      break;
+            case 6: RETVAL = DAMAGE_OVERLAY;     break;
+            case 7: RETVAL = DAMAGE_HIGHLIGHT;   break;
+            case 8: RETVAL = DAMAGE_CONTENTS;    break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        DAMAGE_CHILD_LABEL = 1
+        DAMAGE_EXPOSE      = 2
+        DAMAGE_ALL         = 3
+        DAMAGE_VALUE       = 4
+        DAMAGE_SCROLL      = 5
+        DAMAGE_OVERLAY     = 6
+        DAMAGE_HIGHLIGHT   = 7
+        DAMAGE_CONTENTS    = 8
 
+MODULE = FLTK               PACKAGE = FLTK::Widget
 
 
 

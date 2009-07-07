@@ -67,8 +67,14 @@ use Exporter qw[import];
             CURSOR_NO       CURSOR_NONE
             ]
     ],
+    damage => [
+        qw[ DAMAGE_CHILD DAMAGE_CHILD_LABEL DAMAGE_EXPOSE DAMAGE_ALL
+            DAMAGE_VALUE DAMAGE_PUSHED      DAMAGE_SCROLL DAMAGE_OVERLAY
+            DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS
+            ]
+    ],
     draw => [
-        qw[push_matrix pop_matrix scale translate
+        qw[ push_matrix pop_matrix scale translate
             setcolor
             addvertex
             drawtext
