@@ -469,7 +469,7 @@ L<C<iconized>|/"iconize">.
 
 =cut
 
-=for apidco |bool|FLTK::Window|shown|
+=for apidoc |bool|FLTK::Window|shown|
 
 Returns non-zero if L<C<show()>|/"show"> has been called, but C<DESTROY()> has
 not been called. Note that this returns true if L<C<hide()>|/"hide"> was
