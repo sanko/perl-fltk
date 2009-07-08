@@ -1,10 +1,12 @@
-#include <fltk/run.h>
-#include <fltk/Window.h>
-
 #include <EXTERN.h>
 #include <perl.h>
+#define NO_XSLOCKS // XSUB.h will otherwise override various things we need
 #include <XSUB.h>
 #include "./ppport.pl"
+
+#include <fltk/run.h>
+#include <fltk/Widget.h>
+#include <fltk/Window.h>
 
 using namespace fltk;
 
@@ -46,7 +48,6 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) {
     warn( "Callbacks have been disabled. ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
-
 
 /* Alright, let's get things started, shall we? */
 
