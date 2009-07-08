@@ -829,15 +829,63 @@ Widget::redraw_label( )
     ALIAS:
         redraw_highlight = 1
 
-=for apidoc H|||draw|
+=for apidoc ||int|handle|event
 
-I really need to get around to fully subclassing everything. It's on my todo
-list.
+Handle an event. Returns non-zero if the widget understood and used the event.
+
+The event numbers are listed in F<fltk/events.h>.  All other information about
+the current event (like mouse position) is accessed by various functions
+listed in the same header file.
+
+The default version returns true for C<FLTK::ENTER> and C<FLTK::MOVE> events,
+this is done so you can put tooltips on the base widget. All other events
+return zero.
+
+If you want to send an event to a widget you probably want to call
+L<C<send()>|/"send">, not L<C<handle()>|/"handle">. Send will do extra work
+with each event before calling this, such as turning C<HIGHLIGHT> and
+C<FOCUSED> flags on/off.
+
+=for apidoc ||int|send|event
+
+Wrapper for L<C<handle()>|/"handle">. This should be called to send events. It
+does a few things:
+
+=over
+
+=item It calculates L<C<event_x()>|/"event_x">/L<C<event_y()>|/"event_y"> to
+be relative to the widget. The previous values are restored before this
+returns.
+
+=item It makes sure the widget is active and/or visible if the event requres
+this.
+
+=item If this is not the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget
+then it changes C<FLTK::MOVE> into C<FLTK::ENTER> and turns C<FLTK::DND_DRAG>
+into C<FLTK::DND_ENTER>. If this I<is> the
+L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget then the opposite conversion
+is done.
+
+=item For move, focus, and push events if L<C<handle()>|/"handle"> returns
+true it sets the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> or
+L<C<FLTK::focus()>|FLTK/"focus"> or L<C<FLTK::pushed()>|FLTK/"pushed"> widget
+to reflect this.
+
+=back
 
 =cut
 
-
-
+int
+Widget::handle( int event )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = THIS->handle( event ); break;
+            case 1: RETVAL = THIS->send( event );   break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        send = 1
 
 
 
@@ -896,20 +944,6 @@ list.
 
 
 
-
-
-
-
-void
-Widget::draw ( )
-
-int
-Widget::handle( EVENT )
-    int EVENT
-
- # int
- # Widget::send ( EVENT )
- #    int EVENT
 
 void
 Widget::layout ( )
