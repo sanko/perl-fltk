@@ -887,10 +887,39 @@ Widget::handle( int event )
     ALIAS:
         send = 1
 
+=for apidoc |||add_timeout|time
 
+Call L<C<handle(TIMEOUT)>|/"handle"> at the given time in the future. This
+will happen exactly once. To make it happen repeatedly, call
+L<C<repeat_timeout()>|/"repeat_timeout"> from inside
+L<C<handle(TIMEOUT)>|/"handle">.
 
+=for apidoc |||repeat_timeout|time
 
+Call L<C<handle(TIMEOUT)>|/"handle"> at the given time interval since the last
+timeout. This will produce much more accurate time intervals than
+L<C<add_timeout>|/"add_timeout">.
 
+=cut
+
+void
+Widget::add_timeout( float time )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->add_timeout( time );    break;
+            case 1: THIS->repeat_timeout( time ); break;
+        }
+    ALIAS:
+        repeat_timeout = 1
+
+=for apidoc |||remove_timeout|
+
+Cancel any and all pending L<C<handle(TIMEOUT)>|/"handle"> callbacks.
+
+=cut
+
+void
+Widget::remove_timeout( )
 
 
 
@@ -1066,17 +1095,6 @@ Widget::throw_focus ( )
 
 void
 Widget::redraw_highlight ( )
-
-void
-Widget::add_timeout ( TIME )
-    float TIME
-
-void
-Widget::repeat_timeout ( TIME )
-    float TIME
-
-void
-Widget::remove_timeout (  )
 
 void
 Widget::make_current ( )
