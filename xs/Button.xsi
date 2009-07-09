@@ -45,7 +45,7 @@ L<FLTK::ToggleButton|FLTK::ToggleButton>.
 
 =cut
 
-#include <fltk/Button.H>
+#include <fltk/Button.h>
 
 =for apidoc ||FLTK::Button|new|X|Y|W|H|[LABEL]
 

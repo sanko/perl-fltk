@@ -27,7 +27,7 @@ Creates a new C<FLTK::Adjuster> object.
 
 =cut
 
-#include <fltk/Adjuster.H>
+#include <fltk/Adjuster.h>
 
 Adjuster *
 Adjuster::new ( X, Y, Width, Height, Label = "" )

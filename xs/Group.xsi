@@ -48,7 +48,7 @@ L<FLTK::WizardGroup|FLTK::WizardGroup>.
 
 =cut
 
-#include <fltk/Group.H>
+#include <fltk/Group.h>
 
 Group *
 Group::new ( X, Y, W, H, LABEL = 0, BEGIN = false )
