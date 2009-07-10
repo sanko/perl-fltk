@@ -206,7 +206,7 @@ expired. It is non-zero if any events or timeouts came in.
 =cut
 
 int
-wait ( int time_to_wait = NO_INIT )
+wait ( double time_to_wait = NO_INIT )
     CODE:
         if ( items )
             RETVAL = wait( time_to_wait );
