@@ -173,14 +173,50 @@ zero. A program can also exit by having a callback call C<exit>.
 
 Most FLTK programs will end with C<exit FLTK::run();>.
 
+=for apidoc t[run]F||int|check|
+
+Same as  L<C<FLTK::wait(0)>|/"wait">. Calling this during a big calculation
+will keep the screen up to date and the interface responsive:
+
+    while (!calculation_done()) {
+        calculate();
+        FLTK::check();
+        last if user_hit_abort_button();
+    }
+
+=for apidoc t[run]F||int|ready|
+
+Test to see if any events or callbacks are pending. This will return true if
+L<C<FLTK::check()>|/"check"> would do anything other than update the screen.
+Since this will not draw anything or call any code, it is safe to call this if
+your program is in an inconsistent state. This is also useful if your
+calculation is updating widgets but you do not want or need the overhead of
+the screen updating every time you check for events.
+
+    while (!calculation_done()) {
+        calculate();
+        if (FLTK::ready()) {
+            do_expensive_cleanup();
+            FLTK::check();
+            last if user_hit_abort_button();
+        }
+    }
+
 =cut
 
 int
 run ()
     CODE:
-        RETVAL = run( );
+        switch( ix ) {
+            case 0: RETVAL =   run( ); break;
+            case 1: RETVAL = check( ); break;
+            case 2: RETVAL = ready( ); break;
+        }
     OUTPUT:
         RETVAL
+    ALIAS:
+        check = 1
+        ready = 2
 
 =for apidoc t[run]||int|wait|
 
