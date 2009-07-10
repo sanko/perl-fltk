@@ -164,7 +164,7 @@ remove_timeout( CV * callback, SV * args = NO_INIT )
            add_check = 1
         remove_check = 2
 
-=for apidoc t[run] F||int|run|
+=for apidoc t[run]F||int|run|
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
 all the windows are hidden or destroyed (checked by seeing if
@@ -173,11 +173,23 @@ zero. A program can also exit by having a callback call C<exit>.
 
 Most FLTK programs will end with C<exit FLTK::run();>.
 
+=for apidoc t[run]||int|wait|
+
+Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
+program. You can also check what happened each time after this returns, which
+is quite useful for managing program state.
+
 =cut
 
 int
 run ()
-
+    CODE:
+        switch( ix ) {
+            case 0:  run(); break;
+            case 1: wait(); break;
+        }
+    ALIAS:
+        wait = 1
 
 
 
