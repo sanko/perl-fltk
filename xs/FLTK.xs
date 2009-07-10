@@ -30,20 +30,20 @@ L<FLTK::Widget::callback()>.
 #include <fltk/Widget.h>
 void _cb_w (fltk::Widget * WIDGET, void * CODE) {
 #ifdef ENABLE_CALLBACKS
-    AV *cbargs = (AV *)CODE;
+    AV *cbargs = (AV *) CODE;
     I32 alen = av_len(cbargs);
-    CV *thecb = (CV *)SvRV(*av_fetch(cbargs, 0, 0));
+    SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
     dSP;
     ENTER;
         SAVETMPS;
             PUSHMARK(sp);
     for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
             PUTBACK;
-    call_sv((SV*)thecb, G_DISCARD);
+    call_sv((SV*) thecb, G_DISCARD|G_EVAL);
         FREETMPS;
     LEAVE;
 #else // ifdef ENABLE_CALLBACKS
-    warn( "Callbacks have been disabled. ¬.¬ " );
+    warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
 
@@ -62,6 +62,22 @@ INCLUDE: Group.xsi
 INCLUDE: Widget.xsi
 
 INCLUDE: Window.xsi
+
+
+MODULE = FLTK               PACKAGE = FLTK
+
+BOOT:
+#ifndef ENABLE_CALLBACKS
+    warn( "FLTK's callback system has been disabled %s.\n",
+#ifndef SvWEAKREF
+            "because weak references are not implemented in this release of perl"
+#else  // #ifndef SvWEAKREF
+            "manually"
+#endif // #ifndef SvWEAKREF
+    );
+#endif
+
+
 
 =pod
 

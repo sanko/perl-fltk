@@ -200,24 +200,16 @@ B<NOTE>: This may not be portable to some machines.
 =cut
 
 void
-Widget::callback( SUB, ARGS = NO_INIT, ... )
+Widget::callback( SV * SUB, SV * ARGS = NO_INIT )
     CODE:
 #ifdef ENABLE_CALLBACKS
+        SV * widget = newSVsv((SV*)ST(0));
+        sv_rvweaken(widget);
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(1))); // coderef
-        SV * widget = newSVsv((SV*)ST(0));
-#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::_cb_w()
-        sv_rvweaken(widget);
-#else // ifdef SvWEAKREF
-        croak("weak references are not implemented in this release of perl");
-        XSRETURN_EMPTY;
-#endif // ifdef SvWEAKREF
-        THIS->callback(_cb_w);
         av_push(arr, widget); // widget
-        for (int i = 2; i < items; i++) {
-            av_push(arr, newSVsv((SV*)ST(i)));
-        }
-        THIS->user_data(arr);
+        av_push(arr, ARGS);
+        THIS->callback(_cb_w, (void *) arr);
 #else  // ifdef ENABLE_CALLBACKS
         warn("Callbacks have been disabled."); // TODO: Expain why in POD
 #endif // ifdef ENABLE_CALLBACKS
@@ -260,39 +252,32 @@ Widget::user_data ( args )
 
 You can cause a widget to do its callback at any time.
 
-=for apidoc xH|||do_callback|args
+=for apidoc x|||do_callback|Widget|args
 
 You can also call the callback function with arbitrary arguments.
 
 =cut
 
 void
-Widget::do_callback( widget = NO_INIT, ... )
+Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->do_callback( );
-#if 0 // TODO
     CASE:
         CODE:
-            AV * arr = newAV();
-            AV * arr_old = (AV*) THIS->user_data();
-            av_push(arr, SvRV(*av_fetch(arr_old, 0, 0)));
-            av_push(arr, (CV *) SvRV(*av_fetch(arr_old, 1, 0)));
-            SV * widget = newSVsv((SV*)ST(0));
+            SV * _widget = newSVsv((SV*)ST(1));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-            sv_rvweaken(widget);
+            sv_rvweaken(_widget);
 #else // ifdef SvWEAKREF
-            croak("weak references are not implemented in this release of perl");
-            XSRETURN_EMPTY;
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
 #endif // ifdef SvWEAKREF
-            av_push(arr, widget); // widget
-            for (int i = 1; i < items; i++) {
-                av_push(arr, newSVsv((SV*)ST(i)));
-            }
-            THIS->user_data(arr);
-            THIS->do_callback( );
-            THIS->user_data(arr_old);
-#endif // if 0 // TODO
+            AV *arr = newAV();
+            av_push(arr, *av_fetch((AV*)THIS->user_data(), 0, 0)); // coderef
+            av_push(arr, _widget); // widget
+            if ( items == 3 )
+                av_push(arr, args);
+            THIS->do_callback(widget, (void *) arr);
 
 =for apidoc ||uchar|type|
 
