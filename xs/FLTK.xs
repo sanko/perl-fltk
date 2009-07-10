@@ -4,10 +4,7 @@
 #include <XSUB.h>
 #include "./ppport.pl"
 
-#include <fltk/run.h>
 #include <fltk/Widget.h>
-#include <fltk/Window.h>
-
 using namespace fltk;
 
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
@@ -30,6 +27,7 @@ L<FLTK::Widget::callback()>.
 #undef  ENABLE_CALLBACKS    // TODO: Explain this better :)
 #endif // #ifndef SvWEAKREF
 
+#include <fltk/Widget.h>
 void _cb_w (fltk::Widget * WIDGET, void * CODE) {
 #ifdef ENABLE_CALLBACKS
     AV *cbargs = (AV *)CODE;
@@ -53,8 +51,7 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) {
 
 MODULE = FLTK               PACKAGE = FLTK
 
-void
-run ()
+INCLUDE: run.xsi
 
 INCLUDE: Adjuster.xsi
 
