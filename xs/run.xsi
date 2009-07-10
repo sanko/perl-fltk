@@ -74,6 +74,42 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
     ALIAS:
         repeat_timeout = 1
 
+=for apidoc Hxt[run]||bool|has_timeout|coderef|args
+
+Returns true if the timeout exists and has not been called yet.
+
+This doesn't work right now because I stuff perl's datatypes where I shouldn't
+...I'll come back to it.
+
+=cut
+
+bool
+has_timeout( CV * callback, SV * args = NO_INIT )
+    CODE:
+        AV *arr = newAV();
+        av_push(arr, newSVsv((SV*)ST(0))); // coderef
+        if (items == 2) // Callbacks can be called without arguments
+            av_push(arr, args);
+        /* for (Timeout* t = first_timeout; t; t = t->next)
+            if (t->cb == _cb &&
+                av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
+            ) {RETVAL = true; break; }
+        }*/
+        RETVAL = has_timeout(_cb, (void *) arr); // ...for now. It always returns false...
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
+
+
+
+
 =for apidoc t[run] F|||run|
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
