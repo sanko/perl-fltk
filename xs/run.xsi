@@ -81,6 +81,11 @@ Returns true if the timeout exists and has not been called yet.
 This doesn't work right now because I stuff perl's datatypes where I shouldn't
 ...I'll come back to it.
 
+=for apidoc Hxt[run]||bool|has_check|cb|args
+
+Return true if L<C<add_check()>|/"add_check"> has been done with this C<cb>
+and C<args>, and L<C<remove_check()>|/"remove_check"> has not been done.
+
 =cut
 
 bool
@@ -95,9 +100,14 @@ has_timeout( CV * callback, SV * args = NO_INIT )
                 av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
             ) {RETVAL = true; break; }
         }*/
-        RETVAL = has_timeout(_cb, (void *) arr); // ...for now. It always returns false...
+        switch( ix ) {
+            case 0: RETVAL = has_timeout(_cb, (void *) arr); break; // XXX
+            case 1: RETVAL =   has_check(_cb, (void *) arr); break; // XXX
+        }
     OUTPUT:
         RETVAL
+    ALIAS:
+        has_check = 1
 
 =for apidoc Hxt[run]|||remove_timeout|coderef|args
 
