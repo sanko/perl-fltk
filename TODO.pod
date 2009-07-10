@@ -20,7 +20,9 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item * L<C<FLTK::has_timeout()>|FLTK/"has_timeout"> in F<xs/run.xsi>
 
-=item * L<C<FLTK::remove_timeout()>|FLTK/"remove_timeout"> in F<xs/run.xsi>
+=item * L<C<FLTK::remove_timeout(...)>|FLTK/"remove_timeout"> in F<xs/run.xsi>
+
+=item * L<C<FLTK::remove_check(...)>|FLTK/"remove_check"> in F<xs/run.xsi>
 
 =item * SUBCLASSING!!!!!
 

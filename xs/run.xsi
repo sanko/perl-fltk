@@ -106,27 +106,53 @@ nothing if there are no matching ones that have not been called yet.
 
 Like L<C<has_timeout>|/"has_timeout">, this doesn't work yet.
 
+=for apidoc t[run]|||add_check|coderef|args
+
+Fltk will call this callback just before it flushes the display and waits for
+events. This is different than L<C<add_idle()>|/"add_idle"> because it is only
+called once, then fltk calls the system and tells it not to return until an
+event happens. If several checks have been added fltk calls them all, the most
+recently added one first.
+
+This can be used by code that wants to monitor the application's state, such
+as to keep a display up to date. The advantage of using a check callback is
+that it is called only when no events are pending. If events are coming in
+quickly, whole blocks of them will be processed before this is called once.
+This can save significant time and avoid the application falling behind the
+events:
+
+    my $state_changed;   # anything that changes the display turns this on
+    sub check {
+        return if !$state_changed;
+        $state_changed = 0;
+        do_expensive_calculation();
+        $widget->redraw();
+    }
+    FLTK::add_check(\&check);
+    FLTK::run();
+
+=for apidoc xHt[run]|||remove_check|coderef|args
+
+Remove all matching check callback, if any exists. You can call this from
+inside the check callback if you want.
+
 =cut
 
 void
-remove_timeout()
+remove_timeout( CV * callback, SV * args = NO_INIT )
     CODE:
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(0))); // coderef
         if (items == 2) // Callbacks can be called without arguments
             av_push(arr, args);
-        remove_timeout(_cb, (void *) arr); // ...for now.
-
-
-
-
-
-
-
-
-
-
-
+        switch( ix ) {
+            case 0 : remove_timeout(_cb, (void *) arr); break; // XXX - meh
+            case 1 :      add_check(_cb, (void *) arr); break;
+            case 2 :   remove_check(_cb, (void *) arr); break; // XXX - meh
+        }
+    ALIAS:
+           add_check = 1
+        remove_check = 2
 
 
 
