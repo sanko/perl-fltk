@@ -26,12 +26,29 @@ Widget::take_focus()
     OUTPUT:
         RETVAL
 
-
-
-
- # back up
-
 MODULE = FLTK               PACKAGE = FLTK
+
+    # ...and we're back.
+
+=for apidoc t[run]|||add_timeout|time|callback|args
+
+Add a one-shot timeout callback. The function will be called by
+L<C<fltk::wait()>|FLTK/"wait"> at C<time> seconds after this function is
+called. The optional C<args> are passed to the callback.
+
+=cut
+
+void
+add_timeout( double time, CV * callback, SV * args = NO_INIT )
+    CODE:
+        AV *arr = newAV();
+        av_push(arr, newSVsv((SV*)ST(1))); // coderef
+        if (items == 3) // Callbacks can be called without arguments
+            av_push(arr, args );
+        add_timeout( time, _cb, (void *) arr );
+
+
+
 
 =for apidoc t[run] F|||run|
 

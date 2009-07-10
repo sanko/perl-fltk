@@ -28,7 +28,7 @@ L<FLTK::Widget::callback()>.
 #endif // #ifndef SvWEAKREF
 
 #include <fltk/Widget.h>
-void _cb_w (fltk::Widget * WIDGET, void * CODE) {
+void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #ifdef ENABLE_CALLBACKS
     AV *cbargs = (AV *) CODE;
     I32 alen = av_len(cbargs);
@@ -46,6 +46,27 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) {
     warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
+
+
+void _cb (void * CODE) { // Callbacks for timers, etc.
+#ifdef ENABLE_CALLBACKS // XXX - ...should weaken affect this?
+    AV *cbargs = (AV *) CODE;
+    I32 alen = av_len(cbargs);
+    SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
+    dSP;
+    ENTER;
+        SAVETMPS;
+            PUSHMARK(sp);
+    for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
+            PUTBACK;
+    call_sv((SV*) thecb, G_DISCARD|G_EVAL);
+        FREETMPS;
+    LEAVE;
+#else // ifdef ENABLE_CALLBACKS
+    warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
+#endif // ifdef ENABLE_CALLBACKS
+}
+
 
 /* Alright, let's get things started, shall we? */
 
