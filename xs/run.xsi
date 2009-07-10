@@ -36,6 +36,28 @@ Add a one-shot timeout callback. The function will be called by
 L<C<fltk::wait()>|FLTK/"wait"> at C<time> seconds after this function is
 called. The optional C<args> are passed to the callback.
 
+=for apidoc t[run]|||repeat_timeout|time|callback|args
+
+Similar to L<C<add_timeout()>|/"add_timeout">, but rather than the time being
+measured from "now", it is measured from when the system call elapsed that
+caused this timeout to be called. This will result in far more accurate
+spacing of the timeout callbacks, it also has slightly less system call
+overhead. (It will also use all your machine time if your timeout code and
+fltk's overhead take more than t seconds, as the real timeout will be reduced
+to zero).
+
+Outside a timeout callback this acts like L<C<add_timeout()>|/"add_timeout">.
+
+This code will print "TICK" each second on C<*STDOUT>, with a fair degree of
+accuracy:
+
+    sub callback {
+        printf("TICK\n");
+        FLTK::repeat_timeout(1.0, \&callback);
+    }
+    FLTK::add_timeout(1.0, \&callback);
+    FLTK::wait() while 1
+
 =cut
 
 void
@@ -45,10 +67,12 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
         av_push(arr, newSVsv((SV*)ST(1))); // coderef
         if (items == 3) // Callbacks can be called without arguments
             av_push(arr, args );
-        add_timeout( time, _cb, (void *) arr );
-
-
-
+        switch( ix ) {
+            case 0:    add_timeout( time, _cb, (void *) arr ); break;
+            case 1: repeat_timeout( time, _cb, (void *) arr ); break;
+        }
+    ALIAS:
+        repeat_timeout = 1
 
 =for apidoc t[run] F|||run|
 
