@@ -1095,9 +1095,6 @@ Widget::show ( )
 void
 Widget::hide ( )
 
-bool
-Widget::take_focus ( )
-
 void
 Widget::throw_focus ( )
 

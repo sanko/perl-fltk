@@ -4,7 +4,36 @@ MODULE = FLTK               PACKAGE = FLTK
 
 #include <fltk/run.h>
 
-=for apidoc t:run F|||run|
+    # Side trip into FLTK::Widget
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
+
+=for apidoc t[run]||bool|take_focus|
+
+Tries to make this widget be the keyboard focus widget, by first sending it an
+C<FLTK::FOCUS> event, and if it returns non-zero, setting
+L<C<FLTK::focus()>|FLTK/"focus"> to this widget. You should use this method to
+assign the focus to a widget. Returns true if the widget accepted the focus.
+
+On current systems, fltk does not force the window system to set the focus. If
+the window does not have focus it will usually switch back to the previous
+window when the user types a key.
+
+=cut
+
+bool
+Widget::take_focus()
+    OUTPUT:
+        RETVAL
+
+
+
+
+ # back up
+
+MODULE = FLTK               PACKAGE = FLTK
+
+=for apidoc t[run] F|||run|
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
 all the windows are hidden or destroyed (checked by seeing if
@@ -17,6 +46,10 @@ Most FLTK programs will end with C<exit FLTK::run();>.
 
 void
 run ()
+
+
+
+
 
 #endif // ifndef DISABLE_RUN
 
