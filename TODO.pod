@@ -8,6 +8,8 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * Callbacks seem to be leaking memory
+
 =item * Finish all widgets, etc.
 
 =back

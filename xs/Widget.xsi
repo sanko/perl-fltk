@@ -200,7 +200,7 @@ B<NOTE>: This may not be portable to some machines.
 =cut
 
 void
-Widget::callback( SV * SUB, SV * ARGS = NO_INIT )
+Widget::callback( CV * SUB, SV * ARGS = NO_INIT )
     CODE:
 #ifdef ENABLE_CALLBACKS
         SV * widget = newSVsv((SV*)ST(0));
@@ -272,9 +272,12 @@ Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
         croak("weak references are not implemented in this release of perl");
         XSRETURN_EMPTY;
 #endif // ifdef SvWEAKREF
-            AV *arr = newAV();
-            av_push(arr, *av_fetch((AV*)THIS->user_data(), 0, 0)); // coderef
-            av_push(arr, _widget); // widget
+            AV  * arr     = newAV();
+            if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
+                return;
+            SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
+            av_push(arr, *coderef); // coderef
+            av_push(arr, _widget);  // widget
             if ( items == 3 )
                 av_push(arr, args);
             THIS->do_callback(widget, (void *) arr);
