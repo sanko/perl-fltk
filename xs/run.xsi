@@ -173,26 +173,47 @@ zero. A program can also exit by having a callback call C<exit>.
 
 Most FLTK programs will end with C<exit FLTK::run();>.
 
+=cut
+
+int
+run ()
+    CODE:
+        RETVAL = run( );
+    OUTPUT:
+        RETVAL
+
 =for apidoc t[run]||int|wait|
 
 Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
 program. You can also check what happened each time after this returns, which
 is quite useful for managing program state.
 
+=for apidoc t[run]F||int|wait|time_to_wait
+
+Waits until "something happens", or the given time interval passes. It can
+return much sooner than the time if something happens.
+
+What this really does is call all idle callbacks, all elapsed timeouts, call
+L<C<FLTK::flush()>|/"flush"> to get the screen to update, and then wait some
+time (zero if there are idle callbacks, the shortest of all pending timeouts,
+or the given time), for any events from the user or any
+L<C<FLTK::add_fd()>|/"add_fd"> callbacks. It then handles the events and calls
+the callbacks and then returns.
+
+The return value is zero if nothing happened before the passed C<time_to_wait>
+expired. It is non-zero if any events or timeouts came in.
+
 =cut
 
 int
-run ()
+wait ( int time_to_wait = NO_INIT )
     CODE:
-        switch( ix ) {
-            case 0:  run(); break;
-            case 1: wait(); break;
-        }
-    ALIAS:
-        wait = 1
-
-
-
+        if ( items )
+            RETVAL = wait( time_to_wait );
+        else
+            RETVAL = wait( );
+    OUTPUT:
+        RETVAL
 
 #endif // ifndef DISABLE_RUN
 
