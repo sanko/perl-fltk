@@ -28,8 +28,15 @@ L<FLTK::Widget::callback()>.
 #endif // #ifndef SvWEAKREF
 
 #include <fltk/Widget.h>
+
+//#define ENABLE_HASH_CALLBACKS // TODO - based on perlcall
+#ifdef ENABLE_HASH_CALLBACKS
+static HV * Mapping = (HV*)NULL;
+#endif // #ifdef ENABLE_HASH_CALLBACKS
+
 void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #ifdef ENABLE_CALLBACKS
+#ifndef ENABLE_HASH_CALLBACKS
     AV *cbargs = (AV *) CODE;
     I32 alen = av_len(cbargs);
     SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
@@ -39,14 +46,16 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
             PUSHMARK(sp);
     for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
             PUTBACK;
-    call_sv((SV*) thecb, G_DISCARD|G_EVAL);
+    call_sv(thecb, G_DISCARD);
         FREETMPS;
     LEAVE;
+#else  // ifndef ENABLE_HASH_CALLBACKS
+    warn("It's not ready!");
+#endif // ifndef ENABLE_HASH_CALLBACKS
 #else // ifdef ENABLE_CALLBACKS
     warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
-
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
 #ifdef ENABLE_CALLBACKS // XXX - ...should weaken affect this?
@@ -59,7 +68,7 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
             PUSHMARK(sp);
     for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
             PUTBACK;
-    call_sv((SV*) thecb, G_DISCARD|G_EVAL);
+    call_sv(thecb, G_DISCARD);
         FREETMPS;
     LEAVE;
 #else // ifdef ENABLE_CALLBACKS
