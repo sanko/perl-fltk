@@ -59,6 +59,7 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
 #ifdef ENABLE_CALLBACKS // XXX - ...should weaken affect this?
+#ifndef ENABLE_HASH_CALLBACKS
     AV *cbargs = (AV *) CODE;
     I32 alen = av_len(cbargs);
     SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
@@ -71,6 +72,9 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
     call_sv(thecb, G_DISCARD);
         FREETMPS;
     LEAVE;
+#else  // ifndef ENABLE_HASH_CALLBACKS
+    warn("It's not ready!");
+#endif // ifndef ENABLE_HASH_CALLBACKS
 #else // ifdef ENABLE_CALLBACKS
     warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
