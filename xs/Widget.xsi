@@ -514,7 +514,7 @@ L<C<layout()>|/"layout"> is called before the next L<C<draw()>|/"draw">.
 
 =for apidoc ||bool|resize|W|H
 
-Same as L<C<resize( x(), y(), W, H)>|/"resize">.
+Same as L<C<resize( x(), y(), $W, $H)>|/"resize">.
 
 =cut
 
@@ -775,9 +775,9 @@ Widget::set_damage( uchar c )
 
 =for apidoc |||redraw|
 
-Same as L<C<redraw(L<C<DAMAGE_ALL>|/"DAMAGE_ALL">)>|/"redraw">. This bit is
-used by most widgets to indicate that they should not attempt any incremental
-update, and should instead completely draw themselves.
+Same as C<redraw(DAMAGE_ALL)>. This bit is used by most widgets to indicate
+that they should not attempt any incremental update, and should instead
+completely draw themselves.
 
 =for apidoc |||redraw|flags
 
@@ -965,7 +965,7 @@ parents.
 
 =for apidoc ||bool|output|
 
-This flag is similar to C<!>L<C<active()|/"active"> except it does not change
+This flag is similar to L<C<!active()>|/"active"> except it does not change
 how the widget is drawn. The widget will not recieve any events. This is
 useful for making scrollbars or buttons that work as displays rather than
 input devices.
@@ -985,9 +985,8 @@ true can the user see the widget.
 
 =for apidoc ||bool|takesevents|
 
-This is the same as
-C<(>L<C<active()>|/"active">C< && >L<C<visible()>|/"visible">C< && !>L<C<output()>|/"output">C<)>
-but faster. L<C<send()>|/"send"> uses this to decide whether or not to call
+This is the same as C<(active() && visible() && output())> but faster.
+L<C<send()>|/"send"> uses this to decide whether or not to call
 L<C<handle()>|/"handle"> for most events.
 
 =for apidoc ||bool|click_to_focus|
@@ -1567,10 +1566,34 @@ Widget::box( TYPE )
     Box * TYPE
 
 
-
-
-
 #endif
 
 #endif // ifndef DISABLE_WIDGET
 
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

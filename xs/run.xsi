@@ -22,9 +22,7 @@ window when the user types a key.
 =cut
 
 bool
-Widget::take_focus()
-    OUTPUT:
-        RETVAL
+Widget::take_focus( )
 
 MODULE = FLTK               PACKAGE = FLTK
 

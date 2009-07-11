@@ -331,8 +331,8 @@ NFI
 
 =for apidoc |||insert|WIDGET|WIDGET2
 
-This does L<C<insert(w, L<find(WIDGET2)|/"find">)|/"insert">. This will
-append the widget if C<WIDGET2> is not in the group.
+This does C<insert(w, find(WIDGET2)>. This will append the widget if
+C<WIDGET2> is not in the group.
 
 =cut
 
