@@ -917,6 +917,12 @@ If L<C<active()>|/"active"> is true, this turns it off. If
 L<C<active_r()>|/"active_r"> was true L<C<send()>|/"send"> an
 C<FLTK::DEACTIVATE> event.
 
+=for apidoc |||show|
+
+If L<C<visible()>|/"visible"> is false, turn it on. If
+L<C<visible_r()>|/"visible_r"> is then true, L<C<send()>|/"send"> a
+C<FLTK::SHOW> event.
+
 =cut
 
 void
@@ -926,10 +932,12 @@ Widget::remove_timeout( )
             case 0: THIS->remove_timeout( ); break;
             case 1: THIS->activate();        break;
             case 2: THIS->deactivate();      break;
+            case 3: THIS->show();            break;
         }
     ALIAS:
           activate = 1
         deactivate = 2
+              show = 3
 
 =for apidoc ||bool|active|
 
@@ -982,7 +990,7 @@ Widget::active( )
     OUTPUT:
         RETVAL
     ALIAS:
-        a ctive_r = 1
+         active_r = 1
            output = 2
           visible = 3
         visible_r = 4
@@ -1096,18 +1104,6 @@ Widget::test_shortcut ( TEST_LABEL )
  #         THIS->default_callback(WIDGET, cb);
  #         THIS->user_data(arr);
 
-
-bool
-Widget::pushed ( )
-
-bool
-Widget::focused ( )
-
-bool
-Widget::belowmouse ( )
-
-
-
 bool
 Widget::state ( STATE )
     CASE: ! items
@@ -1115,39 +1111,6 @@ Widget::state ( STATE )
             RETVAL = THIS->state( );
     CASE:
         bool STATE;
-
-bool
-Widget::clear ( )
-
-void
-Widget::setonly ( )
-
-bool
-Widget::visible_r ( )
-
-void
-Widget::show ( )
-
-void
-Widget::hide ( )
-
-void
-Widget::throw_focus ( )
-
-void
-Widget::redraw_highlight ( )
-
-void
-Widget::make_current ( )
-
-void
-Widget::draw_background ( )
-
-void
-Widget::draw_frame ( )
-
-void
-Widget::draw_box ( )
 
 void
 Widget::draw_label ( RECTANGLE, FLAGS )
