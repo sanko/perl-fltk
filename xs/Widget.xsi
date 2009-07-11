@@ -923,6 +923,12 @@ If L<C<visible()>|/"visible"> is false, turn it on. If
 L<C<visible_r()>|/"visible_r"> is then true, L<C<send()>|/"send"> a
 C<FLTK::SHOW> event.
 
+=for apidoc |||hide|
+
+If L<C<visible()>|/"visible"> is true, turn it off. If
+L<C<visible_r()>|/"visible_r"> was true then L<C<send()>|/"send"> a
+C<FLTK::HIDE> event, and L<C<redraw()>|/"redraw"> the parent if necessary.
+
 =cut
 
 void
@@ -933,11 +939,13 @@ Widget::remove_timeout( )
             case 1: THIS->activate();        break;
             case 2: THIS->deactivate();      break;
             case 3: THIS->show();            break;
+            case 4: THIS->hide();            break;
         }
     ALIAS:
           activate = 1
         deactivate = 2
               show = 3
+              hide = 4
 
 =for apidoc ||bool|active|
 
