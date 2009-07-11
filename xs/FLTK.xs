@@ -34,6 +34,21 @@ L<FLTK::Widget::callback()>.
 static HV * Mapping = (HV*)NULL;
 #endif // #ifdef ENABLE_HASH_CALLBACKS
 
+=for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
+
+This is the callback for all widgets. It expects an C<fltk::Widget> object and
+the C<CODE> should be an AV* containing data that looks a little like this...
+
+  [
+    SV * coderef,
+    FLTK::Widget widget,
+    SV* args             # optional arguments sent along to coderef
+  ]
+
+=back
+
+=cut
+
 void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #ifdef ENABLE_CALLBACKS
 #ifndef ENABLE_HASH_CALLBACKS
@@ -56,6 +71,20 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
     warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
+
+=for apidoc H|||_cb_w|WIDGET|(void*)CODE
+
+This is the generic callback for just about everything. It expects a single
+C<(void*) CODE> parameter which should be an AV* holding data that looks a
+little like this...
+
+  [
+    SV * coderef,
+    SV* args  # optional arguments sent along to coderef
+  ]
+
+
+=cut
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
 #ifdef ENABLE_CALLBACKS // XXX - ...should weaken affect this?
