@@ -957,6 +957,11 @@ input devices.
 Set or clear this flag with L<C<set_output()>|/"set_output"> and
 L<C<clear_output()>|/"clear_output">.
 
+=for apidoc ||bool|visible|
+
+Returns true if the widget is visible (L<C<flag(INVISIBLE)>|/"flag"> is
+false).
+
 =cut
 
 bool
@@ -966,12 +971,14 @@ Widget::active( )
             case 0: RETVAL = THIS->active();   break;
             case 1: RETVAL = THIS->active_r(); break;
             case 2: RETVAL = THIS->output();   break;
+            case 3: RETVAL = THIS->visible();  break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
         active_r = 1
           output = 2
+         visible = 3
 
 
 
