@@ -990,27 +990,56 @@ C<(>L<C<active()>|/"active">C< && >L<C<visible()>|/"visible">C< && !>L<C<output(
 but faster. L<C<send()>|/"send"> uses this to decide whether or not to call
 L<C<handle()>|/"handle"> for most events.
 
+=for apidoc ||bool|click_to_focus|
+
+If true then clicking on this widget will give it the focus (the
+L<C<handle()>|/"handle"> method must also return non-zero for C<FLTK::PUSH>
+and for C<FLTK::FOCUS> events).
+
+By default fltk only turns this on on certain widgets such as
+L<FLTK::Input|FLTK::Input>. Turning this on on all widgets will make the user
+interface match Windows more closely.
+
+=for apidoc ||bool|tab_to_focus|
+
+If true then this widget can be given focus by keyboard navigation. (the
+L<C<handle()>|/"handle"> method must also return non-zero for
+C<FLTK::FOCUS> events).
+
+Turning this off with L<C<clear_tab_to_focus()>|/"clear_tab_to_focus"> will
+also turn off the L<C<click_to_focus()>|/"click_to_focus"> flag. This is for
+compatability in case we change the default to a more Windows-like style where
+all widgets get the focus on clicks.
+
+For historical reasons this flag is true on many more widgets than it should
+be, and FLTK relies on L<C<handle()>|/"handle"> returing C<0> for C<FOCUS>.
+This may change in the future so that more widgets have this flag off.
+
 =cut
 
 bool
 Widget::active( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = THIS->active();      break;
-            case 1: RETVAL = THIS->active_r();    break;
-            case 2: RETVAL = THIS->output();      break;
-            case 3: RETVAL = THIS->visible();     break;
-            case 4: RETVAL = THIS->visible_r();   break;
-            case 5: RETVAL = THIS->takesevents(); break;
+            case 0: RETVAL = THIS->active();         break;
+            case 1: RETVAL = THIS->active_r();       break;
+            case 2: RETVAL = THIS->output();         break;
+            case 3: RETVAL = THIS->visible();        break;
+            case 4: RETVAL = THIS->visible_r();      break;
+            case 5: RETVAL = THIS->takesevents();    break;
+            case 6: RETVAL = THIS->click_to_focus(); break;
+            case 7: RETVAL = THIS->tab_to_focus();   break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-           active_r = 1
-             output = 2
-            visible = 3
-          visible_r = 4
-        takesevents = 5
+              active_r = 1
+                output = 2
+               visible = 3
+             visible_r = 4
+           takesevents = 5
+        click_to_focus = 6
+          tab_to_focus = 7
 
 
 
