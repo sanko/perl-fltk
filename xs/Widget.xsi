@@ -904,10 +904,31 @@ Widget::add_timeout( float time )
 
 Cancel any and all pending L<C<handle(TIMEOUT)>|/"handle"> callbacks.
 
+=for apidoc |||activate|
+
+If L<C<active()>|/"active"> is false, this turns it on. If
+L<C<active_r()>|/"active_r"> is now true L<C<send()>|/"send"> an
+C<FLTK::ACTIVATE> event.
+
+=for apidoc |||deactivate|
+
+If L<C<active()>|/"active"> is true, this turns it off. If
+L<C<active_r()>|/"active_r"> was true L<C<send()>|/"send"> an
+C<FLTK::DEACTIVATE> event.
+
 =cut
 
 void
 Widget::remove_timeout( )
+    CODE:
+        switch( ix ) {
+            case 0: THIS->remove_timeout( ); break;
+            case 1: THIS->activate();        break;
+            case 2: THIS->deactivate();      break;
+        }
+    ALIAS:
+          activate = 1
+        deactivate = 2
 
 =for apidoc ||bool|active|
 
