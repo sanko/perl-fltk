@@ -946,6 +946,16 @@ widgets. This is actually the C<INACTIVE_R> bit in L<C<flags()>|/"flags">,
 fltk keeps this up to date as widgets are deactivated and/or added to inactive
 parents.
 
+=for apidoc ||bool|output|
+
+This flag is similar to C<!>L<C<active()|/"active"> except it does not change
+how the widget is drawn. The widget will not recieve any events. This is
+useful for making scrollbars or buttons that work as displays rather than
+input devices.
+
+Set or clear this flag with L<C<set_output()>|/"set_output"> and
+L<C<clear_output()>|/"clear_output">.
+
 =cut
 
 bool
@@ -954,11 +964,13 @@ Widget::active( )
         switch ( ix ) {
             case 0: RETVAL = THIS->active();   break;
             case 1: RETVAL = THIS->active_r(); break;
+            case 2: RETVAL = THIS->output();   break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
         active_r = 1
+          output = 2
 
 
 
