@@ -203,13 +203,18 @@ void
 Widget::callback( CV * SUB, SV * ARGS = NO_INIT )
     CODE:
 #ifdef ENABLE_CALLBACKS
+#ifndef ENABLE_HASH_CALLBACKS
         SV * widget = newSVsv((SV*)ST(0));
         sv_rvweaken(widget);
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(1))); // coderef
         av_push(arr, widget); // widget
-        av_push(arr, ARGS);
+        if ( items == 3 )
+            av_push(arr, ARGS);
         THIS->callback(_cb_w, (void *) arr);
+#else  // #ifndef ENABLE_HASH_CALLBACKS
+        warn ("Uh... hash callbacks aren't ready yet.");
+#endif // #ifndef ENABLE_HASH_CALLBACKS
 #else  // ifdef ENABLE_CALLBACKS
         warn("Callbacks have been disabled."); // TODO: Expain why in POD
 #endif // ifdef ENABLE_CALLBACKS
