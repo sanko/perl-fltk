@@ -983,25 +983,34 @@ false).
 Returns true if the widget and all of its parents are visible. Only if this is
 true can the user see the widget.
 
+=for apidoc ||bool|takesevents|
+
+This is the same as
+C<(>L<C<active()>|/"active">C< && >L<C<visible()>|/"visible">C< && !>L<C<output()>|/"output">C<)>
+but faster. L<C<send()>|/"send"> uses this to decide whether or not to call
+L<C<handle()>|/"handle"> for most events.
+
 =cut
 
 bool
 Widget::active( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = THIS->active();    break;
-            case 1: RETVAL = THIS->active_r();  break;
-            case 2: RETVAL = THIS->output();    break;
-            case 3: RETVAL = THIS->visible();   break;
-            case 4: RETVAL = THIS->visible_r(); break;
+            case 0: RETVAL = THIS->active();      break;
+            case 1: RETVAL = THIS->active_r();    break;
+            case 2: RETVAL = THIS->output();      break;
+            case 3: RETVAL = THIS->visible();     break;
+            case 4: RETVAL = THIS->visible_r();   break;
+            case 5: RETVAL = THIS->takesevents(); break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-         active_r = 1
-           output = 2
-          visible = 3
-        visible_r = 4
+           active_r = 1
+             output = 2
+            visible = 3
+          visible_r = 4
+        takesevents = 5
 
 
 
