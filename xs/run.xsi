@@ -66,7 +66,7 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(1))); // coderef
         if (items == 3) // Callbacks can be called without arguments
-            av_push(arr, args );
+            av_push(arr, newSVsv(args));
         switch( ix ) {
             case 0:    add_timeout( time, _cb, (void *) arr ); break;
             case 1: repeat_timeout( time, _cb, (void *) arr ); break;
@@ -94,7 +94,7 @@ has_timeout( CV * callback, SV * args = NO_INIT )
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(0))); // coderef
         if (items == 2) // Callbacks can be called without arguments
-            av_push(arr, args);
+            av_push(arr, newSVsv(args));
         /* for (Timeout* t = first_timeout; t; t = t->next)
             if (t->cb == _cb &&
                 av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
@@ -154,7 +154,7 @@ remove_timeout( CV * callback, SV * args = NO_INIT )
         AV *arr = newAV();
         av_push(arr, newSVsv((SV*)ST(0))); // coderef
         if (items == 2) // Callbacks can be called without arguments
-            av_push(arr, args);
+            av_push(arr, newSVsv(args));
         switch( ix ) {
             case 0 : remove_timeout(_cb, (void *) arr); break; // XXX - meh
             case 1 :      add_check(_cb, (void *) arr); break;
