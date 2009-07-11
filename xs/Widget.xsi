@@ -962,23 +962,30 @@ L<C<clear_output()>|/"clear_output">.
 Returns true if the widget is visible (L<C<flag(INVISIBLE)>|/"flag"> is
 false).
 
+=for apidoc ||bool|visible_r|
+
+Returns true if the widget and all of its parents are visible. Only if this is
+true can the user see the widget.
+
 =cut
 
 bool
 Widget::active( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = THIS->active();   break;
-            case 1: RETVAL = THIS->active_r(); break;
-            case 2: RETVAL = THIS->output();   break;
-            case 3: RETVAL = THIS->visible();  break;
+            case 0: RETVAL = THIS->active();    break;
+            case 1: RETVAL = THIS->active_r();  break;
+            case 2: RETVAL = THIS->output();    break;
+            case 3: RETVAL = THIS->visible();   break;
+            case 4: RETVAL = THIS->visible_r(); break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-        active_r = 1
-          output = 2
-         visible = 3
+        a ctive_r = 1
+           output = 2
+          visible = 3
+        visible_r = 4
 
 
 
