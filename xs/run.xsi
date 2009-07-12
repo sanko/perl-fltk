@@ -249,6 +249,55 @@ wait ( double time_to_wait = NO_INIT )
     OUTPUT:
         RETVAL
 
+MODULE = FLTK               PACKAGE = FLTK::Window
+
+#include <fltk/Window.h>
+
+=for apidoc ||FLTK::Window|first|
+
+Returns the id of some L<C<visible()>|/"visible"> window. If there is more
+than one, the last one to receive an event is returned. This is useful as a
+default value for L<C<FLTK::Window::child_of()>|FLTK::Window/"child_of">.
+L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> uses it for this if no other
+parent is specified. This is also used by L<C<FLTK::run()>|FLTK/"run"> to see
+if any windows still exist.
+
+=for apidoc ||FLTK::Window|first|window
+
+If this C<window> is visible, this removes it from wherever it is in the list
+and inserts it at the top, as though it received an event. This can be used to
+change the parent of dialog boxes run by
+L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> or
+L<C<FLTK::ask()>|FLTK/"ask">.
+
+=cut
+
+Window *
+Window::first( Window * window = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->first( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->first( window );
+
+=for apidoc ||FLTK::Window|next|
+
+Returns the next L<C<visible()>|/"visible"> top-level window, returns C<undef>
+after the last one. You can use this and L<C<first()>|FLTK::Window/"first"> to
+iterate through all the visible windows.
+
+=cut
+
+Window *
+Window::next( )
+    OUTPUT:
+        RETVAL
+
+
+
 #endif // ifndef DISABLE_RUN
 
 =pod
