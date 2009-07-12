@@ -1044,6 +1044,11 @@ widgets will draw with much different colors if this is on.
 Returns true if this is equal to L<C<FLTK::pushed()>|FLTK/"pushed">, meaning
 it has responded to an C<FLTK::PUSH> event and the mouse is still held down.
 
+=for apidoc ||bool|focused|
+
+Returns true if this is equal to L<C<FLTK::focus()>|FLTK/"focus">, meaning it
+has the keyboard focus and C<FLTK::KEY> events will be sent to this widget.
+
 =cut
 
 bool
@@ -1062,6 +1067,7 @@ Widget::active( )
           //case  9: RETVAL = THIS->value();          break;
             case 10: RETVAL = THIS->selected();       break;
             case 11: RETVAL = THIS->pushed();         break;
+            case 12: RETVAL = THIS->focused();        break;
         }
     OUTPUT:
         RETVAL
@@ -1077,6 +1083,7 @@ Widget::active( )
                  value =  9
               selected = 10
                 pushed = 11
+               focused = 12
 
 
 
