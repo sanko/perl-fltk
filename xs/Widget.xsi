@@ -1033,11 +1033,16 @@ indicate that this flag is on.
 =for hackers For some reason, this is documented in fltk but it doesn't
 actually exist in this class
 
-=for apido ||bool|selected|
+=for apidoc ||bool|selected|
 
 A true/false flag used to mark widgets currently selected in
 L<FLTK::Menu|FLTK::Menu> and L<FLTK::Browser|FLTK::Browser> widgets. Some
 widgets will draw with much different colors if this is on.
+
+=for apidoc ||bool|pushed|
+
+Returns true if this is equal to L<C<FLTK::pushed()>|FLTK/"pushed">, meaning
+it has responded to an C<FLTK::PUSH> event and the mouse is still held down.
 
 =cut
 
@@ -1056,6 +1061,7 @@ Widget::active( )
             case  8: RETVAL = THIS->changed();        break;
           //case  9: RETVAL = THIS->value();          break;
             case 10: RETVAL = THIS->selected();       break;
+            case 11: RETVAL = THIS->pushed();         break;
         }
     OUTPUT:
         RETVAL
@@ -1070,6 +1076,7 @@ Widget::active( )
                changed =  8
                  value =  9
               selected = 10
+                pushed = 11
 
 
 
