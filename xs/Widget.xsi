@@ -1033,6 +1033,12 @@ indicate that this flag is on.
 =for hackers For some reason, this is documented in fltk but it doesn't
 actually exist in this class
 
+=for apido ||bool|selected|
+
+A true/false flag used to mark widgets currently selected in
+L<FLTK::Menu|FLTK::Menu> and L<FLTK::Browser|FLTK::Browser> widgets. Some
+widgets will draw with much different colors if this is on.
+
 =cut
 
 bool
@@ -1048,8 +1054,8 @@ Widget::active( )
             case  6: RETVAL = THIS->click_to_focus(); break;
             case  7: RETVAL = THIS->tab_to_focus();   break;
             case  8: RETVAL = THIS->changed();        break;
-            case  9: RETVAL = THIS->selected();       break;
-            //case 10: RETVAL = THIS->value();          break;
+          //case  9: RETVAL = THIS->value();          break;
+            case 10: RETVAL = THIS->selected();       break;
         }
     OUTPUT:
         RETVAL
@@ -1062,8 +1068,9 @@ Widget::active( )
         click_to_focus =  6
           tab_to_focus =  7
                changed =  8
-              selected =  9
-                 value = 10
+                 value =  9
+              selected = 10
+
 
 
 
