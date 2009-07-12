@@ -1014,6 +1014,15 @@ For historical reasons this flag is true on many more widgets than it should
 be, and FLTK relies on L<C<handle()>|/"handle"> returing C<0> for C<FOCUS>.
 This may change in the future so that more widgets have this flag off.
 
+=for apidoc ||bool|changed|
+
+The default L<C<callback()>|/"callback"> turns this flag on. This can be used
+to find what widgets have had their value changed by the user, for instance in
+response to an "OK" button.
+
+Most widgets turn this flag off when they do the callback, and when the
+program sets the stored value.
+
 =cut
 
 bool
@@ -1028,6 +1037,7 @@ Widget::active( )
             case 5: RETVAL = THIS->takesevents();    break;
             case 6: RETVAL = THIS->click_to_focus(); break;
             case 7: RETVAL = THIS->tab_to_focus();   break;
+            case 8: RETVAL = THIS->changed();        break;
         }
     OUTPUT:
         RETVAL
@@ -1039,6 +1049,7 @@ Widget::active( )
            takesevents = 5
         click_to_focus = 6
           tab_to_focus = 7
+               changed = 8
 
 
 
