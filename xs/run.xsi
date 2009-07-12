@@ -249,6 +249,9 @@ wait ( double time_to_wait = NO_INIT )
     OUTPUT:
         RETVAL
 
+
+    # Here we go again...
+
 MODULE = FLTK               PACKAGE = FLTK::Window
 
 #include <fltk/Window.h>
@@ -296,6 +299,36 @@ Window::next( )
     OUTPUT:
         RETVAL
 
+    # ...and now that we're done with _that_...
+
+MODULE = FLTK               PACKAGE = FLTK
+
+=for apidoc ||int|damage|
+
+True if any L<C<FLTK::Widget::redraw()>|FLTK::Widget/"redraw"> calls have been
+done since the last L<C<FLTK::flush()>|FLTK/"flush">. This indicates that
+L<C<flush()>|FLTK/"flush"> will do something. Currently the meaning of any
+bits are undefined.
+
+Window L<C<flush()>|FLTK/"flush"> routines can set this to indicate that
+L<C<flush()>|FLTK/"flush"> should be called again after waiting for more
+events. This is useful in some instances such as X windows that are waiting
+for a mapping event before being drawn.
+
+=cut
+
+int
+damage( )
+
+=for apidoc |||redraw|
+
+Redraws all widgets. This is a good idea if you have made global changes to
+the styles.
+
+=cut
+
+void
+redraw( )
 
 
 #endif // ifndef DISABLE_RUN
