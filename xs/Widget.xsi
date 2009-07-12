@@ -1049,6 +1049,12 @@ it has responded to an C<FLTK::PUSH> event and the mouse is still held down.
 Returns true if this is equal to L<C<FLTK::focus()>|FLTK/"focus">, meaning it
 has the keyboard focus and C<FLTK::KEY> events will be sent to this widget.
 
+=for apidoc ||bool|belowmouse|
+
+Returns true if this is equal to L<C<FLTK::belowmouse()>|FLTK/"belowmouse">,
+meaning it has the keyboard focus and C<FLTK::MOVE> or C<FLTK::PUSH> events
+will be sent to this widget.
+
 =cut
 
 bool
@@ -1068,6 +1074,8 @@ Widget::active( )
             case 10: RETVAL = THIS->selected();       break;
             case 11: RETVAL = THIS->pushed();         break;
             case 12: RETVAL = THIS->focused();        break;
+            case 13: RETVAL = THIS->belowmouse();     break;
+
         }
     OUTPUT:
         RETVAL
@@ -1084,6 +1092,7 @@ Widget::active( )
               selected = 10
                 pushed = 11
                focused = 12
+            belowmouse = 13
 
 
 
