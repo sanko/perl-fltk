@@ -929,6 +929,12 @@ If L<C<visible()>|/"visible"> is true, turn it off. If
 L<C<visible_r()>|/"visible_r"> was true then L<C<send()>|/"send"> a
 C<FLTK::HIDE> event, and L<C<redraw()>|/"redraw"> the parent if necessary.
 
+=for apidoc |||setonly|
+
+Calls L<C<set()>|/"set"> on this widget and calls L<C<clear()>|/"clear"> on
+all adjacent widgets in the same parent L<Group|FLTK::Group> that have the
+L<C<type()>|/"type"> set to C<RADIO>.
+
 =cut
 
 void
@@ -940,12 +946,14 @@ Widget::remove_timeout( )
             case 2: THIS->deactivate();      break;
             case 3: THIS->show();            break;
             case 4: THIS->hide();            break;
+            case 5: THIS->setonly();         break;
         }
     ALIAS:
           activate = 1
         deactivate = 2
               show = 3
               hide = 4
+           setonly = 5
 
 =for apidoc ||bool|active|
 
@@ -1055,11 +1063,11 @@ Returns true if this is equal to L<C<FLTK::belowmouse()>|FLTK/"belowmouse">,
 meaning it has the keyboard focus and C<FLTK::MOVE> or C<FLTK::PUSH> events
 will be sent to this widget.
 
-=for apidoc ||bool|state|
+=for apidoc ||bool|set|
 
-Widgets have space in them to store a single true/false value (put into the
-C<STATE> bit of L<C<flags()>|/"flags">). This is used by buttons and
-checkmarks and radio menu items.
+Same as L<C<state(true)>|/"state">. If you know the widget will already be
+redrawn, or it is not displayed, it is faster to call the inline
+L<C<set_flag(STATE)>|/"set_flag"> function.
 
 =for apidoc ||bool|clear|
 
@@ -1087,7 +1095,7 @@ Widget::active( )
             case 11: RETVAL = THIS->pushed();         break;
             case 12: RETVAL = THIS->focused();        break;
             case 13: RETVAL = THIS->belowmouse();     break;
-            case 14: RETVAL = THIS->state();          break;
+            case 14: RETVAL = THIS->set();            break;
             case 15: RETVAL = THIS->clear();          break;
         }
     OUTPUT:
@@ -1106,19 +1114,34 @@ Widget::active( )
                 pushed = 11
                focused = 12
             belowmouse = 13
-                 state = 14
+                   set = 14
                  clear = 15
 
+=for apidoc ||bool|state|
 
+Widgets have space in them to store a single true/false value (put into the
+C<STATE> bit of L<C<flags()>|/"flags">). This is used by buttons and
+checkmarks and radio menu items.
 
+=for apidoc |||state|value|
 
+Change the L<C<state()>|/"state">. Also calls
+L<C<clear_changed()>|/"clear_changed">. If the state is different,
+L<C<redraw(DAMAGE_VALUE)>|/"redraw"> is called and true is returned. If the
+state is the same then false is returned and the widget is not redrawn.
 
+=cut
 
-
-
-
-
-
+bool
+Widget::state( bool value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->state( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->state( value );
 
 
 
@@ -1219,14 +1242,6 @@ Widget::test_shortcut ( TEST_LABEL )
  #         }
  #         THIS->default_callback(WIDGET, cb);
  #         THIS->user_data(arr);
-
-bool
-Widget::state ( STATE )
-    CASE: ! items
-        CODE:
-            RETVAL = THIS->state( );
-    CASE:
-        bool STATE;
 
 void
 Widget::draw_label ( RECTANGLE, FLAGS )
