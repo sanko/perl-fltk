@@ -325,10 +325,30 @@ damage( )
 Redraws all widgets. This is a good idea if you have made global changes to
 the styles.
 
+=for apidoc |||flush|
+
+Get the display up to date. This is done by calling L<C<layout()>|/"layout">
+on all Window objects with L<C<layout_damage()>|/"layout_damage"> and then
+calling L<C<draw()>|/"draw"> on all Window objects with
+L<C<damage()>|/"damage">. (actually it calls
+L<C<FLTK::Window::flush()>|FLTK::Window/"flush"> and that calls
+L<C<draw()>|/"draw">, but normally you can ignore this). This will also flush
+the C<X> i/o buffer, update the cursor shape, update Windows' window sizes,
+and other operations to get the display up to date.
+
+L<C<wait()>|/"wait"> calls this before it waits for events.
+
 =cut
 
 void
 redraw( )
+    CODE:
+        switch ( ix ) {
+            case 0: redraw(); break;
+            case 1: flush();  break;
+        }
+    ALIAS:
+        flush = 1
 
 
 #endif // ifndef DISABLE_RUN
