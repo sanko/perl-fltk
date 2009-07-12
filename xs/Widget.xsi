@@ -1055,6 +1055,18 @@ Returns true if this is equal to L<C<FLTK::belowmouse()>|FLTK/"belowmouse">,
 meaning it has the keyboard focus and C<FLTK::MOVE> or C<FLTK::PUSH> events
 will be sent to this widget.
 
+=for apidoc ||bool|state|
+
+Widgets have space in them to store a single true/false value (put into the
+C<STATE> bit of L<C<flags()>|/"flags">). This is used by buttons and
+checkmarks and radio menu items.
+
+=for apidoc ||bool|clear|
+
+Same as L<C<state(false)>|/"state">. If you know the widget will already be
+redrawn, or it is not displayed, it is faster to call the inline
+L<C<clear_flag(STATE)>|/"clear_flag"> function.
+
 =cut
 
 bool
@@ -1075,7 +1087,8 @@ Widget::active( )
             case 11: RETVAL = THIS->pushed();         break;
             case 12: RETVAL = THIS->focused();        break;
             case 13: RETVAL = THIS->belowmouse();     break;
-
+            case 14: RETVAL = THIS->state();          break;
+            case 15: RETVAL = THIS->clear();          break;
         }
     OUTPUT:
         RETVAL
@@ -1093,6 +1106,9 @@ Widget::active( )
                 pushed = 11
                focused = 12
             belowmouse = 13
+                 state = 14
+                 clear = 15
+
 
 
 
