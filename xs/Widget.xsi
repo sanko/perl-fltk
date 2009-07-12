@@ -1023,33 +1023,47 @@ response to an "OK" button.
 Most widgets turn this flag off when they do the callback, and when the
 program sets the stored value.
 
+=for apidoc H||bool|value|
+
+A true/false flag used by L<FLTK::Button|FLTK::Button> to indicate the current
+state and by "parent" items in a hierarchial L<FLTK::Browser|FLTK::Browser> to
+indicate if they are open. Many widgets will draw pushed-in or otherwise
+indicate that this flag is on.
+
+=for hackers For some reason, this is documented in fltk but it doesn't
+actually exist in this class
+
 =cut
 
 bool
 Widget::active( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = THIS->active();         break;
-            case 1: RETVAL = THIS->active_r();       break;
-            case 2: RETVAL = THIS->output();         break;
-            case 3: RETVAL = THIS->visible();        break;
-            case 4: RETVAL = THIS->visible_r();      break;
-            case 5: RETVAL = THIS->takesevents();    break;
-            case 6: RETVAL = THIS->click_to_focus(); break;
-            case 7: RETVAL = THIS->tab_to_focus();   break;
-            case 8: RETVAL = THIS->changed();        break;
+            case  0: RETVAL = THIS->active();         break;
+            case  1: RETVAL = THIS->active_r();       break;
+            case  2: RETVAL = THIS->output();         break;
+            case  3: RETVAL = THIS->visible();        break;
+            case  4: RETVAL = THIS->visible_r();      break;
+            case  5: RETVAL = THIS->takesevents();    break;
+            case  6: RETVAL = THIS->click_to_focus(); break;
+            case  7: RETVAL = THIS->tab_to_focus();   break;
+            case  8: RETVAL = THIS->changed();        break;
+            case  9: RETVAL = THIS->selected();       break;
+            //case 10: RETVAL = THIS->value();          break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-              active_r = 1
-                output = 2
-               visible = 3
-             visible_r = 4
-           takesevents = 5
-        click_to_focus = 6
-          tab_to_focus = 7
-               changed = 8
+              active_r =  1
+                output =  2
+               visible =  3
+             visible_r =  4
+           takesevents =  5
+        click_to_focus =  6
+          tab_to_focus =  7
+               changed =  8
+              selected =  9
+                 value = 10
 
 
 
