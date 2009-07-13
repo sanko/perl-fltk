@@ -29,7 +29,7 @@ See also: L<Automated Test Reports|/"Automated Test Reports">
 
 C<FLTK> requires L<Alien::FLTK|Alien::FLTK> which is listed as prerequisite in
 Build.PL so, unless you answer 'no' when prompted, the CPAN shell should
-automagically install it for you.
+automatically install it for you.
 
 =head1 How Do I...
 
@@ -54,7 +54,7 @@ flags during compilation
 
 TODO
 
-=head2 Depricated Widgets and Functions
+=head2 Deprecated Widgets and Functions
 
 TODO
 
@@ -62,11 +62,11 @@ TODO
 
 =head3 C++ API Differences
 
-For the most part, I have tried to emmulate the official interface to FLTK but
+For the most part, I have tried to emulate the official interface to FLTK but
 there are a few areas where I stray (sometimes drastically) from the C++ API
 Here, I'll list them and (for some) try to explain why.
 
-If a change I mention here chaffes you the wrong way, you're free to (within
+If a change I mention here chafes you the wrong way, you're free to (within
 reason) bug me about it until I reconsider. ...and, in turn, I am free to
 ignore you if I'm busy or just about any other reason. Drop such requests in
 the issue tracker.
@@ -75,7 +75,7 @@ the issue tracker.
 
 =item Support for C<args(...), arg(...), and show(...)>
 
-The latter two are used extensivly in the tests that come with fltk but I
+The latter two are used extensively in the tests that come with fltk but I
 don't think they're powerful enough to use in Perl. I would suggest using
 L<GetOpt::Long|GetOpt::Long> or another command line parser and then setting
 the values in FLTK manually.
@@ -85,7 +85,7 @@ incomplete without C<arg(0, '-geometry blah', 0)> support.
 
 =back
 
-=head3 Backwards Compatability
+=head3 Backward Compatibility
 
 This section lists recent major changes in API or behavior between stable
 releases.  For older news see the F<Changes> file included with this
@@ -96,6 +96,43 @@ distribution.  For detail see the commit logs.
 =item ...nothin' yet.
 
 =back
+
+=head2 APIDoc
+
+To make life easy, FLTK's documentation is in the xs source files near to
+whatever is being described.  The documentation format is based on the apidoc
+found in perl's own core. ...why not steal a great idea?
+
+During the build process, the documentation is pulled from the xs and .pod
+files are created and installed.
+
+=head3 APIDoc format
+
+For folks with an itch to hack or a flair for words and want to help improve
+the documentation, lines are of the form:
+
+    flags|prereq|return_type|function_name|arg1|arg2|...|argN
+
+ flags are single letters with following meanings:
+    d       depreciated code/widget
+    e       enum/flag
+    F       function rather than an OO method*
+    x       experimental and may be removed or changed in a future version
+    t[:X:Y] exported by tags :X and :Y*
+    m       basic functionality has changed since the last major release*
+    U       suppress usage example in auto-generated documentation
+    H       this is a hidden, internal (hacker only) function
+
+ prereq are single letters with the following meanings:
+    g       requires GL*
+    X       requires the X Window system*
+    t       requires pthreads (or Windows)*
+    W       requires Windows*
+
+* denotes stuff I haven't really given enough thought to and probably haven't
+used yet.
+
+This format is subject to change.
 
 =head1 Giving back
 
@@ -169,7 +206,7 @@ shell first:
  cpan> o conf init test_report
    [...follow the CPAN::Reporter setup prompts...]
  cpan> o conf commit
- cpan> install Net::BitTorrent
+ cpan> install FLTK
 
 For more on becoming a CPAN Tester and why this is useful, see the
 L<CPAN::Reporter|CPAN::Reporter/"DESCRIPTION"> documentation and
