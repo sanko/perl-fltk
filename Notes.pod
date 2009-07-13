@@ -6,8 +6,8 @@ FLTK::Notes - Annotated Guide to the Ins and Outs of FLTK
 
 =head1 Description
 
-This is a first draft attempt at defining a road map for future C<FLTK>
-development and a behavioral reference for users and third-party developers.
+This is a first draft attempt at defining a road map for future development
+and a behavioral reference for users and third-party developers.
 
 =head1 Class Hierarchy
 
@@ -60,15 +60,40 @@ TODO
 
 =head2 Compatibility Notes
 
+=head3 C++ API Differences
+
+For the most part, I have tried to emmulate the official interface to FLTK but
+there are a few areas where I stray (sometimes drastically) from the C++ API
+Here, I'll list them and (for some) try to explain why.
+
+If a change I mention here chaffes you the wrong way, you're free to (within
+reason) bug me about it until I reconsider. ...and, in turn, I am free to
+ignore you if I'm busy or just about any other reason. Drop such requests in
+the issue tracker.
+
+=over
+
+=item Support for C<args(...), arg(...), and show(...)>
+
+The latter two are used extensivly in the tests that come with fltk but I
+don't think they're powerful enough to use in Perl. I would suggest using
+L<GetOpt::Long|GetOpt::Long> or another command line parser and then setting
+the values in FLTK manually.
+
+I'm still thinking about this choice, so don't get too angry if your life is
+incomplete without C<arg(0, '-geometry blah', 0)> support.
+
+=back
+
+=head3 Backwards Compatability
+
 This section lists recent major changes in API or behavior between stable
 releases.  For older news see the F<Changes> file included with this
 distribution.  For detail see the commit logs.
 
 =over
 
-=item NA
-
-I have not yet made a stable release at this time.
+=item ...nothin' yet.
 
 =back
 
