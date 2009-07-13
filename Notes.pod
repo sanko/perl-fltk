@@ -1,0 +1,222 @@
+=pod
+
+=head1 NAME
+
+FLTK::Notes - Annotated Guide to the Ins and Outs of FLTK
+
+=head1 Description
+
+This is a first draft attempt at defining a road map for future C<FLTK>
+development and a behavioral reference for users and third-party developers.
+
+=head1 Class Hierarchy
+
+TODO
+
+=head1 Installation
+
+This distribution uses C<Module::Build> for installation, so use the following
+procedure:
+
+  perl Build.PL
+  ./Build
+  ./Build test
+  ./Build install
+
+See also: L<Automated Test Reports|/"Automated Test Reports">
+
+=head2 Prerequisites
+
+C<FLTK> requires L<Alien::FLTK|Alien::FLTK> which is listed as prerequisite in
+Build.PL so, unless you answer 'no' when prompted, the CPAN shell should
+automagically install it for you.
+
+=head1 How Do I...
+
+Parts that aren't handled internally are described here (eventually) with
+sample code to get you started.
+
+TODO
+
+=head1 FLTK Internals
+
+This section describes all the behind the scenes stuff that makes C<FLTK>
+work.  Or not work.  It depends.
+
+=head2 FLTK Libraries
+
+Please refer to L<Alien::FLTK|Alien::FLTK>.
+
+=head2 Customizing the Build Process
+
+=for notes This is where I'll describe stuff like how to turn on/off various
+flags during compilation
+
+TODO
+
+=head2 Depricated Widgets and Functions
+
+TODO
+
+=head2 Compatibility Notes
+
+This section lists recent major changes in API or behavior between stable
+releases.  For older news see the F<Changes> file included with this
+distribution.  For detail see the commit logs.
+
+=over
+
+=item NA
+
+I have not yet made a stable release at this time.
+
+=back
+
+=head1 Giving back
+
+If you're interested in assisting with L<FLTK|FLTK>'s development but don't
+know where to begin, here are a few ideas.
+
+=head2 Joining the Project
+
+C<FLTK> is too large for just one person to hack on.  If you're XS-, C++-, or
+just Perl-adept and would like to help, you can start by forking the project
+on github: http://github.com/sanko/fltk-perl/.  When ready, send me a pull
+request, I'll look over your changes and get back to you. Minor patches get
+your name in the changelog.  Major patches get your name in the
+L<Acknowledgments|FLTK/Acknowledgments> section and an invitation to be a
+trusted collaborator.  Oooo.  Ahhh.
+
+=head2 Bug Reporting
+
+Found bugs should be reported through C<FLTK>'s
+L<Issue Tracker|/"Issue Tracker">.  Before creating a new report, please
+review the following list:
+
+=over
+
+=item 1.
+
+Make sure you are using the most recent stable release.
+
+=item 2.
+
+Make sure the bug is reproducible.
+
+=item 3.
+
+Please write in clear English.
+
+=item 4.
+
+Provide "baby steps" to describe exactly how to replicate the bug.  Sample
+code is welcome.
+
+=item 5.
+
+Search the list of open and resolved issues to make sure the flaw hasn't
+already been reported.  If it has, star the issue to stay up to date.
+
+=item 6.
+
+One bug is one bug report.  Please do not include multiple, separate issues in
+one report unless they are explicitly related to each other.
+
+=item 7.
+
+Look over your report before submission to be sure you've included as much
+detail as possible.  Seriously.  Get up, have a drink of water, come back,
+read over it again to make sure you've included everything you intended, and
+then submit it.
+
+=back
+
+=head2 Automated Test Reports
+
+Becoming a CPAN Tester is an easy, automatic way to contribute to the quality
+of your favorite module and CPAN in general.  If you would like to contribute
+automated test reports for C<FLTK>, install C<CPAN::Reporter> from the CPAN
+shell first:
+
+ $ cpan
+ cpan> install CPAN::Reporter
+ cpan> reload cpan
+ cpan> o conf init test_report
+   [...follow the CPAN::Reporter setup prompts...]
+ cpan> o conf commit
+ cpan> install Net::BitTorrent
+
+For more on becoming a CPAN Tester and why this is useful, see the
+L<CPAN::Reporter|CPAN::Reporter/"DESCRIPTION"> documentation and
+http://cpantesters.org/.
+
+=head1 See Also
+
+=head2 Support and Information Links
+
+=over
+
+=item Website and Blog
+
+Eventually, the official website will be http://sankorobinson.com/fltk/.
+
+=item Live support
+
+Eventually, the official means of support for C<FLTK> will be through
+C<#fltk-perl> on... some IRC network. Probably Freenode.
+
+=item Receive Commit and Issue Tracker Updates
+
+TODO
+
+=item Mailinglist
+
+TODO
+
+=item Issue Tracker
+
+Use http://github.com/sanko/fltk-perl/issues/list for bug
+tracking.  Please include as much information as possible and review
+the list L<above|/"Bug Reporting">.
+
+=item Twitter
+
+I announce stable builds and occasionally complain on Twitter:
+http://twitter.com/fltk_perl
+
+=back
+
+=head2 Related Information
+
+=over
+
+=item Fast Light ToolKit
+
+http://fltk.org/
+
+=back
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2008-2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
