@@ -9,14 +9,14 @@ using namespace fltk;
 
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
 //#define ENABLE_DESTROY    // Introduce pointless bugs :D
-//#define ENABLE_DEPRECATED // Depreciated widgets, etc.
+//#define ENABLE_DEPRECATED // Depreciated widgets, and other buggy junk
 #define USE_IMAGE 0
 #define USE_GL    0
 #define USE_GLUT  0
 #define USE_CAIRO 0
 #define USE_X     0 // TODO
 
-=for apidoc H||FLTK|cb_w|fltk::Widget|CODE
+=for apidoc H|||_cb_w|fltk::Widget|CODE
 
 This is the function called by FLTK whenever callbacks are triggered. See
 L<FLTK::Widget::callback()>.
@@ -121,6 +121,8 @@ INCLUDE: Adjuster.xsi
 INCLUDE: Button.xsi
 
 INCLUDE: Group.xsi
+
+INCLUDE: Rectangle.xsi
 
 INCLUDE: Widget.xsi
 
