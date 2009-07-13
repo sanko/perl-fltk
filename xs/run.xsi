@@ -4,29 +4,207 @@ MODULE = FLTK               PACKAGE = FLTK
 
 #include <fltk/run.h>
 
-    # Side trip into FLTK::Widget
+=for apidoc t[run]F|X||display|d
 
-MODULE = FLTK               PACKAGE = FLTK::Widget
+Startup method to set what C<X> display to use. This uses C<setenv()> to
+change the C<DISPLAY> environment variable, so it will affect programs that
+are exec'd by this one.
 
-=for apidoc t[run]||bool|take_focus|
+This does some "uglification" required by C<X>. If there is no colon in the
+string it appends ":0.0" to it. Thus a plain machine name may be used.
 
-Tries to make this widget be the keyboard focus widget, by first sending it an
-C<FLTK::FOCUS> event, and if it returns non-zero, setting
-L<C<FLTK::focus()>|FLTK/"focus"> to this widget. You should use this method to
-assign the focus to a widget. Returns true if the widget accepted the focus.
+On non-C<X> systems this sets the environment variable anyway, even though it
+probably will not affect the display used. It appears that putenv is missing
+on some versions of Windows so I commented it all out there, sigh.
 
-On current systems, fltk does not force the window system to set the focus. If
-the window does not have focus it will usually switch back to the previous
-window when the user types a key.
+=for hackers Found in F<fltk/setdisplay.cxx>
+
+=cut
+
+void
+display ( char * d )
+
+=for apidoc t[run]F||bool|enable_tablet_events|
+
+Call this to indicate that you are interested in getting more information from
+a pen tablet device. It does some necessary overhead to enable tablets on C<X>
+and Windows. In the future FLTK may do this automatically without you calling
+this.
+
+If a tablet is detected, L<C<FLTK::event_pressure()>|/"event_pressure"> will
+return the pen pressure as a float value between C<0> and C<1>. Some tablets
+also support L<C<event_x_tilt()>|/"event_x_tilt"> and
+L<C<event_y_tilt()>|/"event_y_tilt">.
 
 =cut
 
 bool
-Widget::take_focus( )
+enable_tablet_events( )
 
-MODULE = FLTK               PACKAGE = FLTK
+=for apidoc t[run]||int|wait|
 
-    # ...and we're back.
+Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
+program. You can also check what happened each time after this returns, which
+is quite useful for managing program state.
+
+=for apidoc t[run]F||int|wait|time_to_wait
+
+Waits until "something happens", or the given time interval passes. It can
+return much sooner than the time if something happens.
+
+What this really does is call all idle callbacks, all elapsed timeouts, call
+L<C<FLTK::flush()>|/"flush"> to get the screen to update, and then wait some
+time (zero if there are idle callbacks, the shortest of all pending timeouts,
+or the given time), for any events from the user or any
+L<C<FLTK::add_fd()>|/"add_fd"> callbacks. It then handles the events and calls
+the callbacks and then returns.
+
+The return value is zero if nothing happened before the passed C<time_to_wait>
+expired. It is non-zero if any events or timeouts came in.
+
+=cut
+
+int
+wait ( double time_to_wait = NO_INIT )
+    CODE:
+        if ( items )
+            RETVAL = wait( time_to_wait );
+        else
+            RETVAL = wait( );
+    OUTPUT:
+        RETVAL
+
+=for apidoc t[run]F||int|run|
+
+Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
+all the windows are hidden or destroyed (checked by seeing if
+L<C<Window::first()>|FLTK::Window/"first"> is undef) this will return with
+zero. A program can also exit by having a callback call C<exit>.
+
+Most FLTK programs will end with C<exit FLTK::run();>.
+
+=for apidoc t[run]F||int|check|
+
+Same as  L<C<FLTK::wait(0)>|/"wait">. Calling this during a big calculation
+will keep the screen up to date and the interface responsive:
+
+    while (!calculation_done()) {
+        calculate();
+        FLTK::check();
+        last if user_hit_abort_button();
+    }
+
+=for apidoc t[run]F||int|ready|
+
+Test to see if any events or callbacks are pending. This will return true if
+L<C<FLTK::check()>|/"check"> would do anything other than update the screen.
+Since this will not draw anything or call any code, it is safe to call this if
+your program is in an inconsistent state. This is also useful if your
+calculation is updating widgets but you do not want or need the overhead of
+the screen updating every time you check for events.
+
+    while (!calculation_done()) {
+        calculate();
+        if (FLTK::ready()) {
+            do_expensive_cleanup();
+            FLTK::check();
+            last if user_hit_abort_button();
+        }
+    }
+
+=cut
+
+int
+run ()
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL =   run( ); break;
+            case 1: RETVAL = check( ); break;
+            case 2: RETVAL = ready( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        check = 1
+        ready = 2
+
+=for apidoc F|||redraw|
+
+Redraws all widgets. This is a good idea if you have made global changes to
+the styles.
+
+=for apidoc F|||flush|
+
+Get the display up to date. This is done by calling L<C<layout()>|/"layout">
+on all Window objects with L<C<layout_damage()>|/"layout_damage"> and then
+calling L<C<draw()>|/"draw"> on all Window objects with
+L<C<damage()>|/"damage">. (actually it calls
+L<C<FLTK::Window::flush()>|FLTK::Window/"flush"> and that calls
+L<C<draw()>|/"draw">, but normally you can ignore this). This will also flush
+the C<X> i/o buffer, update the cursor shape, update Windows' window sizes,
+and other operations to get the display up to date.
+
+L<C<wait()>|/"wait"> calls this before it waits for events.
+
+=cut
+
+void
+redraw( )
+    CODE:
+        switch ( ix ) {
+            case 0: redraw(); break;
+            case 1: flush();  break;
+        }
+    ALIAS:
+        flush = 1
+
+=for apidoc ||int|damage|
+
+True if any L<C<FLTK::Widget::redraw()>|FLTK::Widget/"redraw"> calls have been
+done since the last L<C<FLTK::flush()>|FLTK/"flush">. This indicates that
+L<C<flush()>|FLTK/"flush"> will do something. Currently the meaning of any
+bits are undefined.
+
+Window L<C<flush()>|FLTK/"flush"> routines can set this to indicate that
+L<C<flush()>|FLTK/"flush"> should be called again after waiting for more
+events. This is useful in some instances such as X windows that are waiting
+for a mapping event before being drawn.
+
+=for apidoc |||damage|d
+
+Sets L<C<damage()>|/"damage"> to C<d>.
+
+=cut
+
+int
+damage( int d = NO_INIT )
+    CASE: !items
+        CODE:
+            RETVAL = damage();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            damage();
+
+=for apidoc t[run]||time|get_time_secs|
+
+Return portable time that increases by C<1.0> each second.
+
+On Windows it represents the time since system start, on Unixes, it's the
+C<gettimeofday()>.
+
+Using a double, the numerical precision exceeds C<1/1040000> even for the Unix
+gettimeofday value (which is seconds since 1970). However you should only
+store the C<difference> between these values in a float.
+
+The precision of the returned value depends on the OS, but the minimum
+precision is 20ms.
+
+=cut
+
+double
+get_time_secs()
 
 =for apidoc t[run]|||add_timeout|time|callback|args
 
@@ -84,6 +262,10 @@ This doesn't work right now because I stuff perl's datatypes where I shouldn't
 Return true if L<C<add_check()>|/"add_check"> has been done with this C<cb>
 and C<args>, and L<C<remove_check()>|/"remove_check"> has not been done.
 
+=for apidoc Hxt[run]||bool|has_idle|cb|args
+
+Returns true if the specified idle callback is currently installed.
+
 =cut
 
 bool
@@ -101,11 +283,13 @@ has_timeout( CV * callback, SV * args = NO_INIT )
         switch( ix ) {
             case 0: RETVAL = has_timeout(_cb, (void *) arr); break; // XXX
             case 1: RETVAL =   has_check(_cb, (void *) arr); break; // XXX
+            case 2: RETVAL =    has_idle(_cb, (void *) arr); break; // XXX
         }
     OUTPUT:
         RETVAL
     ALIAS:
         has_check = 1
+         has_idle = 2
 
 =for apidoc Hxt[run]|||remove_timeout|coderef|args
 
@@ -144,6 +328,29 @@ events:
 Remove all matching check callback, if any exists. You can call this from
 inside the check callback if you want.
 
+=for apidoc t[run]|||add_idle|coderef|args
+
+Adds a callback function that is called every time by
+L<C<FLTK::wait()>|FLTK/"wait"> and also makes it act as though the timeout is
+zero (this makes L<C<FLTK::wait()>|FLTK/"wait"> return immediately, so if it
+is in a loop it is called repeatedly, and thus the idle fucntion is called
+repeatedly). The idle function can be used to get background processing done.
+
+You can have multiple idle callbacks. They are called one after another in a
+round-robin fashion, checking for events between each.
+
+L<C<FLTK::wait()>|FLTK/"wait"> and L<C<FLTK::check()>|FLTK/"check"> call idle
+callbacks, but L<C<FLTK::ready()>|FLTK/"ready"> does not.
+
+The idle callback can call any FLTK functions, including
+L<C<FLTK::wait()>|FLTK/"wait">, L<C<FLTK::check()>|FLTK/"check">, and
+L<C<FLTK::ready()>|FLTK/"ready">. In this case fltk will not recursively call
+the idle callback.
+
+=for apidoc t[run]|||remove_idle|coderef|args
+
+Removes the specified idle callback, if it is installed.
+
 =cut
 
 void
@@ -157,199 +364,14 @@ remove_timeout( CV * callback, SV * args = NO_INIT )
             case 0 : remove_timeout(_cb, (void *) arr); break; // XXX - meh
             case 1 :      add_check(_cb, (void *) arr); break;
             case 2 :   remove_check(_cb, (void *) arr); break; // XXX - meh
+            case 3 :       add_idle(_cb, (void *) arr); break;
+            case 4 :    remove_idle(_cb, (void *) arr); break; // XXX - meh
         }
     ALIAS:
            add_check = 1
         remove_check = 2
-
-=for apidoc t[run]F||int|run|
-
-Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
-all the windows are hidden or destroyed (checked by seeing if
-L<C<Window::first()>|FLTK::Window/"first"> is undef) this will return with
-zero. A program can also exit by having a callback call C<exit>.
-
-Most FLTK programs will end with C<exit FLTK::run();>.
-
-=for apidoc t[run]F||int|check|
-
-Same as  L<C<FLTK::wait(0)>|/"wait">. Calling this during a big calculation
-will keep the screen up to date and the interface responsive:
-
-    while (!calculation_done()) {
-        calculate();
-        FLTK::check();
-        last if user_hit_abort_button();
-    }
-
-=for apidoc t[run]F||int|ready|
-
-Test to see if any events or callbacks are pending. This will return true if
-L<C<FLTK::check()>|/"check"> would do anything other than update the screen.
-Since this will not draw anything or call any code, it is safe to call this if
-your program is in an inconsistent state. This is also useful if your
-calculation is updating widgets but you do not want or need the overhead of
-the screen updating every time you check for events.
-
-    while (!calculation_done()) {
-        calculate();
-        if (FLTK::ready()) {
-            do_expensive_cleanup();
-            FLTK::check();
-            last if user_hit_abort_button();
-        }
-    }
-
-=cut
-
-int
-run ()
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL =   run( ); break;
-            case 1: RETVAL = check( ); break;
-            case 2: RETVAL = ready( ); break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        check = 1
-        ready = 2
-
-=for apidoc t[run]||int|wait|
-
-Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
-program. You can also check what happened each time after this returns, which
-is quite useful for managing program state.
-
-=for apidoc t[run]F||int|wait|time_to_wait
-
-Waits until "something happens", or the given time interval passes. It can
-return much sooner than the time if something happens.
-
-What this really does is call all idle callbacks, all elapsed timeouts, call
-L<C<FLTK::flush()>|/"flush"> to get the screen to update, and then wait some
-time (zero if there are idle callbacks, the shortest of all pending timeouts,
-or the given time), for any events from the user or any
-L<C<FLTK::add_fd()>|/"add_fd"> callbacks. It then handles the events and calls
-the callbacks and then returns.
-
-The return value is zero if nothing happened before the passed C<time_to_wait>
-expired. It is non-zero if any events or timeouts came in.
-
-=cut
-
-int
-wait ( double time_to_wait = NO_INIT )
-    CODE:
-        if ( items )
-            RETVAL = wait( time_to_wait );
-        else
-            RETVAL = wait( );
-    OUTPUT:
-        RETVAL
-
-
-    # Here we go again...
-
-MODULE = FLTK               PACKAGE = FLTK::Window
-
-#include <fltk/Window.h>
-
-=for apidoc ||FLTK::Window|first|
-
-Returns the id of some L<C<visible()>|/"visible"> window. If there is more
-than one, the last one to receive an event is returned. This is useful as a
-default value for L<C<FLTK::Window::child_of()>|FLTK::Window/"child_of">.
-L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> uses it for this if no other
-parent is specified. This is also used by L<C<FLTK::run()>|FLTK/"run"> to see
-if any windows still exist.
-
-=for apidoc ||FLTK::Window|first|window
-
-If this C<window> is visible, this removes it from wherever it is in the list
-and inserts it at the top, as though it received an event. This can be used to
-change the parent of dialog boxes run by
-L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> or
-L<C<FLTK::ask()>|FLTK/"ask">.
-
-=cut
-
-Window *
-Window::first( Window * window = NO_INIT )
-    CASE: items == 1
-        CODE:
-            THIS->first( );
-        OUTPUT:
-            RETVAL
-    CASE:
-        CODE:
-            THIS->first( window );
-
-=for apidoc ||FLTK::Window|next|
-
-Returns the next L<C<visible()>|/"visible"> top-level window, returns C<undef>
-after the last one. You can use this and L<C<first()>|FLTK::Window/"first"> to
-iterate through all the visible windows.
-
-=cut
-
-Window *
-Window::next( )
-    OUTPUT:
-        RETVAL
-
-    # ...and now that we're done with _that_...
-
-MODULE = FLTK               PACKAGE = FLTK
-
-=for apidoc ||int|damage|
-
-True if any L<C<FLTK::Widget::redraw()>|FLTK::Widget/"redraw"> calls have been
-done since the last L<C<FLTK::flush()>|FLTK/"flush">. This indicates that
-L<C<flush()>|FLTK/"flush"> will do something. Currently the meaning of any
-bits are undefined.
-
-Window L<C<flush()>|FLTK/"flush"> routines can set this to indicate that
-L<C<flush()>|FLTK/"flush"> should be called again after waiting for more
-events. This is useful in some instances such as X windows that are waiting
-for a mapping event before being drawn.
-
-=cut
-
-int
-damage( )
-
-=for apidoc |||redraw|
-
-Redraws all widgets. This is a good idea if you have made global changes to
-the styles.
-
-=for apidoc |||flush|
-
-Get the display up to date. This is done by calling L<C<layout()>|/"layout">
-on all Window objects with L<C<layout_damage()>|/"layout_damage"> and then
-calling L<C<draw()>|/"draw"> on all Window objects with
-L<C<damage()>|/"damage">. (actually it calls
-L<C<FLTK::Window::flush()>|FLTK::Window/"flush"> and that calls
-L<C<draw()>|/"draw">, but normally you can ignore this). This will also flush
-the C<X> i/o buffer, update the cursor shape, update Windows' window sizes,
-and other operations to get the display up to date.
-
-L<C<wait()>|/"wait"> calls this before it waits for events.
-
-=cut
-
-void
-redraw( )
-    CODE:
-        switch ( ix ) {
-            case 0: redraw(); break;
-            case 1: flush();  break;
-        }
-    ALIAS:
-        flush = 1
-
+            add_idle = 3
+         remove_idle = 4
 
 #endif // ifndef DISABLE_RUN
 
