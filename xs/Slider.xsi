@@ -225,6 +225,34 @@ void
 Slider::draw_ticks( fltk::Rectangle * r, int min_spacing )
     C_ARGS: *r, min_spacing
 
+=for apidoc ||bool|draw|rect|flags|slot
+
+Subclasses can use this to redraw the moving part. Draw everything that is
+inside the box, such as the tick marks, the moving slider, and the "slot". The
+slot only drawn if C<slot> is true. You should already have drawn the
+background of the slider.
+
+=cut
+
+void
+Slider::draw( fltk::Rectangle * sr, Flags flags, bool slot)
+    C_ARGS: *sr, flags, slot
+
+=for apidoc ||int|handle|event|rect
+
+This call is provied so subclasses can draw the moving part inside an
+arbitrary rectangle.
+
+=cut
+
+int
+Slider::handle(int event, fltk::Rectangle * r = NO_INIT)
+    CASE: items == 2
+        C_ARGS: event
+    CASE:
+        C_ARGS: event, *r
+
+
 
 #endif // ifndef DISABLE_SLIDER
 
