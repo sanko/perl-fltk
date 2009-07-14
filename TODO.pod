@@ -8,7 +8,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * Callbacks seem to be leaking memory
+=item * Creating new callbacks leaks memory
 
 =item * Finish all widgets, etc.
 
@@ -18,15 +18,24 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * L<C<FLTK::has_timeout()>|FLTK/"has_timeout"> in F<xs/run.xsi>
+=item F<xs/run.xsi>
 
-=item * L<C<FLTK::remove_timeout(...)>|FLTK/"remove_timeout"> in F<xs/run.xsi>
+=over
 
-=item * L<C<FLTK::remove_check(...)>|FLTK/"remove_check"> in F<xs/run.xsi>
+=item * C<has_timeout()>
 
-=item * L<C<FLTK::has_check(...)>|FLTK/"has_check"> in F<xs/run.xsi>
+=item * C<remove_timeout(...)>
 
-=item * SUBCLASSING!!!!!
+=item * C<remove_check(...)>
+
+=item * C<has_check(...)>
+
+=item * C<add_fd(...)>, C<add_fd(...)>, and C<remove_fd(...)>
+
+=item * C<lock()>, C<unlock()>, C<awake([...])>, C<thread_message()>,
+C<in_main_thread()>
+
+=back
 
 =back
 
