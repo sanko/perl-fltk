@@ -1,0 +1,82 @@
+#ifndef DISABLE_VALUEOUTPUT
+
+MODULE = FLTK               PACKAGE = FLTK::ValueOutput
+
+=pod
+
+=head1 Description
+
+A valuator that displays the number like a text box. This is indended for
+showing the user a number, there is no way for the user to change the number.
+It is much lighter weight than using an L<FLTK::Output|FLTK::Output> widget
+for this.
+
+There is no way for the user to change the number, but calling
+L<C<value()>|/"value"> will change it.
+
+=cut
+
+
+#include <fltk/ValueOutput.h>
+
+=for apidoc ||FLTK::ValueOutput|new|x|y|w|h|label = ''
+
+TODO
+
+=cut
+
+ValueOutput *
+ValueOutput::new( int x, int y, int w, int h, char *label = 0)
+    CODE:
+        RETVAL = new ValueOutput( x, y, w, h, label);
+        RETVAL->copy_label(label);
+#if VERBOSE >= 2
+        warn("%s|%s", RETVAL->label(), label);
+#endif
+    OUTPUT:
+        RETVAL
+
+#ifdef ENABLE_DESTROY
+
+bool
+Widget::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, ValueOutput (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+
+#endif // ifndef DISABLE_VALUEOUTPUT
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

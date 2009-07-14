@@ -1,0 +1,114 @@
+#ifndef DISABLE_VALUEINPUT
+
+MODULE = FLTK               PACKAGE = FLTK::ValueInput
+
+=pod
+
+=head1 Description
+
+Controls a single floating point value through a combination of a
+L<FLTK::FloatInput|FLTK::FloatInput> and two up/down buttons. Other toolkits
+call this a "Spin Box".
+
+Clicking the buttons increments/decrements by the
+L<C<linesize()>|/"linesize">. Holding down any shift key and clicking
+increments/decrements by the L<C<pagesize()>|/"pagesize">.
+
+The user can type a new value into the input area.  If L<C<step()>|/"step"> is
+greater or equal to C<1.0> an L<FLTK::IntInput|FLTK::IntInput> is used, this
+prevents the user from typing anything other than digits. If
+L<C<step()>|/"step"> is less than one then the user can type floating point
+values with decimal points and exponents.
+
+The user can type \e any value they want into the text field, I<including ones
+outside the L<C<range()>|/"range"> or non-multiples of the
+L<C<step()>|/"step">>. If you want to prevent this, make the callback function
+reset the value to a legal one.
+
+By default the callback is done when the user moves the slider, when they use
+up/down keys to change the number in the text, or if they edit the text, when
+they hit the Enter key or they click on another widget or put the focus on
+another widget. Changing L<C<when()>|/"when"> to C<FLTK::WHEN_CHANGED> will
+make it do the callback on every edit of the text.
+
+You can get at the input field by using the public "input" instance variable.
+For instance you can clobber the text to a word with
+C<$value_input->input->static_text("word")>.
+
+=cut
+
+#ifdef NORMAL // from perl, probably
+#define PERL_NORMAL NORMAL
+#undef NORMAL
+#endif // ifdef NORMAL
+
+#include <fltk/ValueInput.h>
+
+=for apidoc ||FLTK::ValueInput|new|x|y|w|h|label = ''
+
+TODO
+
+=cut
+
+ValueInput *
+ValueInput::new( int x, int y, int w, int h, char *label = 0)
+    CODE:
+        RETVAL = new ValueInput( x, y, w, h, label);
+        RETVAL->copy_label(label);
+#if VERBOSE >= 2
+        warn("%s|%s", RETVAL->label(), label);
+#endif
+    OUTPUT:
+        RETVAL
+
+#ifdef ENABLE_DESTROY
+
+bool
+Widget::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, ValueInput (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+
+
+#ifdef PERL_NORMAL // Undo our workaround
+#define NORMAL PERL_NORMAL
+#undef PERL_NORMAL
+#endif // ifdef PERL_NORMAL
+
+#endif // ifndef DISABLE_VALUEINPUT
+
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
