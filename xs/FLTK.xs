@@ -124,6 +124,8 @@ INCLUDE: Group.xsi
 
 INCLUDE: Rectangle.xsi
 
+INCLUDE: Slider.xsi
+
 INCLUDE: Valuator.xsi
 
 INCLUDE: ValueInput.xsi

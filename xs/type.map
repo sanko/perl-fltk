@@ -37,6 +37,7 @@ NamedStyle      *   O_FLTK
 Menu            *   O_FLTK
 List            *   O_FLTK
 Scrollbar           O_FLTK
+Slider          *   O_FLTK
 const Style     *   O_FLTK
 const Symbol    *   O_FLTK
 Group           *   O_FLTK

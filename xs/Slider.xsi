@@ -1,0 +1,257 @@
+#ifndef DISABLE_SLIDER
+
+MODULE = FLTK               PACKAGE = FLTK::Slider
+
+=pod
+
+=head1 Description
+
+This widget contains a sliding "knob" that controls a single floating-point
+value. Moving the box all the way to the left or bottom sets it to the
+L<C<minimum()>|/"minimum">, and to the top/right to the
+L<C<maximum()>|/"maximum"> value. The L<C<minimum()>|/"minimum"> may be
+greater than the L<C<maximum()>|/"maximum"> in case you want the larger number
+at the opposite end.
+
+See L<Valuator|FLTK::Valuator> for how to set or get the value or handle
+callbacks when the value changes.
+
+The appearance of the base class may be changed in several ways:
+
+Setting the L<C<box()>|/"box"> to any value other than the default of
+C<FLAT_BOX> will remove the "slot" and draw a box around the slider and the
+tick marks. The L<C<color()>|/"color"> (which defaults to C<GRAY75>) is used
+to fill in the area behind the slider and tick marks.
+
+You can use L<C<set_vertical()>|/"set_vertical"> to make the slider move
+up/down rather than horizontally.
+
+The following bits may be or'd together and given to L<C<type()>|/"type">:
+
+=over
+
+=item C<FLTK::Slider::TICK_ABOVE> : Put tick marks above the horizontal
+slider.
+
+=item C<FLTK::Slider::TICK_LEFT> : Put tick marks to the left of a vertical
+slider (same value as C<TICK_ABOVE>)
+
+=item C<FLTK::Slider::TICK_BELOW> : Put tick marks below the horizontal
+slider.
+
+=item C<FLTK::Slider::TICK_RIGHT> : Put tick marks to the right of a vertical
+slider (same value as C<TICK_BELOW>)
+
+=item C<FLTK::Slider::TICK_BOTH> : Put tick marks on both sides of the slider.
+
+=item C<FLTK::Slider::LOG : Use a logarithimic or power scale for the slider.
+
+=back
+
+The tick marks are placed the L<C<slider_size()>|/"slider_size"> or more apart
+(they are also no closer than the step() value). The color of the tick marks
+is controlled by L<C<textcolor()>|/"text_color">, and the font used to draw
+the numbers is L<C<textfont()>|/"textfont"> and L<C<textsize()>|/"textsize">
+(which defaults to 8).
+
+You can change the L<C<glyph()>|/"glyph"> function to change how the moving
+part is drawn. The L<C<drawflags()>|/"drawflags"> determines what part of the
+slider is being drawn. The L<ScrollBar|FLTK::ScrollBar> subclass turns on
+C<ALIGN_TOP/LEFT/RIGHT/BOTTOM> to draw the buttons at the end (this is the
+same as L<C<Widget::default_glyph()>|FLTK::Widget/"default_glyph"> takes and
+the default slider glyph just calls that). The moving part has bit 16 turned
+on, unless this is a fill slider in which case bit 16 is off. You can check
+the C<LAYOUT_VERTICAL> flag to see which direction the slider is going in.
+
+"Log" sliders have a non-uniform scale. The scale is truly logarithmic if both
+the L<C<minimum()>|/"minimum"> and the L<C<maximum()>|/"maximum"> are non-zero
+and have the same sign. Otherwise the slider position is the square root of
+the value (or C<-sqrt(-value)> for negative values).
+
+=cut
+
+#include <fltk/Slider.h>
+
+=for apidoc ||FLTK::Slider|new|x|y|w|h|label = ''
+
+TODO
+
+=cut
+
+Slider *
+Slider::new( int x, int y, int w, int h, char *label = 0)
+    CODE:
+        RETVAL = new Slider( x, y, w, h, label);
+        RETVAL->copy_label(label);
+#if VERBOSE >= 2
+        warn("%s|%s", RETVAL->label(), label);
+#endif
+    OUTPUT:
+        RETVAL
+
+#ifdef ENABLE_DESTROY
+
+bool
+Slider::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Slider (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc e|||TICK_ABOVE|
+
+Put tick marks above the horizontal slider.
+
+=for apidoc e|||TICK_LEFT|
+
+Put tick marks to the left of a vertical slider (same value as
+L<C<TICK_ABOVE>|/"tick_above">).
+
+=for apidoc e|||TICK_BELOW|
+
+Put tick marks below the horizontal slider.
+
+=for apidoc e|||TICK_RIGHT|
+
+Put tick marks to the right of a vertical slider (same value as
+L<C<TICK_BELOW>|/"tick_below">).
+
+=for apidoc e|||TICK_BOTH|
+
+Put tick marks on both sides of the slider.
+
+=for apidoc e|||LOG|
+
+Use a logarithimic or power scale for the slider.
+
+=for apidoc e|||LINEAR|
+
+TODO
+
+=cut
+
+int
+LINEAR ( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = Slider::LINEAR;     break;
+            case 1: RETVAL = Slider::TICK_ABOVE; break;
+            case 2: RETVAL = Slider::TICK_LEFT;  break;
+            case 3: RETVAL = Slider::TICK_BELOW; break;
+            case 4: RETVAL = Slider::TICK_RIGHT; break;
+            case 5: RETVAL = Slider::TICK_BOTH;  break;
+            case 6: RETVAL = Slider::LOG;        break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        TICK_ABOVE = 1
+         TICK_LEFT = 2
+        TICK_BELOW = 3
+        TICK_RIGHT = 4
+         TICK_BOTH = 5
+               LOG = 6
+
+=for apidoc |||slider_size|value
+
+Set the dimensions of the moving piece of slider. This is measured in pixels
+in a direction parallel to the slider's movement. The default value is 12.
+
+Setting L<C<slider_size()>|/"slider_size"> to zero will make the slider into a
+"fill" slider that draws a solid bar from the left/bottom to the current
+value. This is useful for indicating progress or as a output indicator.
+
+=for apidoc |||tick_size|value
+
+The slider is shrunk this many pixels from the widget's width so that the tick
+marks are visible next to it. The default value is 4.
+
+=cut
+
+void
+Slider::slider_size( int value )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->slider_size(value); break;
+            case 1:   THIS->tick_size(value); break;
+        }
+    ALIAS:
+        tick_size = 1
+
+=for apidoc ||X|slider_position|value|w
+
+This is used by subclasses to draw the slider correctly. Return the location
+of the left/top edge of a box of L<C<slider_size()>|/"slider_size"> would be
+if the slider is set to C<value> and can move in an area of C<w> pixels. The
+L<C<range()>|/"range"> and L<C<log()>|/"log"> settings are taken into account.
+
+=cut
+
+int
+Slider::slider_position( double value, int w )
+
+=for apidoc ||position|position_value|X|w
+
+This is used by subclasses to handle events correctly:
+
+Return the value if the left/top edge of a box of
+L<C<slider_size()>|/"slider_size"> is placed at C<X> pixels from the edge of
+an area of size C<w> pixels. The L<C<range()>|/"range"> and L<C<log()>|/"log">
+settings are taken into account, and it also rounds the value to multiples of
+L<C<step()>|/"step">, using powers of 10 larger and multiples of 2 or 5 to get
+the steps close to 1 pixel so the user is presented with nice numerical
+values.
+
+=cut
+
+double
+Slider::position_value( int X, int w )
+
+=for apidoc |||draw_ticks|rect|min_spacing
+
+Draw tick marks. These lines cross the passed rectangle perpendicular to the
+slider direction. In the direction parallel to the slider direction the box
+should have the same size as the area the slider moves in.
+
+=cut
+
+void
+Slider::draw_ticks( fltk::Rectangle * r, int min_spacing )
+    C_ARGS: *r, min_spacing
+
+
+#endif // ifndef DISABLE_SLIDER
+
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of The Artistic License 2.0.  See the F<LICENSE>
+file included with this distribution or
+http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered
+by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

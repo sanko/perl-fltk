@@ -96,11 +96,12 @@ use Exporter qw[import];
     default => [qw[run message alert ask input password %FLTK]],
     run     => [
         qw[ READ WRITE EXCEPT
-            help
             awake
             ready
             flush
-            run
+            run wait
+            add_timeout repeat_timeout
+            get_time_secs
             ]
     ],
     visual => [
@@ -222,6 +223,11 @@ XSLoader::load 'FLTK';    #, $VERSION ;#if $FLTK::NOXS;  # for testing
 @FLTK::Tooltip::ISA                 = qw[FLTK::MenuWindow];
 @FLTK::MenuTitle::ISA               = qw[FLTK::MenuWindow];
 @FLTK::MWindow::ISA                 = qw[FLTK::MenuWindow];
+@FLTK::Valuator::ISA = qw[FLTK::Widget];
+@FLTK::Slider::ISA = qw[FLTK::Valuator];
+# From my own work
+@FLTK::ValueInput::ISA = qw[FLTK::Valuator];
+@FLTK::ValueOutput::ISA = qw[FLTK::Valuator];
 
 =pod
 
