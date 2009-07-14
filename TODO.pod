@@ -22,13 +22,13 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * C<has_timeout()>
+=item * C<has_timeout()>, C<remove_timeout(...)>, C<repeat_timeout(...)> do
+not work because the SV* I shove into the callback are not equal from the
+perspective of C++.
 
-=item * C<remove_timeout(...)>
+=item * C<remove_check(...)>, et. al do not work for the reasons stated above
 
-=item * C<remove_check(...)>
-
-=item * C<has_check(...)>
+=item * C<remove_idle(...)>, et. al do not work for the reasons stated above
 
 =item * C<add_fd(...)>, C<add_fd(...)>, and C<remove_fd(...)>
 
