@@ -19,13 +19,15 @@ Mark          T_INT
 linepos       T_INT
 
 # Objects
-Adjuster * O_FLTK
-Browser * O_FLTK
-const fltk::Rectangle *   O_FLTK
+Adjuster        *   O_FLTK
+AssociationType     O_FLTK
+AssociationFunctor  O_FLTK
+Browser         *   O_FLTK
 fltk::Rectangle *   O_FLTK
 Box             *   O_FLTK
 Button          *   O_FLTK
 Callback        *   O_FLTK
+Color               O_FLTK
 Cursor          *   O_FLTK
 Font            *   O_FLTK
 Image           *   O_FLTK
@@ -39,8 +41,11 @@ List            *   O_FLTK
 Scrollbar           O_FLTK
 Slider          *   O_FLTK
 const Style     *   O_FLTK
+Style           *   O_FLTK
 const Symbol    *   O_FLTK
+Symbol          *   O_FLTK
 Group           *   O_FLTK
+LabelType       *   O_FLTK
 Valuator        *   O_FLTK
 ValueInput      *   O_FLTK
 ValueOutput     *   O_FLTK

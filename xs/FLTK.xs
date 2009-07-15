@@ -10,6 +10,7 @@ using namespace fltk;
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
 //#define ENABLE_DESTROY    // Introduce pointless bugs :D
 //#define ENABLE_DEPRECATED // Depreciated widgets, and other buggy junk
+#define DISABLE_WIDGET_ASSOCIATION // Requires subclass
 #define USE_IMAGE 0
 #define USE_GL    0
 #define USE_GLUT  0

@@ -71,33 +71,177 @@ Widget::DESTROY ( )
 Returns the parent widget. Usually this is a L<FLTK::Group|FLTK::Group> or
 L<FLTK::Window|FLTK::Window>. Returns C<undef> if this is an orphan widget.
 
+=for apidoc |||parent|group
+
+Sets the parent.
+
 =cut
 
 Group *
-Widget::parent ( )
+Widget::parent ( Group * w )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->parent();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->parent( w );
 
-=for apidoc ||bool|contains|child
+=for apidoc ||FLTK::Window|window|
 
-Returns a true value if L<widget|FLTK::Widget> C<child> is a child of this
-widget, or is equal to this widget. Returns a false value if C<child> is
-undefined.
+Return a pointer to the L<FLTK::Window|FLTK::Window> this widget is in. (it
+will skip any and all parent widgets between this and the window). Returns
+C<undef> if none. Note: for an L<FLTK::Window>, this returns the I<parent>
+window (if any), not I<this> window.
 
-=for apidoc ||bool|inside|parent
+=cut
 
-Returns true if this is a child of C<parent>, or is equal to C<parent>.
-Returns false if C<parent> is undef.
+Window *
+Widget::window ( )
+
+
+=for apidoc et[widget]||int|RESREVED_TYPE|
+
+=for apidoc e||int|TOGGLE|
+
+=for apidoc e||int|RADIO|
+
+=for apidoc e||int|GROUP_TYPE|
+
+=for apidoc e||int|WINDOW_TYPE|
+
+=cut
+
+int
+RESERVED_TYPE ()
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = Widget::RESERVED_TYPE; break;
+            case 1: RETVAL = Widget::TOGGLE;        break;
+            case 2: RETVAL = Widget::RADIO;         break;
+            case 3: RETVAL = Widget::GROUP_TYPE;    break;
+            case 4: RETVAL = Widget::WINDOW_TYPE;   break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+             TOGGLE = 1
+              RADIO = 2
+         GROUP_TYPE = 3
+        WINDOW_TYPE = 4
+
+=for apidoc ||uchar|type|
+
+C<8>-bit identifier that controls how widget works. This value had to be
+provided for Forms compatibility, but you can use it for any purpose you want
+(mostly for "bad object oriented programming" where you insert some subclass
+functionality into the base class). Widget subclasses may store values in the
+range C<0-99> here (larger values are reserved for use by FLTK).
+
+The L<FLTK::PackedGroup|FLTK::PackedGroup> widget uses the low bit of the
+L<C<type()>|/"type"> of each child to indicate C<HORIZONTAL (1)> or
+C<VERTICAL (0)>.
+
+For portability, FLTK does not use RTTI (Run Time Typing Infomation)
+internally (you are free to use it, though). If you don't have RTTI you can
+use the clumsy FLTK mechanisim, by having L<C<type()>|/"type"> use a unique
+value. These unique values must be greater than the symbol
+C<FLTK::Widget::RESERVED_TYPE> (which is C<100>). Look through the header
+files for C<FLTK::Widget::RESERVED_TYPE> to find an unused number. If you
+make a subclass of L<FLTK::Window|FLTK::Window>, you must use
+C<FLTK::Widget::WINDOW_TYPE + N> (C<N> must be in the range C<1> to C<7>) so
+that L<C<is_window()>|/"is_window"> will work, if you make a subclass of
+L<FLTK::Group|FLTK::Group>, you must use C<FLTK::Widget::GROUP_TYPE + N> (C<N>
+must be in the range C<1> to C<7>) so that L<C<is_group()>|/"is_group"> will
+work.
+
+=for apidoc |||type|value
+
+=cut
+
+uchar
+Widget::type( uchar value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->type( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->type( value );
+
+=for apidoc ||bool|is_group|
+
+Returns a true value for subclasses of L<FLTK::Group|FLTK::Group>.
+
+=for apidoc ||bool|is_window|
+
+Returns a true value for subclasses of L<FLTK::Window|FLTK::Window>. If this
+is true, L<C<is_group()>|/"is_group"> is also true.
+
+=for apidoc ||bool|horizontal|
+
+Return true if this widget has a horizontal orientation and
+L<FLTK::Pack|FLTK::Pack> will position it agains the top or bottom edge. This
+is the default.
+
+See also: L<C<vertical()>|/"vertical">
+
+=for apidoc ||bool|vertical|
+
+Same as L<C<!horizontal()>|/"horizontal">
 
 =cut
 
 bool
-Widget::contains ( Widget * child )
-    ALIAS:
-        inside = 1
+Widget::is_group( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = THIS->contains(child); break;
-            case 1: RETVAL = THIS->inside(child);   break;
+            case 0: RETVAL = THIS->is_group();  break;
+            case 1: RETVAL = THIS->is_window(); break;
+            case 2: RETVAL = THIS->horizontal(); break;
+            case 3: RETVAL = THIS->vertical();   break;
         }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+         is_window = 1
+        horizontal = 2
+          vertical = 3
+
+=for apidoc ||bool|resize|X|Y|W|H
+
+Change the size or position of the widget. Nothing is done if the passed size
+and position are the same as before. If there is a change then
+L<C<relayout()>|/"relayout"> is called so that the virtual function
+L<C<layout()>|/"layout"> is called before the next L<C<draw()>|/"draw">.
+
+=for apidoc ||bool|resize|W|H
+
+Same as L<C<resize( x(), y(), $W, $H)>|/"resize">.
+
+=cut
+
+bool
+Widget::resize ( int X = NO_INIT, int Y = NO_INIT, int W, int H )
+    CASE: items == 3
+        CODE:
+            RETVAL = THIS->resize( X, Y, W, H );
+    CASE: items == 5
+        CODE:
+            RETVAL = THIS->resize( W, H );
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||bool|positon|X|Y
+
+Same as L<C<resize( X, Y, w(), h() )>|/"resize">
+
+=cut
+
+bool
+Widget::position ( int X, int Y )
     OUTPUT:
         RETVAL
 
@@ -172,12 +316,185 @@ replace the entire background of the widget with a picture you should set
 L<C<box()>|/"box"> instead. Notice that you can also get images into labels by
 putting C<@> commands into the L<C<label()>|/"label">.
 
+=for apidoc ||Symbol|image|
+
 =cut
 
 #include <fltk/Image.h>
 
-void
-Widget::image ( Image * image )
+const Symbol *
+Widget::image ( Image * image = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->image();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->image( image );
+
+=for apidoc ||unsigned|shortcut|
+
+Returns one of the L<C<add_shortcut()>|/"add_shortcut"> assignments for this
+widget, or returns zero if there are none. If you want to look at more than
+onle you must use L<C<FLTK::list_shortcuts(this)>|FLTK/"list_shortcuts">.
+
+=for apidoc |||shortcut|key
+
+Same as L<C<remove_shortcuts()>|/"remove_shortcut">,
+L<C<add_shortcut(key)>|/"add_shortcut"> except it may be implemented in a more
+efficient way. The result is exactly one shortcut (or none if C<key> is zero).
+Return value is intended to indicate if the shortcut changed, but that is nyi.
+
+=cut
+
+unsigned
+Widget::shortcut ( unsigned KEY = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->shortcut( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->shortcut( KEY );
+
+=for apidoc ||bool|add_shortcut|key
+
+Add a new shortcut assignment. Returns true if successful. If key is zero or
+the assignment already exists this does nothing and returns false.
+
+There can be any number of shortcut assignments, fltk stores them in internal
+tables shared by all widgets. A widget can have any number of shortcuts
+(though most have zero or one), and a given shortcut value can be assigned to
+more than one widget. You can examine the assignments with
+L<C<FLTK::list_shortcuts()>|FLTK/"list_shortcuts">.
+
+If you only want one shortcut use L<C<shortcut()>|/"shortcut"> to assign it.
+
+The shortcut value is a bitwise OR (or sum) of a any set of shift flags
+returned by L<C<FLTK::event_state()>|/"event_state">, and either a key symbol
+returned by L<C<FLTK::event_key()>|/"event_key">, or an ASCII character.
+Examples:
+
+=over
+
+=item C<FLTK::CTRL + 'a'>
+
+=item C<FLTK::ACCELERATOR + FLTK::CTRL + 'A'>
+
+=item just 'a'
+
+=item C<FLTK::SHIFT + '#'>
+
+=item C<FLTK::SHIFT + FLTK::UpKey> See
+L<C<FLTK::list_matching_shortcuts()>|FLTK/"list_matching_shortcuts"> for the
+exact rules for how a C<KEY> event is matched to a shortcut assignment. Case
+is ignored (the lower-case version of any letter is actually put in the
+table).
+
+=back
+
+When FLTK gets a keystroke, it sends it to the
+L<C<FLTK::focus()>|FLTK/"focus"> widget. If that widget's
+L<C<handle()>|/"handle"> returns 0, it will also send the keystroke to all
+parents of that widget (this is mostly for keyboard navigation to work). If
+all of them return 0, or the L<C<FLTK::focus()>|FLTK/"focus"> is null, then it
+will try sending a C<SHORTCUT> event to every single widget inside the same
+window as the focus until one of them returns non-zero. In most cases widgets
+will call L<C<Widget::test_shortcut()>|FLTK::Widget/"test_shortcut"> to see if
+the keystroke is registered here (many widgets will also directly test the key
+to see if it is something they are interested in).
+
+=for apidoc ||bool|remove_shortcut|key
+
+Delete a shortcut assignment. Returns true if it actually existed.
+
+=cut
+
+bool
+Widget::add_shortcut ( unsigned key )
+    CODE:
+        switch( ix ) {
+            case 0:    RETVAL = THIS->add_shortcut( key ); break;
+            case 1: RETVAL = THIS->remove_shortcut( key ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        remove_shortcut = 1
+
+=for apidoc ||unsigned|label_shortcut|
+
+Returns a value that can be passed to L<C<add_shortcut()>|/"add_shortcut"> so
+that this widget has a real shortcut assignment to match any C<&x> in it's
+L<C<label()>|/"label">. The returned value is C<ALT|c> where C<c> is the
+character after the first '&' in the label, or zero if there isn't any '&'
+sign or if L<C<flag(RAW_LABEL)>|/"flag"> is on.
+
+=cut
+
+unsigned
+Widget::label_shortcut ( )
+
+=for apidoc ||bool|test_labe_shortcut|
+
+Test to see if the current C<KEY> or C<SHORTCUT> event matches a shortcut
+specified with C<&x> in the label.
+
+This will match if the character in the L<C<label()>|/"label"> after a '&'
+matches L<C<event_text()[0]>|/"event_text">. Case is ignored. The caller may
+want to check if C<ACCELERATOR> or some other shift key is held down before
+calling this so that plain keys do not do anything, and should certainly make
+sure no other widgets want the shortcut.
+
+This is ignored if L<C<flag(RAW_LABEL)>|/"flag"> is on (which stops the C<&x>
+from printing as an underscore. The sequence "&&" is ignored as well because
+that is used to print a plain '&' in the label.
+
+=cut
+
+bool
+Widget::test_label_shortcut ( )
+
+=for apidoc ||bool|test_shortcut|
+
+Same as L<C<test_shortcut(true)>|/"test_shortcut">.
+
+=for apidoc ||bool|test_shortcut|test_label
+
+Returns true if the current event matches one of the assignements made with
+L<C<add_shortcut()>|/"add_shortcut">, or if C<test_label> is true and
+L<C<test_label_shortcut()>|"test_label_shortcut"> returns true. Normally a
+widget calls this in response to a C<SHORTCUT> event to see if the shortcut
+key is assigned to it.
+
+This is done by doing
+L<C<list_matching_shortcuts()>|FLTK/"list_matching_shortcuts"> and seeing if
+this widget is in the returned list. If the list is empty and C<test_label> is
+true, it will return L<C<test_label_shortcut()>|/"test_label_shortcut">.
+
+If the current event matches a different widget "better" than this one, then
+false is returned. For instance if this widget has 'x' as a shortcut, this
+will return true if the user types 'X'. But if another widget has 'X' then
+this will return false. See
+L<C<FLTK::list_matching_shortcuts()>|FLTK/"list_matching_shortcuts"> for the
+rules about what ones are "better".
+
+=cut
+
+bool
+Widget::test_shortcut ( bool test_label = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->test_shortcut( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = THIS->test_shortcut( test_label );
+        OUTPUT:
+            RETVAL
 
 =for apidoc |||callback|coderef|args
 
@@ -197,23 +514,47 @@ an argument.
 
 B<NOTE>: This may not be portable to some machines.
 
+=for apidoc Hx||FLTK::Callback|callback
+
+Returns the callback as a blessed L<FLTK::Callback> object.
+
+=for apidoc Hx|||callback|object
+
+Accepts a blessed L<FLTK::Callback|FLTK::Callback> object.
+
 =cut
 
-void
-Widget::callback( CV * SUB, SV * ARGS = NO_INIT )
-    CODE:
+Callback *
+Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->callback( );
+        OUTPUT:
+            RETVAL
+    CASE: SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVCV
+        CV * callback
+        CODE:
 #ifdef ENABLE_CALLBACKS
-        SV * widget = newSVsv((SV*)ST(0));
-        sv_rvweaken(widget);
-        AV *arr = newAV();
-        av_push(arr, newSVsv((SV*)ST(1))); // coderef
-        av_push(arr, widget); // widget
-        if ( items == 3 )
-            av_push(arr, newSVsv(ARGS));
-        THIS->callback(_cb_w, (void *) arr);
+            SV * widget = newSVsv((SV*)ST(0));
+            sv_rvweaken(widget);
+            AV *arr = newAV();
+            av_push(arr, newSVsv((SV*)ST(1))); // coderef
+            av_push(arr, widget); // widget
+            if ( items == 3 )
+                av_push(arr, newSVsv(args));
+            THIS->callback(_cb_w, (void *) arr);
 #else  // ifdef ENABLE_CALLBACKS
-        warn("Callbacks have been disabled."); // TODO: Expain why in POD
+            warn("Callbacks have been disabled."); // TODO: Expain why in POD
 #endif // ifdef ENABLE_CALLBACKS
+    CASE:
+        Callback * callback
+        CODE:
+#ifdef ENABLE_CALLBACKS
+            THIS->callback( callback );
+#else  // ifdef ENABLE_CALLBACKS
+            warn("Callbacks have been disabled."); // TODO: Expain why in POD
+#endif // ifdef ENABLE_CALLBACKS
+
 
 =for apidoc |||user_data|args
 
@@ -221,232 +562,48 @@ Set the second argument to the callback.
 
 See Also: L<C<callback>|/"callback">, L<C<argument>|/"argument">.
 
+=for apidoc ||data|user_data|
+
+Returns the second argument to the callback.
+
 =for apidoc |||argument|arg
 
 Set the second argument to the callback to a number.
 
 See Also: L<C<callback>|/"callback">, L<C<user_data>|/"user_data">.
 
+=for apidoc ||data|argument|
+
+Returns the second argument to the callback.
+
 =cut
 
-void
-Widget::user_data ( args )
+SV *
+Widget::user_data ( SV * args = NO_INIT )
+    CASE: items == 1
+        CODE:
+            AV * arr = (AV*)THIS->user_data(); // XXX - check if arr == NULL
+            RETVAL = av_len(arr) == 2 ? *av_fetch(arr, 2, 0) : &PL_sv_undef;
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            AV * arr = newAV();
+            av_push(arr, av_shift((AV*)THIS->user_data()));
+            SV * widget = newSVsv((SV*)ST(0));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
+            sv_rvweaken(widget);
+#else // ifdef SvWEAKREF
+            croak("weak references are not implemented in this release of perl");
+            XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+            av_push(arr, widget); // widget
+            for (int i = 1; i < items; i++) {
+                av_push(arr, newSVsv((SV*)ST(i)));
+            }
+            THIS->user_data(arr);
     ALIAS:
         argument    = 1
-    CODE:
-        AV * arr = newAV();
-        av_push(arr, av_shift((AV*)THIS->user_data()));
-        SV * widget = newSVsv((SV*)ST(0));
-#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-        sv_rvweaken(widget);
-#else // ifdef SvWEAKREF
-        croak("weak references are not implemented in this release of perl");
-        XSRETURN_EMPTY;
-#endif // ifdef SvWEAKREF
-        av_push(arr, widget); // widget
-        for (int i = 1; i < items; i++) {
-            av_push(arr, newSVsv((SV*)ST(i)));
-        }
-        THIS->user_data(arr);
-
-=for apidoc |||do_callback|
-
-You can cause a widget to do its callback at any time.
-
-=for apidoc x|||do_callback|Widget|args
-
-You can also call the callback function with arbitrary arguments.
-
-=cut
-
-void
-Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
-    CASE: items == 1
-        CODE:
-            THIS->do_callback( );
-    CASE:
-        CODE:
-            SV * _widget = newSVsv((SV*)ST(1));
-#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-            sv_rvweaken(_widget);
-#else // ifdef SvWEAKREF
-        croak("weak references are not implemented in this release of perl");
-        XSRETURN_EMPTY;
-#endif // ifdef SvWEAKREF
-            AV  * arr     = newAV();
-            if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
-                return;
-            SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
-            av_push(arr, newSVsv(*coderef));
-            av_push(arr, _widget);
-            if ( items == 3 )
-                av_push(arr, newSVsv(args));
-            THIS->do_callback(widget, (void *) arr);
-
-=for apidoc ||uchar|type|
-
-C<8>-bit identifier that controls how widget works. This value had to be
-provided for Forms compatibility, but you can use it for any purpose you want
-(mostly for "bad object oriented programming" where you insert some subclass
-functionality into the base class). Widget subclasses may store values in the
-range C<0-99> here (larger values are reserved for use by FLTK).
-
-The L<FLTK::PackedGroup|FLTK::PackedGroup> widget uses the low bit of the
-L<C<type()>|/"type"> of each child to indicate C<HORIZONTAL (1)> or
-C<VERTICAL (0)>.
-
-For portability, FLTK does not use RTTI (Run Time Typing Infomation)
-internally (you are free to use it, though). If you don't have RTTI you can
-use the clumsy FLTK mechanisim, by having L<C<type()>|/"type"> use a unique
-value. These unique values must be greater than the symbol
-C<FLTK::Widget::RESERVED_TYPE> (which is C<100>). Look through the header
-files for C<FLTK::Widget::RESERVED_TYPE> to find an unused number. If you
-make a subclass of L<FLTK::Window|FLTK::Window>, you must use
-C<FLTK::Widget::WINDOW_TYPE + N> (C<N> must be in the range C<1> to C<7>) so
-that L<C<is_window()>|/"is_window"> will work, if you make a subclass of
-L<FLTK::Group|FLTK::Group>, you must use C<FLTK::Widget::GROUP_TYPE + N> (C<N>
-must be in the range C<1> to C<7>) so that L<C<is_group()>|/"is_group"> will
-work.
-
-=cut
-
-uchar
-Widget::type( )
-    OUTPUT:
-        RETVAL
-
-=for apidoc ||bool|is_group|
-
-Returns a true value for subclasses of L<FLTK::Group|FLTK::Group>.
-
-=for apidoc ||bool|is_window|
-
-Returns a true value for subclasses of L<FLTK::Window|FLTK::Window>. If this
-is true, L<C<is_group()>|/"is_group"> is also true.
-
-=cut
-
-bool
-Widget::is_group( )
-    ALIAS:
-        is_window = 1
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL = THIS->is_group();  break;
-            case 1: RETVAL = THIS->is_window(); break;
-        }
-    OUTPUT:
-        RETVAL
-
-=for apidoc ||FLTK::Flags|flags|
-
-Each Widget, and most drawing functions, take a bitmask of flags that indicate
-the current state and exactly how to draw things. See <fltk/Flags.h> for
-values.
-
-This is for copying the flag values, use L<C<flag(c)>|/"flag"> to test them.
-
-=for apidoc |||flags|f
-
-Replace L<C<flags()>|/"flags">. This is for constructors, don't use it
-elsewhere.
-
-=cut
-
-Flags
-Widget::flags( Flags f = NO_INIT )
-    CASE: items == 1
-        CODE:
-            RETVAL = THIS->flags( );
-            OUTPUT:
-                RETVAL
-    CASE:
-        CODE:
-            THIS->flags( f );
-
-
-=for apidoc |||set_flag|f
-
-Make L<C<flag(f)>|/"flag"> return true by turning on that bit. You can set
-more than one by or'ing them together.
-
-=for apidoc |||clear_flag|f
-
-Make L<C<flag(f)>|/"flag"> return false by turning off that bit. You can turn
-off multiple bits by or'ing them toegher.
-
-=for apidoc |||set_flag|f|b
-
-Make L<C<flag(f)>|/"flag"> return C<b>. Same as
-C<b ? set_flag(f) : clear_flag(f)>.
-
-=for apidoc |||invert_flag|f
-
-Flip the result of L<C<flag(f)>|/"flag"> if C<f> is a single bit. If you or
-together bits it will flip them all.
-
-=cut
-
-void
-Widget::set_flag( unsigned f, bool b = NO_INIT )
-    CASE: items == 2
-        CODE:
-            switch( ix ) {
-                case 0: THIS->set_flag( f );    break;
-                case 1: THIS->clear_flag( f );  break;
-                case 2: THIS->invert_flag( f ); break;
-            }
-    CASE:
-        CODE:
-            switch( ix ) {
-                case 0: THIS->set_flag( f, b ); break;
-            }
-    ALIAS:
-        clear_flag  = 1
-        invert_flag = 2
-
-=for apidoc ||bool|flag|f
-
-Returns true if the bit for C<f> is on.
-
-=for apidoc ||bool|any_of|f
-
-Returns true if I<any> of the bits in C<f> are on. Actually, this is the same
-function as L<C<flag(f)>|/"flag"> but using this may make the code more
-readable.
-
-=for apidoc ||bool|all_of|f
-
-Returns true if I<all> of the bits in C<f> are on. C<f> should be several bits
-or'd together, otherwise this is the same as L<C<flag(f)>|/"flag">.
-
-=cut
-
-bool
-Widget::flag( unsigned f )
-    ALIAS:
-        any_of = 1
-        all_of = 2
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL = THIS->flag( f ); break;
-            case 1: RETVAL = THIS->any_of( f ); break;
-            case 2: RETVAL = THIS->all_of( f ); break;
-        }
-    OUTPUT:
-        RETVAL
-
-=for apidoc |||align|flags
-
-Forces the values of all the C<FLTK::ALIGN_*> flags to the passed value. This
-determines how the label is printed next to or inside the widget. The default
-value is C<FLTK::ALIGN_CENTER>, which centers the label. The value can be any
-of the C<ALIGN> flags or'd together.
-
-=cut
-
-void
-Widget::align( Flags flags )
 
 
 =for apidoc |||when|flag
@@ -500,460 +657,111 @@ changes.
 
 =back
 
-=cut
-
-void
-Widget::when ( uchar flag )
-
-=for apidoc ||bool|resize|X|Y|W|H
-
-Change the size or position of the widget. Nothing is done if the passed size
-and position are the same as before. If there is a change then
-L<C<relayout()>|/"relayout"> is called so that the virtual function
-L<C<layout()>|/"layout"> is called before the next L<C<draw()>|/"draw">.
-
-=for apidoc ||bool|resize|W|H
-
-Same as L<C<resize( x(), y(), $W, $H)>|/"resize">.
-
-=cut
-
-bool
-Widget::resize ( int X = NO_INIT, int Y = NO_INIT, int W, int H )
-    CASE: items == 3
-        CODE:
-            RETVAL = THIS->resize( X, Y, W, H );
-    CASE: items == 5
-        CODE:
-            RETVAL = THIS->resize( W, H );
-    OUTPUT:
-        RETVAL
-
-=for apidoc ||bool|positon|X|Y
-
-Same as L<C<resize( X, Y, w(), h() )>|/"resize">
-
-=cut
-
-bool
-Widget::position ( int X, int Y )
-    OUTPUT:
-        RETVAL
-
-=for apidoc |||relayout|
-
-Same as L<C<relayout(LAYOUT_DAMAGE)>|/"relayout">, indicates that data inside
-the widget may have changed, but the size did not change. This flag is also on
-when the widget is initially created.
-
-=for apidoc |||relayout|flags
-
-Cause L<C<layout()>|/"layout"> to be called later. Turns on the specified
-flags in L<C<layout_damage()>|/"layout_damage">, and turns on C<LAYOUT_CHILD>
-in all parents of this widget. C<flags> cannot be zero, the maaning of the
-flags is listed under F<fltk/layout.h>.
-
-=cut
-
-void
-Widget::relayout( uchar flags = NO_INIT )
-    CASE: items == 1
-        CODE:
-            THIS->relayout( );
-    CASE:
-        C_ARGS: flags
-
-=for apidoc ||uchar|layout_damage|
-
-The 'or' of all the calls to L<C<relayout()>|/"relayout"> or
-L<C<resize()>|/"resize"> done since the last time L<C<layout()>|/"layout"> was
-called.
-
-A typical layout function does not care about the widget moving, an easy way
-to skip it is as follows:
-
-    package MyWidget; # XXX - Untested
-    { # ... ISA stuff, etc. ...
-        sub layout {
-            my ($self) = @_;
-            return if !($self->layout_damage() & ~LAYOUT_XY);
-            do_expensive_layout();
-            $self->redraw();
-        }
-    }
-
-=for apidoc |||layout_damage|flag
-
-Directly change the value returned by L<C<layout_damage()>|/"layout_damage">.
+=for apidoc Hx||flag|when|
 
 =cut
 
 uchar
-Widget::layout_damage ( uchar VALUE = NO_INIT )
+Widget::when ( uchar flag = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->layout_damage( );
+            RETVAL = THIS->when();
         OUTPUT:
             RETVAL
     CASE:
         CODE:
-            THIS->layout_damage( VALUE );
+            THIS->when( flag );
 
-=for apidoc ||bool|horizontal|
+=for apidoc Hx|||default_callback|w|args
 
-Return true if this widget has a horizontal orientation and
-L<FLTK::Pack|FLTK::Pack> will position it agains the top or bottom edge. This
-is the default.
+This is the initial value for L<C<callback()>|/"callback">. It does
+L<C<set_changed()>|/"set_changed"> on the widget, thus recording the fact that
+the callback was done. Do not set the callback to C<undef>, use this if you
+want no action.
 
-See also: L<C<vertical()>|/"vertical">
+...between you and me, I don't really get this so I'll just hide for now.
 
-=for apidoc ||bool|vertical|
+=cut
 
-Same as L<C<!horizontal()>|/"horizontal">
+void
+Widget::default_callback( Widget * w, SV * args = NO_INIT)
+    CODE:
+        SV * _widget = newSVsv((SV*)ST(1));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
+        sv_rvweaken(_widget);
+#else // ifdef SvWEAKREF
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+        AV  * arr     = newAV();
+        if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
+            return;
+        SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
+        av_push(arr, newSVsv(*coderef));
+        av_push(arr, _widget);
+        if ( items == 3 )
+            av_push(arr, newSVsv(args));
+        THIS->default_callback(w, (void *) arr);
+
+=for apidoc |||do_callback|
+
+You can cause a widget to do its callback at any time.
+
+=for apidoc x|||do_callback|Widget|args
+
+You can also call the callback function with arbitrary arguments.
+
+=cut
+
+void
+Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->do_callback( );
+    CASE:
+        CODE:
+            SV * _widget = newSVsv((SV*)ST(1));
+#ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
+            sv_rvweaken(_widget);
+#else // ifdef SvWEAKREF
+        croak("weak references are not implemented in this release of perl");
+        XSRETURN_EMPTY;
+#endif // ifdef SvWEAKREF
+            AV  * arr     = newAV();
+            if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
+                return;
+            SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
+            av_push(arr, newSVsv(*coderef));
+            av_push(arr, _widget);
+            if ( items == 3 )
+                av_push(arr, newSVsv(args));
+            THIS->do_callback(widget, (void *) arr);
+
+
+=for apidoc ||bool|contains|child
+
+Returns a true value if L<widget|FLTK::Widget> C<child> is a child of this
+widget, or is equal to this widget. Returns a false value if C<child> is
+undefined.
+
+=for apidoc ||bool|inside|parent
+
+Returns true if this is a child of C<parent>, or is equal to C<parent>.
+Returns false if C<parent> is undef.
 
 =cut
 
 bool
-Widget::horizontal( )
-    ALIAS:
-        vertical = 1
+Widget::contains ( Widget * child )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = THIS->horizontal(); break;
-            case 1: RETVAL = THIS->vertical();   break;
-        }
-    OUTPUT:
-        RETVAL
-
-=for apidoc |||set_vertical|
-
-Makes L<C<vertical()>|/"vertical"> return true. This will affect how a
-surrounding L<FLTK::Pack|FLTK::Pack> (or similar group) will place the widget,
-but you must call L<C<relayout()>|/"relayout"> to indicate that this must be
-recalculated.
-
-Some widgets classes such as L<FLTK::MenuBar|FLTK::MenuBar> or
-L<FLTK::Slider|FLTK::Slider> will draw differently if this is turned on, in a
-vertical arrangement.
-
-=for apidoc |||set_horizontal|
-
-Undoes L<C<set_vertical()>|/"set_vertical"> and makes
-L<C<horizontal()>|/"horizontal"> return true. This will affect how a
-surrounding L<FLTK::Pack> (or similar group) will place the widget, but you
-must call L<C<relayout()>|/"relayout"> to indicate that this must be
-recalculated.
-
-=cut
-
-void
-Widget::set_vertical ( )
-    ALIAS:
-        set_horizontal = 1
-    CODE:
-        switch ( ix ) {
-            case 0: THIS->set_vertical();   break;
-            case 1: THIS->set_horizontal(); break;
-        }
-
-    # Push these into the top level
-
-MODULE = FLTK               PACKAGE = FLTK
-
-=for apidoc e|||DAMAGE_CHILD|
-
-A child of this group widget needs to be redrawn (non-group widgets can use
-this bit for their own purposes).
-
-=for apidoc e|||DAMAGE_CHILD_LABEL|
-
-An outside label of this widget needs to be redrawn. This is handled (and this
-bit is cleared) by the parent group.
-
-Because anti-aliasing cannot be redrawn atop itself, this is not
-used anymore. Instead if an outside label needs to change the entire
-parent widget is redrawn.
-
-=for apidoc e|||DAMAGE_EXPOSE|
-
-Damage caused by L<C<damage()>|/"damage"> or by expose events from the
-operating system. If this and L<C<FLTK::DAMAGE_ALL>|/"DAMAGE_ALL"> is on the
-widget should draw every pixel inside it's region.
-
-=for apidoc e|||fltk::DAMAGE_ALL|
-
-This bit is set by L<C<redraw()>|/"redraw"> and indicates that all of the
-widget (but not "holes" where the background shows through) needs to be
-redraw.
-
-=for apidoc e|||DAMAGE_VALUE|
-
-A widget may use this to indicate that the displayed value has changed.
-
-=for apidoc e|||DAMAGE_PUSHED|
-
-A widget may use this to indicate that the user has pushed or released a
-button.
-
-=for apidoc e|||DAMAGE_SCROLL|
-
-A widget may use this to indicate that the displayed data has scrolled moved
-horizontally and/or vertically.
-
-=for apidoc e|||DAMAGE_OVERLAY|
-
-Same value as L<C<FLTK::DAMAGE_SCROLL>|/"FLTK::DAMAGE_SCROLL">.
-
-=for apidoc e|||DAMAGE_HIGHLIGHT
-
-A widget may use this to indicate that the mouse has entered/exited part of
-the widget.
-
-=for apidoc e|||DAMAGE_CONTENTS
-
-Same as L<C<FLTK::DAMAGE_EXPOSE>|/"DAMAGE_EXPOSE"> but if
-L<C<FLTK::DAMAGE_ALL>|/"FLTK::DAMAGE_ALL"> is off a widget can use this for
-it's own purposes.
-
-=cut
-
-#include <fltk/damage.h>
-
-uchar
-DAMAGE_CHILD( )
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL = DAMAGE_CHILD;       break;
-            case 1: RETVAL = DAMAGE_CHILD_LABEL; break;
-            case 2: RETVAL = DAMAGE_EXPOSE;      break;
-            case 3: RETVAL = DAMAGE_ALL;         break;
-            case 4: RETVAL = DAMAGE_VALUE;       break;
-            case 5: RETVAL = DAMAGE_SCROLL;      break;
-            case 6: RETVAL = DAMAGE_OVERLAY;     break;
-            case 7: RETVAL = DAMAGE_HIGHLIGHT;   break;
-            case 8: RETVAL = DAMAGE_CONTENTS;    break;
+            case 0: RETVAL = THIS->contains(child); break;
+            case 1: RETVAL = THIS->inside(child);   break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-        DAMAGE_CHILD_LABEL = 1
-        DAMAGE_EXPOSE      = 2
-        DAMAGE_ALL         = 3
-        DAMAGE_VALUE       = 4
-        DAMAGE_SCROLL      = 5
-        DAMAGE_OVERLAY     = 6
-        DAMAGE_HIGHLIGHT   = 7
-        DAMAGE_CONTENTS    = 8
-
-MODULE = FLTK               PACKAGE = FLTK::Widget
-
-    # ...and welcome back to the show.
-
-=for apidoc ||uchar|damage|
-
-The 'or' of all the calls to L<C<redraw()>|/"redraw"> done since the last
-L<C<draw()>|/"draw">. Cleared to zero after L<C<draw()>|/"draw"> is called.
-
-=cut
-
-uchar
-Widget::damage( )
-    OUTPUT:
-        RETVAL
-
-=for apidoc |||set_damage|c
-
-Directly change the value returned by L<C<damage()>|/"damage">. Note that this
-I<replaces> the value, it does not turn bits on. Use L<C<redraw()>|/"redraw">
-to turn bits on.
-
-=cut
-
-void
-Widget::set_damage( uchar c )
-
-
-=for apidoc |||redraw|
-
-Same as C<redraw(DAMAGE_ALL)>. This bit is used by most widgets to indicate
-that they should not attempt any incremental update, and should instead
-completely draw themselves.
-
-=for apidoc |||redraw|flags
-
-Indicates that L<C<draw()>|/"draw"> should be called, and turns on the given
-bits in L<C<damage()>|/"damage">. At least these bits, and possibly others,
-will still be on when L<C<draw()>|/"draw"> is called.
-
-=cut
-
-void
-Widget::redraw( uchar flags = DAMAGE_ALL )
-
-=for apidoc |||redraw_label|
-
-Indicates that the L<C<label()>|/"label"> should be redrawn. This does nothing
-if there is no label. If it is an outside label (see L<C<align()>|/"align">)
-then the L<C<parent()>|/"parent"> is told to redraw it. Otherwise
-L<C<redraw()>|/"redraw"> is called.
-
-=for apidoc |||redraw_highlight|
-
-Causes a redraw if highlighting changes.
-
-Calls L<C<redraw(DAMAGE_HIGHLIGHT)>|/"redraw"> if this widget has a non-zero
-L<C<highlight_color()>|/"hightlight_color">. This is designed to be called in
-response to C<ENTER >and C<EXIT> events and not redraw the widget if the no
-highlight color is being used.
-
-=cut
-
-void
-Widget::redraw_label( )
-    CODE:
-        switch ( ix ) {
-            case 0: THIS->redraw_label();     break;
-            case 1: THIS->redraw_highlight(); break;
-        }
-    ALIAS:
-        redraw_highlight = 1
-
-=for apidoc ||int|handle|event
-
-Handle an event. Returns non-zero if the widget understood and used the event.
-
-The event numbers are listed in F<fltk/events.h>.  All other information about
-the current event (like mouse position) is accessed by various functions
-listed in the same header file.
-
-The default version returns true for C<FLTK::ENTER> and C<FLTK::MOVE> events,
-this is done so you can put tooltips on the base widget. All other events
-return zero.
-
-If you want to send an event to a widget you probably want to call
-L<C<send()>|/"send">, not L<C<handle()>|/"handle">. Send will do extra work
-with each event before calling this, such as turning C<HIGHLIGHT> and
-C<FOCUSED> flags on/off.
-
-=for apidoc ||int|send|event
-
-Wrapper for L<C<handle()>|/"handle">. This should be called to send events. It
-does a few things:
-
-=over
-
-=item It calculates L<C<event_x()>|/"event_x">/L<C<event_y()>|/"event_y"> to
-be relative to the widget. The previous values are restored before this
-returns.
-
-=item It makes sure the widget is active and/or visible if the event requres
-this.
-
-=item If this is not the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget
-then it changes C<FLTK::MOVE> into C<FLTK::ENTER> and turns C<FLTK::DND_DRAG>
-into C<FLTK::DND_ENTER>. If this I<is> the
-L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget then the opposite conversion
-is done.
-
-=item For move, focus, and push events if L<C<handle()>|/"handle"> returns
-true it sets the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> or
-L<C<FLTK::focus()>|FLTK/"focus"> or L<C<FLTK::pushed()>|FLTK/"pushed"> widget
-to reflect this.
-
-=back
-
-=cut
-
-int
-Widget::handle( int event )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = THIS->handle( event ); break;
-            case 1: RETVAL = THIS->send( event );   break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        send = 1
-
-=for apidoc |||add_timeout|time
-
-Call L<C<handle(TIMEOUT)>|/"handle"> at the given time in the future. This
-will happen exactly once. To make it happen repeatedly, call
-L<C<repeat_timeout()>|/"repeat_timeout"> from inside
-L<C<handle(TIMEOUT)>|/"handle">.
-
-=for apidoc |||repeat_timeout|time
-
-Call L<C<handle(TIMEOUT)>|/"handle"> at the given time interval since the last
-timeout. This will produce much more accurate time intervals than
-L<C<add_timeout>|/"add_timeout">.
-
-=cut
-
-void
-Widget::add_timeout( float time )
-    CODE:
-        switch ( ix ) {
-            case 0: THIS->add_timeout( time );    break;
-            case 1: THIS->repeat_timeout( time ); break;
-        }
-    ALIAS:
-        repeat_timeout = 1
-
-=for apidoc |||remove_timeout|
-
-Cancel any and all pending L<C<handle(TIMEOUT)>|/"handle"> callbacks.
-
-=for apidoc |||activate|
-
-If L<C<active()>|/"active"> is false, this turns it on. If
-L<C<active_r()>|/"active_r"> is now true L<C<send()>|/"send"> an
-C<FLTK::ACTIVATE> event.
-
-=for apidoc |||deactivate|
-
-If L<C<active()>|/"active"> is true, this turns it off. If
-L<C<active_r()>|/"active_r"> was true L<C<send()>|/"send"> an
-C<FLTK::DEACTIVATE> event.
-
-=for apidoc |||show|
-
-If L<C<visible()>|/"visible"> is false, turn it on. If
-L<C<visible_r()>|/"visible_r"> is then true, L<C<send()>|/"send"> a
-C<FLTK::SHOW> event.
-
-=for apidoc |||hide|
-
-If L<C<visible()>|/"visible"> is true, turn it off. If
-L<C<visible_r()>|/"visible_r"> was true then L<C<send()>|/"send"> a
-C<FLTK::HIDE> event, and L<C<redraw()>|/"redraw"> the parent if necessary.
-
-=for apidoc |||setonly|
-
-Calls L<C<set()>|/"set"> on this widget and calls L<C<clear()>|/"clear"> on
-all adjacent widgets in the same parent L<Group|FLTK::Group> that have the
-L<C<type()>|/"type"> set to C<RADIO>.
-
-=cut
-
-void
-Widget::remove_timeout( )
-    CODE:
-        switch( ix ) {
-            case 0: THIS->remove_timeout( ); break;
-            case 1: THIS->activate();        break;
-            case 2: THIS->deactivate();      break;
-            case 3: THIS->show();            break;
-            case 4: THIS->hide();            break;
-            case 5: THIS->setonly();         break;
-        }
-    ALIAS:
-          activate = 1
-        deactivate = 2
-              show = 3
-              hide = 4
-           setonly = 5
+        inside = 1
 
 =for apidoc ||bool|active|
 
@@ -1063,17 +871,22 @@ Returns true if this is equal to L<C<FLTK::belowmouse()>|FLTK/"belowmouse">,
 meaning it has the keyboard focus and C<FLTK::MOVE> or C<FLTK::PUSH> events
 will be sent to this widget.
 
-=for apidoc ||bool|set|
-
-Same as L<C<state(true)>|/"state">. If you know the widget will already be
-redrawn, or it is not displayed, it is faster to call the inline
-L<C<set_flag(STATE)>|/"set_flag"> function.
-
 =for apidoc ||bool|clear|
 
 Same as L<C<state(false)>|/"state">. If you know the widget will already be
 redrawn, or it is not displayed, it is faster to call the inline
 L<C<clear_flag(STATE)>|/"clear_flag"> function.
+
+=for apidoc ||bool|take_focus|
+
+Tries to make this widget be the keyboard focus widget, by first sending it an
+C<FLTK::FOCUS> event, and if it returns non-zero, setting
+L<C<FLTK::focus()>|FLTK/"focus"> to this widget. You should use this method to
+assign the focus to a widget. Returns true if the widget accepted the focus.
+
+On current systems, fltk does not force the window system to set the focus. If
+the window does not have focus it will usually switch back to the previous
+window when the user types a key.
 
 =cut
 
@@ -1095,8 +908,8 @@ Widget::active( )
             case 11: RETVAL = THIS->pushed();         break;
             case 12: RETVAL = THIS->focused();        break;
             case 13: RETVAL = THIS->belowmouse();     break;
-            case 14: RETVAL = THIS->set();            break;
             case 15: RETVAL = THIS->clear();          break;
+            case 16: RETVAL = THIS->take_focus();     break;
         }
     OUTPUT:
         RETVAL
@@ -1114,8 +927,106 @@ Widget::active( )
                 pushed = 11
                focused = 12
             belowmouse = 13
-                   set = 14
                  clear = 15
+            take_focus = 16
+
+
+=for apidoc ||FLTK::Flags|flags|
+
+Each Widget, and most drawing functions, take a bitmask of flags that indicate
+the current state and exactly how to draw things. See <fltk/Flags.h> for
+values.
+
+This is for copying the flag values, use L<C<flag(c)>|/"flag"> to test them.
+
+=for apidoc |||flags|f
+
+Replace L<C<flags()>|/"flags">. This is for constructors, don't use it
+elsewhere.
+
+=cut
+
+Flags
+Widget::flags( Flags f = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->flags( );
+            OUTPUT:
+                RETVAL
+    CASE:
+        CODE:
+            THIS->flags( f );
+
+=for apidoc |||set_flag|f
+
+Make L<C<flag(f)>|/"flag"> return true by turning on that bit. You can set
+more than one by or'ing them together.
+
+=for apidoc |||clear_flag|f
+
+Make L<C<flag(f)>|/"flag"> return false by turning off that bit. You can turn
+off multiple bits by or'ing them toegher.
+
+=for apidoc |||set_flag|f|b
+
+Make L<C<flag(f)>|/"flag"> return C<b>. Same as
+C<b ? set_flag(f) : clear_flag(f)>.
+
+=for apidoc |||invert_flag|f
+
+Flip the result of L<C<flag(f)>|/"flag"> if C<f> is a single bit. If you or
+together bits it will flip them all.
+
+=cut
+
+void
+Widget::set_flag( unsigned f, bool b = NO_INIT )
+    CASE: items == 2
+        CODE:
+            switch( ix ) {
+                case 0: THIS->set_flag( f );    break;
+                case 1: THIS->clear_flag( f );  break;
+                case 2: THIS->invert_flag( f ); break;
+            }
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0: THIS->set_flag( f, b ); break;
+            }
+    ALIAS:
+        clear_flag  = 1
+        invert_flag = 2
+
+=for apidoc ||bool|flag|f
+
+Returns true if the bit for C<f> is on.
+
+=for apidoc ||bool|any_of|f
+
+Returns true if I<any> of the bits in C<f> are on. Actually, this is the same
+function as L<C<flag(f)>|/"flag"> but using this may make the code more
+readable.
+
+=for apidoc ||bool|all_of|f
+
+Returns true if I<all> of the bits in C<f> are on. C<f> should be several bits
+or'd together, otherwise this is the same as L<C<flag(f)>|/"flag">.
+
+=cut
+
+bool
+Widget::flag( unsigned f )
+    ALIAS:
+        any_of = 1
+        all_of = 2
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->flag( f ); break;
+            case 1: RETVAL = THIS->any_of( f ); break;
+            case 2: RETVAL = THIS->all_of( f ); break;
+        }
+    OUTPUT:
+        RETVAL
 
 =for apidoc ||bool|state|
 
@@ -1143,6 +1054,887 @@ Widget::state( bool value = NO_INIT )
         CODE:
             THIS->state( value );
 
+=for apidoc |||align|flags
+
+Forces the values of all the C<FLTK::ALIGN_*> flags to the passed value. This
+determines how the label is printed next to or inside the widget. The default
+value is C<FLTK::ALIGN_CENTER>, which centers the label. The value can be any
+of the C<ALIGN> flags or'd together.
+
+=for apidoc ||Flags|align|
+
+=cut
+
+Flags
+Widget::align( unsigned flags = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->align();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->align( flags );
+
+=for apidoc |||activate|
+
+If L<C<active()>|/"active"> is false, this turns it on. If
+L<C<active_r()>|/"active_r"> is now true L<C<send()>|/"send"> an
+C<FLTK::ACTIVATE> event.
+
+=for apidoc |||activate|bool
+
+Toggle between L<C<activate()>|/"activate"> and L<C<deactivate()>|/"deactivate">.
+
+=cut
+
+void
+Widget::activate( int b = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->activate();
+    CASE:
+        CODE:
+            THIS->activate( b );
+
+=for apidoc |||set_output|
+
+=for apidoc |||clear_output|
+
+=for apidoc |||set_changed|
+
+=for apidoc |||clear_changed|
+
+=for apidoc |||clear_selected|
+
+=for apidoc |||set_click_to_focus|
+
+=for apidoc |||clear_click_to_focus|
+
+=for apidoc |||set_tab_to_focus|
+
+=for apidoc |||clear_tab_to_focus|
+
+=for apidoc |||set_vertical|
+
+Makes L<C<vertical()>|/"vertical"> return true. This will affect how a
+surrounding L<FLTK::Pack|FLTK::Pack> (or similar group) will place the widget,
+but you must call L<C<relayout()>|/"relayout"> to indicate that this must be
+recalculated.
+
+Some widgets classes such as L<FLTK::MenuBar|FLTK::MenuBar> or
+L<FLTK::Slider|FLTK::Slider> will draw differently if this is turned on, in a
+vertical arrangement.
+
+=for apidoc |||set_horizontal|
+
+Undoes L<C<set_vertical()>|/"set_vertical"> and makes
+L<C<horizontal()>|/"horizontal"> return true. This will affect how a
+surrounding L<FLTK::Pack> (or similar group) will place the widget, but you
+must call L<C<relayout()>|/"relayout"> to indicate that this must be
+recalculated.
+
+=for apidoc |||throw_focus|
+
+This function is called by the destructor and by
+L<C<deactivate()>|/"deactivate"> and by L<C<hide()>|/"hide">. It indicates
+that the widget does not want to receive any more events, and also removes all
+global variables that point at the widget (not just the
+L<C<FLTK::focus()>|FLTK/"focus">, but the
+L<C<FLTK::belowmouse()>|FLTK/"belowmouse">, L<C<FLTK::modal()>|FLTK/"modal">,
+and some internal pointers). Unlike older versions of fltk, no events (i.e.
+C<FLTK::LEAVE> or C<FLTK::UNFOCUS>) are sent to the widget.
+
+=for apidoc |||remove_shortcuts|
+
+Remove all shortcuts for the widget. This is automatically done by the
+L<C<Widget>|FLTK::Widget> destructor.
+
+=for apidoc |||make_current|
+
+Make the fltk drawing functions draw into this widget. The transformation is
+set so C<0,0> is at the upper-left corner of the widget and 1 unit equals one
+pixel. The transformation stack is empied, and all other graphics state is
+left in unknown settings.
+
+The equivalent of this is already done before a
+L<C<Widget::draw()>|FLTK::Widget/"draw"> function is called. The only reason
+to call this is for incremental updating of widgets without using
+L<C<redraw()>|/"redraw">. This will crash if the widget is not in a currently
+L<C<shown()>|/"shown"> window. Also this may not work correctly for
+double-buffered windows.
+
+=for apidoc |||draw_background|
+
+Draw what would be in the area of the widget if the widget was not there. By
+calling this in L<C<draw()>|/"draw">, a widgets can redraw as though they are
+partially transparent, or more complicated shapes than rectangles. Note that
+only parent widgets are drawn, not underlapping ones.
+
+If C<DAMAGE_EXPOSE> is on in L<C<damage()>|/"damage"> then the window (or at
+least some region of it) is being completely redrawn. Normally FLTK will have
+already drawn the background, so to avoid redundant drawing this will return
+immediatly without drawing anything. However FLTK may be compiled with
+C<USE_CLIPOUT> (an option to reduce blinking in single-buffered windows) and
+in that case the widget must draw any visible background. In this case this
+function always draws the background.
+
+=for apidoc |||draw_frame|
+
+Same as L<C<draw_box()>|/"draw_box"> but draws only the boundary of the
+L<C<box()>|/"box"> by calling it's draw routine with the C<INVISIBLE> flag
+set. This only works for rectangular boxes. This is useful for avoiding
+blinking during update for widgets that erase their contents as part of
+redrawnig them anyway (ie anything displaying text).
+
+=cut
+
+void
+Widget::set_output( )
+    CODE:
+        switch( ix ) {
+            case  0:           THIS->set_output(); break;
+            case  1:         THIS->clear_output(); break;
+            case  2:          THIS->set_changed(); break;
+            case  3:        THIS->clear_changed(); break;
+            case  4:         THIS->set_selected(); break;
+            case  5:       THIS->clear_selected(); break;
+            case  6:   THIS->set_click_to_focus(); break;
+            case  7: THIS->clear_click_to_focus(); break;
+            case  8:     THIS->set_tab_to_focus(); break;
+            case  9:   THIS->clear_tab_to_focus(); break;
+            case 10:         THIS->set_vertical(); break;
+            case 11:       THIS->set_horizontal(); break;
+            case 12:          THIS->throw_focus(); break;
+            case 13:     THIS->remove_shortcuts(); break;
+            case 14:         THIS->make_current(); break;
+            case 15:      THIS->draw_background(); break;
+            case 16:           THIS->draw_frame(); break;
+        }
+    ALIAS:
+                clear_output =  1
+                 set_changed =  2
+               clear_changed =  3
+                set_selected =  4
+              clear_selected =  5
+          set_click_to_focus =  6
+        clear_click_to_focus =  7
+            set_tab_to_focus =  8
+          clear_tab_to_focus =  9
+                set_vertical = 10
+              set_horizontal = 11
+                 throw_focus = 12
+            remove_shortcuts = 13
+                make_current = 14
+             draw_background = 15
+                  draw_frame = 16
+
+=for apidoc |||redraw|
+
+Same as C<redraw(DAMAGE_ALL)>. This bit is used by most widgets to indicate
+that they should not attempt any incremental update, and should instead
+completely draw themselves.
+
+=for apidoc |||redraw|flags
+
+Indicates that L<C<draw()>|/"draw"> should be called, and turns on the given
+bits in L<C<damage()>|/"damage">. At least these bits, and possibly others,
+will still be on when L<C<draw()>|/"draw"> is called.
+
+=for apidoc |||redraw|rect
+
+=cut
+
+void
+Widget::redraw( args = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->redraw();
+    CASE: sv_isobject(ST(0))
+        fltk::Rectangle * args
+        CODE:
+            THIS->redraw( *args );
+    CASE:
+        uchar args
+        CODE:
+            THIS->redraw( args );
+
+=for apidoc |||redraw_label|
+
+Indicates that the L<C<label()>|/"label"> should be redrawn. This does nothing
+if there is no label. If it is an outside label (see L<C<align()>|/"align">)
+then the L<C<parent()>|/"parent"> is told to redraw it. Otherwise
+L<C<redraw()>|/"redraw"> is called.
+
+=for apidoc |||redraw_highlight|
+
+Causes a redraw if highlighting changes.
+
+Calls L<C<redraw(DAMAGE_HIGHLIGHT)>|/"redraw"> if this widget has a non-zero
+L<C<highlight_color()>|/"hightlight_color">. This is designed to be called in
+response to C<ENTER >and C<EXIT> events and not redraw the widget if the no
+highlight color is being used.
+
+=cut
+
+void
+Widget::redraw_label( )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->redraw_label();     break;
+            case 1: THIS->redraw_highlight(); break;
+        }
+    ALIAS:
+        redraw_highlight = 1
+
+
+=for apidoc |||draw_box|
+
+Draw the widget's L<C<box()>|/"box"> such that it fills the entire area of the
+widget. If the box is not rectangluar, this also draws the area of the parent
+widget that is exposed.
+
+This also does C<drawstyle(style(),flags()&~OUTPUT)> and thus the colors and
+font are set up for drawing text in the widget.
+
+=for apidoc |||draw_box|rect
+
+Draw the widget's L<C<box()>|/"box"> such that it fills the entire area of
+L<C<rect>|FLTK::Rectangle>.
+
+=cut
+
+void
+Widget::draw_box ( fltk::Rectangle * rect = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->draw_box();
+    CASE:
+        CODE:
+            THIS->draw_box( *rect );
+
+=for apidoc |||draw_label|
+
+Calls L<C<draw_label()>|/"draw_label"> with the area inside the
+L<C<box()>|/"box"> and with the alignment stored in L<C<flags()>|/"flags">.
+The L<C<labelfont()>|/"labelfont"> and L<C<labelcolor()>|/"labelcolor"> are
+used. For historic reasons if the C<OUTPUT> flag is on then the
+L<C<textfont()>|/"textfont"> and L<C<textcolor()>|/"textcolor"> are used.
+
+=for apidoc |||draw_label|rect|flags
+
+Draws labels inside the widget using the current font and color settings.
+C<XYWH> is the bounding box to fit the label into, flags is used to align in
+that box.
+
+If the C<flags> contain any C<ALIGN> flags and don't have C<ALIGN_INSIDE> then
+the L<C<label()>|/"label"> is not drawn. Instead the L<C<image()>|/"image"> is
+drawn to fill the box (most L<C<image()>|/"image"> types will center the
+picture).
+
+Otherwise it tries to put both the L<C<label()>|/"label"> and the
+L<C<image()>|/"image"> into the box in a nice way. The L<C<image()>|/"image">
+is put against the side that any ALIGN flags say, and then the
+L<C<label()>|/"label"> is put next to that.
+
+=cut
+
+void
+Widget::draw_label ( fltk::Rectangle * ir = NO_INIT, Flags flags = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->draw_label();
+    CASE: items == 3
+        CODE:
+            THIS->draw_label( *ir, flags );
+
+=for apidoc |||draw_glyph|which|rect
+
+Changes the lower 5 bits (the "align" bits) of L<C<drawflags()>|/"drawflags">
+to be the  value of C<which>, then draws the L<C<glyph()>|/"glyph">, then put
+L<C<drawflags()>|/"drawflags"> back. This is a convienence function for
+widgets that actually need to draw several different glyphs. They have to
+define a glyph which draws a different image depending on the align flags.
+This allows the style to be changed by replacing the glyph function, though
+the replacement should draw the same things for the align flags, perhaps by
+being an L<FLTK::MultiImage>|FLTK::MultiImage>.
+
+=for hackers Found in F<src/default_glyph.cxx>
+
+=cut
+
+void
+Widget::draw_glyph ( int which, fltk::Rectangle * rect )
+    C_ARGS: which, * rect
+
+=for apidoc |||cursor|c
+
+Change the cursor being displayed on the screen. A widget should do this in
+response to C<FLTK::ENTER> and C<FLTK::MOVE> events. FLTK will change it back
+to C<FLTK::CURSOR_DEFAULT> if the mouse is moved outside this widget, unless
+another widget calls this.
+
+=for TODO On X you can mess with the colors by setting the Color variables
+C<fl_cursor_fg> and C<fl_cursor_bg> to the colors you want, before calling
+this.
+
+=cut
+
+void
+Widget::cursor ( Cursor * c )
+
+=for apidoc |||measure_label|w|h
+
+Replace C<w> and C<h> with the size of the area the label will take up. This
+is the size of the L<C<draw_outside_label()>|/"draw_outside_label"> and thus
+does not include any L<C<image()>|/"image"> and always uses the labelfont even
+if the C<OUTPUT> flag is set.
+
+If the C<ALIGN_WRAP> flag is set this chooses the rather arbitrary width of
+300 to wrap the label at. Ideally this should have been passed in C<w> but is
+not for back-compatability reasons.
+
+=for hackers Found in F<fltk/widget_draw.cxx>.
+
+=cut
+
+void
+Widget::measure_label( int w, int h )
+    OUTPUT:
+        w
+        h
+
+=for apidoc ||Box|box|
+
+The type of box to draw around the outer edge of the widget (for the majority
+of widgets, some classes ignore this or use it to draw only text fields inside
+the widget). The default is C<FLTK::DOWN_BOX>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||box|Box
+
+Sets the type of box to draw around the outer edge of widget.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Box|buttonbox|
+
+The type of box to draw buttons internal the widget (notice that
+L<FLTK::Button|FLTK::Button> uses box, however). The default is
+C<FLTK::UP_BOX>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||buttonbox|Box
+
+Returns the type of box to draw buttions internal the widget.
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Box *
+Widget::box( Box * box = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL =       THIS->box(); break;
+                case 1: RETVAL = THIS->buttonbox(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0:       THIS->box( box ); break;
+                case 1: THIS->buttonbox( box ); break;
+            }
+    ALIAS:
+        buttonbox = 1
+
+=for apidoc ||Symbol|glyph|
+
+A small image that some Widgets use to draw part of themselves. For instance
+the L<FLTK::CheckButton|FLTK::CheckButton> class has this set to a Symbol that
+draws the white box and the checkmark if C<VALUE> is true.
+
+Im most cases the L<C<FLTK::drawflags()>|FLTK/"drawflags"> are examined to
+decide between differnt symbols. The default value draws empty squares and
+arrow buttons if C<ALIGN> flags are on, see
+L<Widget::default_glpyh|FLTK::Widget/"default_glyph">.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||glyph|Symbol
+
+Sets a small image that some Widgets use to draw part of themselves.
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Symbol *
+Widget::glyph( Symbol * symbol = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->glyph();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->glyph( symbol );
+
+=for apidoc ||Font|labelfont|
+
+The font used to draw the label. Default is C<FLTK::HELVETICA>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelfont|Font
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Font|textfont|
+
+Font to use to draw information inside the widget, such as the text in a text
+editor or menu or browser. Default is C<FLTK::HELVETICA>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textfont|Font
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Font *
+Widget::labelfont ( Font * font = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->labelfont(); break;
+                case 1: RETVAL =  THIS->textfont(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->labelfont( font ); break;
+                case 1:  THIS->textfont( font ); break;
+            }
+    ALIAS:
+        textfont = 1
+
+=for apidoc ||type|labeltype|
+
+How to draw the label. This provides things like inset, shadow, and the
+symbols. C<FLTK::NORMAL_LABEL>.
+
+=for apidoc |||labeltype|type
+
+=cut
+
+LabelType *
+Widget::labeltype( LabelType * type = NO_INIT )
+    CASE: items = 1
+        CODE:
+            RETVAL = THIS->labeltype();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->labeltype( type );
+
+=for apidoc ||Color|color|
+
+Color of the widgets. The default is C<FLTK::WHITE. You may think most widgets
+are gray, but this is because L<Group|FLTK::Group> and L<Window|FLTK::Window>
+have their own L<Style|FLTK::Style> with this set to C<FLTK::GRAY75>, and also
+because many parts of widgets are drawn with the
+L<C<buttoncolor()>|/"buttoncolor">.
+
+If you want to change the overall color of all the gray parts of the interface
+you want to call L<C<FLTK::set_background(color)>|FLTK/"set_background">
+instead, as this will set the entry for C<FLTK::GRAY75> and also set the "gray
+ramp" so that the edges of buttons are the same color.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||color|Color|
+
+
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|textcolor|
+
+Color to draw text inside the widget. Default is black. This is also used by
+many widgets to control the color when they draw the L<C<glyph()>|/"glyph">,
+thus it can control the color of checkmarks in
+L<FLTK::CheckButton|FLTK::CheckButton>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textcolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|selection_color|
+
+Color drawn behind selected text in inputs, or selected browser or menu items,
+or lit light buttons. The default is C<FLTK::WINDOWS_BLUE>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||selection_color|Color
+
+=for apidoc ||Color|selection_textcolor|
+
+The color to draw text atop the L<C<selection_color>|/"selection_color">. The
+default of zero indicates that fltk will choose a contrasting color (either
+the same as the original color or white or black). I recommend you use the
+default if possible.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||selection_textcolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|buttoncolor|
+
+Color used when drawing buttons. Default is C<FLTK::GRAY75>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||buttoncolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|labelcolor|
+
+Color used to draw labels. Default is C<FLTK::BLACK>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelcolor|Color
+
+=for apidoc ||Color|highlight_color|
+
+The color to draw the widget when the mouse is over it (for scrollbars and
+sliders this is used to color the buttons). Depending on the widget this will
+either recolor the buttons that are normally colored with
+L<C<buttoncolor()>|/"buttoncolor">, or will recolor the main area that is
+normally colored with L<C<color()>|/"color">.
+
+The default value is zero, which indicates that highlighting is disabled.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||highlight_color|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|highlight_textcolor|
+
+Color used to draw the labels or text when the background is drawn in the
+L<C<highlight_color>|/"highlight_color">. The default of zero indicates that
+fltk will choose a contrasting color (either the same as the original color or
+white or black). I recommend you use the default if possible.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||highlight_textcolor|Color
+
+=cut
+
+Color
+Widget::color ( Color color = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch( ix ) {
+                case 0:               RETVAL = THIS->color( ); break;
+                case 1:           RETVAL = THIS->textcolor( ); break;
+                case 2:     RETVAL = THIS->selection_color( ); break;
+                case 3: RETVAL = THIS->selection_textcolor( ); break;
+                case 4:         RETVAL = THIS->buttoncolor( ); break;
+                case 5:          RETVAL = THIS->labelcolor( ); break;
+                case 6:     RETVAL = THIS->highlight_color( ); break;
+                case 7: RETVAL = THIS->highlight_textcolor( ); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0:               THIS->color( color ); break;
+                case 1:           THIS->textcolor( color ); break;
+                case 2:     THIS->selection_color( color ); break;
+                case 3: THIS->selection_textcolor( color ); break;
+                case 4:         THIS->buttoncolor( color ); break;
+                case 5:          THIS->labelcolor( color ); break;
+                case 6:     THIS->highlight_color( color ); break;
+                case 7: THIS->highlight_textcolor( color ); break;
+            }
+    ALIAS:
+                  textcolor = 1
+            selection_color = 2
+        selection_textcolor = 3
+                buttoncolor = 4
+                 labelcolor = 5
+            highlight_color = 6
+        highlight_textcolor = 7
+
+=for apidoc ||float|labelsize|
+
+Size of L<C<labelfont()>|/"labelfont">. Default is 12.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||float|textsize|
+
+Size of L<C<textfont()>|/"textfont">. This is also used by many Widgets to
+control the size they draw the L<C<glyph()>|/"glyph">. Default is 12.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||float|leading|
+
+Extra spacing added between text lines or other things that are stacked
+vertically. The default is 2. The function
+L<C<FLTK::drawtext()>|FLTK/"drawtext"> will use the value from
+L<C<Widget::default_style>|FLTK::Widget/"default_style">, but text editors and
+browsers and menus and similar widgets will use the local value.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelsize|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textsize|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||leading|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+float
+Widget::labelsize( float size = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->labelsize(); break;
+                case 1:  RETVAL = THIS->textsize(); break;
+                case 2:   RETVAL = THIS->leading(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->labelsize( size ); break;
+                case 1:  THIS->textsize( size ); break;
+                case 2:   THIS->leading( size ); break;
+             }
+    ALIAS:
+        textsize = 1
+         leading = 2
+
+=for apidoc ||char|scrollbar_align|
+
+Where to place scrollbars around a L<Browser|FLTK::Browser> or other scrolling
+widget. The default is C<FLTK::ALIGN_RIGHT|FLTK::ALIGN_BOTTOM>.
+
+=for apidoc ||char|scrollbar_width|
+
+How wide the scrollbars are around a Browser or other scrolling widget. The
+default is 15.
+
+=for apidoc |||scrollbar_align|char
+
+=for apidoc |||scrollbar_width|char
+
+=cut
+
+unsigned char
+Widget::scrollbar_align ( unsigned char value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->scrollbar_align(); break;
+                case 1: RETVAL = THIS->scrollbar_width(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->scrollbar_align( value ); break;
+                case 1: THIS->scrollbar_width( value ); break;
+            }
+    ALIAS:
+        scrollbar_width = 1
+
+#ifndef DISABLE_WIDGET_ASSOCIATION
+
+=for apidoc Hx|||add|AssociationType|data
+
+Add an association to a this widget. The associated data is of the given
+association type. The associated data must not be NULL. NULL is simply not
+added as association.
+
+=cut
+
+#include <fltk/WidgetAssociation.h>
+
+void
+Widget::add ( AssociationType ATYPE, SV * DATA = NO_INIT )
+    CODE:
+        THIS->add( ATYPE, (void *) DATA );
+
+#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+
+=for apidoc ||bool|set|
+
+Same as L<C<state(true)>|/"state">. If you know the widget will already be
+redrawn, or it is not displayed, it is faster to call the inline
+L<C<set_flag(STATE)>|/"set_flag"> function.
+
+=for apidoc Hx|||set|AssociationType|data
+
+Removes all associations of the given assiciation type from this widget and,
+if data is not C<undef>, add the given data pointer as a new association.
+
+The removed data is freed by calling the destroy method of the association
+type.
+
+=cut
+
+#ifndef DISABLE_WIDGET_ASSOCIATION
+
+bool
+Widget::set (AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->set( );
+        OUTPUT:
+            RETVAL
+    CASE: items
+            CODE:
+                THIS->set( ATYPE, (void *) DATA )
+
+#else  // ifndef DISABLE_WIDGET_ASSOCIATION
+
+bool
+Widget::set ( )
+    OUTPUT:
+        RETVAL
+
+#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+
+#ifndef DISABLE_WIDGET_ASSOCIATION
+
+=for apidoc Hx||data|get|AssociationType
+
+Returns the first association of the given type that is connected with this
+widget.
+
+Returns C<undef> if none.
+
+=cut
+
+SV *
+Widget::get( AssociationType ATYPE )
+    CODE:
+        RETVAL = THIS->get( ATYPE );
+    OUTPUT:
+        RETVAL
+
+=for apidoc Hx||data|foreach|at|fkt
+
+Call the functor for each piece of data of the give
+L<AssociationType|FLTK::AssociationType>.
+
+This is a wrapper for C<::foreach(&at, this, fkt)>.
+
+=cut
+
+SV *
+Widget::foreach( AssociationType at, AssociationFunctor fkt )
+
+=for apidoc Hx||bool|remove|at|data
+
+Tries to remove one association from a widget, if it exists it is removed and
+the function returns true, if such an association doesn't exist false is
+returned and nothing is changed.
+
+=for apidoc Hx||bool|find|at|data
+
+Tries to find an association of this type with the given data if found the
+function returns true, else false.
+
+=cut
+
+bool
+Widget::remove( AssociationType at, SV * data )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->remove(at, (void *) data); break;
+            case 1:   RETVAL = THIS->find(at, (void *) data); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        find = 1
+
+#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+
+    # Leave the documentation in FLTK/Widget.pod but...
+
+=for apidoc et[when]||int|WHEN_NEVER|
+
+=for apidoc et[when]||int|WHEN_CHANGED|
+
+=for apidoc et[when]||int|WHEN_RELEASE|
+
+=for apidoc et[when]||int|WHEN_RELEASE_ALWAYS|
+
+=for apidoc et[when]||int|WHEN_ENTER_KEY|
+
+=for apidoc et[when]||int|WHEN_ENTER_KEY_ALWAYS|
+
+=for apidoc et[when]||int|WHEN_ENTER_KEY_CHANGED|
+
+=for apidoc et[when]||int|WHEN_NOT_CHANGED|
+
+=cut
+
+    # ...the variables are actually in the top level
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+WHEN_NEVER ( )
+    CODE:
+        RETVAL = ix; // Cheap hack. The ALIAS values are the real values
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        WHEN_CHANGED          = 1
+        WHEN_RELEASE          = 4
+        WHEN_RELEASE_ALWAYS   = 6
+        WHEN_ENTER_KEY        = 8
+        WHEN_ENTER_KEY_ALWAYS =10
+        WHEN_ENTER_KEY_CHANGED=11
+        WHEN_NOT_CHANGED      = 2
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
 
 
 
@@ -1167,7 +1959,360 @@ Widget::state( bool value = NO_INIT )
 
 
 
-#if 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=for apidoc |||relayout|
+
+Same as L<C<relayout(LAYOUT_DAMAGE)>|/"relayout">, indicates that data inside
+the widget may have changed, but the size did not change. This flag is also on
+when the widget is initially created.
+
+=for apidoc |||relayout|flags
+
+Cause L<C<layout()>|/"layout"> to be called later. Turns on the specified
+flags in L<C<layout_damage()>|/"layout_damage">, and turns on C<LAYOUT_CHILD>
+in all parents of this widget. C<flags> cannot be zero, the maaning of the
+flags is listed under F<fltk/layout.h>.
+
+=cut
+
+void
+Widget::relayout( uchar flags = NO_INIT )
+    CASE: items == 1
+        CODE:
+            THIS->relayout( );
+    CASE:
+        C_ARGS: flags
+
+=for apidoc ||uchar|layout_damage|
+
+The 'or' of all the calls to L<C<relayout()>|/"relayout"> or
+L<C<resize()>|/"resize"> done since the last time L<C<layout()>|/"layout"> was
+called.
+
+A typical layout function does not care about the widget moving, an easy way
+to skip it is as follows:
+
+    package MyWidget; # XXX - Untested
+    { # ... ISA stuff, etc. ...
+        sub layout {
+            my ($self) = @_;
+            return if !($self->layout_damage() & ~LAYOUT_XY);
+            do_expensive_layout();
+            $self->redraw();
+        }
+    }
+
+=for apidoc |||layout_damage|flag
+
+Directly change the value returned by L<C<layout_damage()>|/"layout_damage">.
+
+=cut
+
+uchar
+Widget::layout_damage ( uchar VALUE = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->layout_damage( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->layout_damage( VALUE );
+
+=for apidoc e|||DAMAGE_CHILD|
+
+A child of this group widget needs to be redrawn (non-group widgets can use
+this bit for their own purposes).
+
+=for apidoc e|||DAMAGE_CHILD_LABEL|
+
+An outside label of this widget needs to be redrawn. This is handled (and this
+bit is cleared) by the parent group.
+
+Because anti-aliasing cannot be redrawn atop itself, this is not
+used anymore. Instead if an outside label needs to change the entire
+parent widget is redrawn.
+
+=for apidoc e|||DAMAGE_EXPOSE|
+
+Damage caused by L<C<damage()>|/"damage"> or by expose events from the
+operating system. If this and L<C<FLTK::DAMAGE_ALL>|/"DAMAGE_ALL"> is on the
+widget should draw every pixel inside it's region.
+
+=for apidoc e|||fltk::DAMAGE_ALL|
+
+This bit is set by L<C<redraw()>|/"redraw"> and indicates that all of the
+widget (but not "holes" where the background shows through) needs to be
+redraw.
+
+=for apidoc e|||DAMAGE_VALUE|
+
+A widget may use this to indicate that the displayed value has changed.
+
+=for apidoc e|||DAMAGE_PUSHED|
+
+A widget may use this to indicate that the user has pushed or released a
+button.
+
+=for apidoc e|||DAMAGE_SCROLL|
+
+A widget may use this to indicate that the displayed data has scrolled moved
+horizontally and/or vertically.
+
+=for apidoc e|||DAMAGE_OVERLAY|
+
+Same value as L<C<FLTK::DAMAGE_SCROLL>|/"FLTK::DAMAGE_SCROLL">.
+
+=for apidoc e|||DAMAGE_HIGHLIGHT
+
+A widget may use this to indicate that the mouse has entered/exited part of
+the widget.
+
+=for apidoc e|||DAMAGE_CONTENTS
+
+Same as L<C<FLTK::DAMAGE_EXPOSE>|/"DAMAGE_EXPOSE"> but if
+L<C<FLTK::DAMAGE_ALL>|/"FLTK::DAMAGE_ALL"> is off a widget can use this for
+it's own purposes.
+
+=cut
+
+#include <fltk/damage.h>
+
+uchar
+DAMAGE_CHILD( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = DAMAGE_CHILD;       break;
+            case 1: RETVAL = DAMAGE_CHILD_LABEL; break;
+            case 2: RETVAL = DAMAGE_EXPOSE;      break;
+            case 3: RETVAL = DAMAGE_ALL;         break;
+            case 4: RETVAL = DAMAGE_VALUE;       break;
+            case 5: RETVAL = DAMAGE_SCROLL;      break;
+            case 6: RETVAL = DAMAGE_OVERLAY;     break;
+            case 7: RETVAL = DAMAGE_HIGHLIGHT;   break;
+            case 8: RETVAL = DAMAGE_CONTENTS;    break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        DAMAGE_CHILD_LABEL = 1
+        DAMAGE_EXPOSE      = 2
+        DAMAGE_ALL         = 3
+        DAMAGE_VALUE       = 4
+        DAMAGE_SCROLL      = 5
+        DAMAGE_OVERLAY     = 6
+        DAMAGE_HIGHLIGHT   = 7
+        DAMAGE_CONTENTS    = 8
+
+=for apidoc ||uchar|damage|
+
+The 'or' of all the calls to L<C<redraw()>|/"redraw"> done since the last
+L<C<draw()>|/"draw">. Cleared to zero after L<C<draw()>|/"draw"> is called.
+
+=cut
+
+uchar
+Widget::damage( )
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||set_damage|c
+
+Directly change the value returned by L<C<damage()>|/"damage">. Note that this
+I<replaces> the value, it does not turn bits on. Use L<C<redraw()>|/"redraw">
+to turn bits on.
+
+=cut
+
+void
+Widget::set_damage( uchar c )
+
+
+
+=for apidoc ||int|handle|event
+
+Handle an event. Returns non-zero if the widget understood and used the event.
+
+The event numbers are listed in F<fltk/events.h>.  All other information about
+the current event (like mouse position) is accessed by various functions
+listed in the same header file.
+
+The default version returns true for C<FLTK::ENTER> and C<FLTK::MOVE> events,
+this is done so you can put tooltips on the base widget. All other events
+return zero.
+
+If you want to send an event to a widget you probably want to call
+L<C<send()>|/"send">, not L<C<handle()>|/"handle">. Send will do extra work
+with each event before calling this, such as turning C<HIGHLIGHT> and
+C<FOCUSED> flags on/off.
+
+=for apidoc ||int|send|event
+
+Wrapper for L<C<handle()>|/"handle">. This should be called to send events. It
+does a few things:
+
+=over
+
+=item It calculates L<C<event_x()>|/"event_x">/L<C<event_y()>|/"event_y"> to
+be relative to the widget. The previous values are restored before this
+returns.
+
+=item It makes sure the widget is active and/or visible if the event requres
+this.
+
+=item If this is not the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget
+then it changes C<FLTK::MOVE> into C<FLTK::ENTER> and turns C<FLTK::DND_DRAG>
+into C<FLTK::DND_ENTER>. If this I<is> the
+L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> widget then the opposite conversion
+is done.
+
+=item For move, focus, and push events if L<C<handle()>|/"handle"> returns
+true it sets the L<C<FLTK::belowmouse()>|FLTK/"belowmouse"> or
+L<C<FLTK::focus()>|FLTK/"focus"> or L<C<FLTK::pushed()>|FLTK/"pushed"> widget
+to reflect this.
+
+=back
+
+=cut
+
+int
+Widget::handle( int event )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = THIS->handle( event ); break;
+            case 1: RETVAL = THIS->send( event );   break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        send = 1
+
+=for apidoc |||add_timeout|time
+
+Call L<C<handle(TIMEOUT)>|/"handle"> at the given time in the future. This
+will happen exactly once. To make it happen repeatedly, call
+L<C<repeat_timeout()>|/"repeat_timeout"> from inside
+L<C<handle(TIMEOUT)>|/"handle">.
+
+=for apidoc |||repeat_timeout|time
+
+Call L<C<handle(TIMEOUT)>|/"handle"> at the given time interval since the last
+timeout. This will produce much more accurate time intervals than
+L<C<add_timeout>|/"add_timeout">.
+
+=cut
+
+void
+Widget::add_timeout( float time )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->add_timeout( time );    break;
+            case 1: THIS->repeat_timeout( time ); break;
+        }
+    ALIAS:
+        repeat_timeout = 1
+
+=for apidoc |||remove_timeout|
+
+Cancel any and all pending L<C<handle(TIMEOUT)>|/"handle"> callbacks.
+
+=for apidoc |||deactivate|
+
+If L<C<active()>|/"active"> is true, this turns it off. If
+L<C<active_r()>|/"active_r"> was true L<C<send()>|/"send"> an
+C<FLTK::DEACTIVATE> event.
+
+=for apidoc |||show|
+
+If L<C<visible()>|/"visible"> is false, turn it on. If
+L<C<visible_r()>|/"visible_r"> is then true, L<C<send()>|/"send"> a
+C<FLTK::SHOW> event.
+
+=for apidoc |||hide|
+
+If L<C<visible()>|/"visible"> is true, turn it off. If
+L<C<visible_r()>|/"visible_r"> was true then L<C<send()>|/"send"> a
+C<FLTK::HIDE> event, and L<C<redraw()>|/"redraw"> the parent if necessary.
+
+=for apidoc |||setonly|
+
+Calls L<C<set()>|/"set"> on this widget and calls L<C<clear()>|/"clear"> on
+all adjacent widgets in the same parent L<Group|FLTK::Group> that have the
+L<C<type()>|/"type"> set to C<RADIO>.
+
+=for apidoc |||set_visible|
+
+=for apidoc |||clear_visible|
+
+=cut
+
+void
+Widget::remove_timeout( )
+    CODE:
+        switch( ix ) {
+            case 0: THIS->remove_timeout( ); break;
+            case 2: THIS->deactivate();      break;
+            case 3: THIS->show();            break;
+            case 4: THIS->hide();            break;
+            case 5: THIS->setonly();         break;
+            case 6: THIS->set_visible();     break;
+            case 7: THIS->clear_visible();   break;
+        }
+    ALIAS:
+           deactivate = 2
+                 show = 3
+                 hide = 4
+              setonly = 5
+          set_visible = 6
+        clear_visible = 7
+
+=for apidoc ||bool|copy_style|Style
+
+Copy the L<Style|FLTK::Style> from another widget. Copying a style pointer
+from another widget is not safe if that style is C<dynamic()> because it may
+change or be deleted. This makes another C<dynamic()> copy if necessary. For
+non-dynamic styles the pointer is copied.
+
+=cut
+
+bool
+Widget::copy_style( Style * s )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if  0
 
 
 
@@ -1183,50 +2328,6 @@ Widget::state( bool value = NO_INIT )
 void
 Widget::layout ( )
 
-bool
-Widget::copy_style ( STYLE )
-    const Style * STYLE
-
-
-
-Window *
-Widget::window ( )
-
-
-
-unsigned
-Widget::shortcut ( KEY )
-    CASE: ! items
-        C_ARGS:
-    CASE: items == 1
-        unsigned KEY
-        CODE:
-            THIS->shortcut( KEY );
-
-bool
-Widget::add_shortcut ( KEY )
-    unsigned KEY
-
-bool
-Widget::remove_shortcut ( KEY )
-    unsigned KEY
-
-void
-Widget::remove_shortcuts ( )
-
-unsigned
-Widget::label_shortcut ( )
-
-bool
-Widget::test_label_shortcut ( )
-
-bool
-Widget::test_shortcut ( TEST_LABEL )
-    CASE: ! items
-        CODE:
-            THIS->test_shortcut( );
-    CASE: items == 1
-        bool TEST_LABEL
 
  # TODO: Make this look more like the C++ version
  # void
@@ -1243,34 +2344,7 @@ Widget::test_shortcut ( TEST_LABEL )
  #         THIS->default_callback(WIDGET, cb);
  #         THIS->user_data(arr);
 
-void
-Widget::draw_label ( RECTANGLE, FLAGS )
-    CASE: ! items
-        PROTOTYPE: $;$$
-        CODE:
-            THIS->draw_label( );
-    CASE: items == 2
-        const fltk::Rectangle * RECTANGLE
-        Flags                   FLAGS
-        C_ARGS: (const fltk::Rectangle &) RECTANGLE, FLAGS
 
-void
-Widget::draw_glyph ( WHICH, RECTANGLE )
-    int WHICH
-    const fltk::Rectangle * RECTANGLE
-    C_ARGS: WHICH, (const fltk::Rectangle &) RECTANGLE
-
-void
-Widget::cursor ( CURSOR )
-    Cursor * CURSOR
-
-void
-Widget::measure_label ( W, H )
-    int W
-    int H
-    OUTPUT:
-        W
-        H
 
  # TODO: Make these work...
 
@@ -1282,18 +2356,7 @@ Widget::measure_label ( W, H )
  #     OUTPUT:
  #         ATYPE
  #
- # bool
- # Widget::set ( ATYPE, DATA )
- #     CASE: ! items
- #         PROTOTYPE: $;$$
- #         CODE:
- #             RETVAL = THIS->set( );
- #     CASE:
- #           AssociationType * ATYPE
- #         void * DATA
- #         C_ARGS: (const AssociationType) ATYPE, DATA
- #         OUTPUT:
- #             ATYPE
+
  #
  # void *
  # Widget::get ( ATYPE )
@@ -1356,14 +2419,6 @@ Widget::measure_label ( W, H )
 
 
 
-
-
-bool
-Widget::add_shorcut( unsigned key )
-    CODE:
-        THIS->add_shortcut( key );
-    OUTPUT:
-        RETVAL
 
 
 
@@ -1596,60 +2651,6 @@ Widget::baseline_y ( )
 
 
 
- # Unknown...
-float
-Widget::labelsize( SIZE = 0 )
-    CASE: items == 1
-        CODE:
-            RETVAL = THIS->labelsize( );
-       OUTPUT:
-            RETVAL
-    CASE: items == 2
-        int SIZE;
-        CODE:
-            THIS->labelsize(SIZE);
-
-LabelType *
-Widget::labeltype ( TYPE = NO_INIT )
-    CASE: items == 1
-        CODE:
-            RETVAL = THIS->labeltype( );
-        OUTPUT:
-            RETVAL
-    CASE: items == 2
-        LabelType * TYPE
-        CODE:
-            THIS->labeltype( TYPE );
-
-Font *
-Widget::labelfont ( TYPE = NO_INIT )
-    CASE: items == 1
-        CODE:
-            RETVAL = THIS->labelfont( );
-        OUTPUT:
-            RETVAL
-    CASE: items == 2
-        Font * TYPE
-        CODE:
-            THIS->labelfont( TYPE );
-
-
-int
-Widget::color(int color = NO_INIT)
-    CODE:
-        if (items > 1) {
-            //group->box(lookup_box(color));
-            THIS->color(color);
-            RETVAL = (color == THIS->color()) ? color : NULL;
-        }
-        else
-            RETVAL = THIS->color();
-    OUTPUT:
-        RETVAL
-
-void
-Widget::box( TYPE )
-    Box * TYPE
 
 
 #endif
