@@ -1,3 +1,13 @@
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
+=cut
+
 #include <EXTERN.h>
 #include <perl.h>
 #define NO_XSLOCKS // XSUB.h will otherwise override various things we need
@@ -5,12 +15,15 @@
 #include "./ppport.pl"
 
 #include <fltk/Widget.h>
+
 using namespace fltk;
 
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
 //#define ENABLE_DESTROY    // Introduce pointless bugs :D
 //#define ENABLE_DEPRECATED // Depreciated widgets, and other buggy junk
-#define DISABLE_WIDGET_ASSOCIATION // Requires subclass
+#define DISABLE_ASSOCIATIONFUNCTOR // Requires subclass
+#define DISABLE_ASSOCIATIONTYPE    // Requires subclass
+
 #define USE_IMAGE 0
 #define USE_GL    0
 #define USE_GLUT  0
@@ -84,7 +97,6 @@ little like this...
     SV* args  # optional arguments sent along to coderef
   ]
 
-
 =cut
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
@@ -110,33 +122,69 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 #endif // ifdef ENABLE_CALLBACKS
 }
 
-
 /* Alright, let's get things started, shall we? */
 
 MODULE = FLTK               PACKAGE = FLTK
 
+    # Functions (Exported)
+
 INCLUDE: run.xsi
 
+    # Objects (Widgets, etc.)
+
 INCLUDE: Adjuster.xsi
-
+INCLUDE: AssociationFunctor.xsi
+INCLUDE: AssociationType.xsi
 INCLUDE: Button.xsi
-
 INCLUDE: Group.xsi
-
 INCLUDE: Rectangle.xsi
-
 INCLUDE: Slider.xsi
-
+INCLUDE: Style.xsi
 INCLUDE: Valuator.xsi
-
 INCLUDE: ValueInput.xsi
-
 INCLUDE: ValueOutput.xsi
-
 INCLUDE: Widget.xsi
-
 INCLUDE: Window.xsi
 
+    INCLUDE: ~old/Browser.xsi
+    #INCLUDE: ~old/CheckButton.xsi
+    #INCLUDE: ~old/Choice.xsi
+    #INCLUDE: ~old/Clock.xsi
+    #INCLUDE: ~old/ClockOutput.xsi
+    #INCLUDE: ~old/CreatedWindow.xsi
+    #INCLUDE: ~old/CycleButton.xsi
+    #INCLUDE: ~old/Dial.xsi
+    #INCLUDE: ~old/Divider.xsi
+    #INCLUDE: ~old/FillDial.xsi
+    #INCLUDE: ~old/FillSlider.xsi
+    #INCLUDE: ~old/FlatBox.xsi
+    #INCLUDE: ~old/FloatInput.xsi
+    #INCLUDE: ~old/Font.xsi
+    #INCLUDE: ~old/FrameBox.xsi
+    #INCLUDE: ~old/gifImage.xsi
+    #INCLUDE: ~old/GlutWindow.xsi
+    #INCLUDE: ~old/GlWindow.xsi
+    #INCLUDE: ~old/GSave.xsi
+    #INCLUDE: ~old/Guard.xsi
+    #INCLUDE: ~old/HighlightBox.xsi
+    #INCLUDE: ~old/HighlightButton.xsi
+    #INCLUDE: ~old/Image.xsi
+    #INCLUDE: ~old/ImageType.xsi
+    #INCLUDE: ~old/Input.xsi
+    #INCLUDE: ~old/IntInput.xsi
+    #INCLUDE: ~old/InvisibleBox.xsi
+    #INCLUDE: ~old/Item.xsi
+    #INCLUDE: ~old/ItemGroup.xsi
+    #INCLUDE: ~old/LightButton.xsi
+    #INCLUDE: ~old/LineDial.xsi
+    #INCLUDE: ~old/List.xsi
+    #INCLUDE: ~old/Menu.xsi
+    #INCLUDE: ~old/MenuBar.xsi
+    #INCLUDE: ~old/MenuSection.xsi
+    #INCLUDE: ~old/MenuWindow.xsi
+    #INCLUDE: ~old/Monitor.xsi
+    #INCLUDE: ~old/MultiBrowser.xsi
+    #INCLUDE: ~old/MultiImage.xsi
 
 MODULE = FLTK               PACKAGE = FLTK
 
@@ -150,32 +198,3 @@ BOOT:
 #endif // #ifndef SvWEAKREF
     );
 #endif
-
-
-
-=pod
-
-=head1 Author
-
-Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-CPAN ID: SANKO
-
-=head1 License and Legal
-
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of The Artistic License 2.0.  See the F<LICENSE>
-file included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered
-by the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-=for git $Id$ for got=
-
-=cut

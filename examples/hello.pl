@@ -1,18 +1,20 @@
 #!perl -w -I../blib/arch/ -I../blib/lib
-# hello.pl (example1)
+# hello.pl (See FLTK::Basics)
 use strict;
 use warnings;
 use FLTK;
-my $window = new FLTK::Window(300, 180);
+
+#
+my $window = FLTK::Window->new(300, 180);
 $window->begin();
-my $box = new FLTK::Widget(20, 40, 260, 100, "Hello, World!");
+my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
 $box->box(UP_BOX);
 $box->labelfont(HELVETICA_BOLD_ITALIC);
 $box->labelsize(36);
 $box->labeltype(SHADOW_LABEL);
 $window->end();
 $window->show();
-run();
+exit run();
 __END__
 Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
 
@@ -28,4 +30,3 @@ http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
 
 $Id$
-

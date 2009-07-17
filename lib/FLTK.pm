@@ -2,33 +2,11 @@
 package FLTK;
 use strict;
 use warnings;
-
-#
 our $VERSION_BASE = 1; our $FLTK_SVN = 6793; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf('%d.%05d' . ($UNSTABLE_RELEASE ? '_%03d' : ''), $VERSION_BASE, $FLTK_SVN, $UNSTABLE_RELEASE);
-
-#
 use XSLoader;
-
-#
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
 %EXPORT_TAGS = (
-    flags => [
-        qw[ NO_FLAGS
-            ALIGN_TOP ALIGN_BOTTOM ALIGN_LEFT ALIGN_RIGHT ALIGN_CENTER
-            ALIGN_INSIDE ALIGN_CLIP ALIGN_WRAP ALIGN_MASK
-            ALIGN_POSITIONMASK
-            ALIGN_TOPLEFT ALIGN_BOTTOMLEFT ALIGN_TOPRIGHT
-            ALIGN_BOTTOMRIGHT ALIGN_CENTERLEFT ALIGN_CENTERRIGHT
-            ALIGN_INSIDE_TOP ALIGN_INSIDE_BOTTOM ALIGN_INSIDE_LEFT
-            ALIGN_INSIDE_TOPLEFT ALIGN_INSIDE_BOTTOMLEFT
-            ALIGN_INSIDE_RIGHT ALIGN_INSIDE_TOPRIGHT
-            ALIGN_INSIDE_BOTTOMRIGHT ALIGN_MENU ALIGN_BROWSER
-            INACTIVE OUTPUT STATE SELECTED INVISIBLE HIGHLIGHT CHANGED
-            COPIED_LABEL RAW_LABEL LAYOUT_VERTICAL TAB_TO_FOCUS
-            CLICK_TO_FOCUS INACTIVE_R FOCUSED PUSHED RESIZE_NONE
-            RESIZE_FIT RESIZE_FILL OPENED ]
-    ],
     ask => [
         qw[ BEEP_DEFAULT BEEP_MESSAGE BEEP_ERROR BEEP_QUESTION BEEP_PASSWORD
             BEEP_NOTIFICATION
@@ -39,12 +17,12 @@ use Exporter qw[import];
             ]
     ],
     box => [
-        qw[ UP_BOX  DOWN_BOX    THIN_UP_BOX THIN_DOWN_BOX   ENGRAVED_BOX
-            EMBOSSED_BOX    BORDER_BOX  FLAT_BOX    HIGHLIGHT_UP_BOX
-            HIGHLIGHT_DOWN_BOX  ROUND_UP_BOX    ROUND_DOWN_BOX  DIAMOND_UP_BOX
-            DIAMOND_DOWN_BOX    NO_BOX  SHADOW_BOX  ROUNDED_BOX RSHADOW_BOX
-            RFLAT_BOX   OVAL_BOX    OSHADOW_BOX OFLAT_BOX   BORDER_FRAME
-            PLASTIC_UP_BOX  PLASTIC_DOWN_BOX]
+        qw[ UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
+            EMBOSSED_BOX BORDER_BOX FLAT_BOX HIGHLIGHT_UP_BOX
+            HIGHLIGHT_DOWN_BOX ROUND_UP_BOX ROUND_DOWN_BOX DIAMOND_UP_BOX
+            DIAMOND_DOWN_BOX SHADOW_BOX ROUNDED_BOX RSHADOW_BOX RFLAT_BOX
+            OVAL_BOX OSHADOW_BOX OFLAT_BOX BORDER_FRAME PLASTIC_UP_BOX
+            PLASTIC_DOWN_BOX ]
     ],
     color => [
         qw[ NO_COLOR    FREE_COLOR  NUM_FREE_COLOR  GRAY00  GRAY05  GRAY10
@@ -73,13 +51,30 @@ use Exporter qw[import];
             DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS
             ]
     ],
-    draw => [
+    default => [qw[run message alert ask input password %FLTK]],
+    draw    => [
         qw[ push_matrix pop_matrix scale translate
             setcolor
             addvertex
             drawtext
             fillstrokepath fillrect
             ]
+    ],
+    flags => [
+        qw[ NO_FLAGS
+            ALIGN_TOP ALIGN_BOTTOM ALIGN_LEFT ALIGN_RIGHT ALIGN_CENTER
+            ALIGN_INSIDE ALIGN_CLIP ALIGN_WRAP ALIGN_MASK
+            ALIGN_POSITIONMASK
+            ALIGN_TOPLEFT ALIGN_BOTTOMLEFT ALIGN_TOPRIGHT
+            ALIGN_BOTTOMRIGHT ALIGN_CENTERLEFT ALIGN_CENTERRIGHT
+            ALIGN_INSIDE_TOP ALIGN_INSIDE_BOTTOM ALIGN_INSIDE_LEFT
+            ALIGN_INSIDE_TOPLEFT ALIGN_INSIDE_BOTTOMLEFT
+            ALIGN_INSIDE_RIGHT ALIGN_INSIDE_TOPRIGHT
+            ALIGN_INSIDE_BOTTOMRIGHT ALIGN_MENU ALIGN_BROWSER
+            INACTIVE OUTPUT STATE SELECTED INVISIBLE HIGHLIGHT CHANGED
+            COPIED_LABEL RAW_LABEL LAYOUT_VERTICAL TAB_TO_FOCUS
+            CLICK_TO_FOCUS INACTIVE_R FOCUSED PUSHED RESIZE_NONE
+            RESIZE_FIT RESIZE_FILL OPENED ]
     ],
     font => [
         qw[ HELVETICA HELVETICA_BOLD HELVETICA_ITALIC HELVETICA_BOLD_ITALIC
@@ -93,8 +88,7 @@ use Exporter qw[import];
         qw[ NO_LABEL NORMAL_LABEL SYMBOL_LABEL SHADOW_LABEL ENGRAVED_LABEL
             EMBOSSED_LABEL ]
     ],
-    default => [qw[run message alert ask input password %FLTK]],
-    run     => [
+    run => [
         qw[ READ WRITE EXCEPT
             awake
             ready
@@ -109,21 +103,30 @@ use Exporter qw[import];
             ALPHA_BUFFER DEPTH_BUFFER STENCIL_BUFFER RGB24_COLOR MULTISAMPLE
             STEREO
             glVisual own_colormap visual ]
+    ],
+    widget => [
+        qw[
+            RESERVED_TYPE TOGGLE RADIO GROUP_TYPE WINDOW_TYPE
+            ]
+    ],
+    when => [
+        qw[
+            WHEN_CHANGED WHEN_RELEASE WHEN_RELEASE_ALWAYS WHEN_ENTER_KEY
+            WHEN_ENTER_KEY_ALWAYS WHEN_ENTER_KEY_CHANGED WHEN_NOT_CHANGED
+            ]
     ]
 );
 @EXPORT_OK = sort map {@$_} values %EXPORT_TAGS;
 $EXPORT_TAGS{'all'} = \@EXPORT_OK;
-@EXPORT = sort map { m[^:(.+)] ? @{$EXPORT_TAGS{$1}} : $_ }
-    qw[:box :label :font :default];
+@{$EXPORT_TAGS{'style'}}
+    = sort map { @{$EXPORT_TAGS{$_}} } qw[box font label];
+@EXPORT # Export these tags (if prepended w/ ':') or functions by default
+    = sort map { m[^:(.+)] ? @{$EXPORT_TAGS{$1}} : $_ } qw[:style :default];
 
-#use Data::Dump qw[pp];
-#warn pp \@EXPORT_OK;
-our $NOXS ||= $0 eq __FILE__;
+#
+our $NOXS ||= $0 eq __FILE__;    # for testing
+XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 
-#warn $NOXS;
-XSLoader::load 'FLTK';    #, $VERSION ;#if $FLTK::NOXS;  # for testing
-
-#sub END { warn "..." }
 # Classes ####################################################################
 @FLTK::Aduster::ISA            = qw[FLTK::Valuator];
 @FLTK::AssociationFunctor::ISA = qw[];
@@ -223,13 +226,14 @@ XSLoader::load 'FLTK';    #, $VERSION ;#if $FLTK::NOXS;  # for testing
 @FLTK::Tooltip::ISA                 = qw[FLTK::MenuWindow];
 @FLTK::MenuTitle::ISA               = qw[FLTK::MenuWindow];
 @FLTK::MWindow::ISA                 = qw[FLTK::MenuWindow];
-@FLTK::Valuator::ISA = qw[FLTK::Widget];
-@FLTK::Slider::ISA = qw[FLTK::Valuator];
+@FLTK::Valuator::ISA                = qw[FLTK::Widget];
+@FLTK::Slider::ISA                  = qw[FLTK::Valuator];
+
 # From my own work
-@FLTK::ValueInput::ISA = qw[FLTK::Valuator];
+@FLTK::ValueInput::ISA  = qw[FLTK::Valuator];
 @FLTK::ValueOutput::ISA = qw[FLTK::Valuator];
 
-=pod
+# =pod
 
 
 #
@@ -282,6 +286,7 @@ XSLoader::load 'FLTK';    #, $VERSION ;#if $FLTK::NOXS;  # for testing
 @FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
 
+=blah
 =cut
 
 sub message ($;@) {    # XXX - translate to C

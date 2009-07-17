@@ -1,0 +1,763 @@
+#ifndef DISABLE_STYLE
+
+MODULE = FLTK               PACKAGE = FLTK::Style
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
+=head1 Description
+
+Each widget has a pointer to an instance of Style. Usually many widgets share
+pointers to the same one. Styles are linked into a hierarchy tree by the
+C<parent_> pointers.
+
+When you look up a value from a style (such as when
+L<C<box()>|FLTK::Widget/"box"> is called) it looks at that style and each
+parent up until it finds a non-zero value to return, or until there are no
+more parents, in which case zero is returned. Thus changing a parent style
+can make global changes as long as widgets do not have local values set.
+
+When you "set" a style (such as by calling
+L<C<box(UP_BOX)>|FLTK::Widget/"box">) then the local member variable is set.
+Notice that by setting a zero value you will indicate that it should return
+the parent value.
+
+The method L<C<Widget::box(BOX)>|FLTK::Widget/"box"> will create a
+L<C<dynamic()>|/"dynamic"> style for that widget, which is a child of the
+original style, and set the box in that style. This "unique" style is reused
+for any other changes to that widget and it is deleted when the widget is
+deleted. Thus changes to a single widget do not affect other widgets, but the
+majority of widgets all share a Style structure.
+
+Occasionally it is useful to see if a field has been set. To do this you can
+directly access the local member variables using names like C<box_>.
+
+=cut
+
+#include <fltk/Style.h>
+
+=for apidoc ||FLTK::Style|new|
+
+The constructor clears the style to entirely zeros, including the C<parent_>
+pointer. You probably want to set the parent to
+L<C<Widget::default_style>|FLTK::Widget/"default_style"> in order to inherit
+the global settings.
+
+=cut
+
+Style *
+Style::new( )
+    CODE:
+        RETVAL = new Style( );
+#if VERBOSE >= 2
+        warn("new Style");
+#endif
+    OUTPUT:
+        RETVAL
+
+#ifdef ENABLE_DESTROY
+
+bool
+Style::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Style" );
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc et[box]||Box|UP_BOX|
+
+=for apidoc et[box]||Box|DOWN_BOX|
+
+=for apidoc et[box]||Box|THIN_UP_BOX|
+
+=for apidoc et[box]||Box|THIN_DOWN_BOX|
+
+=for apidoc et[box]||Box|DOWN_BOX|
+
+=for apidoc et[box]||Box|THIN_UP_BOX|
+
+=for apidoc et[box]||Box|THIN_DOWN_BOX|
+
+=for apidoc et[box]||Box|ENGRAVED_BOX|
+
+=for apidoc et[box]||Box|EMBOSSED_BOX|
+
+=for apidoc et[box]||Box|BORDER_BOX|
+
+=for apidoc et[box]||Box|FLAT_BOX|
+
+=for apidoc et[box]||Box|HIGHLIGHT_UP_BOX|
+
+=for apidoc et[box]||Box|HIGHLIGHT_DOWN_BOX|
+
+=for apidoc et[box]||Box|ROUND_UP_BOX|
+
+=for apidoc et[box]||Box|ROUND_DOWN_BOX|
+
+=for apidoc et[box]||Box|DIAMOND_UP_BOX|
+
+=for apidoc et[box]||Box|DIAMOND_DOWN_BOX|
+
+=for apidoc et[box]||Box|SHADOW_BOX|
+
+=for apidoc et[box]||Box|ROUNDED_BOX|
+
+=for apidoc et[box]||Box|RSHADOW_BOX|
+
+=for apidoc et[box]||Box|RFLAT_BOX|
+
+=for apidoc et[box]||Box|OVAL_BOX|
+
+=for apidoc et[box]||Box|OSHADOW_BOX|
+
+=for apidoc et[box]||Box|OFLAT_BOX|
+
+=for apidoc et[box]||Box|BORDER_FRAME|
+
+=for apidoc et[box]||Box|PLASTIC_UP_BOX|
+
+=for apidoc et[box]||Box|PLASTIC_DOWN_BOX|
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Box *
+UP_BOX ( )
+    CODE:
+        switch ( ix ) {
+            case  0: RETVAL = UP_BOX; break;
+            case  1: RETVAL = DOWN_BOX; break;
+            case  2: RETVAL = THIN_UP_BOX; break;
+            case  3: RETVAL = THIN_DOWN_BOX; break;
+            case  4: RETVAL = ENGRAVED_BOX; break;
+            case  5: RETVAL = EMBOSSED_BOX; break;
+            case  6: RETVAL = BORDER_BOX; break;
+            case  7: RETVAL = FLAT_BOX; break;
+            case  8: RETVAL = HIGHLIGHT_UP_BOX; break;
+            case  9: RETVAL = HIGHLIGHT_DOWN_BOX; break;
+            case 10: RETVAL = ROUND_UP_BOX; break;
+            case 11: RETVAL = ROUND_DOWN_BOX; break;
+            case 12: RETVAL = DIAMOND_UP_BOX; break;
+            case 13: RETVAL = DIAMOND_DOWN_BOX; break;
+            case 14: RETVAL = SHADOW_BOX; break;
+            case 15: RETVAL = ROUNDED_BOX; break;
+            case 16: RETVAL = RSHADOW_BOX; break;
+            case 17: RETVAL = RFLAT_BOX; break;
+            case 18: RETVAL = OVAL_BOX; break;
+            case 19: RETVAL = OSHADOW_BOX; break;
+            case 20: RETVAL = OFLAT_BOX; break;
+            case 21: RETVAL = BORDER_FRAME; break;
+            case 22: RETVAL = PLASTIC_UP_BOX; break;
+            case 23: RETVAL = PLASTIC_DOWN_BOX; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+                  DOWN_BOX = 1
+               THIN_UP_BOX = 2
+             THIN_DOWN_BOX = 3
+              ENGRAVED_BOX = 4
+              EMBOSSED_BOX = 5
+                BORDER_BOX = 6
+                  FLAT_BOX = 7
+          HIGHLIGHT_UP_BOX = 8
+        HIGHLIGHT_DOWN_BOX = 9
+              ROUND_UP_BOX = 10
+            ROUND_DOWN_BOX = 11
+            DIAMOND_UP_BOX = 12
+          DIAMOND_DOWN_BOX = 13
+                SHADOW_BOX = 14
+               ROUNDED_BOX = 15
+               RSHADOW_BOX = 16
+                 RFLAT_BOX = 17
+                  OVAL_BOX = 18
+               OSHADOW_BOX = 19
+                 OFLAT_BOX = 20
+              BORDER_FRAME = 21
+            PLASTIC_UP_BOX = 22
+          PLASTIC_DOWN_BOX = 23
+
+MODULE = FLTK               PACKAGE = FLTK::Style
+
+=for apidoc et[font]||Font|HELVETICA|
+
+=for apidoc et[font]||Font|HELVETICA_BOLD|
+
+=for apidoc et[font]||Font|HELVETICA_ITALIC|
+
+=for apidoc et[font]||Font|HELVETICA_BOLD_ITALIC|
+
+=for apidoc et[font]||Font|COURIER|
+
+=for apidoc et[font]||Font|COURIER_BOLD|
+
+=for apidoc et[font]||Font|COURIER_ITALIC|
+
+=for apidoc et[font]||Font|COURIER_BOLD_ITALIC|
+
+=for apidoc et[font]||Font|TIMES|
+
+=for apidoc et[font]||Font|TIMES_BOLD|
+
+=for apidoc et[font]||Font|TIMES_ITALIC|
+
+=for apidoc et[font]||Font|TIMES_BOLD_ITALIC|
+
+=for apidoc et[font]||Font|SYMBOL_FONT|
+
+=for apidoc et[font]||Font|SCREEN_FONT|
+
+=for apidoc et[font]||Font|SCREEN_BOLD_FONT|
+
+=for apidoc et[font]||Font|ZAPF_DINGBATS|
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Font *
+HELVETICA ()
+    CODE:
+        switch ( ix ) {
+            case  0: RETVAL = HELVETICA_BOLD;        break;
+            case  1: RETVAL = HELVETICA_ITALIC;      break;
+            case  2: RETVAL = HELVETICA_BOLD_ITALIC; break;
+            case  3: RETVAL = COURIER;               break;
+            case  4: RETVAL = COURIER_BOLD;          break;
+            case  5: RETVAL = COURIER_ITALIC;        break;
+            case  6: RETVAL = COURIER_BOLD_ITALIC;   break;
+            case  7: RETVAL = TIMES;                 break;
+            case  8: RETVAL = TIMES_BOLD;            break;
+            case  9: RETVAL = TIMES_ITALIC;          break;
+            case 10: RETVAL = TIMES_BOLD_ITALIC;     break;
+            case 11: RETVAL = SYMBOL_FONT;           break;
+            case 12: RETVAL = SCREEN_FONT;           break;
+            case 13: RETVAL = SCREEN_BOLD_FONT;      break;
+            case 14: RETVAL = ZAPF_DINGBATS;         break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+             HELVETICA_ITALIC = 1
+        HELVETICA_BOLD_ITALIC = 2
+                      COURIER = 3
+                 COURIER_BOLD = 4
+               COURIER_ITALIC = 5
+          COURIER_BOLD_ITALIC = 6
+                        TIMES = 7
+                   TIMES_BOLD = 8
+                 TIMES_ITALIC = 9
+            TIMES_BOLD_ITALIC = 10
+                  SYMBOL_FONT = 11
+                  SCREEN_FONT = 12
+             SCREEN_BOLD_FONT = 13
+                ZAPF_DINGBATS = 14
+
+MODULE = FLTK               PACKAGE = FLTK::Style
+
+=for apidoc et[label]||LabelType|NO_LABEL|
+
+=for apidoc et[label]||LabelType|NORMAL_LABEL|
+
+=for apidoc et[label]||LabelType|SYMBOL_LABEL|
+
+=for apidoc et[label]||LabelType|SHADOW_LABEL|
+
+=for apidoc et[label]||LabelType|ENGRAVED_LABEL|
+
+=for apidoc et[label]||LabelType|EMBOSSED_LABEL|
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+LabelType *
+NO_LABEL ()
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = NO_LABEL;       break;
+            case 1: RETVAL = NORMAL_LABEL;   break;
+            case 2: RETVAL = SYMBOL_LABEL;   break; // same as NORMAL_LABEL
+            case 3: RETVAL = SHADOW_LABEL;   break;
+            case 4: RETVAL = ENGRAVED_LABEL; break;
+            case 5: RETVAL = EMBOSSED_LABEL; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+          NORMAL_LABEL = 1
+          SYMBOL_LABEL = 2
+          SHADOW_LABEL = 3
+        ENGRAVED_LABEL = 4
+        EMBOSSED_LABEL = 5
+
+=for apidoc ||bool|dynamic|
+
+True if this Style is unique to the Widget that owns it, and is not shared
+with other Widgets.
+
+=cut
+
+bool
+Style::dynamic()
+
+=for apidoc ||Style|find|name
+
+
+=cut
+
+Style *
+Style::find ( char * name )
+
+=for apidoc ||Box|box|
+
+The type of box to draw around the outer edge of the widget (for the majority
+of widgets, some classes ignore this or use it to draw only text fields inside
+the widget). The default is C<FLTK::DOWN_BOX>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||box|Box
+
+Sets the type of box to draw around the outer edge of widget.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Box|buttonbox|
+
+The type of box to draw buttons internal the widget (notice that
+L<FLTK::Button|FLTK::Button> uses box, however). The default is
+C<FLTK::UP_BOX>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||buttonbox|Box
+
+Returns the type of box to draw buttions internal the widget.
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Box *
+Style::box( Box * box = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL =       THIS->box(); break;
+                case 1: RETVAL = THIS->buttonbox(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0:       THIS->box( box ); break;
+                case 1: THIS->buttonbox( box ); break;
+            }
+    ALIAS:
+        buttonbox = 1
+
+=for apidoc ||Symbol|glyph|
+
+A small image that some Widgets use to draw part of themselves. For instance
+the L<FLTK::CheckButton|FLTK::CheckButton> class has this set to a Symbol that
+draws the white box and the checkmark if C<VALUE> is true.
+
+Im most cases the L<C<FLTK::drawflags()>|FLTK/"drawflags"> are examined to
+decide between differnt symbols. The default value draws empty squares and
+arrow buttons if C<ALIGN> flags are on, see
+L<Widget::default_glpyh|FLTK::Widget/"default_glyph">.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||glyph|Symbol
+
+Sets a small image that some Widgets use to draw part of themselves.
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Symbol *
+Style::glyph( Symbol * symbol = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->glyph();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->glyph( symbol );
+
+=for apidoc ||Font|labelfont|
+
+The font used to draw the label. Default is C<FLTK::HELVETICA>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelfont|Font
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Font|textfont|
+
+Font to use to draw information inside the widget, such as the text in a text
+editor or menu or browser. Default is C<FLTK::HELVETICA>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textfont|Font
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+Font *
+Style::labelfont ( Font * font = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->labelfont(); break;
+                case 1: RETVAL =  THIS->textfont(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->labelfont( font ); break;
+                case 1:  THIS->textfont( font ); break;
+            }
+    ALIAS:
+        textfont = 1
+
+=for apidoc ||type|labeltype|
+
+How to draw the label. This provides things like inset, shadow, and the
+symbols. C<FLTK::NORMAL_LABEL>.
+
+=for apidoc |||labeltype|type
+
+=cut
+
+LabelType *
+Style::labeltype( LabelType * type = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->labeltype();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->labeltype( type );
+
+=for apidoc ||Color|color|
+
+Color of the widgets. The default is C<FLTK::WHITE. You may think most widgets
+are gray, but this is because L<Group|FLTK::Group> and L<Window|FLTK::Window>
+have their own L<Style|FLTK::Style> with this set to C<FLTK::GRAY75>, and also
+because many parts of widgets are drawn with the
+L<C<buttoncolor()>|/"buttoncolor">.
+
+If you want to change the overall color of all the gray parts of the interface
+you want to call L<C<FLTK::set_background(color)>|FLTK/"set_background">
+instead, as this will set the entry for C<FLTK::GRAY75> and also set the "gray
+ramp" so that the edges of buttons are the same color.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||color|Color|
+
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|textcolor|
+
+Color to draw text inside the widget. Default is black. This is also used by
+many widgets to control the color when they draw the L<C<glyph()>|/"glyph">,
+thus it can control the color of checkmarks in
+L<FLTK::CheckButton|FLTK::CheckButton>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textcolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|selection_color|
+
+Color drawn behind selected text in inputs, or selected browser or menu items,
+or lit light buttons. The default is C<FLTK::WINDOWS_BLUE>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||selection_color|Color
+
+=for apidoc ||Color|selection_textcolor|
+
+The color to draw text atop the L<C<selection_color>|/"selection_color">. The
+default of zero indicates that fltk will choose a contrasting color (either
+the same as the original color or white or black). I recommend you use the
+default if possible.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||selection_textcolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|buttoncolor|
+
+Color used when drawing buttons. Default is C<FLTK::GRAY75>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||buttoncolor|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|labelcolor|
+
+Color used to draw labels. Default is C<FLTK::BLACK>.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelcolor|Color
+
+=for apidoc ||Color|highlight_color|
+
+The color to draw the widget when the mouse is over it (for scrollbars and
+sliders this is used to color the buttons). Depending on the widget this will
+either recolor the buttons that are normally colored with
+L<C<buttoncolor()>|/"buttoncolor">, or will recolor the main area that is
+normally colored with L<C<color()>|/"color">.
+
+The default value is zero, which indicates that highlighting is disabled.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||highlight_color|Color
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||Color|highlight_textcolor|
+
+Color used to draw the labels or text when the background is drawn in the
+L<C<highlight_color>|/"highlight_color">. The default of zero indicates that
+fltk will choose a contrasting color (either the same as the original color or
+white or black). I recommend you use the default if possible.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||highlight_textcolor|Color
+
+=cut
+
+Color
+Style::color ( Color color = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch( ix ) {
+                case 0:               RETVAL = THIS->color( ); break;
+                case 1:           RETVAL = THIS->textcolor( ); break;
+                case 2:     RETVAL = THIS->selection_color( ); break;
+                case 3: RETVAL = THIS->selection_textcolor( ); break;
+                case 4:         RETVAL = THIS->buttoncolor( ); break;
+                case 5:          RETVAL = THIS->labelcolor( ); break;
+                case 6:     RETVAL = THIS->highlight_color( ); break;
+                case 7: RETVAL = THIS->highlight_textcolor( ); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0:               THIS->color( color ); break;
+                case 1:           THIS->textcolor( color ); break;
+                case 2:     THIS->selection_color( color ); break;
+                case 3: THIS->selection_textcolor( color ); break;
+                case 4:         THIS->buttoncolor( color ); break;
+                case 5:          THIS->labelcolor( color ); break;
+                case 6:     THIS->highlight_color( color ); break;
+                case 7: THIS->highlight_textcolor( color ); break;
+            }
+    ALIAS:
+                  textcolor = 1
+            selection_color = 2
+        selection_textcolor = 3
+                buttoncolor = 4
+                 labelcolor = 5
+            highlight_color = 6
+        highlight_textcolor = 7
+
+=for apidoc ||float|labelsize|
+
+Size of L<C<labelfont()>|/"labelfont">. Default is 12.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||float|textsize|
+
+Size of L<C<textfont()>|/"textfont">. This is also used by many Widgets to
+control the size they draw the L<C<glyph()>|/"glyph">. Default is 12.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc ||float|leading|
+
+Extra spacing added between text lines or other things that are stacked
+vertically. The default is 2. The function
+L<C<FLTK::drawtext()>|FLTK/"drawtext"> will use the value from
+L<C<Widget::default_style>|FLTK::Widget/"default_style">, but text editors and
+browsers and menus and similar widgets will use the local value.
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||labelsize|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||textsize|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=for apidoc |||leading|float
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+float
+Style::labelsize( float size = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->labelsize(); break;
+                case 1:  RETVAL = THIS->textsize(); break;
+                case 2:   RETVAL = THIS->leading(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->labelsize( size ); break;
+                case 1:  THIS->textsize( size ); break;
+                case 2:   THIS->leading( size ); break;
+             }
+    ALIAS:
+        textsize = 1
+         leading = 2
+
+=for apidoc ||char|scrollbar_align|
+
+Where to place scrollbars around a L<Browser|FLTK::Browser> or other scrolling
+widget. The default is C<FLTK::ALIGN_RIGHT|FLTK::ALIGN_BOTTOM>.
+
+=for apidoc ||char|scrollbar_width|
+
+How wide the scrollbars are around a Browser or other scrolling widget. The
+default is 15.
+
+=for apidoc |||scrollbar_align|char
+
+=for apidoc |||scrollbar_width|char
+
+=cut
+
+unsigned char
+Style::scrollbar_align ( unsigned char value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->scrollbar_align(); break;
+                case 1: RETVAL = THIS->scrollbar_width(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->scrollbar_align( value ); break;
+                case 1: THIS->scrollbar_width( value ); break;
+            }
+    ALIAS:
+        scrollbar_width = 1
+
+=for apidoc ||bool|hide_underscore|
+
+If false, draw C<&x> in labels as an underscore. If true (the default) then
+the underscores are not drawn. In this case you should limit your C<&x>
+hotkeys to menubar items, as underscores in buttons are not visible. The
+menubar will show them when C<Alt> is held down.
+
+=for apidoc |||hide_underscore|bool
+
+=for apidoc ||bool|draw_boxes_inactive|
+
+If false then most of the built-in box types draw the same even if
+C<FLTK::INACTIVE_R> is passed to them. This repliates Windows appearance. If
+true (the default) then the boxes themselves gray out.
+
+=for apidoc |||draw_boxes_inactive|bool
+
+=cut
+
+bool
+Style::hide_underscore ( bool value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->hide_underscore(); break;
+                case 1: RETVAL = THIS->draw_boxes_inactive(); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch( ix ) {
+                case 0: THIS->hide_underscore( value ); break;
+                case 1: THIS->draw_boxes_inactive( value ); break;
+            }
+    ALIAS:
+        draw_boxes_inactive = 1
+
+=for apidoc ||int|wheel_scroll_lines|
+
+How many lines to move for one click of a mouse wheel. The default is 3.
+
+=for apidoc |||wheel_scroll_lines|int
+
+=cut
+
+int
+Style::wheel_scroll_lines ( int value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->wheel_scroll_lines();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->wheel_scroll_lines( value );
+
+
+
+    # Children
+
+INCLUDE: NamedStyle.xsi
+
+#endif // ifndef DISABLE_STYLE

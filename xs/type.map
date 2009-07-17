@@ -1,58 +1,58 @@
 TYPEMAP
 
 # Defaults
-const char *  T_PV
-const char ** T_PV
-char ** T_PV
-uchar         T_U_CHAR
-uchar *       T_PV
-float         T_FLOAT
-const void *  T_PTR
-int *         T_IPTR
-const int *   T_IPTR
-const uchar * T_PV
+const char  *   T_PV
+const char  **  T_PV
+char        **  T_PV
+uchar           T_U_CHAR
+uchar       *   T_PV
+float           T_FLOAT
+const void  *   T_PTR
+int         *   T_IPTR
+const int   *   T_IPTR
+const uchar *   T_PV
 
 # Enum
-Flags         T_INT
-const Mark    T_INT
-Mark          T_INT
-linepos       T_INT
+Flags               T_INT
+Browser::linepos    O_FLTK
 
 # Objects
-Adjuster        *   O_FLTK
-AssociationType     O_FLTK
-AssociationFunctor  O_FLTK
-Browser         *   O_FLTK
-fltk::Rectangle *   O_FLTK
-Box             *   O_FLTK
-Button          *   O_FLTK
-Callback        *   O_FLTK
-Color               O_FLTK
-Cursor          *   O_FLTK
-Font            *   O_FLTK
-Image           *   O_FLTK
-LabelType       *   O_FLTK
-const Monitor   *   O_FLTK
-
-Monitor         *   O_FLTK
-NamedStyle      *   O_FLTK
-Menu            *   O_FLTK
-List            *   O_FLTK
-Scrollbar           O_FLTK
-Slider          *   O_FLTK
-const Style     *   O_FLTK
-Style           *   O_FLTK
-const Symbol    *   O_FLTK
-Symbol          *   O_FLTK
-Group           *   O_FLTK
-LabelType       *   O_FLTK
-Valuator        *   O_FLTK
-ValueInput      *   O_FLTK
-ValueOutput     *   O_FLTK
-Widget          *   O_FLTK
-const Widget    *   O_FLTK
-      Window    *   O_FLTK
-const Window    *   O_FLTK
+Adjuster            *   O_FLTK
+AssociationType         O_FLTK
+AssociationType     *   O_FLTK
+AssociationFunctor      O_FLTK
+AssociationFunctor  *   O_FLTK
+Browser             *   O_FLTK
+fltk::Rectangle     *   O_FLTK
+Box                 *   O_FLTK
+Button              *   O_FLTK
+Callback            *   O_FLTK
+Color                   T_INT
+Cursor              *   O_FLTK
+Font                *   O_FLTK
+Image               *   O_FLTK
+LabelType           *   O_FLTK
+const Monitor       *   O_FLTK
+Monitor             *   O_FLTK
+NamedStyle          *   O_FLTK
+Browser::Mark       *   O_FLTK
+Menu                *   O_FLTK
+List                *   O_FLTK
+Scrollbar               O_FLTK
+Slider              *   O_FLTK
+const Style         *   O_FLTK
+Style               *   O_FLTK
+const Symbol        *   O_FLTK
+Symbol              *   O_FLTK
+Group               *   O_FLTK
+LabelType           *   O_FLTK
+Valuator            *   O_FLTK
+ValueInput          *   O_FLTK
+ValueOutput         *   O_FLTK
+Widget              *   O_FLTK
+const Widget        *   O_FLTK
+      Window        *   O_FLTK
+const Window        *   O_FLTK
 
 OUTPUT
 O_FLTK
@@ -65,21 +65,17 @@ O_FLTK
   else
     Perl_croak(aTHX_ \"%s: %s is not of type %s\",
       ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")
+
 /*
- #
- # Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
- #
- # This program is free software; you can redistribute it and/or modify it
- # under the terms of The Artistic License 2.0.  See the LICENSE file
- # included with this distribution or
- # http://www.perlfoundation.org/artistic_license_2_0.  For
- # clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
- #
- # When separated from the distribution, all POD documentation is covered by
- # the Creative Commons Attribution-Share Alike 3.0 License.  See
- # http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
- # clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
- #
- # $Id$
- #
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
+=cut
+
 */

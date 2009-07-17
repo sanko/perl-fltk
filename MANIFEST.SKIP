@@ -100,6 +100,7 @@ xs/~old/.+
 
 left.session
 right.session
+SciTE.session
 
 # Just for me
 .gitattributes
@@ -112,12 +113,11 @@ right.session
 # temp
 Classes.pod
 Compatability.pod
-examples/hello.pl
 examples/helloask.pl
 examples/message.pl
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
-
+examples/tinker.pl
 
 # Tests for stuff I haven't (re)written yet
 t/00000_Basic/00001_use_ok.t
@@ -127,3 +127,4 @@ t/50000_Classes/50000_FLTK_Rectangle/51000_FLTK_Monitor.t
 t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget.t
 t/50000_Classes/50001_FLTK_Rectangle.t
 t/50000_Classes/~50002_FLTK_Style.t
+examples/timer.pl

@@ -4,6 +4,12 @@ MODULE = FLTK               PACKAGE = FLTK::Button
 
 =pod
 
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
 =head1 Description
 
 Buttons generate callbacks when they are clicked by the user. You control
@@ -131,7 +137,7 @@ Button::handle ( EVENT, RECT = NO_INIT )
         C_ARGS: EVENT
     CASE:
         int               EVENT
-        const fltk::Rectangle * RECT
+        fltk::Rectangle * RECT
         C_ARGS: EVENT, *RECT
 
 =for apidoc ||bool|value|VALUE
@@ -184,30 +190,3 @@ Button::default_style ( )
         RETVAL
 
 #endif // ifndef DISABLE_BUTTON
-
-=pod
-
-=head1 Author
-
-Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-CPAN ID: SANKO
-
-=head1 License and Legal
-
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of The Artistic License 2.0.  See the F<LICENSE>
-file included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered
-by the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-=for git $Id$
-
-=cut

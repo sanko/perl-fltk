@@ -4,6 +4,12 @@ MODULE = FLTK               PACKAGE = FLTK::Window
 
 =pod
 
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
 =head1 Description
 
 This widget produces an actual window. This can either be a main window, with
@@ -103,24 +109,27 @@ Window::DESTROY ( )
 
 #endif // #ifdef ENABLE_DESTROY
 
-=for apidoc |||border|bool set
+=for apidoc |||border|set
 
 If C<set> is a true value, then a window border will be set, otherwise the
 window will have neither border nor caption.
 
+=for apidoc ||bool|border|
+
 =cut
 
-void
-Window::border(bool set)
-    ALIAS:
-    CODE:
-        switch (ix) {
-            case 0: THIS->border(set);   break;
-            //case 1: THIS->(set);  break;
-            default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
-        }
+bool
+Window::border( bool set = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->border( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->border( set );
 
-=for apidoc |||borders|FLTK::Rectangle r
+=for apidoc |||borders|rect
 
 C<r> is set to the the size of the borders that will be added around this
 window. This is done by querying the window system. Because it is more
@@ -132,9 +141,9 @@ rectangle around your window, add these values to the window's size.
 =cut
 
 void
-Window::borders(fltk::Rectangle * r)
+Window::borders(fltk::Rectangle * rect)
 
-=for apidoc |||child_of|FLTK::Window parent
+=for apidoc |||child_of|parent
 
 Tell the system that this window will not have an icon, it will dissappear and
 reappear when C<parent> is iconized or shown, and it is forced to always be
@@ -495,11 +504,20 @@ Sets the text displayed below the icon (or in the taskbar). If you don't set
 this it defaults to the L<C<label()>|/"label"> but if that appears to be a
 filename, it defaults to the last portion after the last C</> character.
 
+=for apidoc ||label|iconlable|
+
 =cut
 
-void
-Window::iconlabel( iname )
-    const char * iname
+const char *
+Window::iconlabel( char * iname = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->iconlabel();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->iconlabel( iname );
 
 =for apidoc |||label|name|iname
 
@@ -513,14 +531,19 @@ Sets the window title, which is drawn in the titlebar by the system.
 
 =cut
 
-void
-Window::label( name, iname = "" )
+const char *
+Window::label( char * name = NO_INIT, char * iname = "" )
     CASE: items == 1
-        const char * name
-        C_ARGS: name
+        CODE:
+            RETVAL = THIS->label();
+        OUTPUT:
+            RETVAL
     CASE: items == 2
-        const char * name
-        const char * iname
+        CODE:
+            THIS->label( name );
+    CASE: items == 3
+        CODE:
+            THIS->label( name, iname );
 
 =for apidoc |||make_exec_return|return_value
 
@@ -727,30 +750,3 @@ Window::next( )
         RETVAL
 
 #endif // ifndef DISABLE_WINDOW
-
-=pod
-
-=head1 Author
-
-Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-CPAN ID: SANKO
-
-=head1 License and Legal
-
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of The Artistic License 2.0.  See the F<LICENSE>
-file included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered
-by the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-=for git $Id$
-
-=cut

@@ -4,6 +4,12 @@ MODULE = FLTK               PACKAGE = FLTK::Widget
 
 =pod
 
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
 =head1 Description
 
 The base class for all widgets in FLTK. The basic Widget draws an empty
@@ -1538,7 +1544,7 @@ symbols. C<FLTK::NORMAL_LABEL>.
 
 LabelType *
 Widget::labeltype( LabelType * type = NO_INIT )
-    CASE: items = 1
+    CASE: items == 1
         CODE:
             RETVAL = THIS->labeltype();
         OUTPUT:
@@ -1781,7 +1787,7 @@ Widget::scrollbar_align ( unsigned char value = NO_INIT )
     ALIAS:
         scrollbar_width = 1
 
-#ifndef DISABLE_WIDGET_ASSOCIATION
+#ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 =for apidoc Hx|||add|AssociationType|data
 
@@ -1798,7 +1804,7 @@ Widget::add ( AssociationType ATYPE, SV * DATA = NO_INIT )
     CODE:
         THIS->add( ATYPE, (void *) DATA );
 
-#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+#endif // ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 =for apidoc ||bool|set|
 
@@ -1816,7 +1822,7 @@ type.
 
 =cut
 
-#ifndef DISABLE_WIDGET_ASSOCIATION
+#ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 bool
 Widget::set (AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
@@ -1829,16 +1835,16 @@ Widget::set (AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
             CODE:
                 THIS->set( ATYPE, (void *) DATA )
 
-#else  // ifndef DISABLE_WIDGET_ASSOCIATION
+#else  // ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 bool
 Widget::set ( )
     OUTPUT:
         RETVAL
 
-#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+#endif // ifndef DISABLE_ASSOCIATIONFUNCTOR
 
-#ifndef DISABLE_WIDGET_ASSOCIATION
+#ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 =for apidoc Hx||data|get|AssociationType
 
@@ -1893,7 +1899,7 @@ Widget::remove( AssociationType at, SV * data )
     ALIAS:
         find = 1
 
-#endif // ifndef DISABLE_WIDGET_ASSOCIATION
+#endif // ifndef DISABLE_ASSOCIATIONFUNCTOR
 
     # Leave the documentation in FLTK/Widget.pod but...
 
@@ -2656,31 +2662,3 @@ Widget::baseline_y ( )
 #endif
 
 #endif // ifndef DISABLE_WIDGET
-
-
-=pod
-
-=head1 Author
-
-Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-CPAN ID: SANKO
-
-=head1 License and Legal
-
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of The Artistic License 2.0.  See the F<LICENSE>
-file included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered
-by the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-=for git $Id$
-
-=cut
