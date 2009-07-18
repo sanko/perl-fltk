@@ -43,6 +43,16 @@ C<in_main_thread()>
 
 =back
 
+=item Anti-perl-isms
+
+=over
+
+=item * L<C<Color::split_color( color, r, g, b )>|FLTK::Color/"split_color">
+sets the values of C<r,g,b> which is very un-perl. I'd rather return an AV*
+with the values of C<r,g,b>.
+
+=back
+
 =back
 
 =head1 Long term goals
@@ -53,7 +63,7 @@ C<in_main_thread()>
 
 =back
 
-=head1 Production Ready Perl 6
+=head1 Production Ready Perl 6 (read 'One of these days')
 
 =over
 

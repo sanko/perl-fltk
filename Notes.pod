@@ -83,6 +83,25 @@ the values in FLTK manually.
 I'm still thinking about this choice, so don't get too angry if your life is
 incomplete without C<arg(0, '-geometry blah', 0)> support.
 
+=item Anti-perl-isms
+
+The Feather Light Toolkit's API is so C++ oriented that it makes me itch.
+Here, I'll list the places where things moved too far from what one might
+expect in a Perl module and I made a decision which strayes from the
+underlying C++ API.
+
+=over
+
+=item L<C<FLTK::parsecolor ( COLOR, [ LENGTH ] )>|FLTK::Color/parsecolor>
+
+The C++ function takes two parameters:
+L<C<parsecolor( char * name, unsigned length )>|FLTK::Color/"parsecolor">
+...but this is Perl and forcing you to call
+L<C<parsecolor( $mycolor, length($mycolor) )>|FLTK::Color/"parsecolor"> is
+silly.
+
+=back
+
 =back
 
 =head3 Backward Compatibility

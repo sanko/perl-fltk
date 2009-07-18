@@ -1,4 +1,4 @@
-#!perl -I../../blib/lib -I../../blib/arch
+#!perl -I../../blib/lib -I../../blib/arch -Iinc
 # Color typedef tests
 #
 use strict;
@@ -20,7 +20,6 @@ $SIG{__WARN__} = (
         }
     : sub { }
 );
-
 {
     my %named_colors = (
                   RED            => {in => &RED,            out => 88},
@@ -231,7 +230,8 @@ $SIG{__WARN__} = (
     is(lerp(BLACK, WHITE, 1), WHITE, 'lerp(BLACK, WHITE, 1) == WHITE');
 }
 {    # Grays out the color
-    is(inactive(color(RED)), -8421632, 'inactive(color(RED)) == -8421632');
+    is(inactive(color(RED)), 2132746496,
+        'inactive(color(RED)) == 2132746496');
     is(inactive(color(RED), color(BLUE)),
         -1878510848, 'inactive(color(RED), color(BLUE)) == -1878510848');
     is(inactive(color(RED), color(RED)),
@@ -286,13 +286,9 @@ $SIG{__WARN__} = (
         GREEN, 'nearest_index(color(GREEN)) == GREEN');
     is(nearest_index(YELLOW), YELLOW, 'nearest_index(YELLOW) == YELLOW');
 }
-
 {
-
     warn 'TODO: color_chooser( ... )';
-
-    }
-
+}
 __END__
 Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
 

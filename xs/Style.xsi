@@ -303,6 +303,8 @@ NO_LABEL ()
         ENGRAVED_LABEL = 4
         EMBOSSED_LABEL = 5
 
+MODULE = FLTK               PACKAGE = FLTK::Style
+
 =for apidoc ||bool|dynamic|
 
 True if this Style is unique to the Widget that owns it, and is not shared

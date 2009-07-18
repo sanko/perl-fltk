@@ -136,6 +136,7 @@ INCLUDE: Adjuster.xsi
 INCLUDE: AssociationFunctor.xsi
 INCLUDE: AssociationType.xsi
 INCLUDE: Button.xsi
+INCLUDE: Color.xsi
 INCLUDE: Group.xsi
 INCLUDE: Rectangle.xsi
 INCLUDE: Slider.xsi

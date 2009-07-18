@@ -1,0 +1,167 @@
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::Basics - An introduction
+
+=head1 Description
+
+This chapter will show you how to write a very simple FLTK program.
+
+=head1 A sample FLTK program
+
+    use strict;
+    use warnings;
+    use FLTK;
+
+    #
+    my $window = FLTK::Window->new(300, 180);
+    $window->begin();
+    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
+    $box->box(UP_BOX);
+    $box->labelfont(HELVETICA_BOLD_ITALIC);
+    $box->labelsize(36);
+    $box->labeltype(SHADOW_LABEL);
+    $window->end();
+    $window->show();
+    exit run();
+
+The resulting program will display a window. You can quit the program by
+closing the window or pressing the C<ESC>ape key.
+
+=head2 Using FLTK
+
+The basic way to C<use FLTK> is simply:
+
+    use FLTK;
+
+Each widget in FLTK is represented by it's own class. This sample program
+uses a L<Window|FLTK::Window> and L<Widgets|FLTK::Widget>.
+
+In addition several non-class functions and symbols can also be imported, they
+are grouped into tags with lower-case names. You should only include the ones
+you need. In this case C<run> is included automatically as it is in the
+C<:default> tag. The C<:default> tag contans most functions needed by the main
+part of a program to get FLTK to run.
+
+=head2 Creating the Widgets
+
+After the C<use> statement, the program then creates a window:
+
+    my $window = FLTK::Window->new(300, 180);
+
+It then calls L<C<begin>|FLTK::Window/"begin"> on it, which indicates that all
+widgets constructed after this should be "children" of this window:
+
+    $window->begin();
+
+It then creates a box with the "Hello, World!" string in it, this new widget
+is made a "child" of the window we just created:
+
+    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
+
+For most widgets the arguments to the constructor are:
+
+    FLTK::Widget->new(x, y, width, height, label);
+
+C<x> and C<y> are the location of the upper-left corner of the widget,
+measured in pixels. For L<windows|FLTK::Window> this is measured from the
+upper-left corner of the screen, for L<widgets|FLTK::Widget> it is measured
+from the upper-left corner of the parent window.
+
+C<width> and C<height> are the size of the widget.
+
+C<label> is a pointer to a character string to label the widget with or
+C<undef>. If not given it defaults to C<undef>. The string is C<not> copied,
+FLTK assummes it is static. For example, this:
+
+    my $label = 'Testing';
+    FLTK::Button->new( $x, $y, $w, $h, $label );
+    $label = 'Changed';
+
+...would create a button with the label 'Testing' but on the next redraw, the
+button's label would read 'Changed'. This is true of almost all interfaces in
+FLTK that take strings and greatly speeds up FLTK. (see
+L<C<copy_label()>|FLTK::Widget/copy_label()> for a method that has more
+traditional behavior).
+
+=head2 Get/Set Methods
+
+Next we set several "attributes" of the box:
+
+    $box->box(UP_BOX);
+    $box->labelfont(HELVETICA_BOLD_ITALIC);
+    $box->labelsize(36);
+    $box->labeltype(SHADOW_LABEL);
+
+C<$box-E<gt>box(UP_BOX)> sets the type of box the box widget draws, changing
+it from the default of C<FLTK::DOWN_BOX>. In our "Hello, World!" example we
+use C<FLTK::UP_BOX>, which means that a raised button border will be drawn
+around the widget.
+
+You can examine the boxtype in by doing C<$box->box()>. FLTK uses method name
+overloading to make short names for get/set methods. The underlying libraries
+use mutators so I brought them along for the ride.
+
+Almost all of these set/get pairs are very fast and short inline functions and
+thus very efficient.  However, I<the "set" methods do not call
+L<C<redraw()>|FLTK::Widget/"redraw">>, you have to call it yourself.  This
+greatly reduces code size and execution time.  The only common exception is
+L<C<value()>|FLTK::Widget/"value">, this does
+L<C<redraw()>|FLTK::Widget/"redraw"> if necessary.
+
+=head2 Begin/End of groups and windows
+
+Then we indicate we are done adding widgets to the window:
+
+    $window->end();
+
+The method L<C<Group::end()>|FLTK::Group/"end"> restores the "current group"
+to the parent of itself, in this case it is set to null because the window has
+no parent.  You may also find it useful to call
+L<C<FLTK::Group::current(0)>|FLTK::Group/"current"> to turn this off
+completely.
+
+=head2 Showing the Window
+
+Then we cause the window to appear on the screen:
+
+    $window->show();
+
+On some systems the window does not I<actually> appear until
+L<C<FLTK::run()>|FLTK/"run"> is called, which flushes the cached instructions
+to the window server).
+
+=head2 The Main Event Loop
+
+    exit run();
+
+This will repeatedly wait for and then process events from the user.
+L<C<FLTK::run()>|FLTK/"run"> does not return until all of the windows under
+FLTK control are closed (either by the user or your program).
+
+When the user attempts to close the window, the
+L<callback|FLTK::Widget/"callback"> for the window is called. If you don't
+change it, the callback will remove the window from the screen.
+
+You can replace this callback with your own code, so you can prevent the
+window from closing, or pop up a confirmation, or create another window, or
+you can call C<exit> if you want to exit when the user closes the "main"
+window even if other windows are still open.
+
+FLTK was designed to not take over the main event loop. Instead a program can
+call L<C<FLTK::wait()>|FLTK/"wait">, which will pause until "something
+happens" and then return. A program can call L<C<FLTK::wait()>|FLTK/"wait">
+repeatedly or mix it with other calculations. You can do this if there are no
+windows displayed. The L<C<FLTK::wait()>|FLTK/"wait"> method is equivalent to:
+
+    FLTK::wait() while FLTK::first_window();
+    return 0;
+
+=cut

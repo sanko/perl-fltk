@@ -85,7 +85,7 @@ examples/pack.pl
 
 xs/C\+P\.xsi
 
-.+\.pod
+~pod\.*.pod
 
 xs/FLTK_.+
 xs/fltk/.+

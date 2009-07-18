@@ -1,8 +1,8 @@
-#!perl -I../blib/lib -I../blib/arch -I../blib/arch/FLTK/FLTK
+#!perl
 package FLTK;
 use strict;
 use warnings;
-our $VERSION_BASE = 1; our $FLTK_SVN = 6793; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf('%d.%05d' . ($UNSTABLE_RELEASE ? '_%03d' : ''), $VERSION_BASE, $FLTK_SVN, $UNSTABLE_RELEASE);
+our $VERSION_BASE = 1; our $UNSTABLE_RELEASE = 2; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
 use XSLoader;
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
@@ -13,8 +13,7 @@ use Exporter qw[import];
             alert ask beep beep_on_dialog choice choice_alert input message
             password
             ok yes no cancel message_window_timeout message_window_scrollable
-            message_window_label message_style icon_style
-            ]
+            message_window_label message_style icon_style ]
     ],
     box => [
         qw[ UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
@@ -35,21 +34,18 @@ use Exporter qw[import];
             WINDOWS_BLUE
             color   parsecolor  lerp    inactive    contrast split_color
             set_color_index get_color_index set_background nearest_index
-            color_chooser
-            ]
+            color_chooser ]
     ],
     cursor => [
         qw[ CURSOR_DEFAULT  CURSOR_ARROW    CURSOR_CROSS    CURSOR_WAIT
             CURSOR_INSERT   CURSOR_HAND     CURSOR_HELP     CURSOR_MOVE
             CURSOR_NS       CURSOR_WE       CURSOR_NWSE     CURSOR_NESW
-            CURSOR_NO       CURSOR_NONE
-            ]
+            CURSOR_NO       CURSOR_NONE ]
     ],
     damage => [
         qw[ DAMAGE_CHILD DAMAGE_CHILD_LABEL DAMAGE_EXPOSE DAMAGE_ALL
             DAMAGE_VALUE DAMAGE_PUSHED      DAMAGE_SCROLL DAMAGE_OVERLAY
-            DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS
-            ]
+            DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS ]
     ],
     default => [qw[run message alert ask input password %FLTK]],
     draw    => [
@@ -57,8 +53,7 @@ use Exporter qw[import];
             setcolor
             addvertex
             drawtext
-            fillstrokepath fillrect
-            ]
+            fillstrokepath fillrect ]
     ],
     flags => [
         qw[ NO_FLAGS
@@ -95,8 +90,7 @@ use Exporter qw[import];
             flush
             run wait
             add_timeout repeat_timeout
-            get_time_secs
-            ]
+            get_time_secs ]
     ],
     visual => [
         qw[ RGB_COLOR INDEXED_COLOR SINGLE_BUFFER DOUBLE_BUFFER ACCUM_BUFFER
@@ -104,23 +98,17 @@ use Exporter qw[import];
             STEREO
             glVisual own_colormap visual ]
     ],
-    widget => [
-        qw[
-            RESERVED_TYPE TOGGLE RADIO GROUP_TYPE WINDOW_TYPE
-            ]
-    ],
-    when => [
-        qw[
-            WHEN_CHANGED WHEN_RELEASE WHEN_RELEASE_ALWAYS WHEN_ENTER_KEY
-            WHEN_ENTER_KEY_ALWAYS WHEN_ENTER_KEY_CHANGED WHEN_NOT_CHANGED
-            ]
+    widget => [qw[ RESERVED_TYPE TOGGLE RADIO GROUP_TYPE WINDOW_TYPE ]],
+    when   => [
+        qw[ WHEN_CHANGED WHEN_RELEASE WHEN_RELEASE_ALWAYS WHEN_ENTER_KEY
+            WHEN_ENTER_KEY_ALWAYS WHEN_ENTER_KEY_CHANGED WHEN_NOT_CHANGED ]
     ]
 );
 @EXPORT_OK = sort map {@$_} values %EXPORT_TAGS;
 $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 @{$EXPORT_TAGS{'style'}}
     = sort map { @{$EXPORT_TAGS{$_}} } qw[box font label];
-@EXPORT # Export these tags (if prepended w/ ':') or functions by default
+@EXPORT    # Export these tags (if prepended w/ ':') or functions by default
     = sort map { m[^:(.+)] ? @{$EXPORT_TAGS{$1}} : $_ } qw[:style :default];
 
 #
@@ -233,9 +221,7 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::ValueInput::ISA  = qw[FLTK::Valuator];
 @FLTK::ValueOutput::ISA = qw[FLTK::Valuator];
 
-# =pod
-
-
+#=pod
 #
 ################################################ FLTK::Rectangle (top level) #
 @FLTK::Monitor::ISA = @FLTK::Widget::ISA = qw[FLTK::Rectangle];
@@ -281,14 +267,14 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::FloatInput::ISA = qw[FLTK::NumericInput];
 ########################################################### FLTK::FloatInput #
 @FLTK::IntInput::ISA = qw[FLTK::FloatInput];
+
 # Depreciated Widgets ########################################################
 ############################################################# FLTK::Valuator #
 @FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
 
-=blah
+=pod
 =cut
-
 sub message ($;@) {    # XXX - translate to C
     my $l = sprintf(shift, @_);
     $l =~ s[%][\%\%]g;

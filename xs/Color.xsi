@@ -1,0 +1,506 @@
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for git $Id$ for got=
+
+=cut
+
+#ifndef DISABLE_BROWSER
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=pod
+
+=head1 Description
+
+L<FLTK::Color|FLTK::Color> is a typedef for a 32-bit integer containing r,g,b
+bytes and an "index" in the lowest byte (the I<first> byte on a
+little-endian machine such as an x86).  For instance C<0xFF008000> is 255 red,
+zero green, and 128 blue. If rgb are not zero then the low byte is ignored, or
+may be treated as "alpha" by some code.
+
+If the rgb is zero, the N is the color "index". This index is used to look up
+an L<FLTK::Color|FLTK::Color> in an internal table of 255 colors shown here.
+All the indexed colors may be changed by using
+L<C<set_color_index()>|/"set_color_index">.  However FLTK uses the ones
+between 32 and 255 and assummes they are not changed from their default
+values.
+
+A Color of zero (L<C<FLTK::NO_COLOR>|FLTK::Color/"NO_COLOR">) will draw black
+but is ambiguous. It is returned as an error value or to indicate portions of
+a L<Style|FLTK::Style> that should be inherited, and it is also used as the
+default label color for everything so that changing color zero can be used by
+the C<-fg> switch. You should use L<C<FLTK::BLACK>|FLTK::Color/"BLACK"> (56)
+to get black.
+
+=head1 ~Functions
+
+Symbolic names for some of the indexed colors.
+
+The 24-entry "gray ramp" is modified by
+L<C<FLTK::set_background()>|FLTK/"set_background"> so that the color
+C<FLTK::GRAY75> is the background color, and the others are a nice range from
+black to a lighter version of the gray. These are used to draw box edges. The
+gray levels are chosen to be evenly spaced, listed here is the actual 8-bit
+and decimal gray level assigned by default.  Also listed here is the letter
+used for L<FLTK::FrameBox|FLTK::FrameBox> and the old fltk1.1 names used for
+these levels.
+
+The remiander of the colormap is a C<5x8x5> color cube. This cube is used to
+dither images on 8-bit screens X colormaps to reduce the number of colors
+used.
+
+=cut
+
+#include <fltk/color.h>
+
+=for apidoc t[color]Ue||int|NO_COLOR|
+
+Black, empty place holder in Style
+
+=for apidoc t[color]Ue||int|FREE_COLOR|
+
+Starting from index 16 is the FREE_COLOR area
+
+=for apidoc t[color]Ue||int|NUM_FREE_COLOR|
+
+Number of free color slots starting from index FREE_COLOR
+
+=for apidoc t[color]Ue||int|GRAY00|
+
+hex=00, dec=.00, framebox=A, fltk1 = GRAY0, GRAY_RAMP
+
+=for apidoc t[color]Ue||int|GRAY05|
+
+hex=0d, dec=.05, framebox=B
+
+=for apidoc t[color]Ue||int|GRAY10|
+
+hex=1a, dec=.10, framebox=C
+
+=for apidoc t[color]Ue||int|GRAY15|
+
+hex=27, dec=.15, framebox=D
+
+=for apidoc t[color]Ue||int|GRAY20|
+
+hex=34, dec=.20, framebox=E
+
+=for apidoc t[color]Ue||int|GRAY25|
+
+hex=41, dec=.25, framebox=F
+
+=for apidoc t[color]Ue||int|GRAY30|
+
+hex=4f, dec=.31, framebox=G
+
+=for apidoc t[color]Ue||int|GRAY33|
+
+hex=5c, dec=.36, framebox=H, fltk1 = DARK3
+
+=for apidoc t[color]Ue||int|GRAY35|
+
+hex=69, dec=.41, framebox=I
+
+=for apidoc t[color]Ue||int|GRAY40|
+
+hex=76, dec=.46, framebox=J (18% gray card)
+
+=for apidoc t[color]Ue||int|GRAY45|
+
+hex=83, dec=.51, framebox=K
+
+=for apidoc t[color]Ue||int|GRAY50|
+
+hex=90, dec=.56, framebox=L
+
+=for apidoc t[color]Ue||int|GRAY55|
+
+hex=9e, dec=.62, framebox=M
+
+=for apidoc t[color]Ue||int|GRAY60|
+
+hex=ab, dec=.67, framebox=N, fltk1 = DARK2
+
+=for apidoc t[color]Ue||int|GRAY65|
+
+hex=b8, dec=.72, framebox=O
+
+=for apidoc t[color]Ue||int|GRAY66|
+
+hex=c5, dec=.77, framebox=P, fltk1 = DARK1, INACTIVE_COLOR
+
+=for apidoc t[color]Ue||int|GRAY70|
+
+hex=d2, dec=.82, framebox=Q
+
+=for apidoc t[color]Ue||int|GRAY75|
+
+hex=e0, dec=.88, framebox=R, fltk1 = GRAY, SELECTION_COLOR
+
+=for apidoc t[color]Ue||int|GRAY80|
+
+hex=e5, dec=.90, framebox=S
+
+=for apidoc t[color]Ue||int|GRAY85|
+
+hex=ea, dec=.92, framebox=T, fltk1 = LIGHT1
+
+=for apidoc t[color]Ue||int|GRAY90|
+
+hex=f4, dec=.96, framebox=V, fltk1 = LIGHT2
+
+=for apidoc t[color]Ue||int|GRAY95|
+
+hex=f9, dec=.98, framebox=W
+
+=for apidoc t[color]Ue||int|GRAY99|
+
+hex=ff, dec=1.0, framebox=X, fltk1 = LIGHT3
+
+=for apidoc t[color]Ue||int|BLACK|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|RED|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|GREEN|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|YELLOW|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|BLUE|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|MAGENTA|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|CYAN|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|WHITE|
+
+Corner of color cube
+
+=for apidoc t[color]Ue||int|DARK_RED|
+
+=for apidoc t[color]Ue||int|DARK_GREEN|
+
+=for apidoc t[color]Ue||int|DARK_YELLOW|
+
+=for apidoc t[color]Ue||int|DARK_BLUE|
+
+=for apidoc t[color]Ue||int|DARK_MAGENTA|
+
+=for apidoc t[color]Ue||int|DARK_CYAN|
+
+=for apidoc t[color]Ue||int|WINDOWS_BLUE|
+
+Default selection_color
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+NO_COLOR ( )
+    CODE:
+        switch ( ix ) {
+            case  0: RETVAL = NO_COLOR; break;
+            case  1: RETVAL = FREE_COLOR; break;
+            case  2: RETVAL = NUM_FREE_COLOR; break;
+            case  3: RETVAL = GRAY00; break;
+            case  4: RETVAL = GRAY05; break;
+            case  5: RETVAL = GRAY10; break;
+            case  6: RETVAL = GRAY15; break;
+            case  7: RETVAL = GRAY20; break;
+            case  8: RETVAL = GRAY25; break;
+            case  9: RETVAL = GRAY30; break;
+            case 10: RETVAL = GRAY33; break;
+            case 11: RETVAL = GRAY35; break;
+            case 12: RETVAL = GRAY40; break;
+            case 13: RETVAL = GRAY45; break;
+            case 14: RETVAL = GRAY50; break;
+            case 15: RETVAL = GRAY55; break;
+            case 16: RETVAL = GRAY60; break;
+            case 17: RETVAL = GRAY65; break;
+            case 18: RETVAL = GRAY66; break;
+            case 19: RETVAL = GRAY70; break;
+            case 20: RETVAL = GRAY75; break;
+            case 21: RETVAL = GRAY80; break;
+            case 22: RETVAL = GRAY85; break;
+            case 23: RETVAL = GRAY90; break;
+            case 24: RETVAL = GRAY95; break;
+            case 25: RETVAL = GRAY99; break;
+            case 26: RETVAL = BLACK; break;
+            case 27: RETVAL = RED; break;
+            case 28: RETVAL = GREEN; break;
+            case 29: RETVAL = YELLOW; break;
+            case 30: RETVAL = BLUE; break;
+            case 31: RETVAL = MAGENTA; break;
+            case 32: RETVAL = CYAN; break;
+            case 33: RETVAL = WHITE; break;
+            case 34: RETVAL = DARK_RED; break;
+            case 35: RETVAL = DARK_GREEN; break;
+            case 36: RETVAL = DARK_YELLOW; break;
+            case 37: RETVAL = DARK_BLUE; break;
+            case 38: RETVAL = DARK_MAGENTA; break;
+            case 39: RETVAL = DARK_CYAN; break;
+            case 40: RETVAL = WINDOWS_BLUE; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+            FREE_COLOR = 1
+        NUM_FREE_COLOR = 2
+                GRAY00 = 3
+                GRAY05 = 4
+                GRAY10 = 5
+                GRAY15 = 6
+                GRAY20 = 7
+                GRAY25 = 8
+                GRAY30 = 9
+                GRAY33 = 10
+                GRAY35 = 11
+                GRAY40 = 12
+                GRAY45 = 13
+                GRAY50 = 14
+                GRAY55 = 15
+                GRAY60 = 16
+                GRAY65 = 17
+                GRAY66 = 18
+                GRAY70 = 19
+                GRAY75 = 20
+                GRAY80 = 21
+                GRAY85 = 22
+                GRAY90 = 23
+                GRAY95 = 24
+                GRAY99 = 25
+                 BLACK = 26
+                   RED = 27
+                 GREEN = 28
+                YELLOW = 29
+                  BLUE = 30
+               MAGENTA = 31
+                  CYAN = 32
+                 WHITE = 33
+              DARK_RED = 34
+            DARK_GREEN = 35
+           DARK_YELLOW = 36
+             DARK_BLUE = 37
+          DARK_MAGENTA = 38
+             DARK_CYAN = 39
+          WINDOWS_BLUE = 40
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc t[color]||Color|color|name
+
+Turn a string into a color. If C<name> is C<undef>, this returns
+L<C<NO_COLOR>|/"NO_COLOR">. Otherwise it returns
+L<C<FLTK::parsecolor(name, strlen(name))>|FLTK/"parsecolor">.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+color ( name = "", ... )
+    CASE: items == 1 || ! items
+        const char * name
+    CASE: items == 3
+        int r = (int)SvIV(ST(0));
+        int g = (int)SvIV(ST(1));
+        int b = (int)SvIV(ST(2));
+        CODE:
+            RETVAL = color( r, g, b );
+        OUTPUT:
+            RETVAL
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||color|parsecolor|name|n
+
+Turn the first C<n> bytes of C<name> into an FLTK color. This allows you to
+parse a color out of the middle of a string.
+
+Recognized values are:
+
+=over
+
+=item * "" turns into NO_COLOR
+
+=item * "0"-"99" decimal fltk color number, only works for indexed color range
+
+=item * "0xnnn" hex value of any fltk color number
+
+=item * "rgb" or "#rgb" three hex digits for rgb
+
+=item * "rrggbb" or "#rrggbb" 2 hex digits for each of rgb
+
+=item * "rrggbbaa" or "#rrggbbaa" fltk color number in hex
+
+=item * "rrrgggbbb" or "#rrrgggbbb" 3 hex digits for each of rgb
+
+=item * "rrrrggggbbbb" or "#rrrrggggbbbb" 4 hex digits for each of rgb
+
+=item * 17 "web safe colors" as defined by CSS 2.1
+
+=item * If FLTK is compiled to use X11, then XParseColor() is tried
+
+=item * all other strings return NO_COLOR.
+
+=back
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+parsecolor ( char * name = "", unsigned length = strlen(name) )
+    OUTPUT:
+        RETVAL
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||color|lerp|color1|color2|weight
+
+Return C<(1-weight)*color1 + weight*color2>. C<weight> is clamped to the 0-1
+range before use.
+
+=for hackers Found in F<src/setcolor.cxx>
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+lerp ( Color color1, Color color2, float weight )
+
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||color|inactive|fore|back
+
+Same as L<C<lerp(fg, bg, .5)>|/"lerp">, it grays out the color.
+
+=for apidoc ||color|inactive|fore|
+
+Same as L<C<lerp(fg, getbgcolor(), .5)>|/"lerp">. This is for
+back-compatability only?
+
+=for hackers Found in F<src/setcolor.cxx>
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+inactive ( Color fore, Color back = NO_INIT )
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||Color|contrast|fg|bg
+
+Returns C<fg> if fltk decides it can be seen well when drawn against a C<bg>.
+Otherwise it returns either L<C<FLTK::BLACK>|FLTK/"BLACK"> or
+L<C<fltk::WHITE>|FLTK/"WHITE">.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+contrast ( Color fore, Color back )
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc |||split_color|color|r|g|b
+
+Set C<r,g,b> to the 8-bit components of this color. If it is an indexed color
+they are looked up in the table, otherwise they are simply copied out of the
+color number.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+split_color ( Color color, unsigned char r, unsigned char g, unsigned char b )
+    OUTPUT:
+        r
+        g
+        b
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc |||set_color_index|index|color
+
+Set one of the indexed colors to the given rgb color. \C<index> must be in the
+range 0-255, and C<color> must be a non-indexed rgb color.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+set_color_index ( Color index, Color color )
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||get_color_index|color
+
+Return the rgb form of C<color>. If it is an indexed color that entry is
+returned. If it is an rgb color it is returned unchanged.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+get_color_index ( Color color )
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||set_background|color
+
+C<FLTK::GRAY75> is replaced with the passed color, and all the other
+C<FLTK::GRAY*> colors are replaced with a color ramp (or sometimes a straight
+line) so that using them for highlighted edges of raised buttons looks
+correct.
+
+=for hackers Found in F<src/Style.cxx>
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+set_background ( Color COLOR )
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
+=for apidoc ||Color|nearest_index|color
+
+Find an indexed color in the range 56-127 that is closest to this color. If
+this is an indexed color it is returned unchanged.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Color
+nearest_index ( Color COLOR )
+
+#endif // #ifndef DISABLE_BROWSER
