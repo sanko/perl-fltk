@@ -83,6 +83,14 @@ the values in FLTK manually.
 I'm still thinking about this choice, so don't get too angry if your life is
 incomplete without C<arg(0, '-geometry blah', 0)> support.
 
+=item L<FLTK::ask|FLTK::ask> functions do not do sprintf-like stuff.
+
+Working around XSUB's inability to take true variable argument lists isn't
+worth the time nor effort.
+
+=item L<C<choice(...)>|FLTK::ask/choice>'s choices (<_<) are shown in the
+correct order; from left to right.
+
 =item Anti-perl-isms
 
 The Feather Light Toolkit's API is so C++ oriented that it makes me itch.

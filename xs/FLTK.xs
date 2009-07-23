@@ -2,7 +2,10 @@
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
 
+=for abstract Perl Interface to the Feather Light Toolkit
+
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+CPANID: SANKO
 
 =for git $Id$ for got=
 
@@ -20,9 +23,9 @@ using namespace fltk;
 
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
 //#define ENABLE_DESTROY    // Introduce pointless bugs :D
-//#define ENABLE_DEPRECATED // Depreciated widgets, and other buggy junk
-#define DISABLE_ASSOCIATIONFUNCTOR // Requires subclass
-#define DISABLE_ASSOCIATIONTYPE    // Requires subclass
+#define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
+#define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
+#define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 
 #define USE_IMAGE 0
 #define USE_GL    0
@@ -30,12 +33,9 @@ using namespace fltk;
 #define USE_CAIRO 0
 #define USE_X     0 // TODO
 
-=for apidoc H|||_cb_w|fltk::Widget|CODE
-
-This is the function called by FLTK whenever callbacks are triggered. See
-L<FLTK::Widget::callback()>.
-
-=cut
+#ifndef ENABLE_DEPRECATED
+#define DISABLE_ADJUSTER
+#endif // #ifndef ENABLE_DEPRECATED
 
 #ifndef SvWEAKREF           // Callbacks use weak references to the widget
 #undef  ENABLE_CALLBACKS    // TODO: Explain this better :)
@@ -86,7 +86,7 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #endif // ifdef ENABLE_CALLBACKS
 }
 
-=for apidoc H|||_cb_w|WIDGET|(void*)CODE
+=for apidoc H|||_cb|(void*)CODE
 
 This is the generic callback for just about everything. It expects a single
 C<(void*) CODE> parameter which should be an AV* holding data that looks a
@@ -124,6 +124,8 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 
 /* Alright, let's get things started, shall we? */
 
+
+
 MODULE = FLTK               PACKAGE = FLTK
 
     # Functions (Exported)
@@ -135,19 +137,25 @@ INCLUDE: run.xsi
 INCLUDE: Adjuster.xsi
 INCLUDE: AssociationFunctor.xsi
 INCLUDE: AssociationType.xsi
-INCLUDE: Button.xsi
-INCLUDE: Color.xsi
-INCLUDE: Group.xsi
-INCLUDE: Rectangle.xsi
-INCLUDE: Slider.xsi
-INCLUDE: Style.xsi
-INCLUDE: Valuator.xsi
-INCLUDE: ValueInput.xsi
-INCLUDE: ValueOutput.xsi
-INCLUDE: Widget.xsi
-INCLUDE: Window.xsi
+INCLUDE: AlignGroup.xsi
+INCLUDE: AnsiWidget.xsi
+INCLUDE: ask.xsi
 
-    INCLUDE: ~old/Browser.xsi
+
+#INCLUDE: Button.xsi
+#INCLUDE: Color.xsi
+#INCLUDE: ColorChooser.xsi
+#INCLUDE: Group.xsi
+#INCLUDE: Rectangle.xsi
+#INCLUDE: Slider.xsi
+#INCLUDE: Style.xsi
+#INCLUDE: Valuator.xsi
+#INCLUDE: ValueInput.xsi
+#INCLUDE: ValueOutput.xsi
+#INCLUDE: Widget.xsi
+#INCLUDE: Window.xsi
+
+    #INCLUDE: ~old/Browser.xsi
     #INCLUDE: ~old/CheckButton.xsi
     #INCLUDE: ~old/Choice.xsi
     #INCLUDE: ~old/Clock.xsi
@@ -199,3 +207,26 @@ BOOT:
 #endif // #ifndef SvWEAKREF
     );
 #endif
+
+=head1 Testing
+
+This is all in a section called Testing.
+
+=head1 Synopsis
+
+    use strict;
+    use warnings;
+    use FLTK;
+
+    my $window = FLTK::Window->new(300, 180);
+    $window->begin();
+    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
+    $box->box(UP_BOX);
+    $box->labelfont(HELVETICA_BOLD_ITALIC);
+    $box->labelsize(36);
+    $box->labeltype(SHADOW_LABEL);
+    $window->end();
+    $window->show();
+    exit run();
+
+=cut

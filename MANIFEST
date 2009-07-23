@@ -14,10 +14,14 @@ t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget/52201_Button.t
 t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget/52300_FLTK_Group/52351_FLTK_Window.t
 TODO.pod
 xs/Adjuster.xsi
+xs/AlignGroup.xsi
+xs/AnsiWidget.xsi
+xs/ask.xsi
 xs/AssociationFunctor.xsi
 xs/AssociationType.xsi
 xs/Button.xsi
 xs/Color.xsi
+xs/ColorChooser.xsi
 xs/draw.xsi
 xs/FLTK.xs
 xs/Group.xsi

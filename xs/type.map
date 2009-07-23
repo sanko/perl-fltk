@@ -22,12 +22,17 @@ AssociationType         O_FLTK
 AssociationType     *   O_FLTK
 AssociationFunctor      O_FLTK
 AssociationFunctor  *   O_FLTK
+AlignGroup          *   O_FLTK
+AnsiWidget          *   O_FLTK
+
+
 Browser             *   O_FLTK
 fltk::Rectangle     *   O_FLTK
 Box                 *   O_FLTK
 Button              *   O_FLTK
 Callback            *   O_FLTK
 Color                   T_INT
+ColorChooser        *   O_FLTK
 Cursor              *   O_FLTK
 Font                *   O_FLTK
 Image               *   O_FLTK

@@ -1,0 +1,464 @@
+#ifndef DISABLE_ASK
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Implementation of message, ask, choice, and input functions
+
+=for git $Id$
+
+=head1 Description
+
+Implementation of L<C<FLTK::message()>|/"message">,
+L<C<FLTK::ask(...)>|/"ask">, L<C<FLTK::choice(...)>|/"choice">,
+L<C<FLTK::input()>|/"input">.
+
+=cut
+
+#include <fltk/ask.h>
+
+=for apidoc t[ask]e||int|BEEP_DEFAULT|
+
+
+
+=for apidoc t[ask]e||int|BEEP_MESSAGE|
+
+
+
+=for apidoc t[ask]e||int|BEEP_ERROR|
+
+
+
+=for apidoc t[ask]e||int|BEEP_QUESTION|
+
+
+
+=for apidoc t[ask]e||int|BEEP_PASSWORD|
+
+
+
+=for apidoc t[ask]e||int|BEEP_NOTIFICATION|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+BEEP_DEFAULT ()
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = BEEP_DEFAULT; break;
+            case 1: RETVAL = BEEP_MESSAGE; break;
+            case 2: RETVAL = BEEP_ERROR; break;
+            case 3: RETVAL = BEEP_QUESTION; break;
+            case 4: RETVAL = BEEP_PASSWORD; break;
+            case 5: RETVAL = BEEP_NOTIFICATION; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+             BEEP_MESSAGE = 1
+               BEEP_ERROR = 2
+            BEEP_QUESTION = 3
+            BEEP_PASSWORD = 4
+        BEEP_NOTIFICATION = 5
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F|||message|string|
+
+Displays a message in a pop-up box with an "OK" button, waits for the user to
+hit the button. The message will wrap to fit the window, or may be many lines
+by putting C<\n> characters into it. The enter key is a shortcut for the OK
+button.
+
+=for apidoc t[ask]F|||alert|string|
+
+Same as L<C<FLTK::message()>|/"message"> except for the "!" symbol.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+message( char * string )
+    CODE:
+        switch ( ix ) {
+            case 0: message(string); break;
+            case 1:   alert(string); break;
+        }
+    ALIAS:
+        alert = 1
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||int|ask|question|
+
+Displays a message in a pop-up box with a "Yes" and "No" button and waits for
+the user to hit a button. The return value is C<1> if the user hits "Yes",
+C<0> if they pick "No". The C<Enter> key is a shortcut for "Yes" and C<ESC> is
+a shortcut for "No".
+
+If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<-1>
+will be returned if the timeout expires.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+ask( char * question )
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||int|choice|question|answer_1|answer_2|answer_3
+
+Shows the message with three buttons below it marked with the strings
+C<answer_1>, C<answer_2>, and C<answer_3>. Returns C<0>, C<1>, or C<2>
+depending on which button is hit. If one of the strings begins with the
+special character '*' then the associated button will be the default which is
+selected when the C<Enter> key is pressed. C<ESC> is a shortcut for
+C<answer_1>.
+
+If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<-1>
+will be returned if the timeout expires.
+
+=for apidoc t[ask]F||int|choice_alert|question|answer_1|answer_2|answer_3
+
+Same as L<C<choice()>|/"choice"> except a "!" icon is used instead of a "?"
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+choice( char * question, char * answer_1, char * answer_2, char * answer_3)
+    CODE:
+        int a;
+        switch ( ix ) {
+            case 0: a = choice(question, answer_3, answer_2, answer_1); break;
+            case 1: a = choice_alert(question, answer_3, answer_2, answer_1); break;
+        }
+        RETVAL = a == 0 ? 2 : a == 2 ? 0 : a;
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        choice_alert = 1
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||string|input|label|default_value = ''
+
+Pops up a window displaying a string, lets the user edit it, and return the
+new value. The cancel button returns C<undef>. The returned pointer is only
+valid until the next time L<C<FLTK::input()>|FLTK::ask/"input"> is called.
+
+If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<0>
+will be returned if the timeout expires.
+
+=for apidoc t[ask]Fx||string|password|label|default_value = ''
+
+Same as L<C<FLTK::input()>|FLTK::ask/"input"> except an
+L<FLTK::SecretInput|FLTK::SecretInput> field is used.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+input( char * label, char * default_value = 0 )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = input( label, default_value ); break;
+            case 1: RETVAL = password( label, default_value ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        password = 1
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F|||beep|type = BEEP_DEFAULT
+
+Generates a simple beep message.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+beep( int type = BEEP_DEFAULT )
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F|||beep_on_dialog|bool
+
+You can enable beep on default message dialog (like L<C<ask>|/"ask">,
+L<C<choice>|/"choice">, L<C<input>|/"input">, ...) by using this function with
+true (default is false).
+
+=for apidoc t[ask]F||bool|beep_on_dialog|
+
+You get the state enable beep on default message dialog (like
+L<C<ask>|/"ask">, L<C<choice>|/"choice">, L<C<input>|/"input">, ...) by using
+this function with true (default is false).
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+beep_on_dialog( bool value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            beep_on_dialog( value );
+    CASE:
+        C_ARGS:
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||NamedStyle|icon_style|
+
+This L<Style|FLTK::Style> is used for the C<50x50> icon area on the left of
+all the popup windows. You can change the colors or font used here.
+
+=for apidoc t[ask]F||NamedStyle|message_style|
+
+This L<Style|FLTK::Style> is used for the label area for all the popup
+windows. You can change the L<C<textfont()>|FLTK::Style/"textfont"> or
+L<C<textsize()>|FLTK::Style/"textsize"> to make them print differently.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+NamedStyle *
+icon_style(  )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = icon_style; break;
+            case 1: RETVAL = message_style; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        message_style = 1
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||label|message_window_label|
+
+Get the title of L<C<message()>|/"message">, L<C<alert()>|/"alert">,
+L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc. windows.
+
+=for apidoc t[ask]F|||message_window_label|label
+
+Set this to change the title of L<C<message()>|/"message">,
+L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
+windows.
+
+=for apidoc F||label|no|
+
+Returns the current value for this variable.
+
+=for apidoc F|||no|label
+
+You can change this string to convert fltk to a foreign language.
+
+=for apidoc F||label|yes|
+
+Returns the current value for this variable.
+
+=for apidoc F|||yes|label
+
+You can change this string to convert fltk to a foreign language.
+
+=for apidoc F||label|ok|
+
+Returns the current value for this variable.
+
+=for apidoc F|||ok|label
+
+You can change this string to convert fltk to a foreign language.
+
+=for apidoc F||label|cancel|
+
+Returns the current value for this variable.
+
+=for apidoc F|||cancel|label
+
+You can change this string to convert fltk to a foreign language.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+message_window_label ( char * label = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch( ix ) {
+                case 0: message_window_label = label; break;
+                case 1:                   no = label; break;
+                case 2:                  yes = label; break;
+                case 3:                   ok = label; break;
+                case 4:               cancel = label; break;
+            }
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = message_window_label; break;
+                case 1: RETVAL = no;     break;
+                case 2: RETVAL = yes;    break;
+                case 3: RETVAL = ok;     break;
+                case 4: RETVAL = cancel; break;
+            }
+        OUTPUT:
+            RETVAL
+    ALIAS:
+            no = 1
+           yes = 2
+            ok = 3
+        cancel = 4
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||timeout|message_window_timeout|
+
+Returns the current value for
+L<C<message_window_timeout(...)>|/"message_window_timeout">.
+
+=for apidoc t[ask]F|||message_window_timeout|timeout
+
+Set this to a positive value to cause the L<C<message()>|/"message">,
+L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
+windows to close automatically after this timeout. If the timeout expires,
+C<-1> will be returned by the functions that return integers. The timeout
+value is a float in seconds.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+double
+message_window_timeout( double timeout = NO_INIT )
+    CASE: items == 1
+        CODE:
+            message_window_timeout = timeout;
+    CASE:
+        CODE:
+            RETVAL = message_window_timeout;
+        OUTPUT:
+            RETVAL
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]F||bool|message_window_scrollable|
+
+Returns current value of
+L<C<message_window_scrollable(...)>|/"message_window_scrollable">.
+
+=for apidoc t[ask]F|||message_window_scrollable|scroll
+
+When this is set to true, then (all) message windows will use scrollbars if
+the given message is too long.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+message_window_scrollable( bool scroll = NO_INIT )
+    CASE: items == 1
+        CODE:
+            message_window_scrollable = scroll;
+    CASE:
+        CODE:
+            RETVAL = message_window_scrollable;
+        OUTPUT:
+            RETVAL
+
+
+
+#if 0
+
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]v||string|message_window_label|
+
+Set this to change the title of L<C<message()>|/"message">,
+L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
+windows.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+_message_window_label ( char * value = NO_INIT )
+    CASE: ! items
+        CODE:
+            warn ("get");
+            switch ( ix ) {
+                case 0: RETVAL = message_window_label; break;
+                case 1: RETVAL = no; break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            warn ("set | %s | %d", value, ix);
+            switch ( ix ) {
+                case 0: message_window_label = value; break;
+                case 1: no = value; break;
+            }
+    ALIAS:
+        _no = 1
+
+MODULE = FLTK               PACKAGE = FLTK::ask
+
+=for apidoc t[ask]v||float|message_window_timeout|
+
+Set this to a positive value to cause the  L<C<message()>|/"message">,
+L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">,
+etc. windows to close automatically after this timeout.  If the timeout
+expires, C<-1> will be returned by the functions that return int. The timeout
+value is in seconds.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+double
+_message_window_timeout( double value = NO_INIT )
+    CASE: items == 0
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = message_window_timeout; break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: message_window_timeout = value; break;
+            }
+    ALIAS:
+
+
+
+#endif
+
+
+
+
+#endif // ifndef DISABLE_ASK

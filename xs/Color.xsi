@@ -8,7 +8,7 @@
 
 =cut
 
-#ifndef DISABLE_BROWSER
+#ifndef DISABLE_COLOR
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 
@@ -503,4 +503,4 @@ MODULE = FLTK               PACKAGE = FLTK
 Color
 nearest_index ( Color COLOR )
 
-#endif // #ifndef DISABLE_BROWSER
+#endif // #ifndef DISABLE_COLOR

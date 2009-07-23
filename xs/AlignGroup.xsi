@@ -1,0 +1,120 @@
+#ifndef DISABLE_ALIGNGROUP
+
+MODULE = FLTK               PACKAGE = FLTK::AlignGroup
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Align layout manager
+
+=for git $Id$
+
+=head1 Description
+
+The L<AlignGroup|FLTK::AlignGroup> overrides all group's children's label
+alignments to it's own L<C<align()>|/"align"> value, tiles and
+L<C<resize()>|/"resize">s the children to fit in the space not required by the
+(outsize) labels.
+
+=cut
+
+#include <fltk/AlignGroup.h>
+
+=for apidoc d|||new|x|y|width|height|label = ''|n_to_break = 0|vertical = 1|align = ALIGN_LEFT|dw = 0|dh = 0
+
+Creates a new C<FLTK::AlignGroup> object.
+
+=cut
+
+AlignGroup *
+AlignGroup::new ( int X, int Y, int W, int H, const char* L = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0,uchar dh = 0 )
+
+#if ENABLE_DESTROY
+
+bool
+AlignGroup::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, AlignGroup (label: '%s')", THIS->label());
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc ||bool|vertical|
+
+=for apidoc |||vertical|v
+
+=cut
+
+bool
+AlignGroup::vertical ( bool v = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->vertical( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->vertical( v );
+
+=for apidoc ||char|n_to_break|
+
+=for apidoc |||n_to_break|value|
+
+=for apidoc ||char|dw|
+
+=for apidoc |||dw|value|
+
+=for apidoc ||char|dh|
+
+=for apidoc |||dh|value|
+
+=cut
+
+uchar
+AlignGroup::n_to_break( uchar value = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = THIS->n_to_break( ); break;
+                case 1: RETVAL = THIS->dw( ); break;
+                case 2: RETVAL = THIS->dh( ); break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: THIS->n_to_break( value ); break;
+                case 1: THIS->dw( value ); break;
+                case 2: THIS->dh( value ); break;
+            }
+    ALIAS:
+        dw = 1
+        dh = 2
+
+=for apidoc ||flags|align|
+
+=for apidoc |||align|flags
+
+=cut
+
+Flags
+AlignGroup::align( Flags a = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->align( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->align( a );
+
+#endif // ifndef DISABLE_ALIGNGROUP

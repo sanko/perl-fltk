@@ -1,0 +1,319 @@
+#ifndef DISABLE_ANSIWIDGET
+
+MODULE = FLTK               PACKAGE = FLTK::AnsiWidget
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Displays ANSI escape codes
+
+=for git $Id$
+
+=head1 Description
+
+Displays ANSI escape codes.
+
+Escape sequences start with the characters C<ESC> (ASCII 27d/1Bh/033o) and
+C<[> (left bracket). This sequence is called CSI for "Control Sequence
+Introducer".
+
+=head2 Supported control codes:
+
+=over
+
+=item C<\t>
+
+tab (20 px)
+
+=item C<\a>
+
+beep
+
+=item C<\r>
+
+return
+
+=item C<\n>
+
+next line
+
+=item C<\xC>
+
+clear screen
+
+=item C<\e[K>
+
+clear to end of line
+
+=item C<\e[0m>
+
+reset all attributes to their defaults
+
+=item C<\e[1m>
+
+set bold on
+
+=item C<\e[4m>
+
+set underline on
+
+=item C<\e[7m>
+
+reverse video
+
+=item C<\e[21m>
+
+set bold off
+
+=item C<\e[24m>
+
+set underline off
+
+=item C<\e[27m>
+
+set reverse off
+
+=back
+
+=head1 See Also
+
+For more information about ANSI code see:
+
+=over
+
+=item * http://en.wikipedia.org/wiki/ANSI_escape_code
+
+=item * http://www.uv.tietgen.dk/staff/mlha/PC/Soft/Prog/BAS/VB/Function.html
+
+=back
+
+=cut
+
+#include <fltk/AnsiWidget.h>
+
+=for apidoc ||AnsiWidget|new|x|y|width|height|defsize
+
+Creates a new C<FLTK::AnsiWidget> object.
+
+=cut
+
+AnsiWidget *
+AnsiWidget::new ( int x, int y, int w, int h, int defsize )
+
+#if ENABLE_DESTROY
+
+bool
+AnsiWidget::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, AnsiWidget" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc |||clearScreen|
+
+Clear the offscreen buffer.
+
+=for apidoc |||beep|
+
+Create audible beep sound.
+
+=cut
+
+void
+AnsiWidget::clearScreen ( )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->clearScreen( );
+            case 1: THIS->beep();
+        }
+    ALIAS:
+        beep = 1
+
+=for apidoc |||print|str
+
+Prints the contents of the given string onto the backbuffer.
+
+=cut
+
+void
+AnsiWidget::print( const char * str )
+
+=for apidoc |||drawLine|x1|y1|x2|y2
+
+Draw a line onto the offscreen buffer.
+
+=for apidoc |||drawRectFilled|x1|y1|x2|y2
+
+Draw a filled rectangle onto the offscreen buffer.
+
+=for apidoc |||drawRect|x1|y1|x2|y2
+
+Draw a rectangle onto the offscreen buffer.
+
+=cut
+
+void
+AnsiWidget::drawLine( int x1, int y1, int x2, int y2 )
+    CODE:
+        switch( ix ) {
+            case 0: THIS->drawLine( x1, y1, x2, y2); break;
+            case 1: THIS->drawRectFilled( x1, y1, x2, y2); break;
+            case 2: THIS->drawRect( x1, y1, x2, y2); break;
+        }
+    ALIAS:
+        drawRectFilled = 1
+        drawRect = 2
+
+=for apidoc |||drawImage|img|x|y|sx|sy|w|h
+
+Draws the given image onto the offscreen buffer.
+
+=cut
+
+void
+AnsiWidget::drawImage( Image* img, int x, int y, int sx, int sy, int w, int h )
+
+
+=for apidoc |||saveImage|filename|x|y|w|h
+
+Save the offscreen buffer to the given filename.
+
+=cut
+
+void
+AnsiWidget::saveImage( char * filename, int x, int y, int w, int h )
+
+=for apidoc |||setTextColor|fore|back
+
+Sets the current text drawing color.
+
+=cut
+
+void
+AnsiWidget::setTextColor( long fore, long back )
+
+=for apidoc |||setColor|color
+
+Sets the current drawing color.
+
+=cut
+
+void
+AnsiWidget::setColor( long color )
+
+=for apidoc ||X|getX|
+
+
+
+=for apidoc ||Y|getY|
+
+
+
+=for apidoc ||W|getWidth|
+
+
+
+=for apidoc ||H|getHeight|
+
+
+
+=cut
+
+int
+AnsiWidget::getX ( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->getX( ); break;
+            case 1: RETVAL = THIS->getY( ); break;
+            case 2: RETVAL = THIS->getWidth( );  break;
+            case 3: RETVAL = THIS->getHeight( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+             getY = 1
+         getWidth = 2
+        getHeight = 3
+
+=for apidoc |||setPixel|X|Y|Color
+
+Sets the pixel to the given color at the given C<X, Y> location.
+
+=cut
+
+void
+AnsiWidget::setPixel( int X, int Y, int Color )
+
+=for apidoc ||color|getPixel|X|Y
+
+Returns the color of the pixel at the given C<X, Y> location.
+
+=cut
+
+int
+AnsiWidget::getPixel ( int X, int Y )
+
+=for apidoc |||setXY|X|Y
+
+
+
+=cut
+
+void
+AnsiWidget::setXY( int X, int Y )
+
+=for apidoc ||width|textWidth|string
+
+Returns the width in pixels using the current font setting.
+
+=cut
+
+int
+AnsiWidget::textWidth( char * string )
+
+=for apidoc ||height|textHeight|
+
+Returns the height in pixels using the current font setting.
+
+=cut
+
+int
+AnsiWidget::textHeight( )
+
+=for apidoc |||setFontSize|i
+
+
+
+=cut
+
+void
+AnsiWidget::setFontSize( double i )
+
+=for apidoc ||size|getFontSize|
+
+
+
+=cut
+
+int
+AnsiWidget::getFontSize( )
+
+=for apidoc ||FLTK::Color|ansiToFltk()|color
+
+Converts ANSI colors to FLTK colors.
+
+=cut
+
+Color
+AnsiWidget::ansiToFltk( long color )
+
+#endif // ifndef DISABLE_ANSIWIDGET

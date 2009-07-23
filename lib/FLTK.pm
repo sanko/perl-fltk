@@ -12,8 +12,9 @@ use Exporter qw[import];
             BEEP_NOTIFICATION
             alert ask beep beep_on_dialog choice choice_alert input message
             password
-            ok yes no cancel message_window_timeout message_window_scrollable
-            message_window_label message_style icon_style ]
+            icon_style message_style
+            message_window_label message_window_timeout
+            message_window_scrollable ]
     ],
     box => [
         qw[ UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
@@ -119,6 +120,10 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::Aduster::ISA            = qw[FLTK::Valuator];
 @FLTK::AssociationFunctor::ISA = qw[];
 @FLTK::AssociationType::ISA    = qw[];
+@FLTK::AlignGroup::ISA         = qw[FLTK::Group];
+@FLTK::AnsiWidget::ISA         = qw[FLTK::Widget];
+
+
 @FLTK::Box::ISA                = qw[FLTK::Symbol];
 @FLTK::Browser::ISA            = qw[FLTK::Menu];
 @FLTK::Button::ISA             = qw[FLTK::Widget];
@@ -179,7 +184,7 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::LineDial::ISA                = qw[FLTK::Dial];
 @FLTK::PlasticBox::ISA              = qw[FLTK::FrameBox];
 @FLTK::RoundBox::ISA                = qw[FLTK::FrameBox];
-@FLTK::AlignGroup::ISA              = qw[FLTK::Group];
+
 @FLTK::BarGroup::ISA                = qw[FLTK::Group];
 @FLTK::ColorChooser::ISA            = qw[FLTK::Group];
 @FLTK::HelpView::ISA                = qw[FLTK::Group];
@@ -273,62 +278,8 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
 
-=pod
-=cut
-sub message ($;@) {    # XXX - translate to C
-    my $l = sprintf(shift, @_);
-    $l =~ s[%][\%\%]g;
-    _message($l);
-}
-
-sub alert ($;@) {      # XXX - translate to C
-    my $l = sprintf(shift, @_);
-    $l =~ s[%][\%\%]g;
-    _alert($l);
-}
-
-sub ask ($;@) {        # XXX - translate to C
-    my $l = sprintf(shift, @_);
-    $l =~ s[%][\%\%]g;
-    _ask($l);
-}
-
-sub input ($;$@) {     # XXX - translate to C
-    my ($format, $default, @sprintf) = @_;
-    my $l = sprintf($format, @sprintf);
-    $l =~ s[%][\%\%]g;
-    _input($l, $default ? $default : ());
-}
-
-sub password ($;$@) {    # XXX - translate to C
-    my ($format, $default, @sprintf) = @_;
-    my $l = sprintf($format, @sprintf);
-    $l =~ s[%][\%\%]g;
-    _password($l, $default ? $default : ());
-}
+1;
 __END__
-
-=pod
-
-=begin comments
-
-
-# Magic? Abuse of C pointers? Yes. ###########################################
-for my $what (qw[no ok cancel yes
-                message_window_label
-                message_window_scrollable
-                message_window_timeout], # Read/Write
-              qw[help] # Read only
-    )
-{   eval sprintf '$FLTK::%s = FLTK::_%s();
-    FLTK::_%s($FLTK::%s) if $FLTK::%s;', $what, $what,
-        $what,
-        $what, $what;
-}
-
-=end comments
-
-=cut
 
 ################################
 for my $var (qw[yes no ok cancel]) {

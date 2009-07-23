@@ -371,6 +371,6 @@ __END__
 $Rev$
 $Revision$
 $Date$Last $Modified$
-$URL: http://github.com/sanko/perl-FLTK/raw/971dff11b6c65f8fb13de34ba3b641834e63f101/inc/MBX/FLTK.pm $
+$URL$
 $ID$
 
