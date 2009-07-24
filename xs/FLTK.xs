@@ -17,6 +17,9 @@ CPANID: SANKO
 #include <XSUB.h>
 #include "./ppport.pl"
 
+#define isa(package,parent)\
+    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));
+
 #include <fltk/Widget.h>
 
 using namespace fltk;
@@ -135,16 +138,22 @@ INCLUDE: run.xsi
     # Objects (Widgets, etc.)
 
 INCLUDE: Adjuster.xsi
-INCLUDE: AssociationFunctor.xsi
-INCLUDE: AssociationType.xsi
+
 INCLUDE: AlignGroup.xsi
+
 INCLUDE: AnsiWidget.xsi
+
 INCLUDE: ask.xsi
+
 INCLUDE: BarGroup.xsi
+
+INCLUDE: Box.xsi
 
 
 #INCLUDE: Button.xsi
-#INCLUDE: Color.xsi
+
+INCLUDE: Color.xsi
+
 #INCLUDE: ColorChooser.xsi
 INCLUDE: Group.xsi
 #INCLUDE: Rectangle.xsi
@@ -154,6 +163,8 @@ INCLUDE: Group.xsi
 #INCLUDE: ValueInput.xsi
 #INCLUDE: ValueOutput.xsi
 #INCLUDE: Widget.xsi
+
+INCLUDE: WidgetAssociation.xsi
 INCLUDE: Window.xsi
 
     #INCLUDE: ~old/Browser.xsi

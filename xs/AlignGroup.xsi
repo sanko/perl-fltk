@@ -30,7 +30,7 @@ Creates a new C<FLTK::AlignGroup> object.
 =cut
 
 AlignGroup *
-AlignGroup::new ( int X, int Y, int W, int H, const char* L = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0,uchar dh = 0 )
+AlignGroup::new ( int X, int Y, int W, int H, const char* L = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
 
 #if ENABLE_DESTROY
 
@@ -47,9 +47,22 @@ AlignGroup::DESTROY ( )
 
 #endif // ENABLE_DESTROY
 
+=for apidoc |||layout|
+
+
+
+=cut
+
+void
+AlignGroup::layout( )
+
 =for apidoc ||bool|vertical|
 
+
+
 =for apidoc |||vertical|v
+
+
 
 =cut
 
@@ -116,5 +129,8 @@ AlignGroup::align( Flags a = NO_INIT )
     CASE:
         CODE:
             THIS->align( a );
+
+BOOT:
+    isa("FLTK::AlignGroup", "FLTK::Group");
 
 #endif // ifndef DISABLE_ALIGNGROUP

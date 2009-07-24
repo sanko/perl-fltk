@@ -1,0 +1,461 @@
+#ifndef DISABLE_BOX
+
+MODULE = FLTK               PACKAGE = FLTK::Box
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Define your own values for L<C<box()>|FLTK::Widget/"box"> on a
+widget by making one of these
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+#include <fltk/Box.h>
+
+=for apidoc |||_draw|rect
+
+
+
+=cut
+
+void
+Box::_draw( fltk::Rectangle * rect )
+    C_ARGS: * rect
+
+=for apidoc t[box]|||drawframe|s|x|y|w|h
+
+Draw a spiral, useful as a box edge, starting with the bottom edge and going
+in a counter-clockwise direction, from the outside in toward the center. The
+string is interpreted to get a gray shade: A is black, X is white, and all
+other letters are 24 possible steps of gray shade, and R is the normal
+background color of C<GRAY75>. A leading '2' makes it start with the top edge,
+which will reverse exactly which pixels are drawn in the corner.
+
+Emulates the fltk1 C<fl_frame2()> function.
+
+=for apidoc t[box]|||drawframe2|s|x|y|w|h
+
+Draw a spiral similar to L<C<drawframe()>|/"drawframe">, but starts with the
+top edge and goes counter-clockwise.
+
+Emulates the fltk1 C<fl_frame()> function.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+drawframe( char * s, int x, int y, int w, int h )
+    CODE:
+        switch( ix ) {
+            case 0:  drawframe( s, x, y, w, h ); break;
+            case 1: drawframe2( s, x, y, w, h ); break;
+        }
+    ALIAS:
+        drawframe2 = 1
+
+=for apidoc t[box]F||FLTK::Box|DOWN_BOX|
+
+Inset box in fltk's standard theme.
+
+=for apidoc t[box]F||FLTK::Box|NO_BOX|
+
+Draws a flat rectangle of L<C<getbgcolor()>|/"getbgcolor">.
+
+=for apidoc t[box]F||FLTK::Box|NO_BOX|
+
+Draws nothing.
+
+Can be used as a box to make the background of a widget invisible. Also some
+widgets check specifically for this and change their behavior or drawing
+methods.
+
+=for apidoc t[box]F||FLTK::Box|UP_BOX
+
+Up button in fltk's standard theme.
+
+=for apidoc t[box]F||FLTK::Box|THIN_DOWN_BOX
+
+1-pixel-thick inset box.
+
+=for apidoc t[box]F||FLTK::Box|THIN_UP_BOX
+
+1-pixel-thick raised box.
+
+=for apidoc t[box]F||FLTK::Box|ENGRAVED_BOX
+
+2-pixel thick engraved line around edge.
+
+=for apidoc t[box]F||FLTK::Box|EMBOSSED_BOX
+
+2-pixel thick raised line around edge.
+
+=for apidoc t[box]F||FLTK::Box|BORDER_BOX
+
+1-pixel thick gray line around rectangle.
+
+=for apidoc t[box]F||FLTK::Box|HIGHLIGHT_UP_BOX
+
+Draws nothing normally, and as L<C<THIN_UP_BOX>|/"THIN_UP_BOX"> when the mouse
+pointer points at it or the value of the widget is turned on.
+
+=for apidoc t[box]F||FLTK::Box|HIGHLIGHT_DOWN_BOX
+
+Draws nothing normally, and as L<C<THIN_DOWN_BOX>|/"THIN_DOWN_BOX"> when the
+mouse pointer points at it or the value of the widget is turned on.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Box *
+DOWN_BOX( )
+    CODE:
+        switch ( ix ) {
+            case  0: RETVAL =           DOWN_BOX; break;
+            case  1: RETVAL =           FLAT_BOX; break;
+            case  2: RETVAL =             NO_BOX; break;
+            case  3: RETVAL =             UP_BOX; break;
+            case  4: RETVAL =      THIN_DOWN_BOX; break;
+            case  5: RETVAL =        THIN_UP_BOX; break;
+            case  6: RETVAL =       ENGRAVED_BOX; break;
+            case  7: RETVAL =       EMBOSSED_BOX; break;
+            case  8: RETVAL =         BORDER_BOX; break;
+            case  9: RETVAL =   HIGHLIGHT_UP_BOX; break;
+            case 10: RETVAL = HIGHLIGHT_DOWN_BOX; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+                  FLAT_BOX =  1
+                    NO_BOX =  2
+                    UP_BOX =  3
+             THIN_DOWN_BOX =  4
+               THIN_UP_BOX =  5
+              ENGRAVED_BOX =  6
+              EMBOSSED_BOX =  7
+                BORDER_BOX =  8
+          HIGHLIGHT_UP_BOX =  9
+        HIGHLIGHT_DOWN_BOX = 10
+
+MODULE = FLTK               PACKAGE = FLTK::Box
+
+BOOT:
+    isa("FLTK::Box", "FLTK::Symbol");
+
+#endif // ifndef DISABLE_BOX
+
+
+
+#ifndef DISABLE_FRAMEBOX
+
+MODULE = FLTK               PACKAGE = FLTK::FrameBox
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Box drawing code for the Fast Light Tool Kit (FLTK)
+
+=for git $Id$
+
+=head1 Description
+
+This box class interprets a small string stored in L<C<data()>|/"data"> to
+indicate the gray shades to draw around the edge of the box and can be used to
+draw simple bezels.
+
+The box is drawn by calling L<C<drawframe()>|/"drawframe"> or
+L<C<drawframe2()>|/"drawframe2"> if the string starts with a '2'.
+
+The normal up box draws the pattern C<AAWWHHTT>
+
+The normal down_ box draws the pattern C<WWHHPPAA>
+
+The C<PUSHED> or C<STATE> flags will cause the pattern from
+L<C<down_()>|/"down_"> to be used instead, allowing you to draw a different
+bezel when pushed in.
+
+The C<INVISIBLE> flag will not draw the interior, which can make many widgets
+draw faster and with less blinking.
+
+=cut
+
+#include <fltk/Box.h>
+
+=for apidoc ||FLTK::FrameBox|new|name|x|y|width|height|pattern|down = 0
+
+Constructor where you give the thickness of the borders used by
+L<C<inset()>|/"inset">.
+
+=cut
+
+FrameBox *
+FrameBox::new ( char * name, int dx, int dy, int dw, int dh, char * pattern, Box * down = 0 )
+
+#if ENABLE_DESTROY
+
+bool
+FrameBox::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, FrameBox" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc ||string|data|
+
+
+
+=for apidoc |||data|string
+
+
+
+=cut
+
+const char *
+FrameBox::data( char * string = NO_INIT )
+    CASE: ! items
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->data( string );
+
+
+=for apidoc |||_draw|rect
+
+
+
+=cut
+
+void
+FrameBox::_draw( fltk::Rectangle * rect )
+    C_ARGS: * rect
+
+=for apidoc |||inset|rect
+
+
+
+=cut
+
+void
+FrameBox::inset( fltk::Rectangle * rect )
+    C_ARGS: * rect
+
+=for apidoc ||bool|fills_rectangle|
+
+
+
+=for apidoc ||bool|is_frame|
+
+
+
+=cut
+
+bool
+FrameBox::fills_rectangle(  )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->fills_rectangle( ); break;
+            case 1: RETVAL = THIS->is_frame( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        is_frame = 1
+
+BOOT:
+    isa("FLTK::FrameBox", "FLTK::Box");
+
+#endif // #ifndef DISABLE_FRAMEBOX
+
+
+
+
+#ifndef DISABLE_FLATBOX
+
+MODULE = FLTK               PACKAGE = FLTK::FlatBox
+
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Box drawing code for the Fast Light Tool Kit (FLTK)
+
+=for git $Id$
+
+=head1 Description
+
+Draws a rectangle filled with L<C<getbgcolor()>|/"getbgcolor">. This is a
+useful base class for some box types.
+
+=cut
+
+#include <fltk/Box.h>
+
+=for apidoc ||FLTK::FlatBox|new|name
+
+Creates a new C<FLTK::FlatBox> object.
+
+=cut
+
+FlatBox *
+FlatBox::new ( char * name )
+
+#if ENABLE_DESTROY
+
+bool
+FlatBox::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, FlatBox" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc |||_draw|rect
+
+
+
+=cut
+
+void
+FlatBox::_draw( fltk::Rectangle * rect )
+    C_ARGS: * rect
+
+=for apidoc ||bool|fills_rectangle|
+
+
+
+=for apidoc ||bool|is_frame|
+
+
+
+=cut
+
+bool
+FlatBox::fills_rectangle(  )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->fills_rectangle( ); break;
+            case 1: RETVAL = THIS->is_frame( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        is_frame = 1
+
+BOOT:
+    isa("FLTK::FlatBox", "FLTK::Box");
+
+#endif // #ifndef DISABLE_FLATBOX
+
+
+#ifndef DISABLE_HIGHLIGHTBOX
+
+MODULE = FLTK               PACKAGE = FLTK::HighlightBox
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Draw a box only when highlighted or selected
+
+=for git $Id$
+
+=head1 Description
+
+Draws nothing normally, this can draw as any other box (passed to the
+constructor) when C<HIGHLIGHT>, C<STATE>, or C<PUSHED> is turned on in the
+flags. This can be used to make frames appear when the mouse points at widgets
+or when the widget is turned on.
+
+=cut
+
+#include <fltk/Box.h>
+
+=for apidoc ||FLTK::HighlightBox|new|name|box
+
+Creates a new C<FLTK::HighlightBox> object.
+
+=cut
+
+HighlightBox *
+HighlightBox::new ( char * name, Box * d )
+
+#if ENABLE_DESTROY
+
+bool
+HighlightBox::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, HighlightBox" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc |||_draw|rect
+
+
+
+=cut
+
+void
+HighlightBox::_draw( fltk::Rectangle * rect )
+    C_ARGS: * rect
+
+=for apidoc ||bool|fills_rectangle|
+
+
+
+=for apidoc ||bool|is_frame|
+
+
+
+=cut
+
+bool
+HighlightBox::fills_rectangle(  )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->fills_rectangle( ); break;
+            case 1: RETVAL = THIS->is_frame( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        is_frame = 1
+
+BOOT:
+    isa("FLTK::HighlightBox", "FLTK::FlatBox");
+
+#endif // #ifndef DISABLE_HIGHLIGHTBOX

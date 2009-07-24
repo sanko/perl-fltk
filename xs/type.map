@@ -34,7 +34,10 @@ Callback            *   O_FLTK
 Color                   T_INT
 ColorChooser        *   O_FLTK
 Cursor              *   O_FLTK
+FlatBox             *   O_FLTK
 Font                *   O_FLTK
+FrameBox            *   O_FLTK
+HighlightBox        *   O_FLTK
 Image               *   O_FLTK
 LabelType           *   O_FLTK
 const Monitor       *   O_FLTK

@@ -118,6 +118,36 @@ AnsiWidget::DESTROY ( )
 
 #endif // ENABLE_DESTROY
 
+=for apidoc |||draw|
+
+
+
+=for apidoc |||layout|
+
+
+
+=cut
+
+void
+AnsiWidget::draw( )
+    CODE:
+        switch( ix ) {
+            case 0: THIS->draw();   break;
+            case 1: THIS->layout(); break;
+        }
+    ALIAS:
+        layout = 1
+
+=for apidoc ||int|handle|event
+
+
+
+=cut
+
+int
+AnsiWidget::handle( int event )
+
+
 =for apidoc |||clearScreen|
 
 Clear the offscreen buffer.
@@ -315,5 +345,8 @@ Converts ANSI colors to FLTK colors.
 
 Color
 AnsiWidget::ansiToFltk( long color )
+
+BOOT:
+    isa("FLTK::AnsiWidget", "FLTK::Widget");
 
 #endif // ifndef DISABLE_ANSIWIDGET

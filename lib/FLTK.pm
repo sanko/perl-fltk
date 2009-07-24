@@ -1,5 +1,18 @@
 #!perl
 package FLTK;
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Perl interface to the Feather Light Toolkit
+
+=for git $Id$
+
+=cut
+
 use strict;
 use warnings;
 our $VERSION_BASE = 1; our $UNSTABLE_RELEASE = 2; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
@@ -17,7 +30,9 @@ use Exporter qw[import];
             message_window_scrollable ]
     ],
     box => [
-        qw[ UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
+        qw[ drawframe drawframe2
+        NO_BOX
+            UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
             EMBOSSED_BOX BORDER_BOX FLAT_BOX HIGHLIGHT_UP_BOX
             HIGHLIGHT_DOWN_BOX ROUND_UP_BOX ROUND_DOWN_BOX DIAMOND_UP_BOX
             DIAMOND_DOWN_BOX SHADOW_BOX ROUNDED_BOX RSHADOW_BOX RFLAT_BOX
@@ -115,7 +130,7 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 #
 our $NOXS ||= $0 eq __FILE__;    # for testing
 XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
-
+=pod
 # Classes ####################################################################
 @FLTK::Aduster::ISA            = qw[FLTK::Valuator];
 @FLTK::AssociationFunctor::ISA = qw[];
@@ -123,9 +138,18 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::AlignGroup::ISA         = qw[FLTK::Group];
 @FLTK::AnsiWidget::ISA         = qw[FLTK::Widget];
 @FLTK::BarGroup::ISA           = qw[FLTK::Group];
+@FLTK::Box::ISA             = qw[FLTK::Symbol];
+
 
 #
-@FLTK::Box::ISA             = qw[FLTK::Symbol];
+@FLTK::FrameBox::ISA =  qw[FLTK::Box];
+@FLTK::FlatBox::ISA =  qw[FLTK::Box];
+@FLTK::HighlightBox::ISA =  qw[FLTK::FlatBox];
+
+
+
+#
+
 @FLTK::Browser::ISA         = qw[FLTK::Menu];
 @FLTK::Button::ISA          = qw[FLTK::Widget];
 @FLTK::CheckButton::ISA     = qw[FLTK::Button];
@@ -277,4 +301,9 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 ############################################################# FLTK::Valuator #
 @FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
+
+
+=pod
+=cut
+
 1;

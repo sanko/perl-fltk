@@ -92,4 +92,7 @@ See L<C<handle()>|FLTK::Valuator/handle> in L<FLTK::Valuator|FLTK::Valuator>.
 int
 Adjuster::handle ( int event )
 
+BOOT:
+    isa("FLTK::Adjuster", "FLTK::Valuator");
+
 #endif // ifndef DISABLE_ADJUSTER

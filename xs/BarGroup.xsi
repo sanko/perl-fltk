@@ -147,4 +147,7 @@ BarGroup::glyph_size( int value = NO_INIT )
         CODE:
             THIS->glyph_size( value );
 
+BOOT:
+    isa("FLTK::BarGroup", "FLTK::Group");
+
 #endif // ifndef DISABLE_BARGROUP
