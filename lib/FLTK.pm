@@ -122,49 +122,50 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::AssociationType::ISA    = qw[];
 @FLTK::AlignGroup::ISA         = qw[FLTK::Group];
 @FLTK::AnsiWidget::ISA         = qw[FLTK::Widget];
+@FLTK::BarGroup::ISA           = qw[FLTK::Group];
 
-
-@FLTK::Box::ISA                = qw[FLTK::Symbol];
-@FLTK::Browser::ISA            = qw[FLTK::Menu];
-@FLTK::Button::ISA             = qw[FLTK::Widget];
-@FLTK::CheckButton::ISA        = qw[FLTK::Button];
-@FLTK::Choice::ISA             = qw[FLTK::Menu];
-@FLTK::Clock::ISA              = qw[FLTK::ClockOutput];
-@FLTK::ClockOutput::ISA        = qw[FLTK::Widget];
-@FLTK::CreatedWindow::ISA      = qw[];
-@FLTK::CycleButton::ISA        = qw[FLTK::Menu];
-@FLTK::Dial::ISA               = qw[FLTK::Valuator];
-@FLTK::Divider::ISA            = qw[FLTK::Widget];
-@FLTK::FillDial::ISA           = qw[FLTK::Dial];
-@FLTK::FillSlider::ISA         = qw[FLTK::Slider];
-@FLTK::FlatBox::ISA            = qw[FLTK::Symbol];
-@FLTK::FloatInput::ISA         = qw[FLTK::NumericInput];
-@FLTK::Font::ISA               = qw[];
-@FLTK::FrameBox::ISA           = qw[FLTK::Symbol];
-@FLTK::gifImage::ISA           = qw[FLTK::SharedImage];
-@FLTK::GlutWindow::ISA         = qw[FLTK::GlWindow];
-@FLTK::GlWindow::ISA           = qw[FLTK::Window];
-@FLTK::Group::ISA              = qw[FLTK::Widget];
-@FLTK::GSave::ISA              = qw[];
-@FLTK::Guard::ISA              = qw[];
-@FLTK::HighlightBox::ISA       = qw[FLTK::FlatBox];
-@FLTK::HighlightButton::ISA    = qw[FLTK::Button];
-@FLTK::Image::ISA              = qw[FLTK::Symbol];
-@FLTK::ImageType::ISA          = qw[];
-@FLTK::Input::ISA              = qw[FLTK::Widget];
-@FLTK::IntInput::ISA           = qw[FLTK::FloatInput];
-@FLTK::InvisibleBox::ISA       = qw[FLTK::Widget];
-@FLTK::Item::ISA               = qw[FLTK::Widget];
-@FLTK::ItemGroup::ISA          = qw[FLTK::Menu];
-@FLTK::LightButton::ISA        = qw[FLTK::CheckButton];
-@FLTK::LineDial::ISA           = qw[FLTK::Dial];
-@FLTK::Menu::ISA               = qw[FLTK::Group];
-@FLTK::MenuBar::ISA            = qw[FLTK::Menu];
-@FLTK::MenuSection::ISA        = qw[];
-@FLTK::MenuWindow::ISA         = qw[FLTK::Window];
-@FLTK::Monitor::ISA            = qw[FLTK::Rectangle];
-@FLTK::MultiBrowser::ISA       = qw[FLTK::Browser];
-@FLTK::MultiImage::ISA         = qw[FLTK::Symbol];
+#
+@FLTK::Box::ISA             = qw[FLTK::Symbol];
+@FLTK::Browser::ISA         = qw[FLTK::Menu];
+@FLTK::Button::ISA          = qw[FLTK::Widget];
+@FLTK::CheckButton::ISA     = qw[FLTK::Button];
+@FLTK::Choice::ISA          = qw[FLTK::Menu];
+@FLTK::Clock::ISA           = qw[FLTK::ClockOutput];
+@FLTK::ClockOutput::ISA     = qw[FLTK::Widget];
+@FLTK::CreatedWindow::ISA   = qw[];
+@FLTK::CycleButton::ISA     = qw[FLTK::Menu];
+@FLTK::Dial::ISA            = qw[FLTK::Valuator];
+@FLTK::Divider::ISA         = qw[FLTK::Widget];
+@FLTK::FillDial::ISA        = qw[FLTK::Dial];
+@FLTK::FillSlider::ISA      = qw[FLTK::Slider];
+@FLTK::FlatBox::ISA         = qw[FLTK::Symbol];
+@FLTK::FloatInput::ISA      = qw[FLTK::NumericInput];
+@FLTK::Font::ISA            = qw[];
+@FLTK::FrameBox::ISA        = qw[FLTK::Symbol];
+@FLTK::gifImage::ISA        = qw[FLTK::SharedImage];
+@FLTK::GlutWindow::ISA      = qw[FLTK::GlWindow];
+@FLTK::GlWindow::ISA        = qw[FLTK::Window];
+@FLTK::Group::ISA           = qw[FLTK::Widget];
+@FLTK::GSave::ISA           = qw[];
+@FLTK::Guard::ISA           = qw[];
+@FLTK::HighlightBox::ISA    = qw[FLTK::FlatBox];
+@FLTK::HighlightButton::ISA = qw[FLTK::Button];
+@FLTK::Image::ISA           = qw[FLTK::Symbol];
+@FLTK::ImageType::ISA       = qw[];
+@FLTK::Input::ISA           = qw[FLTK::Widget];
+@FLTK::IntInput::ISA        = qw[FLTK::FloatInput];
+@FLTK::InvisibleBox::ISA    = qw[FLTK::Widget];
+@FLTK::Item::ISA            = qw[FLTK::Widget];
+@FLTK::ItemGroup::ISA       = qw[FLTK::Menu];
+@FLTK::LightButton::ISA     = qw[FLTK::CheckButton];
+@FLTK::LineDial::ISA        = qw[FLTK::Dial];
+@FLTK::Menu::ISA            = qw[FLTK::Group];
+@FLTK::MenuBar::ISA         = qw[FLTK::Menu];
+@FLTK::MenuSection::ISA     = qw[];
+@FLTK::MenuWindow::ISA      = qw[FLTK::Window];
+@FLTK::Monitor::ISA         = qw[FLTK::Rectangle];
+@FLTK::MultiBrowser::ISA    = qw[FLTK::Browser];
+@FLTK::MultiImage::ISA      = qw[FLTK::Symbol];
 
 #
 #
@@ -184,7 +185,6 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 @FLTK::LineDial::ISA                = qw[FLTK::Dial];
 @FLTK::PlasticBox::ISA              = qw[FLTK::FrameBox];
 @FLTK::RoundBox::ISA                = qw[FLTK::FrameBox];
-
 @FLTK::BarGroup::ISA                = qw[FLTK::Group];
 @FLTK::ColorChooser::ISA            = qw[FLTK::Group];
 @FLTK::HelpView::ISA                = qw[FLTK::Group];
@@ -277,78 +277,4 @@ XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
 ############################################################# FLTK::Valuator #
 @FLTK::Adjuster::ISA = qw[FLTK::Valuator];
 ##########
-
 1;
-__END__
-
-################################
-for my $var (qw[yes no ok cancel]) {
-    eval sprintf q[tie our $%s, 'FLTK::Variable', $var;], $var, $var;
-}
-for my $var (qw[help]) {
-    eval sprintf q[tie our $%s, 'FLTK::Variable::ReadOnly', $var;], $var,
-        $var;
-}
-{
-
-    package FLTK::Variable;
-    use strict;
-    use warnings;
-    use Carp;
-    sub TIESCALAR { my ($class, $what) = @_; return bless \$what, $class; }
-
-    sub FETCH {
-        my $self = shift;
-        confess "wrong type" unless ref $self;
-        croak "usage error" if @_;
-        my $return;
-        local ($!) = 0;
-        my $line = sprintf 'FLTK::%s();', $$self;
-        $return = eval $line;
-        if ($!) { croak sprintf 'FETCH %s failed: %s', $$self, $! }
-        return $return;
-    }
-
-    sub STORE {
-        my ($self, $value) = @_;
-        confess "wrong type" unless ref $self;
-        croak "usage error" if scalar @_ > 2;
-        local ($!) = 0;
-        my $line = sprintf 'FLTK::%s("%s");', $$self, $value;
-        warn $line;
-        my $return = eval $line;
-        if ($!) { croak sprintf 'FETCH %s failed: %s', $$self, $! }
-        return $return;
-    }
-
-    sub DESTROY {
-        my $self = shift;
-        confess "wrong type" unless ref $self;
-    }
-}
-{
-
-    package FLTK::Variable::ReadOnly;
-    use strict;
-    use warnings;
-    BEGIN { our @ISA = qw[FLTK::Variable]; }
-    sub STORE { return 0 }
-}
-1;
-
-#
-# Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
-#
-# This program is free software; you can redistribute it and/or modify it
-# under the terms of The Artistic License 2.0.  See the LICENSE file
-# included with this distribution or
-# http://www.perlfoundation.org/artistic_license_2_0.  For
-# clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-#
-# When separated from the distribution, all POD documentation is covered by
-# the Creative Commons Attribution-Share Alike 3.0 License.  See
-# http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-# clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-#
-# $Id$
-#

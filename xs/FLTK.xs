@@ -140,12 +140,13 @@ INCLUDE: AssociationType.xsi
 INCLUDE: AlignGroup.xsi
 INCLUDE: AnsiWidget.xsi
 INCLUDE: ask.xsi
+INCLUDE: BarGroup.xsi
 
 
 #INCLUDE: Button.xsi
 #INCLUDE: Color.xsi
 #INCLUDE: ColorChooser.xsi
-#INCLUDE: Group.xsi
+INCLUDE: Group.xsi
 #INCLUDE: Rectangle.xsi
 #INCLUDE: Slider.xsi
 #INCLUDE: Style.xsi
@@ -153,7 +154,7 @@ INCLUDE: ask.xsi
 #INCLUDE: ValueInput.xsi
 #INCLUDE: ValueOutput.xsi
 #INCLUDE: Widget.xsi
-#INCLUDE: Window.xsi
+INCLUDE: Window.xsi
 
     #INCLUDE: ~old/Browser.xsi
     #INCLUDE: ~old/CheckButton.xsi

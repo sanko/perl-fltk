@@ -24,7 +24,7 @@ AssociationFunctor      O_FLTK
 AssociationFunctor  *   O_FLTK
 AlignGroup          *   O_FLTK
 AnsiWidget          *   O_FLTK
-
+BarGroup            *   O_FLTK
 
 Browser             *   O_FLTK
 fltk::Rectangle     *   O_FLTK

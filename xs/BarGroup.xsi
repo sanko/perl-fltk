@@ -1,0 +1,150 @@
+#ifndef DISABLE_BARGROUP
+
+MODULE = FLTK               PACKAGE = FLTK::BarGroup
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract A closable strip typically used as a container for toolbars
+
+=for git $Id$
+
+=head1 Description
+
+The L<BarGroup|FLTK::BarGroup> is a closable strip that can be put in the
+edges of a L<Pack|FLTK::Pack>, usually it contains toolbars or buttons.
+
+Based on Frametab V2 contributed by Curtis Edwards (curt1@trilec.com)
+
+=cut
+
+#include <fltk/BarGroup.h>
+
+=for apidoc ||FLTK::BarGroup|new|x|y|width|height|label = ""|begin = 0
+
+Creates a new C<FLTK::BarGroup> object.
+
+=cut
+
+BarGroup *
+BarGroup::new ( int x, int y, int w, int h, char * label = "", bool begin = false )
+
+#if ENABLE_DESTROY
+
+bool
+BarGroup::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, BarGroup" );
+#endif
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // ENABLE_DESTROY
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+
+
+=cut
+
+NamedStyle *
+BarGroup::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||layout|
+
+
+
+=for apidoc |||draw|
+
+
+
+=cut
+
+void
+BarGroup::layout( )
+    CODE:
+        switch( ix ) {
+            case 0: THIS->layout( ); break;
+            case 1: THIS->draw( );   break;
+        }
+    ALIAS:
+        draw = 1
+
+=for apidoc ||int|handle|event
+
+
+
+=cut
+
+int
+BarGroup::handle ( int event )
+
+=for apidoc ||bool|opened|
+
+
+
+=for apidoc ||bool|opened|value
+
+
+
+=cut
+
+bool
+BarGroup::opened( bool value = NO_INIT )
+    CASE: !items
+        C_ARGS:
+     CASE:
+        C_ARGS: value
+
+
+=for apidoc ||bool|open|
+
+
+
+=for apidoc ||bool|cloase|
+
+
+=cut
+
+bool
+BarGroup::open( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = THIS->open( );  break;
+            case 1: RETVAL = THIS->close( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        close = 1
+
+=for apidoc ||int|glyph_size|
+
+
+
+=for apidoc |||glyph_size|value
+
+
+
+=cut
+
+int
+BarGroup::glyph_size( int value = NO_INIT )
+    CASE: !items
+        CODE:
+            RETVAL = THIS->glyph_size( );
+    CASE:
+        CODE:
+            THIS->glyph_size( value );
+
+#endif // ifndef DISABLE_BARGROUP
