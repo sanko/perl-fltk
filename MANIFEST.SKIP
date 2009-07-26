@@ -128,3 +128,4 @@ t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget.t
 t/50000_Classes/50001_FLTK_Rectangle.t
 t/50000_Classes/~50002_FLTK_Style.t
 examples/timer.pl
+examples/fltk.ico

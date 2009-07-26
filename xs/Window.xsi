@@ -61,6 +61,10 @@ Creates a new C<FLTK::Window> object.
 =cut
 
 #include <fltk/Window.h>
+#ifdef WIN32 // the following is needed for the window icon (WIN32 only)
+#include <windows.h>
+#include <fltk/x.h>
+#endif
 
 Window *
 Window::new(package, ...)
@@ -92,7 +96,8 @@ Window::new(package, ...)
             RETVAL = new Window(XPos, YPos, Width, Height, Label);
         OUTPUT:
             RETVAL
-
+    POSTCALL:
+        RETVAL->icon((char *)LoadIcon (dllInstance, "FLTK" ));
 
 #ifdef ENABLE_DESTROY
 
@@ -749,8 +754,62 @@ Window::next( )
     OUTPUT:
         RETVAL
 
+=for apidoc x|W||icon|path
+
+This loads an icon (F<.ico>) in the window.
+
+=cut
+
+void
+Window::icon( char * path )
+    CODE:
+#ifdef WIN32
+        CreatedWindow* x = CreatedWindow::find((Window *) THIS);
+        if (x == NULL)
+            return;
+        HICON s_icon = (HICON)LoadImage(NULL, path, IMAGE_ICON, 16, 16, LR_LOADFROMFILE|LR_DEFAULTCOLOR|LR_SHARED);
+        HICON b_icon = (HICON)LoadImage(NULL, path, IMAGE_ICON, 32, 32, LR_LOADFROMFILE|LR_DEFAULTCOLOR|LR_SHARED);
+        if (b_icon == NULL)
+            b_icon = s_icon;
+        if( b_icon )
+            SendMessage( x->xid, WM_SETICON, ICON_BIG, (LPARAM) b_icon);
+        if ( s_icon )
+            SendMessage( x->xid, WM_SETICON, ICON_SMALL, (LPARAM)s_icon);
+#else
+        warn("Loading icons on no-Win32 systems is on my TODO list");
+#endif // #ifdef WIN32
+
+=for apidoc xH|W||_icon_resource_example|iconID
+
+This loads an icon in the window by name from a resource file. (Currently only
+supports (w)perl.exe itself.)
+
+=cut
+
+void
+Window::_icon_resource_example( char * iconID )
+    CODE:
+#ifdef WIN32
+        HICON b_icon = (HICON)LoadImage(xdisplay, iconID, IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR|LR_SHARED );
+        HICON s_icon = (HICON)LoadImage(xdisplay, iconID, IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR|LR_SHARED );
+        HICON t_icon  =       LoadIcon (xdisplay, iconID);
+        if (!t_icon)
+            t_icon  = LoadIcon (xdisplay, iconID );
+        warn ("A b_icon is %s", ( b_icon == NULL? "borked": "okay"));
+        warn ("B s_icon is %s", ( s_icon == NULL? "borked": "okay"));
+        warn ("C t_icon is %s", ( t_icon == NULL? "borked": "okay"));
+        warn ("%s | %s", fltk::xdisplay, GetModuleHandle(0));
+        CreatedWindow* x = CreatedWindow::find(THIS);
+
+        if ( ! ( x && xdisplay ) )
+            return;
+        if ( b_icon )
+            SendMessage( x->xid, WM_SETICON, ICON_BIG, (LPARAM) b_icon);
+        if ( s_icon )
+            SendMessage( x->xid, WM_SETICON, ICON_SMALL, (LPARAM)s_icon);
+#endif // #ifdef WIN32
+
 BOOT:
     isa("FLTK::Window", "FLTK::Group");
-
 
 #endif // ifndef DISABLE_WINDOW

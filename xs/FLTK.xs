@@ -69,7 +69,9 @@ the C<CODE> should be an AV* containing data that looks a little like this...
 void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #ifdef ENABLE_CALLBACKS
 #ifndef ENABLE_HASH_CALLBACKS
+    if (CODE == NULL) return;
     AV *cbargs = (AV *) CODE;
+    if (cbargs == NULL) return;
     I32 alen = av_len(cbargs);
     SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
     dSP;
@@ -125,9 +127,21 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 #endif // ifdef ENABLE_CALLBACKS
 }
 
+#ifdef WIN32
+#include <windows.h>
+HINSTANCE dllInstance; // Global library instance handle.
+extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
+    switch ( reason ) {
+        case DLL_PROCESS_ATTACH:
+        case DLL_THREAD_ATTACH:
+            dllInstance = hInst;
+            break;
+    }
+    return TRUE;
+}
+#endif // #ifdef WIN32
+
 /* Alright, let's get things started, shall we? */
-
-
 
 MODULE = FLTK               PACKAGE = FLTK
 
@@ -149,6 +163,7 @@ INCLUDE: BarGroup.xsi
 
 INCLUDE: Box.xsi
 
+INCLUDE: Browser.xsi
 
 #INCLUDE: Button.xsi
 
@@ -162,12 +177,14 @@ INCLUDE: Group.xsi
 #INCLUDE: Valuator.xsi
 #INCLUDE: ValueInput.xsi
 #INCLUDE: ValueOutput.xsi
-#INCLUDE: Widget.xsi
+
+INCLUDE: Widget.xsi
 
 INCLUDE: WidgetAssociation.xsi
+
 INCLUDE: Window.xsi
 
-    #INCLUDE: ~old/Browser.xsi
+
     #INCLUDE: ~old/CheckButton.xsi
     #INCLUDE: ~old/Choice.xsi
     #INCLUDE: ~old/Clock.xsi

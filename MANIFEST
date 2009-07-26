@@ -17,9 +17,9 @@ xs/Adjuster.xsi
 xs/AlignGroup.xsi
 xs/AnsiWidget.xsi
 xs/ask.xsi
-xs/AssociationFunctor.xsi
-xs/AssociationType.xsi
 xs/BarGroup.xsi
+xs/Box.xsi
+xs/Browser.xsi
 xs/Button.xsi
 xs/Color.xsi
 xs/ColorChooser.xsi
@@ -28,6 +28,9 @@ xs/FLTK.xs
 xs/Group.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
+xs/rc/fltk.ico
+xs/rc/icons.rc
+xs/rc/resource.h
 xs/Rectangle.xsi
 xs/run.xsi
 xs/Slider.xsi
@@ -37,4 +40,5 @@ xs/Valuator.xsi
 xs/ValueInput.xsi
 xs/ValueOutput.xsi
 xs/Widget.xsi
+xs/WidgetAssociation.xsi
 xs/Window.xsi

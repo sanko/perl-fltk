@@ -8,6 +8,8 @@ MODULE = FLTK               PACKAGE = FLTK::Widget
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for abstract The base class for all widgets in FLTK
+
 =for git $Id$ for got=
 
 =head1 Description
@@ -16,14 +18,6 @@ The base class for all widgets in FLTK. The basic Widget draws an empty
 L<C<box()>|/"box"> and the L<C<label()>|/"label">, and ignores all events.
 This can be useful for making decorations or providing areas that pop up a
 L<C<tooltip()>|/"tooltip">.
-
-Inherits L<FLTK::Widget|FLTK::Widget>.
-
-Inherited by L<BButton|FLTK::BButton>, L<FLTK::CheckButton|FLTK::CheckButton>,
-L<FLTK::HighlightButton|FLTK::HighlightButton>,
-L<FLTK::RepeatButton|FLTK::RepeatButton>,
-L<FLTK::ReturnButton|FLTK::ReturnButton>, and
-L<FLTK::ToggleButton|FLTK::ToggleButton>.
 
 =cut
 

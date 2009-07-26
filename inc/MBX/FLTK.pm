@@ -6,7 +6,7 @@ package MBX::FLTK;
     use Config qw[%Config];
     use ExtUtils::ParseXS qw[];
     use ExtUtils::CBuilder qw[];
-    use File::Spec::Functions qw[catdir rel2abs];
+    use File::Spec::Functions qw[catdir rel2abs abs2rel canonpath];
     use File::Find qw[find];
     use File::Path 2.07 qw[make_path];
     use base 'Module::Build';
@@ -135,9 +135,23 @@ package MBX::FLTK;
 
     sub ACTION_code {
         my ($self, $args) = @_;
-        my @xs;
+        my (@xs, @rc, @obj);
         find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
-        my @obj;
+        find(sub { push @rc, $File::Find::name if !m[.+\.o$]; }, 'xs/rc');
+        if ($self->is_windowsish) {
+            print "Building Win32 resources...\n";
+            my @dot_rc = grep defined,
+                map { m[\.rc$] ? rel2abs($_) : () } @rc;
+            for my $dot_rc (@dot_rc) {
+                my $dot_o = $dot_rc =~ m[^(.*)\.] ? $1 . $Config{'_o'} : next;
+                push @obj, $dot_o;
+                next if $self->up_to_date($dot_rc, $dot_o);
+                chdir 'xs/rc';
+                $self->do_system(sprintf "windres $dot_rc $dot_o");
+                chdir $self->base_dir;
+            }
+            map { abs2rel($_) } @obj;
+        }
     XS: for my $XS (@xs) {
             my $cpp = _xs_to_cpp($self, $XS)
                 or do { printf 'Cannot Parse %s', $XS; exit 0 };
@@ -153,6 +167,7 @@ package MBX::FLTK;
         }
         make_path(catdir(qw[blib arch auto FLTK]),
                   {verbose => VERBOSE, mode => 0711});
+        @obj = map { canonpath abs2rel($_) } @obj;
         if (!$self->up_to_date([@obj],
                                catdir(qw[blib arch auto FLTK],
                                       'FLTK.' . $Config{'so'}
@@ -164,9 +179,8 @@ package MBX::FLTK;
                  objects => \@obj,
                  lib_file =>
                      catdir(qw[blib arch auto FLTK], 'FLTK.' . $Config{'so'}),
-                 module_name => 'FLTK',
-                 extra_linker_flags =>
-                     Alien::FLTK->ldflags(qw[gl images static]),
+                 module_name        => 'FLTK',
+                 extra_linker_flags => Alien::FLTK->ldflags(qw[gl images]),
                 );
             @cleanup = map { s["][]g; rel2abs($_); } @cleanup;
             $self->add_to_cleanup(@cleanup);

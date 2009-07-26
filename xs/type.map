@@ -82,6 +82,8 @@ O_FLTK
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for abstract Type definitions for the Feather Light Toolkit
+
 =for git $Id$ for got=
 
 =cut
