@@ -129,3 +129,6 @@ t/50000_Classes/50001_FLTK_Rectangle.t
 t/50000_Classes/~50002_FLTK_Style.t
 examples/timer.pl
 examples/fltk.ico
+examples/~cpp.pl
+
+# $ID$

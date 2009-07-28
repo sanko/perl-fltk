@@ -238,10 +238,10 @@ This code will print "TICK" each second on C<*STDOUT>, with a fair degree of
 accuracy:
 
     sub callback {
-        printf("TICK\n");
-        FLTK::repeat_timeout(1.0, \&callback);
+        say('TICK');
+        FLTK::repeat_timeout(1, \&callback);
     }
-    FLTK::add_timeout(1.0, \&callback);
+    FLTK::add_timeout(1, \&callback);
     FLTK::wait() while 1
 
 =cut

@@ -292,6 +292,7 @@ END
 
     sub ACTION_RCS {
         my ($self) = @_;
+        require POSIX;
         print 'Fake RCS...';
         my @manifest_files = sort keys %{$self->_read_manifest('MANIFEST')};
     FILE: for my $file (@manifest_files) {
@@ -387,4 +388,3 @@ $Revision$
 $Date$Last $Modified$
 $URL$
 $ID$
-

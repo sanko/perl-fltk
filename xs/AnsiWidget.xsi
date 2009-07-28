@@ -103,7 +103,7 @@ Creates a new C<FLTK::AnsiWidget> object.
 AnsiWidget *
 AnsiWidget::new ( int x, int y, int w, int h, int defsize )
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 AnsiWidget::DESTROY ( )

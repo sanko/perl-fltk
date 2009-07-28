@@ -26,6 +26,7 @@ xs/ColorChooser.xsi
 xs/draw.xsi
 xs/FLTK.xs
 xs/Group.xsi
+xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
 xs/rc/fltk.ico

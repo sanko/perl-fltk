@@ -108,6 +108,12 @@ L<C<parsecolor( char * name, unsigned length )>|FLTK::Color/"parsecolor">
 L<C<parsecolor( $mycolor, length($mycolor) )>|FLTK::Color/"parsecolor"> is
 silly.
 
+=item L<C<FLTK::Browser::column_widths()>|FLTK::Browser/"column_widths">,
+L<C<FLTK::Browser::current_index>|FLTK::Browser/"current_index">
+L<C<FLTK::Browser::focus_index>|FLTK::Browser/"focus_index">
+L<C<FLTK::Browser::column_labels>|FLTK::Browser/"column_labels"> do not
+require a trailing zero (C<0>) and do not add one to return values.
+
 =back
 
 =back
@@ -115,8 +121,8 @@ silly.
 =head3 Backward Compatibility
 
 This section lists recent major changes in API or behavior between stable
-releases.  For older news see the F<Changes> file included with this
-distribution.  For detail see the commit logs.
+releases. For older news see the F<Changes> file included with this
+distribution. For detail see the commit logs.
 
 =over
 

@@ -41,7 +41,7 @@ yourself in order to see it.
 =cut
 
 Widget *
-Widget::new( int x, int y, int w, int h, char *label = 0)
+Widget::new( int x, int y, int w, int h, char * label = 0)
     CODE:
         RETVAL = new Widget( x, y, w, h, label);
         RETVAL->copy_label(label);
@@ -1374,9 +1374,9 @@ response to C<FLTK::ENTER> and C<FLTK::MOVE> events. FLTK will change it back
 to C<FLTK::CURSOR_DEFAULT> if the mouse is moved outside this widget, unless
 another widget calls this.
 
-=for TODO On X you can mess with the colors by setting the Color variables
-C<fl_cursor_fg> and C<fl_cursor_bg> to the colors you want, before calling
-this.
+=for hackers TODO On X you can mess with the colors by setting the Color
+variables C<fl_cursor_fg> and C<fl_cursor_bg> to the colors you want, before
+calling this.
 
 =cut
 

@@ -204,7 +204,7 @@ L<C<inset()>|/"inset">.
 FrameBox *
 FrameBox::new ( char * name, int dx, int dy, int dw, int dh, char * pattern, Box * down = 0 )
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 FrameBox::DESTROY ( )
@@ -321,7 +321,7 @@ Creates a new C<FLTK::FlatBox> object.
 FlatBox *
 FlatBox::new ( char * name )
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 FlatBox::DESTROY ( )
@@ -408,7 +408,7 @@ Creates a new C<FLTK::HighlightBox> object.
 HighlightBox *
 HighlightBox::new ( char * name, Box * d )
 
-#if ENABLE_DESTROY
+#ifdef ENABLE_DESTROY
 
 bool
 HighlightBox::DESTROY ( )

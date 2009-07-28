@@ -12,10 +12,9 @@ package FLTK;
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
-our $VERSION_BASE = 1; our $UNSTABLE_RELEASE = 2; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
+our $VERSION_BASE = 530; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
 use XSLoader;
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
@@ -31,7 +30,7 @@ use Exporter qw[import];
     ],
     box => [
         qw[ drawframe drawframe2
-        NO_BOX
+            NO_BOX
             UP_BOX DOWN_BOX THIN_UP_BOX THIN_DOWN_BOX ENGRAVED_BOX
             EMBOSSED_BOX BORDER_BOX FLAT_BOX HIGHLIGHT_UP_BOX
             HIGHLIGHT_DOWN_BOX ROUND_UP_BOX ROUND_DOWN_BOX DIAMOND_UP_BOX

@@ -18,7 +18,8 @@ CPANID: SANKO
 #include "./ppport.pl"
 
 #define isa(package,parent)\
-    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));
+    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));\
+    /* TODO: make this spider up the list and make deeper connections? */
 
 #include <fltk/Widget.h>
 
@@ -170,7 +171,11 @@ INCLUDE: Browser.xsi
 INCLUDE: Color.xsi
 
 #INCLUDE: ColorChooser.xsi
+
 INCLUDE: Group.xsi
+
+INCLUDE: MultiBrowser.xsi
+
 #INCLUDE: Rectangle.xsi
 #INCLUDE: Slider.xsi
 #INCLUDE: Style.xsi

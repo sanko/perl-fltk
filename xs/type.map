@@ -25,8 +25,8 @@ AssociationFunctor  *   O_FLTK
 AlignGroup          *   O_FLTK
 AnsiWidget          *   O_FLTK
 BarGroup            *   O_FLTK
-
 Browser             *   O_FLTK
+Browser::Mark       *   O_FLTK
 fltk::Rectangle     *   O_FLTK
 Box                 *   O_FLTK
 Button              *   O_FLTK
@@ -42,11 +42,11 @@ Image               *   O_FLTK
 LabelType           *   O_FLTK
 const Monitor       *   O_FLTK
 Monitor             *   O_FLTK
+MultiBrowser        *   O_FLTK
 NamedStyle          *   O_FLTK
-Browser::Mark       *   O_FLTK
 Menu                *   O_FLTK
 List                *   O_FLTK
-Scrollbar               O_FLTK
+Scrollbar           *   O_FLTK
 Slider              *   O_FLTK
 const Style         *   O_FLTK
 Style               *   O_FLTK

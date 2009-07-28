@@ -1,3 +1,7 @@
+#ifndef DISABLE_COLOR
+
+MODULE = FLTK               PACKAGE = FLTK::Color
+
 =pod
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
@@ -5,14 +9,6 @@
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
 =for git $Id$ for got=
-
-=cut
-
-#ifndef DISABLE_COLOR
-
-MODULE = FLTK               PACKAGE = FLTK::Color
-
-=pod
 
 =head1 Description
 
@@ -36,7 +32,7 @@ default label color for everything so that changing color zero can be used by
 the C<-fg> switch. You should use L<C<FLTK::BLACK>|FLTK::Color/"BLACK"> (56)
 to get black.
 
-=head1 ~Functions
+=head1 Functions
 
 Symbolic names for some of the indexed colors.
 
