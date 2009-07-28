@@ -1,14 +1,26 @@
-#!perl -I../../blib/lib -I../../blib/arch
-# Simple fltk/ask.h tests
-#
+#!perl -Iblib/lib -Iblib/arch
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Tests for functions found in xs/ask.xsi
+
+=for TODO Somehow test selecting different buttons (with defaults and C<ESC>)
+
+=for git $Id$
+
+=cut
 use strict;
 use warnings;
-use FLTK qw[:ask];
-use Test::More tests => 29;
+use Test::More tests => 30;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
-chdir '../../' if not -d '_build';
+chdir '../..' if not -d '_build';
+use lib 'inc';
 my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
@@ -16,10 +28,13 @@ my $interactive     = $build->notes('interactive');
 $SIG{__WARN__} = (
     $verbose
     ? sub {
-        diag(sprintf(q[%02.4f], Time::HiRes::time- $^T), q[ ], shift);
+        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
         }
     : sub { }
 );
+
+#
+use_ok('FLTK', qw[:all]);
 
 #
 is(FLTK::ok(),           '&OK',      'Default English value for ok()');
@@ -43,37 +58,34 @@ is(FLTK::cancel('Forget it!'),
 is(FLTK::cancel(), 'Forget it!', 'Verify new value for cancel()');
 
 #
-ok(!FLTK::message_window_timeout(),
-    'Default value for message_window_timeout()');
-is(FLTK::message_window_timeout(0.25),
+ok(!message_window_timeout(), 'Default value for message_window_timeout()');
+is(message_window_timeout(0.25),
     0.25, 'Change value with message_window_timeout( 1.5 )');
-is(FLTK::message_window_timeout(),
-    0.25, 'Verify new value for message_window_timeout()');
+is(message_window_timeout(), 0.25,
+    'Verify new value for message_window_timeout()');
 
 #
-ok(!FLTK::message_window_scrollable(),
+ok(!message_window_scrollable(),
     'Default value for message_window_scrollable()');
-is(FLTK::message_window_scrollable(1),
+is(message_window_scrollable(1),
     1, 'Change value with message_window_scrollable( 1 )');
-is(FLTK::message_window_scrollable(),
+is(message_window_scrollable(),
     1, 'Verify new value for message_window_scrollable()');
 
 #
-ok(!FLTK::message_window_label(),
-    'Default value for message_window_scrollable()');
-is(FLTK::message_window_label('This is my title!'),
+ok(!message_window_label(), 'Default value for message_window_scrollable()');
+is(message_window_label('This is my title!'),
     'This is my title!',
     'Change value with message_window_label( \'This is my title!\' )');
-is(FLTK::message_window_label(),
+is(message_window_label(),
     'This is my title!',
     'Verify new value for message_window_label()');
 
 #
-SKIP: {
-    skip '...no typemap for these yet.', 2;
-    warn FLTK::message_style();
-    warn FLTK::icon_style();
-}
+isa_ok(message_style(), 'FLTK::NamedStyle', 'message_style()');
+isa_ok(icon_style(),    'FLTK::NamedStyle', 'icon_style()');
+
+#
 warn
     'These pop up and go a way quick because the message_window_timeout is now 0.25s';
 ok(!message("This is a test."),
@@ -89,18 +101,3 @@ is( choice("This is a test.", 'One', 'Two', 'Three'),
     -1,
     'choice("This is a test.", "One", "Two", "Three") returns -1 on timeout'
 );
-__END__
-Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of The Artistic License 2.0.  See the LICENSE file
-included with this distribution or
-http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered by
-the Creative Commons Attribution-Share Alike 3.0 License.  See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-$Id$
