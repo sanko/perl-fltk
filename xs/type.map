@@ -31,6 +31,8 @@ fltk::Rectangle     *   O_FLTK
 Box                 *   O_FLTK
 Button              *   O_FLTK
 Callback            *   O_FLTK
+CheckButton         *   O_FLTK
+Choice              *   O_FLTK
 Color                   T_INT
 ColorChooser        *   O_FLTK
 Cursor              *   O_FLTK

@@ -8,6 +8,8 @@ MODULE = FLTK               PACKAGE = FLTK::Button
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for abstract Push button widget
+
 =for git $Id$ for got=
 
 =head1 Description
@@ -41,39 +43,18 @@ an input field in the same window, the user will have to hold down the C<Alt>
 key so that the input field does not eat the event first as an
 L<C<FLTK::KEY>|FLTK/"KEY"> event.
 
-Inherits L<FLTK::Widget|FLTK::Widget>.
-
-Inherited by L<BButton|FLTK::BButton>, L<FLTK::CheckButton|FLTK::CheckButton>,
-L<FLTK::HighlightButton|FLTK::HighlightButton>,
-L<FLTK::RepeatButton|FLTK::RepeatButton>,
-L<FLTK::ReturnButton|FLTK::ReturnButton>, and
-L<FLTK::ToggleButton|FLTK::ToggleButton>.
-
 =cut
 
 #include <fltk/Button.h>
 
-=for apidoc ||FLTK::Button|new|X|Y|W|H|[LABEL]
+=for apidoc ||FLTK::Button|new|x|y|w|h|label = ""
 
 Creates a new C<FLTK::Button> object. Obviously.
 
 =cut
 
 Button *
-Button::new(x, y, w, h, label = 0)
-    int x
-    int y
-    int w
-    int h
-    char * label
-    CODE:
-        RETVAL = new Button( x, y, w, h, label);
-        RETVAL->copy_label(label);
-#if VERBOSE >= 2
-        warn("%s|%s", RETVAL->label(), label);
-#endif
-    OUTPUT:
-        RETVAL
+Button::new(int x, int y, int w, int h, char * label = 0)
 
 #ifdef ENABLE_DESTROY
 
@@ -92,7 +73,7 @@ Button::DESTROY ( )
 
 =for apidoc e||int|HIDDEN|
 
-NFI
+Back-comptability value to hide the button
 
 =cut
 
@@ -103,44 +84,7 @@ HIDDEN ( )
     OUTPUT:
         RETVAL
 
-
-=for apidoc |||draw|GLYPH_WIDTH
-
-This function provides a mess of back-compatabilty and Windows emulation to
-subclasses of Button to draw with. It will draw the button according to the
-current state of being pushed and it's L<C<state()>|/"state">. If non-zero is
-passed for C<GLYPH_WIDTH> then the L<C<glyph()>|/"glyph"> is drawn in that
-space on the left (or on the right if negative), and it assummes the glyph
-indicates the L<C<state()>|/"state">, so the box is only used to indicate the
-pushed state.
-
-=cut
-
-void
-Button::draw( GLYPH_WIDTH )
-    int GLYPH_WIDTH
-
-=for apidoc ||int|handle|EVENT|FLTK::Rectangle
-
-NFI
-
-=for apidoc ||int|handle|EVENT
-
-NFI
-
-=cut
-
-int
-Button::handle ( EVENT, RECT = NO_INIT )
-    CASE: items == 2
-        int EVENT
-        C_ARGS: EVENT
-    CASE:
-        int               EVENT
-        fltk::Rectangle * RECT
-        C_ARGS: EVENT, *RECT
-
-=for apidoc ||bool|value|VALUE
+=for apidoc ||bool|value|value
 
 Change the L<C<value()>|/"value">. Redraws the button and returns true if the
 new value is different. This is the same function as
@@ -164,17 +108,32 @@ This is the same as L<Widget::state()|FLTK::Widget/"state">.
 =cut
 
 bool
-Button::value ( VALUE = NO_INIT )
+Button::value ( bool value = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->value( );
         OUTPUT:
             RETVAL
     CASE:
-        bool VALUE
+        CODE:
+            THIS->value( value );
+
+=for apidoc ||int|handle|event|rectangle
 
 
- # Static Public Attributes
+
+=for apidoc ||int|handle|event
+
+
+
+=cut
+
+int
+Button::handle ( int event, fltk::Rectangle * rectangle = NO_INIT )
+    CASE: items == 2
+        C_ARGS: event
+    CASE:
+        C_ARGS: event, * rectangle
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 
@@ -188,5 +147,23 @@ Button::default_style ( )
         RETVAL = THIS->default_style;
     OUTPUT:
         RETVAL
+
+=for apidoc |||draw|glyph_width
+
+This function provides a mess of back-compatabilty and Windows emulation to
+subclasses of Button to draw with. It will draw the button according to the
+current state of being pushed and it's L<C<state()>|/"state">. If non-zero is
+passed for C<GLYPH_WIDTH> then the L<C<glyph()>|/"glyph"> is drawn in that
+space on the left (or on the right if negative), and it assummes the glyph
+indicates the L<C<state()>|/"state">, so the box is only used to indicate the
+pushed state.
+
+=cut
+
+void
+Button::draw( int glyph_width )
+
+BOOT:
+    isa("FLTK::Button", "FLTK::Widget");
 
 #endif // ifndef DISABLE_BUTTON

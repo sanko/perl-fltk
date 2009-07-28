@@ -21,6 +21,8 @@ xs/BarGroup.xsi
 xs/Box.xsi
 xs/Browser.xsi
 xs/Button.xsi
+xs/CheckButton.xsi
+xs/Choice.xsi
 xs/Color.xsi
 xs/ColorChooser.xsi
 xs/draw.xsi

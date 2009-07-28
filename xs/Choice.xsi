@@ -1,0 +1,122 @@
+#ifndef DISABLE_CHOICE
+
+MODULE = FLTK               PACKAGE = FLTK::Choice
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Popup list of items that the user can choose one of
+
+=for git $Id$
+
+=head1 Description
+
+Subclass of fltk::Menu that provides a button that pops up the menu, and also
+displays the text of the most-recently selected menu item.
+
+The appearance is designed to look like an "uneditable ComboBox" in
+Windows, but it is somewhat different in that it does not contain a
+text editor, also the menu pops up with the current item under the
+cursor, which is immensely easier to use once you get used to it. This
+is the same UI as the Macintosh and Motif, which called this an
+OptionButton.
+
+The user can change the value by popping up the menu by clicking anywhere in
+the widget and moving the cursor to a different item, or by typing up and down
+arrow keys to cycle amoung the items. Typing the
+L<C<FLTK::Widget::shortcut()>|FLTK::Widget/"shortcut"> of any of the items
+will also change the value to that item.
+
+If you set a L<C<shortcut()>|FLTK::Widget/"shortcut"> on this widget itself or
+put C<&x> in the label, that shortcut will pop up the menu. The user can then
+use arrow keys or the mouse to change the selected item.
+
+When the user changes the L<C<value()>|/"value"> the callback is done.
+
+If you wish to display text that is different than any of the menu items, you
+may instead want an L<FLTK::PopupMenu>. It works identically but instead
+displays an empty box with the label() inside it, you can then change the
+L<C<label()>|/"label"> as needed.
+
+If you want a "real" ComboBox where the user edits the text, this is a planned
+addition to the L<FLTK::Input> widget. All text input will have menus of
+possible replacements and completions. Not yet implemented, unfortunately.
+
+=cut
+
+#include <fltk/Choice.h>
+
+=for apidoc ||FLTK::Choice|new|x|y|w|h|label = ""
+
+The constructor makes the menu empty. See L<Menu|FLTK::Menu> and
+L<StringList|FLTK::StringList> for information on how to set the menu to a
+list of items.
+
+=cut
+
+Choice *
+Choice::new(int x, int y, int w, int h, char * label = 0)
+
+#ifdef ENABLE_DESTROY
+
+bool
+Choice::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Choice (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc ||int|handle|event
+
+
+
+=for apidoc ||int|handle|event|rectangle
+
+
+
+=cut
+
+int
+Choice::handle( int event, fltk::Rectangle * rectangle )
+    CASE: items == 2
+        C_ARGS: event
+    CASE: items == 3
+        C_ARGS: event, (const fltk::Rectangle) * rectangle
+
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+NamedStyle *
+Choice::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||draw|
+
+You can change the icon drawn on the right edge by setting
+L<C<glyph()>|/"glyph"> to your own function that draws whatever you want.
+
+=cut
+
+void
+Choice::draw()
+
+BOOT:
+    isa("FLTK::Choice", "FLTK::Menu");
+
+#endif // ifndef DISABLE_CHOICE

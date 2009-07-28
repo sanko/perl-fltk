@@ -166,7 +166,11 @@ INCLUDE: Box.xsi
 
 INCLUDE: Browser.xsi
 
-#INCLUDE: Button.xsi
+INCLUDE: Button.xsi
+
+INCLUDE: CheckButton.xsi
+
+INCLUDE: Choice.xsi
 
 INCLUDE: Color.xsi
 
