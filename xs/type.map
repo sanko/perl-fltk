@@ -33,6 +33,8 @@ Button              *   O_FLTK
 Callback            *   O_FLTK
 CheckButton         *   O_FLTK
 Choice              *   O_FLTK
+Clock               *   O_FLTK
+ClockOutput         *   O_FLTK
 Color                   T_INT
 ColorChooser        *   O_FLTK
 Cursor              *   O_FLTK

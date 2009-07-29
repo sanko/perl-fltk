@@ -148,6 +148,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
     # Functions (Exported)
 
+INCLUDE: ask.xsi
+
 INCLUDE: run.xsi
 
     # Objects (Widgets, etc.)
@@ -157,8 +159,6 @@ INCLUDE: Adjuster.xsi
 INCLUDE: AlignGroup.xsi
 
 INCLUDE: AnsiWidget.xsi
-
-INCLUDE: ask.xsi
 
 INCLUDE: BarGroup.xsi
 
@@ -171,6 +171,8 @@ INCLUDE: Button.xsi
 INCLUDE: CheckButton.xsi
 
 INCLUDE: Choice.xsi
+
+INCLUDE: Clock.xsi
 
 INCLUDE: Color.xsi
 

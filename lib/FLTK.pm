@@ -38,6 +38,9 @@ use Exporter qw[import];
             OVAL_BOX OSHADOW_BOX OFLAT_BOX BORDER_FRAME PLASTIC_UP_BOX
             PLASTIC_DOWN_BOX ]
     ],
+    clock => [
+        qw[SQUARE ANALOG ROUND DIGITAL]
+    ],
     color => [
         qw[ NO_COLOR    FREE_COLOR  NUM_FREE_COLOR  GRAY00  GRAY05  GRAY10
             GRAY15      GRAY20      GRAY25          GRAY30  GRAY33  GRAY35

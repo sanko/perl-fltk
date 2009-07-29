@@ -120,13 +120,7 @@ lib/FLTK/Version.pm
 examples/tinker.pl
 
 # Tests for stuff I haven't (re)written yet
-t/00000_Basic/00001_use_ok.t
-t/20000_Types/20001_Color.t
-t/30000_FLTK/ask.t
-t/50000_Classes/50000_FLTK_Rectangle/51000_FLTK_Monitor.t
-t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget.t
-t/50000_Classes/50001_FLTK_Rectangle.t
-t/50000_Classes/~50002_FLTK_Style.t
+t/~.+
 examples/timer.pl
 examples/fltk.ico
 examples/~cpp.pl

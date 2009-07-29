@@ -1,0 +1,245 @@
+#ifndef DISABLE_CLOCKOUTPUT
+
+MODULE = FLTK               PACKAGE = FLTK::ClockOutput
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Base class of FLTK::Clock
+
+=for git $Id$
+
+=head1 Description
+
+Base class of L<C<Clock>|FLTK::Clock>, this one does not move, it just
+displays whatever time  you set into it.
+
+L<C<type()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
+
+=cut
+
+#include <fltk/Clock.h>
+
+=for apidoc ||FLTK::ClockOutput|new|x|y|w|h|label = ""
+
+
+
+=cut
+
+ClockOutput *
+ClockOutput::new(int x, int y, int w, int h, char * label = 0)
+
+#ifdef ENABLE_DESTROY
+
+bool
+ClockOutput::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, ClockOutput (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc et[clock]||int|SQUARE|
+
+
+
+=for apidoc et[clock]||int|ANALOG|
+
+
+
+=for apidoc et[clock]||int|ROUND|
+
+
+
+=for apidoc et[clock]||int|DIGITAL|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+SQUARE( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = ClockOutput::SQUARE;  break;
+            case 1: RETVAL = ClockOutput::ANALOG;  break;
+            case 2: RETVAL = ClockOutput::ROUND;   break;
+            case 3: RETVAL = ClockOutput::DIGITAL; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+         ANALOG = 1
+          ROUND = 2
+        DIGITAL = 3
+
+MODULE = FLTK               PACKAGE = FLTK::ClockOutput
+
+=for apidoc |||value|time
+
+Set the clock to a Unix timestamp. The value is passed through the
+L<C<localtime()>|/"localtime"> function and used to get the hour, minute, and
+second.
+
+=for apidoc |||value|hour|minute|second
+
+Set the hour, minute, and second to display. The hour is effectively taken
+modulus 12 and the minute and second modulus 60 to figure out where to place
+the hands. Redraw happens only if different.
+
+Note that this does not set the L<C<value()>|/"value">; ...without the date,
+it really can't.
+
+=for apidoc ||time|value|
+
+Return the last Unix timestamp the clock was set to.
+
+=cut
+
+unsigned long
+ClockOutput::value( unsigned long time = NO_INIT, int minute = NO_INIT, int second = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->value( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->value( time );
+    CASE: items == 4
+        CODE:
+            THIS->value( time, minute, second );
+
+=for apidoc ||h|hour|
+
+Return the hour sent to the last call to L<C<value()>|/"value">.
+
+=for apidoc ||m|minute|
+
+Return the minute sent to the last call to L<C<value()>|/"value">.
+
+=for apidoc ||s|second|
+
+Return the second sent to the last call to L<C<value()>|/"value">.
+
+=cut
+
+int
+ClockOutput::hour( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = THIS->hour( );   break;
+            case 1: RETVAL = THIS->minute( ); break;
+            case 2: RETVAL = THIS->second( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        minute = 1
+        second = 2
+
+BOOT:
+    isa("FLTK::ClockOutput", "FLTK::Widget");
+
+#endif // ifndef DISABLE_CLOCKOUTPUT
+
+#ifndef DISABLE_CLOCK
+
+MODULE = FLTK               PACKAGE = FLTK::Clock
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Clock widget for the Fast Light Tool Kit (FLTK).
+
+=for git $Id$
+
+=head1 Description
+
+This widget provides a round analog clock display and is provided for Forms
+compatibility. It installs a 1-second timeout callback using
+L<C<FLTK::add_timeout()>|FLTK/"add_timeout">.
+
+The L<C<color()>|FLTK::Color/"color"> fills the background. The
+L<C<selectioncolor()>|FLTK/"selectioncolor"> (which defaults to C<GRAY85>)
+fills the hands. The L<C<textcolor()>|/"textcolor"> is used to color in the
+tick marks and outline the hands.
+
+L<C<type()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
+See the base class ClockOutput for some other methods.
+
+=head1 Design credits
+
+Original clock display written by Paul Haeberli at SGI.
+
+Modifications by Mark Overmars for Forms
+
+Further changes by Bill Spitzak for fltk
+
+=cut
+
+#include <fltk/Clock.h>
+
+=for apidoc ||FLTK::Clock|new|x|y|w|h|label = ""
+
+
+
+=cut
+
+Clock *
+Clock::new(int x, int y, int w, int h, char * label = 0)
+
+#ifdef ENABLE_DESTROY
+
+bool
+Clock::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Clock (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc ||int|handle|event
+
+
+
+=cut
+
+int
+Clock::handle( int event )
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+
+
+=cut
+
+NamedStyle *
+Clock::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+BOOT:
+    isa("FLTK::Clock", "FLTK::ClockOutput");
+
+#endif // ifndef DISABLE_CLOCK

@@ -10,8 +10,10 @@ MANIFEST			This list of files
 META.yml
 Notes.pod
 README
-t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget/52201_Button.t
-t/50000_Classes/50000_FLTK_Rectangle/52000_FLTK_Widget/52300_FLTK_Group/52351_FLTK_Window.t
+t/00000_basic/00001_use_ok.t
+t/20000_functions/20010_ask.t
+t/40000_widgets/40010_clock.t
+t/60000_types/60001_Color.t
 TODO.pod
 xs/Adjuster.xsi
 xs/AlignGroup.xsi
@@ -23,6 +25,7 @@ xs/Browser.xsi
 xs/Button.xsi
 xs/CheckButton.xsi
 xs/Choice.xsi
+xs/Clock.xsi
 xs/Color.xsi
 xs/ColorChooser.xsi
 xs/draw.xsi
