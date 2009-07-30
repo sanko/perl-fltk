@@ -28,6 +28,7 @@ xs/Choice.xsi
 xs/Clock.xsi
 xs/Color.xsi
 xs/ColorChooser.xsi
+xs/ComboBox.xsi
 xs/draw.xsi
 xs/FLTK.xs
 xs/Group.xsi

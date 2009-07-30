@@ -1,0 +1,398 @@
+#ifndef DISABLE_COMBOBOX
+
+MODULE = FLTK               PACKAGE = FLTK::ComboBox
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Single line input field with predefined choices via popup menu
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+#include <fltk/ComboBox.h>
+
+=for apidoc ||ComboBox|new|x|y|w|h|label = ""
+
+
+
+=cut
+
+ComboBox *
+ComboBox::new( int x , int y, int w, int h, char * label = 0 );
+
+#ifdef ENABLE_DESTROY
+
+bool
+ComboBox::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, ComboBox" );
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+
+
+=cut
+
+NamedStyle *
+ComboBox::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=for apidoc |||draw|
+
+
+
+=for apidoc |||layout|
+
+
+
+=cut
+
+void
+ComboBox::draw( )
+    CODE:
+        switch ( ix ) {
+            case 0: THIS->draw();   break;
+            case 1: THIS->layout(); break;
+        }
+    ALIAS:
+        layout = 1
+
+=for apidoc ||int|handle|event
+
+
+
+=cut
+
+int
+ComboBox::handle( int event )
+
+=for apidoc ||int|popup|rect|title = ""|menubar = false
+
+
+
+=cut
+
+int
+ComboBox::popup( fltk::Rectangle * rect, char * title = 0, bool menubar = false )
+    C_ARGS: * rect, title, menubar
+
+=for apidoc ||int|choice|value|
+
+
+
+=for apidoc ||int|choice||
+
+
+
+=cut
+
+int
+ComboBox::choice( int value = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        C_ARGS: value
+
+=for apidoc ||int|find_choice||
+
+
+
+=cut
+
+int
+ComboBox::find_choice( )
+
+=for apidoc ||bool|text|txt
+
+
+
+=for apidoc ||string|text||
+
+
+
+=cut
+
+int
+ComboBox::text( char * txt = NO_INIT, int n = NO_INIT )
+    PPCODE:
+        if ( items == 1 ) {
+            const char * RETVAL = THIS->text( );
+            XSprePUSH; PUSHi((IV)RETVAL);
+        }
+        else if ( items == 2 ) {
+            bool RETVAL = THIS->text ( txt );
+            ST(0) = boolSV(RETVAL);
+            sv_2mortal(ST(0));
+        }
+        else if ( items == 3 ) {
+            bool RETVAL = THIS->text ( txt, n );
+            ST(0) = boolSV(RETVAL);
+            sv_2mortal(ST(0));
+        }
+        XSRETURN(1);
+
+=for apidoc ||bool|static_text|txt
+
+
+
+=for apidoc ||bool|static_text|txt|n
+
+
+
+=cut
+
+bool
+ComboBox::static_text( const char * txt, int n = NO_INIT )
+    CASE: items == 2
+        C_ARGS: txt
+    CASE: items == 3
+        C_ARGS: txt, n
+
+=for apidoc ||char|at|index
+
+
+
+=cut
+
+char
+ComboBox::at( int index )
+
+=for apidoc ||int|size|ofText
+
+
+
+=cut
+
+int
+ComboBox::size( bool ofText )
+
+=for apidoc ||int|position||
+
+
+
+=for apidoc |||position|p|m
+
+
+
+=for apidoc |||position|p|m
+
+
+
+=cut
+
+int
+ComboBox::position( int p = NO_INIT, int m = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->position( p );
+    CASE: items == 3
+        CODE:
+            THIS->position( p, m );
+
+=for apidoc ||int|mark||
+
+
+
+=for apidoc |||mark|m
+
+
+
+=cut
+
+int
+ComboBox::mark( int m = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->mark( m );
+
+=for apidoc |||up_down_position|p|m
+
+
+
+=cut
+
+void
+ComboBox::up_down_position( int p, bool b )
+
+=for apidoc ||bool|replace|a|b|c|d
+
+
+
+=for apidoc ||bool|replace|a|b|c
+
+
+
+=cut
+
+bool
+ComboBox::replace ( int a, int b, c, int d = NO_INIT )
+    CASE: items == 4
+        char c;
+        C_ARGS: a, b, c
+        OUTPUT:
+            RETVAL
+    CASE: items == 5
+        const char * c;
+        C_ARGS: a, b, c, d
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||bool|cut||
+
+
+
+
+=for apidoc ||bool|cut|n|
+
+
+
+=for apidoc ||bool|cut|n|b|
+
+
+
+=cut
+
+bool
+ComboBox::cut( int n = NO_INIT, int b = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        C_ARGS: n
+    CASE: items == 3
+        C_ARGS: n, b
+
+=for apidoc ||bool|insert|text|line = 0
+
+
+
+=cut
+
+bool
+ComboBox::insert( const char * text, int l = 0 )
+
+=for apidoc ||bool|copy|clipboard = true
+
+
+
+=cut
+
+bool
+ComboBox::copy( bool clipboard = true )
+
+=for apidoc ||bool|undo||
+
+
+
+=cut
+
+bool
+ComboBox::undo( )
+
+=for apidoc ||int|word_start|index
+
+
+
+=for apidoc ||int|word_start|index
+
+
+
+=for apidoc ||int|word_start|index
+
+
+
+=for apidoc ||int|word_start|index
+
+
+
+=cut
+
+int
+ComboBox::word_start( int index )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = THIS->word_start( index ); break;
+            case 1: RETVAL = THIS->word_end( index );   break;
+            case 2: RETVAL = THIS->line_start( index ); break;
+            case 3: RETVAL = THIS->line_end( index );   break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+          word_end = 1
+        line_start = 2
+          line_end = 3
+
+=for apidoc ||int|mouse_position|rectangle
+
+
+
+=cut
+
+int
+ComboBox::mouse_position( fltk::Rectangle * rectangle )
+    C_ARGS: * rectangle
+
+=for apidoc ||int|xscroll||
+
+
+
+=for apidoc ||int|xscroll||
+
+
+
+=cut
+
+int
+ComboBox::xscroll( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = THIS->xscroll();
+            case 1: RETVAL = THIS->yscroll();
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        yscroll = 1
+
+#ifdef WIN32
+
+=for apidoc |W||input_callback_|widget|args = NO_INIT
+
+
+
+=cut
+
+void
+ComboBox::input_callback_(Widget * widget, ComboBox * d )
+    C_ARGS: widget, (void *) d
+
+#endif // #ifdef WIN32
+
+BOOT:
+    isa("FLTK::ComboBox", "FLTK::Choice");
+
+#endif // #ifndef DISABLE_COMBOBOX
