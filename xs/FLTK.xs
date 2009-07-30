@@ -2,7 +2,7 @@
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
 
-=for abstract Perl Interface to the Feather Light Toolkit
+=for abstract Perl Interface to the Fast Light Toolkit
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 CPANID: SANKO
@@ -176,7 +176,7 @@ INCLUDE: Clock.xsi
 
 INCLUDE: Color.xsi
 
-#INCLUDE: ColorChooser.xsi
+INCLUDE: ColorChooser.xsi
 
 INCLUDE: Group.xsi
 

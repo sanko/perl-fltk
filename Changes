@@ -1,4 +1,4 @@
-Version 0.0XX | Distant future | 7df412e
+Version 0.0XX | Distant future | 00569f8
 
     API Changes/Compatibility Information:
      * It actually exists
@@ -18,9 +18,8 @@ Version 0.0XX | Distant future | 7df412e
 
 _ -.-. .... .- -. --. . ... _________________________________________
 For more information, see the commit log:
-    http://code.google.com/p/sanko/source/list
+    http://github.com/sanko/fltk-perl/commits/master
 
-$Ver$ from git
+$Ver$ from git $Rev$
 $Date$
-$Rev$
 $Url$

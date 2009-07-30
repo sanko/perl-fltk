@@ -93,10 +93,9 @@ correct order; from left to right.
 
 =item Anti-perl-isms
 
-The Feather Light Toolkit's API is so C++ oriented that it makes me itch.
-Here, I'll list the places where things moved too far from what one might
-expect in a Perl module and I made a decision which strayes from the
-underlying C++ API.
+The Fast Light Toolkit's API is so C++ oriented that it makes me itch. Here,
+I'll list the places where things moved too far from what one might expect in
+a Perl module and I made a decision which strayes from the underlying C++ API.
 
 =over
 

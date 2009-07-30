@@ -73,7 +73,7 @@ my $mb = MBX::FLTK->new(
     meta_merge => {
         generated_by => 'Conversion, software version 7.0',
         keywords     => [
-            qw[FLTK Feather Light Toolkit widget FL GUI UI window 2.0.x experimental]
+            qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
         ],
         resources => {
             bugtracker => 'http://github.com/sanko/fltk-perl/issues',

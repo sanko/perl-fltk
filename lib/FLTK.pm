@@ -7,7 +7,7 @@ package FLTK;
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Perl interface to the Feather Light Toolkit
+=for abstract Perl interface to the Fast Light Toolkit
 
 =for git $Id$
 

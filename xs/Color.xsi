@@ -8,6 +8,8 @@ MODULE = FLTK               PACKAGE = FLTK::Color
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for abstract Color value
+
 =for git $Id$ for got=
 
 =head1 Description

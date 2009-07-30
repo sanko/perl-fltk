@@ -31,6 +31,9 @@ fltk::Rectangle     *   O_FLTK
 Box                 *   O_FLTK
 Button              *   O_FLTK
 Callback            *   O_FLTK
+ccHueBox            *   O_FLTK
+ccValueBox          *   O_FLTK
+ccCellBox           *   O_FLTK
 CheckButton         *   O_FLTK
 Choice              *   O_FLTK
 Clock               *   O_FLTK
@@ -86,7 +89,7 @@ O_FLTK
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Type definitions for the Feather Light Toolkit
+=for abstract Type definitions for the Fast Light Toolkit
 
 =for git $Id$ for got=
 
