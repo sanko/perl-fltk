@@ -46,7 +46,7 @@ public:
         XPUSHs( widget );
         XPUSHs( sv_2mortal( newSViv( event ) ) );
         PUTBACK;
-        int count = call_method( "handle", G_EVAL | G_SCALAR );
+        int count = call_method( "handle", /*G_EVAL |*/ G_SCALAR );
         SPAGAIN;
         SP -= count;
         ax = ( SP - PL_stack_base ) + 1;
