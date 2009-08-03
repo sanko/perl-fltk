@@ -42,6 +42,7 @@ Color                   T_INT
 ColorChooser        *   O_FLTK
 ComboBox            *   O_FLTK
 Cursor              *   O_FLTK
+CycleButton         *   O_FLTK
 FlatBox             *   O_FLTK
 Font                *   O_FLTK
 FrameBox            *   O_FLTK

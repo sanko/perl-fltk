@@ -189,6 +189,8 @@ INCLUDE: ComboBox.xsi
 
 INCLUDE: Cursor.xsi
 
+INCLUDE: CycleButton.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

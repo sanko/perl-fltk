@@ -1,0 +1,82 @@
+#ifndef DISABLE_CYCLEBUTTON
+
+MODULE = FLTK               PACKAGE = FLTK::CycleButton
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Popup list of items that the user can choose one of
+
+=for git $Id$
+
+=head1 Description
+
+This widget lets the user select one of a set of choices by clicking on it.
+Each click cycles to the next choice. Holding down any shift key or using the
+middle or right mouse button cycles backwards.
+
+Notice that the number of items can be 2. In this case this widget serves the
+common purpose of a "toggle" button that shows the current on/off state by
+changing it's label.
+
+This is a subclass of L<Menu|FLTK::Menu>. The possible states are defined by
+using L<C<Menu::add()>|FLTK::Menu/"add"> or other methods that define the menu
+items. You can also put a different callback on each item. Or you can replace
+this widget's callback with your own and use
+L<C<value()>|FLTK::Widget/"value"> to get the index of the current setting.
+Items that are not L<C<visible()>|FLTK::Widget/"visible"> or are not
+L<C<active()>|FLTK::Widget/"active"> are skipped by the cycling.
+
+If you set L<C<buttonbox()>|/"buttonbox"> to C<NO_BOX> then you must define
+your items to draw identical-sized and fully opaque images, so that drawing
+one completely obscures any other one. This was done to avoid blinking when
+drawing "artistic" user interfaces where all the entire button is an image.
+
+=cut
+
+#include <fltk/CycleButton.h>
+
+=for apidoc ||FLTK::CycleButton|new|x|y|w|h|label = ""
+
+Creates a new C<FLTK::CycleButton> object. Obviously.
+
+=cut
+
+CycleButton *
+CycleButton::new(int x, int y, int w, int h, char * label = 0)
+
+#ifdef ENABLE_DESTROY
+
+bool
+CycleButton::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, CycleButton (label: '%s')", THIS->label());
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+=for apidoc ||FLTK::NamedStyle|default_style|
+
+NFI
+
+=cut
+
+NamedStyle *
+CycleButton::default_style ( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+BOOT:
+    isa("FLTK::CycleButton", "FLTK::Menu");
+
+#endif // ifndef DISABLE_CYCLEBUTTON

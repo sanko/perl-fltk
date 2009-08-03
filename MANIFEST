@@ -33,6 +33,7 @@ xs/Color.xsi
 xs/ColorChooser.xsi
 xs/ComboBox.xsi
 xs/Cursor.xsi
+xs/CycleButton.xsi
 xs/draw.xsi
 xs/events.xsi
 xs/FLTK.xs
