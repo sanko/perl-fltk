@@ -75,6 +75,8 @@ Choice::DESTROY ( )
 
 #endif // #ifdef ENABLE_DESTROY
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -92,6 +94,7 @@ Choice::handle( int event, fltk::Rectangle * rectangle )
     CASE: items == 3
         C_ARGS: event, (const fltk::Rectangle) * rectangle
 
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 

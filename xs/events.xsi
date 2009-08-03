@@ -1,0 +1,1401 @@
+#ifndef DISABLE_EVENTS
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Event types and data. A Widget::handle() method needs this.
+
+=for git $Id$
+
+=head1 Description
+
+
+=cut
+
+#ifdef ENTER
+#define PERL_ENTER ENTER
+#undef ENTER
+#endif // #ifdef ENTER
+
+#ifdef LEAVE
+#define PERL_LEAVE LEAVE
+#undef LEAVE
+#endif // #ifdef LEAVE
+
+#include <fltk/events.h>
+
+=pod
+
+=head1 Events
+
+FLTK's event system passes numbered arguments to
+L<C<Widget::handle()>|FLTK::Subclass/handle> and returns the same from
+L<C<event()>|FLTK::Widget/"event">. These events may be imported with the
+C<events> tag and include the following:
+
+=over
+
+=itemC<NO_EVENT>
+
+=itemC<PUSH>
+
+=itemC<RELEASE>
+
+=itemC<ENTER>
+
+=itemC<LEAVE>
+
+=itemC<DRAG>
+
+=itemC<FOCUS>
+
+=itemC<UNFOCUS>
+
+=itemC<KEY>
+
+=itemC<KEYUP>
+
+=itemC<FOCUS_CHANGE>
+
+=itemC<MOVE>
+
+=itemC<SHORTCUT>
+
+=itemC<DEACTIVATE>
+
+=itemC<ACTIVATE>
+
+=itemC<HIDE>
+
+=itemC<SHOW>
+
+=itemC<PASTE>
+
+=itemC<TIMEOUT>
+
+=itemC<MOUSEWHEEL>
+
+=itemC<DND_ENTER>
+
+=itemC<DND_DRAG>
+
+=itemC<DND_LEAVE>
+
+=itemC<DND_RELEASE>
+
+=itemC<TOOLTIP>
+
+=back
+
+If you're rolling your own event system (See
+L<FLTK::Subclass|FLTK::Subclass>), you're gonna need these.
+
+=cut
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "NO_EVENT", newSViv( NO_EVENT ));
+    newCONSTSUB(FLTK_stash, "PUSH", newSViv( PUSH ));
+    newCONSTSUB(FLTK_stash, "RELEASE", newSViv( RELEASE ));
+    newCONSTSUB(FLTK_stash, "ENTER", newSViv( ENTER ));
+    newCONSTSUB(FLTK_stash, "LEAVE", newSViv( LEAVE ));
+    newCONSTSUB(FLTK_stash, "DRAG", newSViv( DRAG ));
+    newCONSTSUB(FLTK_stash, "FOCUS", newSViv( FOCUS ));
+    newCONSTSUB(FLTK_stash, "UNFOCUS", newSViv( UNFOCUS ));
+    newCONSTSUB(FLTK_stash, "KEY", newSViv( KEY ));
+    newCONSTSUB(FLTK_stash, "KEYUP", newSViv( KEYUP ));
+    newCONSTSUB(FLTK_stash, "FOCUS_CHANGE", newSViv(FOCUS_CHANGE ));
+    newCONSTSUB(FLTK_stash, "MOVE", newSViv( MOVE ));
+    newCONSTSUB(FLTK_stash, "SHORTCUT", newSViv( SHORTCUT ));
+    newCONSTSUB(FLTK_stash, "DEACTIVATE", newSViv( DEACTIVATE ));
+    newCONSTSUB(FLTK_stash, "ACTIVATE", newSViv( ACTIVATE ));
+    newCONSTSUB(FLTK_stash, "HIDE", newSViv( HIDE ));
+    newCONSTSUB(FLTK_stash, "SHOW", newSViv( SHOW ));
+    newCONSTSUB(FLTK_stash, "PASTE", newSViv( PASTE ));
+    newCONSTSUB(FLTK_stash, "TIMEOUT", newSViv( TIMEOUT ));
+    newCONSTSUB(FLTK_stash, "MOUSEWHEEL", newSViv( MOUSEWHEEL ));
+    newCONSTSUB(FLTK_stash, "DND_ENTER", newSViv( DND_ENTER ));
+    newCONSTSUB(FLTK_stash, "DND_DRAG", newSViv( DND_DRAG ));
+    newCONSTSUB(FLTK_stash, "DND_LEAVE", newSViv( DND_LEAVE ));
+    newCONSTSUB(FLTK_stash, "DND_RELEASE", newSViv( DND_RELEASE ));
+    newCONSTSUB(FLTK_stash, "TOOLTIP", newSViv( TOOLTIP ));
+
+=pod
+
+=head1 Event Keys
+
+Values returned by C<event_key()>, passed to C<event_key_state()> and
+C<get_key_state()>, and used for the low 16 bits of C<add_shortcut()>.
+
+The actual values returned are based on X11 keysym values, though fltk always
+returns "unshifted" values much like Windows does. A given key always returns
+the same value no matter what shift keys are held down. Use C<event_text()> to
+see the results of any shift keys.
+
+The lowercase letters 'a' through 'z' and the ascii symbols '`', '-', '=',
+'[', ']', '\\', ',', '.', '/', ';', '\'' and space are used to identify the
+keys in the main keyboard.
+
+On X systems unrecognized keys are returned unchanged as their X keysym value.
+If they have no keysym it uses the scan code or'd with C<0x8000>, this is what
+all those blue buttons on a Microsoft keyboard will do. I don't know how to
+get those buttons on Windows.
+
+Supported keys may be imported with the C<events> tag and include...
+
+=over
+
+=item C<LeftButton>
+
+=item C<MiddleButton>
+
+=item C<RightButton>
+
+=item C<SpaceKey>
+
+=item C<BackSpaceKey>
+
+=item C<TabKey>
+
+=item C<ClearKey>
+
+On some systems with NumLock off '5' produces this.
+
+=item C<ReturnKey>
+
+Main Enter key, Windows and X documentation calls this "Return"
+
+=item C<PauseKey>
+
+Pause / Break button
+
+=item C<ScrollLockKey>
+
+=item C<EscapeKey>
+
+=item C<HomeKey>
+
+=item C<LeftKey>
+
+=item C<UpKey>
+
+=item C<RightKey>
+
+=item C<DownKey>
+
+=item C<PageUpKey>
+
+=item C<PageDownKey>
+
+=item C<EndKey>
+
+=item C<PrintKey>
+
+Print Scr / Sys Rq key
+
+=item C<InsertKey>
+
+=item C<MenuKey>
+
+Key in lower-right (between Ctrl and Win) with picture of popup menu
+
+=item C<HelpKey>
+
+Help key on Macintosh keyboards
+
+=item C<NumLockKey>
+
+=item C<Keypad>
+
+Add ASCII to this to get keypad keys.
+
+As in C<Keypad + "+"> is the same as C<AddKey>.
+
+=item C<KeypadEnter>
+
+Enter on the keypad. Same as C<Keypad + "\r">
+
+=item C<MultiplyKey>
+
+C<*> on the keypad. Same as C<Keypad + "*">
+
+=item C<AddKey>
+
+C<+> on the keypad. Same as C<Keypad + "+">
+
+=item C<SubtractKey>
+
+C<-> on the keypad. Same as C<Keypad + "-">
+
+=item C<DecimalKey>
+
+C<.> on the keypad
+
+=item C<DivideKey>
+
+C</> on the keypad
+
+=item C<Keypad0>
+
+C<0> on the keypad
+
+=item C<Keypad1>
+
+C<1> on the keypad
+
+=item C<Keypad2>
+
+C<2> on the keypad
+
+=item C<Keypad3>
+
+C<3> on the keypad
+
+=item C<Keypad4>
+
+C<4> on the keypad
+
+=item C<Keypad5>
+
+C<5> on the keypad
+
+=item C<Keypad6>
+
+C<6> on the keypad
+
+=item C<Keypad7>
+
+C<7> on the keypad
+
+=item C<Keypad8>
+
+C<8> on the keypad
+
+=item C<Keypad9>
+
+C<9> on the keypad
+
+=item C<KeypadLast>
+
+C<Keypad + '='>, largest legal keypad key
+
+=item C<F0Key>
+
+Add a number to get function key.
+
+As in C<F0Key + 3> is the same as C<F3Key>
+
+=item C<F1Key>
+
+=item C<F2Key>
+
+=item C<F3Key>
+
+=item C<F4Key>
+
+=item C<F5Key>
+
+=item C<F6Key>
+
+=item C<F7Key>
+
+=item C<F8Key>
+
+=item C<F9Key>
+
+=item C<F10Key>
+
+=item C<F11Key>
+
+=item C<F12Key>
+
+=item C<LastFunctionKey>
+
+Largest legal function key. Same as C<F0Key + 35>
+
+=item C<LeftShiftKey>
+
+Left-hand Shift
+
+=item C<RightShiftKey>
+
+Right-hand Shift
+
+=item C<LeftCtrlKey>
+
+Left-hand Ctrl
+
+=item C<RightCtrlKey>
+
+Right-hand Ctrl
+
+=item C<CapsLockKey>
+
+Caps Lock
+
+=item C<LeftMetaKey>
+
+The left "Windows" or "Apple" key
+
+=item C<RightMetaKey>
+
+The right "Windows" or "Apple" key
+
+=item C<LeftAltKey>
+
+Left-hand Alt (option on Mac)
+
+=item C<RightAltKey>
+
+Right-hand Alt (option on Mac)
+
+=item C<DeleteKey>
+
+Delete
+
+=item C<LeftAccKey>
+
+Same as C<LeftCtrlKey> on Mac, C<LeftAltKey> on other systems.
+
+=item C<RightAccKey>
+
+Same as C<RightCtrlKey> on Mac, C<RightAltKey> on other systems.
+
+=item C<LeftCmdKey>
+
+Same as C<LeftMetaKey> on Mac, C<LeftCtrlKey> on other systems.
+
+=item C<RightCmdKey>
+
+Same as C<RightMetaKey> on Mac, C<RightCtrlKey> on other systems.
+
+=back
+
+...in addition to the above, letters C<a .. z> and all punctuation are passed
+by their ordinal values.
+
+=cut
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "LeftButton", newSViv(LeftButton));
+    newCONSTSUB(FLTK_stash, "MiddleButton", newSViv(MiddleButton));
+    newCONSTSUB(FLTK_stash, "RightButton", newSViv(RightButton));
+    newCONSTSUB(FLTK_stash, "SpaceKey", newSViv(SpaceKey));
+    newCONSTSUB(FLTK_stash, "BackSpaceKey", newSViv(BackSpaceKey));
+    newCONSTSUB(FLTK_stash, "TabKey", newSViv(TabKey));
+    newCONSTSUB(FLTK_stash, "ClearKey", newSViv(ClearKey));
+    newCONSTSUB(FLTK_stash, "ReturnKey", newSViv(ReturnKey));
+    newCONSTSUB(FLTK_stash, "PauseKey", newSViv(PauseKey));
+    newCONSTSUB(FLTK_stash, "ScrollLockKey", newSViv(ScrollLockKey));
+    newCONSTSUB(FLTK_stash, "EscapeKey", newSViv(EscapeKey));
+    newCONSTSUB(FLTK_stash, "HomeKey", newSViv(HomeKey));
+    newCONSTSUB(FLTK_stash, "LeftKey", newSViv(LeftKey));
+    newCONSTSUB(FLTK_stash, "UpKey", newSViv(UpKey));
+    newCONSTSUB(FLTK_stash, "RightKey", newSViv(RightKey));
+    newCONSTSUB(FLTK_stash, "DownKey", newSViv(DownKey));
+    newCONSTSUB(FLTK_stash, "PageUpKey", newSViv(PageUpKey));
+    newCONSTSUB(FLTK_stash, "PageDownKey", newSViv(PageDownKey));
+    newCONSTSUB(FLTK_stash, "EndKey", newSViv(EndKey));
+    newCONSTSUB(FLTK_stash, "PrintKey", newSViv(PrintKey));
+    newCONSTSUB(FLTK_stash, "InsertKey", newSViv(InsertKey));
+    newCONSTSUB(FLTK_stash, "MenuKey", newSViv(MenuKey));
+    newCONSTSUB(FLTK_stash, "HelpKey", newSViv(HelpKey));
+    newCONSTSUB(FLTK_stash, "NumLockKey", newSViv(NumLockKey));
+    newCONSTSUB(FLTK_stash, "Keypad", newSViv(Keypad));
+    newCONSTSUB(FLTK_stash, "KeypadEnter", newSViv(KeypadEnter));
+    newCONSTSUB(FLTK_stash, "MultiplyKey", newSViv(MultiplyKey));
+    newCONSTSUB(FLTK_stash, "AddKey", newSViv(AddKey));
+    newCONSTSUB(FLTK_stash, "SubtractKey", newSViv(SubtractKey));
+    newCONSTSUB(FLTK_stash, "DecimalKey", newSViv(DecimalKey));
+    newCONSTSUB(FLTK_stash, "DivideKey", newSViv(DivideKey));
+    newCONSTSUB(FLTK_stash, "Keypad0", newSViv(Keypad0));
+    newCONSTSUB(FLTK_stash, "Keypad1", newSViv(Keypad1));
+    newCONSTSUB(FLTK_stash, "Keypad2", newSViv(Keypad2));
+    newCONSTSUB(FLTK_stash, "Keypad3", newSViv(Keypad3));
+    newCONSTSUB(FLTK_stash, "Keypad4", newSViv(Keypad4));
+    newCONSTSUB(FLTK_stash, "Keypad5", newSViv(Keypad5));
+    newCONSTSUB(FLTK_stash, "Keypad6", newSViv(Keypad6));
+    newCONSTSUB(FLTK_stash, "Keypad7", newSViv(Keypad7));
+    newCONSTSUB(FLTK_stash, "Keypad8", newSViv(Keypad8));
+    newCONSTSUB(FLTK_stash, "Keypad9", newSViv(Keypad9));
+    newCONSTSUB(FLTK_stash, "KeypadLast", newSViv(KeypadLast));
+    newCONSTSUB(FLTK_stash, "F0Key", newSViv(F0Key));
+    newCONSTSUB(FLTK_stash, "F1Key", newSViv(F1Key));
+    newCONSTSUB(FLTK_stash, "F2Key", newSViv(F2Key));
+    newCONSTSUB(FLTK_stash, "F3Key", newSViv(F3Key));
+    newCONSTSUB(FLTK_stash, "F4Key", newSViv(F4Key));
+    newCONSTSUB(FLTK_stash, "F5Key", newSViv(F5Key));
+    newCONSTSUB(FLTK_stash, "F6Key", newSViv(F6Key));
+    newCONSTSUB(FLTK_stash, "F7Key", newSViv(F7Key));
+    newCONSTSUB(FLTK_stash, "F8Key", newSViv(F8Key));
+    newCONSTSUB(FLTK_stash, "F9Key", newSViv(F9Key));
+    newCONSTSUB(FLTK_stash, "F10Key", newSViv(F10Key));
+    newCONSTSUB(FLTK_stash, "F11Key", newSViv(F11Key));
+    newCONSTSUB(FLTK_stash, "F12Key", newSViv(F12Key));
+    newCONSTSUB(FLTK_stash, "LastFunctionKey", newSViv(LastFunctionKey));
+    newCONSTSUB(FLTK_stash, "LeftShiftKey", newSViv(LeftShiftKey));
+    newCONSTSUB(FLTK_stash, "RightShiftKey", newSViv(RightShiftKey));
+    newCONSTSUB(FLTK_stash, "LeftCtrlKey", newSViv(LeftCtrlKey));
+    newCONSTSUB(FLTK_stash, "RightCtrlKey", newSViv(RightCtrlKey));
+    newCONSTSUB(FLTK_stash, "CapsLockKey", newSViv(CapsLockKey));
+    newCONSTSUB(FLTK_stash, "LeftMetaKey", newSViv(LeftMetaKey));
+    newCONSTSUB(FLTK_stash, "RightMetaKey", newSViv(RightMetaKey));
+    newCONSTSUB(FLTK_stash, "LeftAltKey", newSViv(LeftAltKey));
+    newCONSTSUB(FLTK_stash, "RightAltKey", newSViv(RightAltKey));
+    newCONSTSUB(FLTK_stash, "DeleteKey", newSViv(DeleteKey));
+    newCONSTSUB(FLTK_stash, "LeftAccKey", newSViv(LeftAccKey));
+    newCONSTSUB(FLTK_stash, "RightAccKey", newSViv(RightAccKey));
+    newCONSTSUB(FLTK_stash, "LeftCmdKey", newSViv(LeftCmdKey));
+    newCONSTSUB(FLTK_stash, "RightCmdKey", newSViv(RightCmdKey));
+
+=pod
+
+=head1 Flags
+
+Flags returned by C<event_state()>, and used as the high 16 bits of
+L<C<Widget::add_shortcut()>|FLTK::Widget/"add_shortcut"> values (the low 16
+bits are all zero, so these may be or'd with key values).
+
+The function C<BUTTON(n)> will turn C<n> (1 .. 8) into the flag for a mouse
+button.
+
+The current flags imported with the C<:events> targ are...
+
+=over
+
+=item C<SHIFT>
+
+Either shift key held down
+
+=item C<CAPSLOCK>
+
+Caps lock is toggled on
+=item C<CTRL>
+
+Either ctrl key held down
+
+=item C<ALT>
+
+Either alt key held down
+
+=item C<NUMLOCK>
+
+Num Lock turned on.
+
+=item C<META>
+
+"Windows" or the "Apple" keys held down.
+
+=item C<SCROLLLOCK>
+
+Scroll Lock turned on.
+
+=item C<BUTTON1>
+
+Left mouse button held down.
+
+=item C<BUTTON2>
+
+Middle mouse button held down.
+
+=item C<BUTTON3>
+
+Right mouse button held down.
+
+=item C<ANY_BUTTON>
+
+Any mouse button (up to 8).
+
+=item C<ACCELERATOR>
+
+C<ALT> on Windows/Linux, C<CTRL> on OS/X, use for menu accelerators.
+
+=item C<COMMAND>
+
+C<CTRL> on Windows/Linux, C<META> on OS/X, use for menu shortcuts.
+
+=item C<OPTION>
+
+C<ALT|META> on Windows/Linux, just C<ALT> on OS/X, use as a drag modifier.
+
+=back
+
+=cut
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "SHIFT", newSViv(SHIFT));
+    newCONSTSUB(FLTK_stash, "CAPSLOCK", newSViv(CAPSLOCK));
+    newCONSTSUB(FLTK_stash, "CTRL", newSViv(CTRL));
+    newCONSTSUB(FLTK_stash, "ALT", newSViv(ALT));
+    newCONSTSUB(FLTK_stash, "NUMLOCK", newSViv(NUMLOCK));
+    newCONSTSUB(FLTK_stash, "META", newSViv(META));
+    newCONSTSUB(FLTK_stash, "SCROLLLOCK", newSViv(SCROLLLOCK));
+    newCONSTSUB(FLTK_stash, "BUTTON1", newSViv(BUTTON1));
+    newCONSTSUB(FLTK_stash, "BUTTON2", newSViv(BUTTON2));
+    newCONSTSUB(FLTK_stash, "BUTTON3", newSViv(BUTTON3));
+    newCONSTSUB(FLTK_stash, "ANY_BUTTON", newSViv(ANY_BUTTON));
+    newCONSTSUB(FLTK_stash, "ACCELERATOR", newSViv(ACCELERATOR));
+    newCONSTSUB(FLTK_stash, "OPTION", newSViv(OPTION));
+    newCONSTSUB(FLTK_stash, "COMMAND", newSViv(COMMAND));
+
+=for apidoc t[events]||int|BUTTON|number
+
+The function C<BUTTON(n)> will turn C<n> (1 .. 8) into the L<flag|/"Flags">
+for a mouse button.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+BUTTON( int n )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=pod
+
+=head1 Devices
+
+Device identifiers are returned by C<event_device()>. This is useful to get
+the device type that caused a C<PUSH>, C<RELEASE>, C<DRAG> or C<MOVE> event.
+
+Current devices (which are imported with the C<events> tag) include...
+
+=over
+
+=item C<DEVICE_MOUSE>
+
+Event triggered by the system mouse.
+
+=item C<DEVICE_STYLUS>
+
+Event triggered by a pen on a tablet, givin pressure and tilt information.
+
+=item C<DEVICE_ERASER>
+
+Event triggered by an eraser on a tablet, givin pressure and tilt information.
+
+=item C<DEVICE_CURSOR>
+
+Event triggered by a puck style device on a tablet.
+
+=item C<DEVICE_AIRBRUSH>
+
+Event triggered by an airbrush on a tablet, giving pressure and tilt information.
+
+=item C<DEVICE_TOUCH>
+
+Event triggered by touch a touch screen device.
+
+=back
+
+=cut
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "DEVICE_MOUSE", newSViv(DEVICE_MOUSE));
+    newCONSTSUB(FLTK_stash, "DEVICE_STYLUS", newSViv(DEVICE_STYLUS));
+    newCONSTSUB(FLTK_stash, "DEVICE_ERASER", newSViv(DEVICE_ERASER));
+    newCONSTSUB(FLTK_stash, "DEVICE_CURSOR", newSViv(DEVICE_CURSOR));
+    newCONSTSUB(FLTK_stash, "DEVICE_AIRBRUSH", newSViv(DEVICE_AIRBRUSH));
+    newCONSTSUB(FLTK_stash, "DEVICE_TOUCH", newSViv(DEVICE_TOUCH));
+
+=for apidoc t[events]||int|event||
+
+
+
+=for apidoc t[events]||int|event_x||
+
+
+
+=for apidoc t[events]||int|event_y||
+
+
+
+=for apidoc t[events]||int|event_dx||
+
+
+
+=for apidoc t[events]||int|event_dy||
+
+
+
+=for apidoc t[events]||int|event_x_root||
+
+
+
+=for apidoc t[events]||int|event_y_root||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+event( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = event( ); break;
+            case 1: RETVAL = event_x( ); break;
+            case 2: RETVAL = event_y( ); break;
+            case 3: RETVAL = event_dx( ); break;
+            case 4: RETVAL = event_dy( ); break;
+            case 5: RETVAL = event_x_root( ); break;
+            case 6: RETVAL = event_y_root( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+             event_x = 1
+             event_y = 2
+            event_dx = 3
+            event_dy = 4
+        event_x_root = 5
+        event_y_root = 6
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|event_clicks||
+
+
+
+=for apidoc t[events]||int|event_clicks||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+event_clicks( int i = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = event_clicks( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            event_clicks( i );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|event_is_click||
+
+
+
+=for apidoc t[events]|||event_is_click|bool|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+event_is_click( bool i = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = event_is_click( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            event_is_click( i ); /* Really? Only false works? */
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|event_state||
+
+
+
+=for apidoc t[events]||bool|event_state|state|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+event_state( unsigned i = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = event_state( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            RETVAL = (unsigned) event_state( i );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|event_key||
+
+
+
+=for apidoc t[events]||int|event_button||
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+event_key( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = event_key(); break;
+            case 1: RETVAL = event_button(); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        event_button = 1
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|event_key_state|state|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+event_key_state( unsigned x )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||string|event_text||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+event_text( )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|event_length||
+
+
+
+=for apidoc t[events]||int|event_key_repeated||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+event_length( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = event_length(); break;
+            case 1: RETVAL = event_key_repeated(); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        event_key_repeated = 1
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||float|event_pressure||
+
+
+
+=for apidoc t[events]||float|event_x_tilt||
+
+
+
+=for apidoc t[events]||float|event_y_tilt||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+float
+event_pressure( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = event_pressure(); break;
+            case 1: RETVAL = event_x_tilt(); break;
+            case 2: RETVAL = event_y_tilt(); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        event_x_tilt = 1
+        event_y_tilt = 2
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|event_device||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+int
+event_device( )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|event_inside|rectangle
+
+Returns true if the current L<C<event_x()>|/"event_x"> and
+L<C<event_y()>|/"event_y"> put it inside the L<Rectangle|FLTK::Rectangle>. You
+should always call this rather than doing your own comparison so you are
+consistent about edge effects.
+
+=for hackers Found in C<src/run.cxx>
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+event_inside( fltk::Rectangle * rectangle )
+    C_ARGS: * rectangle
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|compose|del
+
+Use of this function is very simple. Any text editing widget should call this
+for each C<KEY> event.
+
+If a true value is returned, then it has modified the
+L<C<event_text()>/"event_text"> and L<C<event_length()>|/"event_length"> to a
+set of bytes to insert (it may be of zero length!). It will also set the
+C<del> parameter to the number of bytes to the left of the cursor to delete,
+this is used to delete the results of the previous call to
+L<C<compose()>|/"compose">. Compose may consume the key, which is indicated by
+returning true, but both the length and C<del> are set to zero.
+
+Compose returns a false value if it thinks the key is a function key that the
+widget should handle itself, and not an attempt by the user to insert text.
+
+Though the current implementation returns immediately, future versions may
+take quite awhile, as they may pop up a window or do other user-interface
+things to allow international characters to be selected.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+compose( int del )
+    OUTPUT:
+        RETVAL
+        del
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|||compose_reset||
+
+If the user moves the cursor, be sure to call
+L<C<compose_reset()>|/"compose_reset">. The next call to
+L<C<compose()>|/"compose"> will start out in an initial state. In particular
+it will not set "del" to non-zero. This call is very fast so it is ok to call
+it many times and in many places.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+compose_reset( )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|try_shortcut||
+
+Try sending the current C<KEY> event as a C<SHORTCUT> event.
+
+Normally the L<C<focus()>|/"focus"> gets all keystrokes, and shortcuts are
+only tested if that widget indicates it is uninterested by returning zero from
+L<C<Widget::handle()>|FLTK::Subclass/"handle">.  However in some cases the
+focus wants to use the keystroke I<only if it is not a shortcut>. The most
+common example is Emacs-style editing keystrokes in text editing widgets,
+which conflict with Microsoft-compatable menu key bindings, but we want the
+editing keys to work if there is no conflict.
+
+This will send a C<SHORTCUT> event just like the focus returned zero, to every
+widget in the focus window, and to the L<C<add_handler()>|/"add_handler">
+calls, if any. It will return true if any widgets were found that were
+interested in it. A C<handle()> method can call this in a C<KEY> event. If it
+returns true, return 1 B<immediatly>, as the shortcut will have executed and
+may very well have destroyed your widget. If this returns false, then do what
+you want the key to do.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+try_shortcut()
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||string|key_name|hotkey|
+
+Unparse a L<C<FLTK::Widget::shortcut()>|FLTK::Widget/"shortcut">, an
+L<C<event_key()>|/"event_key">, or an L<C<event_key()>|/"event_key"> or'd with
+L<C<event_state()>|/"event_state">. Returns a human-readable string like
+"Alt+N". If C<hotkey> is zero an empty string is returned.
+
+The opposite function is L<C<key()>|/"key">.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+key_name( unsigned hotkey )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||int|key|name|
+
+Turn a string into a L<C<event_key()>|/"event_key"> value or'd with
+L<C<event_shift()>|/"event_shift"> flags. The returned value can be used by by
+L<C<FLTK::Widget::add_shortcut()>|FLTK::Widget/"add_shortcut">.  Any error, or
+a null or zero-length string, returns 0.
+
+Currently this understands prefixes of "Alt+", "Shift+", and "Ctrl+" to turn
+on C<ALT>, C<SHIFT>, and C<CTRL>. Case is ignored and the '+' can be a '-'
+instead and the prefixes can be in any order.  You can also use '#' instead of
+"Alt+", '+' instead of "Shift+", and '^' instead of "Ctrl+".
+
+After the shift prefixes there can either be a single ASCII letter, "Fn" where
+C<n> is a number to indicate a function key, or "0xnnnn" to get an arbitrary
+L<C<event_key()>|/"event_kay"> enumeration value.
+
+The inverse function to turn a number into a string is
+L<C<key_name()>|/"key_name">. Currently this function does not parse some
+strings L<C<key_name()>|/"key_name"> can return, such as the names of arrow
+keys!
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+key( const char * name )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|int|foreachShortcut|SF|widget
+
+Calls the L<C<handle()>|FLTK::Subclass/"handle"> method from the passed
+ShortcutFunctor object for every
+L<C<Widget::shortcut()>|FLTK::Widget/"shortcut"> assignment known. If any
+return true then this immediately returns that shortcut value, else this
+returns zero after calling it for the last one. This is most useful for making
+a display of shortcuts for the user, or implementing a shortcut editor.
+
+If C<widget> is not null, only do assignments for that widget, this is much
+faster than searching the entire list. This is useful for drawing the
+shortcuts on a widget (though most fltk widgets only draw the first one).
+
+=for apidoc t[events]|int|foreachShortcut|SF|
+
+Same. But without widget NULL by default.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+unsigned
+foreachShortcut( ShortcutFunctor * SF, Widget * widget = NO_INIT )
+    CASE: items == 1
+        C_ARGS: * SF
+    CASE: items == 2
+        C_ARGS: widget, * SF
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|get_key_state|key
+
+Returns true if the given key was held down (or pressed) I<during the last
+event>. This is constant until the next event is read from the server. The
+possible values for the key are listed under C<SpaceKey>.
+
+Note: On Win32, C<event_key_state(KeypadEnter)> does not work.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+get_key_state( unsigned key )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|||get_mouse|x|y
+
+
+Return where the mouse is on the screen by doing a round-trip query to the
+server. You should use L<C<event_x_root()>|/"event_x_root"> and
+L<C<event_y_root()>|/"event_y_root"> if possible, but this is necessary if you
+are not sure if a mouse event has been processed recently (such as to position
+your first window). If the display is not open, this will open it.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+get_mouse( int x, int y )
+    OUTPUT:
+        x
+        y
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|warp_mouse|x|y
+
+Change where the mouse is on the screen.
+
+Returns true if successful, false on failure (exactly what success and failure
+means depends on the os).
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+warp_mouse ( int x, int y )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|handle|event|window
+
+This is the function called from the system-specific code for all events that
+can be passed to L<C<Widget::handle()>|FLTK::Subclass/"handle">.
+
+You can call it directly to fake events happening to your widgets. Currently
+data other than the event number can only be faked by writing to the
+undocumented C<fltk::e_*> variables, for instance to make
+L<C<event_x()>|/"event_x"> return C<5>, you whould do C<fltk::e_x = 5>. This
+may change in future versions of fltk toolkit and is currently not supported
+by the FLTK module.
+
+This will redirect events to the L<C<modal()>|/"modal">,
+L<C<pushed()>|/"pushed">, L<C<belowmouse()>|/"belowmouse">, or
+L<C<focus()>|/"focus"> widget depending on those settings and the event type.
+It will turn C<MOVE> into C<DRAG> if any buttons are down. If the resulting
+widget returns 0 (or the window or widget is undef) then the functions pointed
+to by L<C<add_event_handler()>|/"add_event_handler"> are called.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+handle( int event, Window * window )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||Widget|belowmouse||
+
+Get the widget that is below the mouse. This is the last widget to respond to
+an C<ENTER> event as long as the mouse is still pointing at it. This is for
+highlighting buttons and bringing up tooltips. It is not used to send C<PUSH>
+or C<MOVE> directly, for several obscure reasons, but those events typically
+go to this widget.
+
+=for apidoc t[events]|||belowmouse|Widget|
+
+Change the L<C<belowmouse()>|/"belowmouse"> widget, the previous one and all
+parents (that don't contain the new widget) are sent C<LEAVE> events. Changing
+this does not send C<ENTER> to this or any widget, because sending C<ENTER> is
+supposed to test if the widget wants the mouse (by it returning non-zero from
+handle()).
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Widget *
+belowmouse( Widget * widget = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = belowmouse( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            belowmouse( widget );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||Widget|pushed||
+
+Get the widget that is being pushed. C<DRAG> or C<RELEASE> (and any more
+C<PUSH>) events will be sent to this widget. This is null if no mouse button
+is being held down, or if no widget responded to the C<PUSH> event.
+
+=for apidoc t[events]|||pushed|Widget|
+
+Change the L<C<pushed()>|/"pushed'> widget. This sends no events.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Widget *
+pushed( Widget * widget = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = pushed( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            pushed( widget );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||Widget|focus||
+
+Returns the widgets that will receive C<KEY> events. This is undef if the
+application does not have focus now, or if no widgets accepted focus.
+
+=for apidoc t[events]|||focus|Widget|
+
+Change L<C<focus()>|/"focus"> to the given widget, the previous widget and all
+parents (that don't contain the new widget) are sent L<UNFOCUS> events, the
+new widget is sent an L<FOCUS> event, and all parents of it get
+L<FOCUS_CHANGE> events.
+
+L<C<focus()>|/"focus"> is set whether or not the applicaton has the focus or
+if the widgets accept the focus. You may want to use
+L<C<FLTK::Widget::take_focus()>|FLTK::Widget/"take_focus"> instead, it will
+test first.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Widget *
+focus( Widget * widget = NO_INIT )
+    CASE: items == 0
+        CODE:
+            RETVAL = focus( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 1
+        CODE:
+            focus( widget );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|||copy|stuff|length = strlen(stuff)|clipboard = false
+
+Change the current selection. The block of text is copied to an internal
+buffer by FLTK (be careful if doing this in response to a C<PASTE> as this may
+be the same buffer returned by C<L<event_text()>|/"event_text">).
+
+The block of text may be retrieved (from this program or whatever program last
+set it) with L<C<paste()>|/"paste">.
+
+There are actually two buffers. If C<clipboard> is true then the text goes
+into the user-visible selection that is moved around with cut/copy/paste
+commands (on X this is the CLIPBOARD selection). If C<clipboard> is false then
+the text goes into a less-visible buffer used for temporarily selecting text
+with the mouse and for drag & drop (on X this is the XA_PRIMARY selection).
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+copy ( const char * stuff, int len = strlen(stuff), bool clipboard = false )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|||paste|widget|clipboard = false
+
+This is what a widget does when a "paste" command (like Ctrl+V or the middle
+mouse click) is done to it. Cause a C<PASTE> event to be sent to the receiver
+with the contents of the current selection in the
+L<C<event_text()>|/"event_text">. The selection can be set by
+L<C<copy()>|/"copy">.
+
+There are actually two buffers. If C<clipboard> is true then the text is from
+the user-visible selection that is moved around with cut/copy/paste commands
+(on X this is the CLIPBOARD selection). If C<clipboard> is false then the text
+is from a less-visible buffer used for temporarily selecting text with the
+mouse and for drag & drop (on X this is the XA_PRIMARY selection).
+
+The reciever should be prepared to be called I<directly> by this or, for it to
+happen later, or possibly not at all. This allows the window system to take as
+long as necessary to retrieve the paste buffer (or even to screw up
+completely) without complex and error-prone synchronization code most toolkits
+require.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+paste ( Widget * reciever, bool clipboard = false )
+    C_ARGS: * reciever, clipboard
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|dnd||
+
+Drag and drop the data set by the most recent L<C<copy()>|/"copy"> (with the
+C<clipboard> argument false). Returns true if the data was dropped on
+something that accepted it.
+
+By default only blocks of text are dragged. You can use system-specific
+variables to change the type of data.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+dnd( )
+
+MODULE = FLTK               PACKAGE = FLTK
+
+=for apidoc t[events]|||modal|widget|grab = false
+
+Restricts events to a certain widget.
+
+First thing: much of the time L<C<Window::exec()>|FLTK::Window/"exec"> will do
+what you want, so try using that.
+
+This function sets the passed widget as the "modal widget". All user events
+are directed to it or a child of it, preventing the user from messing with
+other widgets. The modal widget does not have to be visible or even a child of
+a L<Window|FLTK::Window> for this to work (but if it not visible,
+L<C<event_x()>|/"event_x"> and L<C<event_y()>|/"event_y"> are meaningless, use
+L<C<event_x_root()>|/"event_x_root"> and
+L<C<event_y_root()>|/"event_y_root">).
+
+The calling code is responsible for saving the current value of
+L<C<modal()>|/"modal"> and L<C<grab()>|/"grab"> and restoring them by calling
+this after it is done. The code calling this should then loop calling
+L<C<wait()>|FLTK/"wait"> until L<C<exit_modal_flag()>|/"exit_modal_flag"> is
+set or you otherwise decide to get out of the modal state. It is the calling
+code's responsibility to monitor this flag and restore the modal widget to
+it's previous value when it turns on.
+
+C<grab> indicates that the modal widget should get events from anywhere on the
+screen. This is done by messing with the window system. If
+L<C<exit_modal()>|/"exit_modal"> is called in response to a C<PUSH> event
+(rather than waiting for the drag or release event) fltk will "repost" the
+event so that it is handled after modal state is exited. This may also be done
+for keystrokes in the future. On both X and WIN32 grab will not work unless
+you have some visible window because the system interface needs a visible
+window id. On X be careful that your program does not enter an infinite loop
+while L<C<grab()>|/"grab"> is on, it will lock up your screen!
+
+=for apidoc t[events]||Widget|modal||
+
+Returns the current modal widget, or undef if there isn't one. It is useful to
+test these in timeouts and file descriptor callbacks in order to block actions
+that should not happen while the modal window is up. You also need these in
+order to save and restore the modal state.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Widget *
+modal( Widget * widget = NO_INIT, bool grab = false )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            modal( widget, grab );
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||bool|grab||
+
+Returns the current value of grab (this is always false if
+L<C<modal()>|/"modal"> is undef).
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+grab( )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]|||exit_modal||
+
+Turns on L<C<exit_modal_flag()>|/"exit_modal_flag">. This may be used by user
+callbacks to cancel modal state. See also
+L<C<Window::make_exec_return()>|FLTK::Window/"make_exec_return">.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+exit_modal( )
+
+MODULE = FLTK               PACKAGE = FLTK
+
+=for apidoc t[events]||bool|exit_modal_flag||
+
+True if L<C<exit_modal()>|/"exit_modal"> has been called. The flag is also set
+by the destruction or hiding of the modal widget, and on Windows by other
+applications taking the focus when grab is on.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+bool
+exit_modal_flag( )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+=for apidoc t[events]||string|event_name|event
+
+Return the corresponding name of an event, should not consume memory if api is
+not used. This is really only good for debugging.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+const char *
+event_name( int event )
+
+MODULE = FLTK               PACKAGE = FLTK::events
+
+#ifdef PERL_ENTER
+#define ENTER PERL_ENTER
+#endif // #ifdef PERL_ENTER
+#ifdef PERL_LEAVE
+#define LEAVE PERL_LEAVE
+#endif // #ifdef PERL_LEAVE
+
+#endif // ifndef DISABLE_EVENTS

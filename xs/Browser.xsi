@@ -151,6 +151,8 @@ Browser::DESTROY ( )
 
 #endif
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -159,6 +161,8 @@ Browser::DESTROY ( )
 
 int
 Browser::handle ( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc h|||layout|
 

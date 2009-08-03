@@ -17,10 +17,6 @@ CPANID: SANKO
 #include <XSUB.h>
 #include "./ppport.pl"
 
-#define isa(package,parent)\
-    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));\
-    /* TODO: make this spider up the list and make deeper connections? */
-
 #include <fltk/Widget.h>
 
 using namespace fltk;
@@ -30,6 +26,7 @@ using namespace fltk;
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
+#define DISABLE_HANDLE // Disables creation of [Widget]::handle( int event ) methods
 
 #define USE_IMAGE 0
 #define USE_GL    0
@@ -51,6 +48,9 @@ using namespace fltk;
 #ifdef ENABLE_HASH_CALLBACKS
 static HV * Mapping = (HV*)NULL;
 #endif // #ifdef ENABLE_HASH_CALLBACKS
+
+/* For inserting stuff directly into FLTK's namespace */
+HV * FLTK_stash = gv_stashpv("FLTK", TRUE);
 
 =for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
 
@@ -128,6 +128,11 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 #endif // ifdef ENABLE_CALLBACKS
 }
 
+void isa(char * package, char * parent) {
+    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));
+    /* TODO: make this spider up the list and make deeper connections? */
+}
+
 #ifdef WIN32
 #include <windows.h>
 HINSTANCE dllInstance; // Global library instance handle.
@@ -149,6 +154,8 @@ MODULE = FLTK               PACKAGE = FLTK
     # Functions (Exported)
 
 INCLUDE: ask.xsi
+
+INCLUDE: events.xsi
 
 INCLUDE: run.xsi
 
@@ -236,6 +243,8 @@ INCLUDE: Window.xsi
     #INCLUDE: ~old/Monitor.xsi
     #INCLUDE: ~old/MultiBrowser.xsi
     #INCLUDE: ~old/MultiImage.xsi
+
+INCLUDE: Subclass.xsi
 
 MODULE = FLTK               PACKAGE = FLTK
 

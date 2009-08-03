@@ -118,6 +118,8 @@ Button::value ( bool value = NO_INIT )
         CODE:
             THIS->value( value );
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event|rectangle
 
 
@@ -134,6 +136,8 @@ Button::handle ( int event, fltk::Rectangle * rectangle = NO_INIT )
         C_ARGS: event
     CASE:
         C_ARGS: event, * rectangle
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 

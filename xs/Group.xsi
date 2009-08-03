@@ -315,6 +315,8 @@ Group::focus_index ( INDEX = NO_INIT )
         CODE:
             THIS->focus_index( INDEX );
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|EVENT
 
 Calls L<C<send()>|/"send"> on some or all of the children widgets.
@@ -328,6 +330,8 @@ Reimplemented in L<FLTK::ItemGroup|FLTK::ItemGroup>.
 int
 Group::handle ( EVENT )
     int EVENT
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc |||insert|WIDGET|INDEX
 

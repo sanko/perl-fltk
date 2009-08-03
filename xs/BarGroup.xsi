@@ -80,6 +80,8 @@ BarGroup::layout( )
     ALIAS:
         draw = 1
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -88,6 +90,8 @@ BarGroup::layout( )
 
 int
 BarGroup::handle ( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc ||bool|opened|
 

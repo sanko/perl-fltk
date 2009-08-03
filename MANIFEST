@@ -32,6 +32,7 @@ xs/ComboBox.xsi
 xs/draw.xsi
 xs/FLTK.xs
 xs/Group.xsi
+xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
@@ -42,6 +43,7 @@ xs/Rectangle.xsi
 xs/run.xsi
 xs/Slider.xsi
 xs/Style.xsi
+xs/Subclass.xsi
 xs/type.map
 xs/Valuator.xsi
 xs/ValueInput.xsi

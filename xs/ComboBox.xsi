@@ -77,6 +77,8 @@ ComboBox::draw( )
     ALIAS:
         layout = 1
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -85,6 +87,8 @@ ComboBox::draw( )
 
 int
 ComboBox::handle( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc ||int|popup|rect|title = ""|menubar = false
 

@@ -217,6 +217,8 @@ Clock::DESTROY ( )
 
 #endif // #ifdef ENABLE_DESTROY
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -225,6 +227,8 @@ Clock::DESTROY ( )
 
 int
 Clock::handle( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 

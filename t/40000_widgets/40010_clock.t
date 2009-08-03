@@ -81,13 +81,15 @@ warn 'value(h, m, s) does not change actual value()';
 #
 is($C1->value(), time, 'Default value for Clock is the current time');
 is($C2->value(), 0,    'Orphan Clock objects do not keep track of time');
+
+my $_value = $C1->value();
 for (1 .. 3) {
     sleep 1;
     FLTK::wait(1);
 }
 FLTK::wait();
-is(    # XXX - ...timestamps may be off due to processing time; close enough?
-    int($C1->value() / 10 ), int(time / 10),
+ok(    # XXX - ...timestamps may be off due to processing time; close enough?
+    ( $C1->value() >= $_value + 3),
     'After 3 seconds of sleep, the value for Clock is still the current time'
 );
 is($C2->value(), 0,

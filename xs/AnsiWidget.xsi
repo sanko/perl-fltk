@@ -138,6 +138,8 @@ AnsiWidget::draw( )
     ALIAS:
         layout = 1
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -147,6 +149,7 @@ AnsiWidget::draw( )
 int
 AnsiWidget::handle( int event )
 
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc |||clearScreen|
 

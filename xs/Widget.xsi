@@ -2196,6 +2196,8 @@ to reflect this.
 
 =cut
 
+#ifndef DISABLE_HANDLE
+
 int
 Widget::handle( int event )
     CODE:
@@ -2207,6 +2209,8 @@ Widget::handle( int event )
         RETVAL
     ALIAS:
         send = 1
+
+#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc |||add_timeout|time
 

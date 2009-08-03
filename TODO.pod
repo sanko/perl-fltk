@@ -43,6 +43,14 @@ C<in_main_thread()>
 
 =back
 
+=item F<fltk/events.h>
+
+=over
+
+=item * C<add_event_handler>
+
+=back
+
 =item Anti-perl-isms
 
 =over

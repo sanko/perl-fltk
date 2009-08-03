@@ -83,6 +83,8 @@ Adjuster::soft ( int x = NO_INIT )
         CODE:
             THIS->soft( X );
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc d||int|handle|event
 
 See L<C<handle()>|FLTK::Valuator/handle> in L<FLTK::Valuator|FLTK::Valuator>.
@@ -91,6 +93,8 @@ See L<C<handle()>|FLTK::Valuator/handle> in L<FLTK::Valuator|FLTK::Valuator>.
 
 int
 Adjuster::handle ( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 BOOT:
     isa("FLTK::Adjuster", "FLTK::Valuator");

@@ -1,0 +1,79 @@
+#ifndef DISABLE_SUBCLASS
+
+MODULE = FLTK               PACKAGE = FLTK::Subclass
+
+=pod
+
+=for license Artistic License 2.0 |Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Cheap (as in 'shoddy') Widget subclassing
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+
+MODULE = FLTK               PACKAGE = FLTK::Subclass
+
+#include "include/WidgetSubclass.h"
+
+void
+FLTK::Button::Subclass::new( int x, int y, int w, int h, const char * label = 0 )
+    ALIAS:
+              FLTK::Input::Subclass::new = 1
+        FLTK::CheckButton::Subclass::new = 2
+    PPCODE:
+        void * RETVAL;
+        switch( ix ) {
+            case 0:
+                RETVAL = (void *) new WidgetSubclass<Button>(CLASS,x,y,w,h,label);
+                isa(CLASS, "FLTK::Button::Subclass");
+                break;
+            case 1:
+                RETVAL = (void *) new WidgetSubclass<Input>(CLASS,x,y,w,h,label);
+                isa(CLASS, "FLTK::Input::Subclass");
+                break;
+            case 2:
+                RETVAL = (void *) new WidgetSubclass<CheckButton>(CLASS,x,y,w,h,label);
+                isa(CLASS, "FLTK::CheckButton::Subclass");
+                break;
+        }
+        ST(0) = sv_newmortal();
+        sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+        XSRETURN(1);
+
+=pod
+
+=head1 Supported Widgets
+
+This is still very S<experimental> iffy stuff so the only widgets currently
+supported are:
+
+=over
+
+=item L<Button|FLTK::Button>
+
+=item L<CheckButton|FLTK::CheckButton>
+
+=item L<Input|FLTK::Input>
+
+=back
+
+=cut
+
+BOOT:
+    isa("FLTK::Subclass",              "FLTK::Widget");
+    isa("FLTK::Button::Subclass",      "FLTK::Subclass");
+    isa("FLTK::Button::Subclass",      "FLTK::Button");
+    isa("FLTK::Input::Subclass",       "FLTK::Subclass");
+    isa("FLTK::Input::Subclass",       "FLTK::Input");
+    isa("FLTK::CheckButton::Subclass", "FLTK::Subclass");
+    isa("FLTK::CheckButton::Subclass", "FLTK::CheckButton");
+
+#endif // #ifndef DISABLE_SUBCLASS

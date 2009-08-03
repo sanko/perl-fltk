@@ -348,6 +348,8 @@ MODULE = FLTK               PACKAGE = FLTK::ccHueBox
 ccHueBox *
 ccHueBox::new( int x , int y, int w, int h );
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -356,6 +358,8 @@ ccHueBox::new( int x , int y, int w, int h );
 
 int
 ccHueBox::handle( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 BOOT:
     isa("FLTK::ccHueBox", "FLTK::Widget");
@@ -408,6 +412,8 @@ ccValueBox::DESTROY ( )
 
 #endif // #ifdef ENABLE_DESTROY
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -416,6 +422,8 @@ ccValueBox::DESTROY ( )
 
 int
 ccValueBox::handle( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 BOOT:
     isa("FLTK::ccValueBox", "FLTK::Widget");
@@ -468,6 +476,8 @@ ccCellBox::DESTROY ( )
 
 #endif // #ifdef ENABLE_DESTROY
 
+#ifndef DISABLE_HANDLE
+
 =for apidoc ||int|handle|event
 
 
@@ -476,6 +486,8 @@ ccCellBox::DESTROY ( )
 
 int
 ccCellBox::handle( int event )
+
+#endif // #ifndef DISABLE_HANDLE
 
 BOOT:
     isa("FLTK::ccCellBox", "FLTK::Widget");

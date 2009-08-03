@@ -12,6 +12,7 @@ package FLTK;
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 our $VERSION_BASE = 530; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
@@ -38,9 +39,7 @@ use Exporter qw[import];
             OVAL_BOX OSHADOW_BOX OFLAT_BOX BORDER_FRAME PLASTIC_UP_BOX
             PLASTIC_DOWN_BOX ]
     ],
-    clock => [
-        qw[SQUARE ANALOG ROUND DIGITAL]
-    ],
+    clock => [qw[SQUARE ANALOG ROUND DIGITAL]],
     color => [
         qw[ NO_COLOR    FREE_COLOR  NUM_FREE_COLOR  GRAY00  GRAY05  GRAY10
             GRAY15      GRAY20      GRAY25          GRAY30  GRAY33  GRAY35
@@ -72,6 +71,35 @@ use Exporter qw[import];
             addvertex
             drawtext
             fillstrokepath fillrect ]
+    ],
+    events => [
+        qw[ NO_EVENT PUSH RELEASE ENTER LEAVE DRAG FOCUS UNFOCUS KEY KEYUP
+            FOCUS_CHANGE MOVE SHORTCUT DEACTIVATE ACTIVATE HIDE SHOW PASTE
+            TIMEOUT MOUSEWHEEL DND_ENTER DND_DRAG DND_LEAVE DND_RELEASE
+            TOOLTIP
+            LeftButton MiddleButton RightButton SpaceKey BackSpaceKey TabKey
+            ClearKey ReturnKey PauseKey ScrollLockKey EscapeKey HomeKey
+            LeftKey UpKey RightKey DownKey PageUpKey PageDownKey EndKey
+            PrintKey InsertKey MenuKey HelpKey NumLockKey Keypad KeypadEnter
+            MultiplyKey AddKey SubtractKey DecimalKey DivideKey Keypad0
+            Keypad1 Keypad2 Keypad3 Keypad4 Keypad5 Keypad6 Keypad7 Keypad8
+            Keypad9 KeypadLast F0Key F1Key F2Key F3Key F4Key F5Key F6Key F7Key
+            F8Key F9Key F10Key F11Key F12Key LastFunctionKey LeftShiftKey
+            RightShiftKey LeftCtrlKey RightCtrlKey CapsLockKey LeftMetaKey
+            RightMetaKey LeftAltKey RightAltKey DeleteKey LeftAccKey
+            RightAccKey LeftCmdKey RightCmdKey
+            SHIFT CAPSLOCK CTRL ALT NUMLOCK META SCROLLLOCK BUTTON1 BUTTON2
+            BUTTON3 ANY_BUTTON ACCELERATOR OPTION COMMAND
+            BUTTON
+            DEVICE_MOUSE DEVICE_STYLUS DEVICE_ERASER DEVICE_CURSOR
+            DEVICE_AIRBRUSH DEVICE_TOUCH
+            event_x event_y event_dx event_dy event_x_root event_y_root
+            event_clicks event_is_click event_state event_key event_button
+            event_key_state event_text event_length event_key_repeated
+            event_pressure event_x_tilt event_y_tilt event_device event_inside
+            compose compose_reset try_shortcut key_name key foreachShortcut
+            get_key_state get_mouse warp_mouse handle belowmouse pushed focus
+            copy paste dnd modal grab exit_modal exit_modal_flag ]
     ],
     flags => [
         qw[ NO_FLAGS

@@ -60,12 +60,14 @@ const Style         *   O_FLTK
 Style               *   O_FLTK
 const Symbol        *   O_FLTK
 Symbol              *   O_FLTK
+ShortcutFunctor     *   O_FLTK
 Group               *   O_FLTK
 LabelType           *   O_FLTK
 Valuator            *   O_FLTK
 ValueInput          *   O_FLTK
 ValueOutput         *   O_FLTK
 Widget              *   O_FLTK
+WidgetSubclass      *   O_FLTK
 const Widget        *   O_FLTK
       Window        *   O_FLTK
 const Window        *   O_FLTK
