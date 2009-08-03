@@ -1191,7 +1191,6 @@ Browser::leaf_symbol( Symbol * symbol = NO_INIT )
 
 #ifdef PERL_NORMAL // Undo our workaround
 #define NORMAL PERL_NORMAL
-#undef PERL_NORMAL
 #endif // ifdef PERL_NORMAL
 
 BOOT:
