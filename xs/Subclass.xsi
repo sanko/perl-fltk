@@ -28,6 +28,7 @@ FLTK::Button::Subclass::new( int x, int y, int w, int h, const char * label = 0 
     ALIAS:
               FLTK::Input::Subclass::new = 1
         FLTK::CheckButton::Subclass::new = 2
+             FLTK::Widget::Subclass::new = 3
     PPCODE:
         void * RETVAL;
         switch( ix ) {
@@ -42,6 +43,10 @@ FLTK::Button::Subclass::new( int x, int y, int w, int h, const char * label = 0 
             case 2:
                 RETVAL = (void *) new WidgetSubclass<CheckButton>(CLASS,x,y,w,h,label);
                 isa(CLASS, "FLTK::CheckButton::Subclass");
+                break;
+            case 3:
+                RETVAL = (void *) new WidgetSubclass<Widget>(CLASS,x,y,w,h,label);
+                isa(CLASS, "FLTK::Widget::Subclass");
                 break;
         }
         ST(0) = sv_newmortal();
@@ -63,9 +68,20 @@ supported are:
 
 =item L<Input|FLTK::Input>
 
+=item L<Widget|FLTK::Widget>
+
 =back
 
 =cut
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
+
+int
+Widget::handle( int event )
+    CODE:
+        RETVAL = THIS->Widget::handle( event );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     isa("FLTK::Subclass",              "FLTK::Widget");
@@ -75,5 +91,8 @@ BOOT:
     isa("FLTK::Input::Subclass",       "FLTK::Input");
     isa("FLTK::CheckButton::Subclass", "FLTK::Subclass");
     isa("FLTK::CheckButton::Subclass", "FLTK::CheckButton");
+    isa("FLTK::Widget::Subclass",      "FLTK::Subclass");
+    isa("FLTK::Widget::Subclass",      "FLTK::Widget");
+
 
 #endif // #ifndef DISABLE_SUBCLASS
