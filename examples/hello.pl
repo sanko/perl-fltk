@@ -4,7 +4,7 @@
 
 =for name hello.pl
 
-=for description Basic 'Hello, World' script described in
+=for abstract Basic 'Hello, World' script described in
 L<FLTK::Basics|FLTK::Basics>
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson

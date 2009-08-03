@@ -57,7 +57,8 @@ use Exporter qw[import];
         qw[ CURSOR_DEFAULT  CURSOR_ARROW    CURSOR_CROSS    CURSOR_WAIT
             CURSOR_INSERT   CURSOR_HAND     CURSOR_HELP     CURSOR_MOVE
             CURSOR_NS       CURSOR_WE       CURSOR_NWSE     CURSOR_NESW
-            CURSOR_NO       CURSOR_NONE ]
+            CURSOR_NO       CURSOR_NONE
+            cursor ]
     ],
     damage => [
         qw[ DAMAGE_CHILD DAMAGE_CHILD_LABEL DAMAGE_EXPOSE DAMAGE_ALL

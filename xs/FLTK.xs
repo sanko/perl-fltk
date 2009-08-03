@@ -187,6 +187,8 @@ INCLUDE: ColorChooser.xsi
 
 INCLUDE: ComboBox.xsi
 
+INCLUDE: Cursor.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

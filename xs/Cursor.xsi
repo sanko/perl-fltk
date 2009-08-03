@@ -1,0 +1,178 @@
+#ifndef DISABLE_CURSOR
+
+MODULE = FLTK               PACKAGE = FLTK::Cursor
+
+=pod
+
+=for license Artistic License 2.0 |Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Mouse cursor support for the Fast Light Tool Kit (FLTK)
+
+=for git $Id$
+
+=head1 Description
+
+L<C<Cursor>|FLTK::Cursor> is an opaque system-dependent class. Currently you
+can only use the built-in cursors but a method to turn an L<Image|FLTK::Image>
+into a L<C<Cursor>|FLTK::Cursor> will be added in the future.
+
+To display a cursor, call L<C<Widget::cursor()>|FLTK::Widget/"cursor">.
+
+Built-in cursors may be imported with the C<cursor> tag and are...
+
+=over
+
+=item C<CURSOR_DEFAULT>
+
+the default cursor, usually an arrow.
+
+=item C<CURSOR_ARROW>
+
+up-left arrow pointer
+
+=item C<CURSOR_CROSS>
+
+crosshairs
+
+=item C<CURSOR_WAIT>
+
+watch or hourglass
+
+=item C<CURSOR_INSERT>
+
+I-beam
+
+=item C<CURSOR_HAND>
+
+hand / pointing finger
+
+=item C<CURSOR_HELP>
+
+question mark
+
+=item C<CURSOR_MOVE>
+
+4-pointed arrow
+
+=item C<CURSOR_NS>
+
+up/down arrow
+
+=item C<CURSOR_WE>
+
+left/right arrow
+
+=item C<CURSOR_NWSE>
+
+diagonal arrow
+
+=item C<CURSOR_NESW>
+
+diagonal arrow
+
+=item C<CURSOR_NO>
+
+circle with slash
+
+=item C<CURSOR_NONE>
+
+invisible
+
+=back
+
+=cut
+
+#include <fltk/Cursor.h>
+
+=for apidoc ||Cursor|cursor|image|x|y|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Cursor *
+cursor( Image * image, int x, int y )
+
+MODULE = FLTK               PACKAGE = FLTK::Cursor
+
+#ifdef ENABLE_DESTROY
+
+bool
+Cursor::DESTROY ( )
+    CODE:
+#if VERBOSE >= 2
+        warn ( "Bye, Cursor" );
+#endif // #if VERBOSE >= 2
+        delete THIS;
+        RETVAL = true;
+    OUTPUT:
+        RETVAL
+
+#endif // #ifdef ENABLE_DESTROY
+
+MODULE = FLTK               PACKAGE = FLTK
+
+Cursor *
+CURSOR_DEFAULT( )
+    CODE:
+        switch( ix ) {
+            case  0: RETVAL = CURSOR_DEFAULT; break;
+            case  1: RETVAL = CURSOR_ARROW;   break;
+            case  2: RETVAL = CURSOR_CROSS;   break;
+            case  3: RETVAL = CURSOR_WAIT;    break;
+            case  4: RETVAL = CURSOR_INSERT;  break;
+            case  5: RETVAL = CURSOR_HAND;    break;
+            case  6: RETVAL = CURSOR_HELP;    break;
+            case  7: RETVAL = CURSOR_MOVE;    break;
+            case  8: RETVAL = CURSOR_NS;      break;
+            case  9: RETVAL = CURSOR_WE;      break;
+            case 10: RETVAL = CURSOR_NWSE;    break;
+            case 11: RETVAL = CURSOR_NESW;    break;
+            case 12: RETVAL = CURSOR_NO;      break;
+            case 13: RETVAL = CURSOR_NONE;    break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+         CURSOR_ARROW =  1
+         CURSOR_CROSS =  2
+          CURSOR_WAIT =  3
+        CURSOR_INSERT =  4
+          CURSOR_HAND =  5
+          CURSOR_HELP =  6
+          CURSOR_MOVE =  7
+            CURSOR_NS =  8
+            CURSOR_WE =  9
+          CURSOR_NWSE = 10
+          CURSOR_NESW = 11
+            CURSOR_NO = 12
+          CURSOR_NONE = 13
+
+MODULE = FLTK               PACKAGE = FLTK::Widget
+
+=for apidoc |||cursor|c
+
+Change the cursor being displayed on the screen. A widget should do this in
+response to C<ENTER> and C<MOVE> events. FLTK will change it back to
+C<CURSOR_DEFAULT> if the mouse is moved outside this widget, unless another
+widget calls this.
+
+=for hackers TODO On X you can mess with the colors by setting the Color
+variables C<fl_cursor_fg> and C<fl_cursor_bg> to the colors you want, before
+calling this.
+
+=cut
+
+void
+Widget::cursor ( Cursor * c )
+
+MODULE = FLTK               PACKAGE = FLTK::Cursor
+
+BOOT:
+//    isa("FLTK::Cursor", "FLTK::Image");
+
+#endif // #ifndef DISABLE_CURSOR

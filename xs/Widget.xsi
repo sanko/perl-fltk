@@ -1367,22 +1367,6 @@ void
 Widget::draw_glyph ( int which, fltk::Rectangle * rect )
     C_ARGS: which, * rect
 
-=for apidoc |||cursor|c
-
-Change the cursor being displayed on the screen. A widget should do this in
-response to C<FLTK::ENTER> and C<FLTK::MOVE> events. FLTK will change it back
-to C<FLTK::CURSOR_DEFAULT> if the mouse is moved outside this widget, unless
-another widget calls this.
-
-=for hackers TODO On X you can mess with the colors by setting the Color
-variables C<fl_cursor_fg> and C<fl_cursor_bg> to the colors you want, before
-calling this.
-
-=cut
-
-void
-Widget::cursor ( Cursor * c )
-
 =for apidoc |||measure_label|w|h
 
 Replace C<w> and C<h> with the size of the area the label will take up. This
