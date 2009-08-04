@@ -14,7 +14,10 @@ MODULE = FLTK               PACKAGE = FLTK::Subclass
 
 =head1 Description
 
+This is very PoC but, eventually, this will be what L<FLTK::Widget> will be
+based upon.
 
+Perhaps.
 
 =cut
 
@@ -24,34 +27,118 @@ MODULE = FLTK               PACKAGE = FLTK::Subclass
 #include "include/WidgetSubclass.h"
 
 void
-FLTK::Button::Subclass::new( int x, int y, int w, int h, const char * label = 0 )
-    ALIAS:
-              FLTK::Input::Subclass::new = 1
-        FLTK::CheckButton::Subclass::new = 2
-             FLTK::Widget::Subclass::new = 3
+FLTK::Subclass::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
-        void * RETVAL;
-        switch( ix ) {
-            case 0:
-                RETVAL = (void *) new WidgetSubclass<Button>(CLASS,x,y,w,h,label);
-                isa(CLASS, "FLTK::Button::Subclass");
-                break;
-            case 1:
-                RETVAL = (void *) new WidgetSubclass<Input>(CLASS,x,y,w,h,label);
-                isa(CLASS, "FLTK::Input::Subclass");
-                break;
-            case 2:
-                RETVAL = (void *) new WidgetSubclass<CheckButton>(CLASS,x,y,w,h,label);
-                isa(CLASS, "FLTK::CheckButton::Subclass");
-                break;
-            case 3:
-                RETVAL = (void *) new WidgetSubclass<Widget>(CLASS,x,y,w,h,label);
-                isa(CLASS, "FLTK::Widget::Subclass");
-                break;
+        void * RETVAL = NULL;
+        if (0) { /* meh, meh, meh */  }
+#ifndef DISABLE_ADJUSTER
+        else if (sv_derived_from(ST(0), "FLTK::Adjuster::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Adjuster>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Adjuster");
         }
-        ST(0) = sv_newmortal();
-        sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-        XSRETURN(1);
+#endif
+#ifndef DISABLE_ALIGNGROUP
+        else if (sv_derived_from(ST(0), "FLTK::AlignGroup::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<AlignGroup>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::AlignGroup");
+        }
+#endif
+#ifndef DISABLE_ANSIWIDGET
+        else if (sv_derived_from(ST(0), "FLTK::AnsiWidget::Subclass")) {
+            /*
+            Needs a different list of args...
+            RETVAL = (void *) new WidgetSubclass<AnsiWidget>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::AnsiWidget");
+            */
+        }
+#endif
+#ifndef DISABLE_BROWSER
+        else if (sv_derived_from(ST(0), "FLTK::Browser::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Browser>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Browser");
+        }
+#endif
+#ifndef DISABLE_BUTTON
+        else if (sv_derived_from(ST(0), "FLTK::Button::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Button>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Button");
+        }
+#endif
+#ifndef DISABLE_CHECKBUTTON
+        else if (sv_derived_from(ST(0), "FLTK::CheckButton::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<CheckButton>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::CheckButton");
+        }
+#endif
+#ifndef DISABLE_CHOICE
+        else if (sv_derived_from(ST(0), "FLTK::Choice::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Choice>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Choice");
+        }
+#endif
+#ifndef DISABLE_CLOCK
+        else if (sv_derived_from(ST(0), "FLTK::Clock::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Clock>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Clock");
+        }
+#endif
+#ifndef DISABLE_COLORCHOOSER
+        else if (sv_derived_from(ST(0), "FLTK::ColorChooser::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<ColorChooser>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::ColorChooser");
+        }
+#endif
+#ifndef DISABLE_COMBOBOX
+        else if (sv_derived_from(ST(0), "FLTK::ComboBox::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<ComboBox>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::ComboBox");
+        }
+#endif
+#ifndef DISABLE_CYCLEBUTTON
+        else if (sv_derived_from(ST(0), "FLTK::CycleButton::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<CycleButton>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::CycleButton");
+        }
+#endif
+#ifndef DISABLE_GROUP
+        else if (sv_derived_from(ST(0), "FLTK::Group::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Group>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Group");
+        }
+#endif
+#ifndef DISABLE_INPUT
+        else if (sv_derived_from(ST(0), "FLTK::Input::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Input>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Input");
+        }
+#endif
+#ifndef DISABLE_MULTIBROWSER
+        else if (sv_derived_from(ST(0), "FLTK::MultiBrowser::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<MultiBrowser>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::MultiBrowser");
+        }
+#endif
+#ifndef DISABLE_WIDGET
+        else if (sv_derived_from(ST(0), "FLTK::Widget::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Widget>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Widget");
+        }
+#endif
+#ifndef DISABLE_WINDOW
+        else if (sv_derived_from(ST(0), "FLTK::Window::Subclass")) {
+            RETVAL = (void *) new WidgetSubclass<Window>(CLASS,x,y,w,h,label);
+            isa(CLASS, "FLTK::Window");
+        }
+#endif
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+        else
+            warn("Failed to find which widget type '%s' is a subclass of.\n"
+                 "it probably isn't one but this is rather incomplete so\n"
+                 "I say report as a bug, m'kay?", CLASS);
 
 =pod
 
@@ -62,13 +149,39 @@ supported are:
 
 =over
 
+=item L<Adjuster|FLTK::Adjuster>
+
+=item L<AlignGroup|FLTK::AlignGroup>
+
+=item L<AnsiWidget|FLTK::AnsiWidget>
+
+=item L<BarGroup|FLTK::BarGroup>
+
+=item L<Browser|FLTK::Browser>
+
 =item L<Button|FLTK::Button>
 
 =item L<CheckButton|FLTK::CheckButton>
 
+=item L<Choice|FLTK::Choice>
+
+=item L<Clock|FLTK::Clock>
+
+=item L<ColorChooser|FLTK::ColorChooser>
+
+=item L<ComboBox|FLTK::ComboBox>
+
+=item L<CycleButton|FLTK::CycleButton>
+
+=item L<Group|FLTK::Group>
+
 =item L<Input|FLTK::Input>
 
+=item L<MultiBrowser|FLTK::MultiBrowser>
+
 =item L<Widget|FLTK::Widget>
+
+=item L<Window|FLTK::Window>
 
 =back
 
@@ -80,19 +193,29 @@ int
 Widget::handle( int event )
     CODE:
         RETVAL = THIS->Widget::handle( event );
+        /* TODO: Guess actual type with sv_derived_from and call correct SUPER
+                 based on that. */
     OUTPUT:
         RETVAL
 
 BOOT:
-    isa("FLTK::Subclass",              "FLTK::Widget");
-    isa("FLTK::Button::Subclass",      "FLTK::Subclass");
-    isa("FLTK::Button::Subclass",      "FLTK::Button");
-    isa("FLTK::Input::Subclass",       "FLTK::Subclass");
-    isa("FLTK::Input::Subclass",       "FLTK::Input");
-    isa("FLTK::CheckButton::Subclass", "FLTK::Subclass");
-    isa("FLTK::CheckButton::Subclass", "FLTK::CheckButton");
-    isa("FLTK::Widget::Subclass",      "FLTK::Subclass");
-    isa("FLTK::Widget::Subclass",      "FLTK::Widget");
-
+    isa(               "FLTK::Subclass", "FLTK::Widget");
+    isa(     "FLTK::Adjuster::Subclass", "FLTK::Subclass");
+    isa(   "FLTK::AlignGroup::Subclass", "FLTK::Subclass");
+    isa(   "FLTK::AnsiWidget::Subclass", "FLTK::Subclass");
+    isa(     "FLTK::BarGroup::Subclass", "FLTK::Subclass");
+    isa(      "FLTK::Browser::Subclass", "FLTK::Subclass");
+    isa(       "FLTK::Button::Subclass", "FLTK::Subclass");
+    isa(  "FLTK::CheckButton::Subclass", "FLTK::Subclass");
+    isa(       "FLTK::Choice::Subclass", "FLTK::Subclass");
+    isa(        "FLTK::Clock::Subclass", "FLTK::Subclass");
+    isa( "FLTK::ColorChooser::Subclass", "FLTK::Subclass");
+    isa(     "FLTK::ComboBox::Subclass", "FLTK::Subclass");
+    isa(  "FLTK::CycleButton::Subclass", "FLTK::Subclass");
+    isa(        "FLTK::Group::Subclass", "FLTK::Subclass");
+    isa(        "FLTK::Input::Subclass", "FLTK::Subclass");
+    isa( "FLTK::MultiBrowser::Subclass", "FLTK::Subclass");
+    isa(       "FLTK::Widget::Subclass", "FLTK::Subclass");
+    isa(       "FLTK::Window::Subclass", "FLTK::Subclass");
 
 #endif // #ifndef DISABLE_SUBCLASS

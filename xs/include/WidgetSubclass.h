@@ -35,14 +35,14 @@ public:
         delete _class;
     }
     int handle( int event ) {
-        int handled = 1; // safe to assume for now
+        int handled = 1; /* safe to assume for now */
         dSP;
         I32 ax;
         ENTER;
         SAVETMPS;
         PUSHMARK( SP );
         SV * widget = sv_newmortal();
-        sv_setref_pv( widget, _class, ( void* ) this ); // XXX - scalar value won't match parent...
+        sv_setref_pv( widget, _class, ( void* ) this );
         XPUSHs( widget );
         XPUSHs( sv_2mortal( newSViv( event ) ) );
         PUTBACK;
