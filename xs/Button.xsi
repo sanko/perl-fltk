@@ -53,23 +53,18 @@ Creates a new C<FLTK::Button> object. Obviously.
 
 =cut
 
-Button *
-Button::new(int x, int y, int w, int h, char * label = 0)
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-Button::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Button (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+void
+FLTK::Button::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<Button>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc e||int|HIDDEN|
 
@@ -163,9 +158,6 @@ indicates the L<C<state()>|/"state">, so the box is only used to indicate the
 pushed state.
 
 =cut
-
-void
-Button::draw( int glyph_width )
 
 BOOT:
     isa("FLTK::Button", "FLTK::Widget");
