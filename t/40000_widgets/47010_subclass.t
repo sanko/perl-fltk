@@ -38,7 +38,7 @@ use_ok('FLTK', ':events');
 {
 
     package Test::Button::Subclass;
-    our @ISA = qw[FLTK::Button::Subclass];
+    our @ISA = qw[FLTK::Button];
 
     sub handle {
         my ($obj, $event) = @_;
@@ -55,13 +55,13 @@ use_ok('FLTK', ':events');
 {
 
     package Test::Input::Subclass;
-    our @ISA = qw[FLTK::Input::Subclass];
+    our @ISA = qw[FLTK::Input];
 
     sub handle {
         my ($obj, $event) = @_;
-        ::pass('Test::Button::Input->handle(SHOW) called on Widget creation')
+        ::pass('Test::Input::Input->handle(SHOW) called on Widget creation')
             if $event == ::SHOW();
-        ::pass('Test::Button::Input->handle(HIDE) called on Widget creation')
+        ::pass('Test::Input::Input->handle(HIDE) called on Widget creation')
             if $event == ::HIDE();
         return 1 if $event == ::SHOW();
         return 0;
@@ -70,7 +70,7 @@ use_ok('FLTK', ':events');
 {
 
     package Test::CheckButton::Subclass;
-    our @ISA = qw[FLTK::CheckButton::Subclass];
+    our @ISA = qw[FLTK::CheckButton];
 
     sub handle {
         my ($obj, $event) = @_;
@@ -81,24 +81,27 @@ use_ok('FLTK', ':events');
     }
 }
 
+# Outside of a group, handle isn't called because the Widget is never shown
+my $W0 = new_ok('Test::CheckButton::Subclass' => [100, 0, 100, 100],
+                'new Test::CheckButton::Subclass( 100, 0, 100, 100 )');
+isa_ok($W0, 'FLTK::CheckButton', $W0);
+
 #
 my $W = new FLTK::Window(200, 100);
 $W || BAIL_OUT('Failed to create window');
-my $W0 = new_ok('Test::CheckButton::Subclass' => [100, 0, 100, 100],
-                'new Test::CheckButton::Subclass( 100, 0, 100, 100 )');
 $W->begin();
 my $W1 = new_ok('Test::Button::Subclass' => [0, 0, 100, 100],
                 'new Test::Button::Subclass( 0, 0, 100, 100 )');
-my $W2 = new_ok('Test::Input::Subclass' => [100, 0, 100, 100],
-                'new Test::Input::Subclass( 100, 0, 100, 100 )');
+isa_ok($W1, 'FLTK::Button', $W1);
+SKIP: {
+    skip 'FLTK::Input has not been dealt with yet.', 4;
+    my $W2 = new_ok('Test::Input::Subclass' => [100, 0, 100, 100],
+                    'new Test::Input::Subclass( 100, 0, 100, 100 )');
+    isa_ok($W2, 'FLTK::Input', $W2);
+}
+
+#
 $W->end();
-
-#
-isa_ok($W0, 'FLTK::CheckButton', ref $W0);
-isa_ok($W1, 'FLTK::Button',      ref $W1);
-isa_ok($W2, 'FLTK::Input',       ref $W2);
-
-#
 $W->show();
 FLTK::wait(1);
 $W->hide();
