@@ -155,6 +155,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 INCLUDE: ask.xsi
 
+INCLUDE: damage.xsi
+
 INCLUDE: events.xsi
 
 INCLUDE: run.xsi

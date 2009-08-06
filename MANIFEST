@@ -17,6 +17,7 @@ t/40000_widgets/40010_clock.t
 t/40000_widgets/47010_subclass.t
 t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
+t/60000_types/60003_damage.t
 TODO.pod
 xs/Adjuster.xsi
 xs/AlignGroup.xsi
@@ -34,6 +35,7 @@ xs/ColorChooser.xsi
 xs/ComboBox.xsi
 xs/Cursor.xsi
 xs/CycleButton.xsi
+xs/damage.xsi
 xs/draw.xsi
 xs/events.xsi
 xs/FLTK.xs

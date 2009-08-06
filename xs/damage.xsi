@@ -1,0 +1,92 @@
+#ifndef DISABLE_DAMAGE
+
+MODULE = FLTK               PACKAGE = FLTK::damage
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Values of the bits stored in Widget::damage()
+
+=for git $Id$
+
+=cut
+
+#include <fltk/damage.h>
+
+=pod
+
+=head1 Description
+
+When redrawing your widgets you should look at the damage bits to see what
+parts of your widget need redrawing. The
+L<C<Widget::handle()>|FLTK::Widget/"handle"> method can then set individual
+damage bits to limit the amount of drawing that needs to be done, and the
+L<C<Widget::draw()>|FLTK::Widget/"draw"> method can test these bits to decide
+what to draw:
+
+  package MyClass;
+
+  sub handle {
+      my ($self, $event) =@_;
+      $self->damage(1) if change_to_part1();
+      $self->damage(2) if change_to_part2();
+      $self->damage(3) if change_to_part3();
+  }
+
+  sub draw {
+      my ($self) = @_;
+      if ($self->damage() & DAMAGE_ALL()) {
+          # draw frame/box and other static stuff...
+      }
+      draw_part1() if ($self->damage() & (DAMAGE_ALL() | 1));
+      draw_part2() if ($self->damage() & (DAMAGE_ALL() | 2));
+      draw_part3() if ($self->damage() & (DAMAGE_ALL() | 4));
+  }
+
+Except for C<DAMAGE_ALL>, each widget is allowed to assign any meaning to any
+of the bits it wants. The enumerations are just to provide suggested meanings.
+
+The folowing default may be imported using the C<damage> tag:
+
+=over
+
+=item C<DAMAGE_VALUE>
+
+=item C<DAMAGE_PUSHED>
+
+=item C<DAMAGE_SCROLL>
+
+=item C<DAMAGE_OVERLAY>
+
+=item C<DAMAGE_HIGHLIGHT>
+
+=item C<DAMAGE_CHILD>
+
+=item C<DAMAGE_CHILD_LABEL>
+
+=item C<DAMAGE_EXPOSE>
+
+=item C<DAMAGE_CONTENTS>
+
+=item C<DAMAGE_ALL>
+
+=back
+
+=cut
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "DAMAGE_VALUE", newSViv(DAMAGE_VALUE));
+    newCONSTSUB(FLTK_stash, "DAMAGE_PUSHED", newSViv(DAMAGE_PUSHED));
+    newCONSTSUB(FLTK_stash, "DAMAGE_SCROLL", newSViv(DAMAGE_SCROLL));
+    newCONSTSUB(FLTK_stash, "DAMAGE_OVERLAY", newSViv(DAMAGE_OVERLAY));
+    newCONSTSUB(FLTK_stash, "DAMAGE_HIGHLIGHT", newSViv(DAMAGE_HIGHLIGHT));
+    newCONSTSUB(FLTK_stash, "DAMAGE_CHILD", newSViv(DAMAGE_CHILD));
+    newCONSTSUB(FLTK_stash, "DAMAGE_CHILD_LABEL", newSViv(DAMAGE_CHILD_LABEL));
+    newCONSTSUB(FLTK_stash, "DAMAGE_EXPOSE", newSViv(DAMAGE_EXPOSE));
+    newCONSTSUB(FLTK_stash, "DAMAGE_CONTENTS", newSViv(DAMAGE_CONTENTS));
+    newCONSTSUB(FLTK_stash, "DAMAGE_ALL", newSViv(DAMAGE_ALL));
+
+#endif // ifndef DISABLE_DAMAGE
