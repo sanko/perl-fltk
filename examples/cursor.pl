@@ -13,7 +13,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use FLTK qw[:cursor :events run];
@@ -37,15 +36,15 @@ my %cursors = ('CURSOR_ARROW'  => CURSOR_ARROW,
 {
 
     package CursorBox;
-    our @ISA = qw[FLTK::Widget::Subclass];
+    our @ISA = qw[FLTK::Widget];
 
     sub handle {
         my ($self, $event) = @_;
-        if ($event == ::ENTER()) {
+        if ($event == ::ENTER) {
             $self->cursor($cursors{$self->label()});
             return 0;
         }
-        if ($event == ::PUSH()) { return 1 }    # drag the cursor around
+        return 1 if ($event == ::PUSH);    # drag the cursor around
         return FLTK::Widget::handle($self, $event);
     }
 }
