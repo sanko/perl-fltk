@@ -120,14 +120,7 @@ AnsiWidget::new( int x, int y, int w, int h, int defsize )
 =cut
 
 void
-AnsiWidget::draw( )
-    CODE:
-        switch( ix ) {
-            case 0: THIS->draw();   break;
-            case 1: THIS->layout(); break;
-        }
-    ALIAS:
-        layout = 1
+AnsiWidget::layout( )
 
 #ifndef DISABLE_HANDLE
 

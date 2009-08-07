@@ -59,21 +59,10 @@ BarGroup::default_style( )
 
 
 
-=for apidoc |||draw|
-
-
-
 =cut
 
 void
 BarGroup::layout( )
-    CODE:
-        switch( ix ) {
-            case 0: THIS->layout( ); break;
-            case 1: THIS->draw( );   break;
-        }
-    ALIAS:
-        draw = 1
 
 #ifndef DISABLE_HANDLE
 

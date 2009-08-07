@@ -240,10 +240,6 @@ background of the slider.
 
 =cut
 
-void
-Slider::draw( fltk::Rectangle * sr, Flags flags, bool slot)
-    C_ARGS: *sr, flags, slot
-
 =for apidoc ||int|handle|event|rect
 
 This call is provied so subclasses can draw the moving part inside an

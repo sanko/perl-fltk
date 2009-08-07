@@ -97,11 +97,6 @@ destructor on all the children!!!
 
 =cut
 
-=for apidoc |||draw|
-
-NFI
-
-=cut
 
 =for apidoc |||end|
 
@@ -152,7 +147,6 @@ void
 Group::begin( )
     ALIAS:
         clear             = 1
-        draw              = 2
         end               = 3
         fix_old_positions = 4
         init_sizes        = 5
@@ -162,7 +156,6 @@ Group::begin( )
         switch( ix ) {
             case 0: THIS->begin();             break;
             case 1: THIS->clear();             break;
-            case 2: THIS->draw();              break;
             case 3: THIS->end();               break;
             case 4: THIS->fix_old_positions(); break;
             case 5: THIS->init_sizes();        break;

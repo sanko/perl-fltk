@@ -57,10 +57,6 @@ ComboBox::default_style( )
     OUTPUT:
         RETVAL
 
-=for apidoc |||draw|
-
-
-
 =for apidoc |||layout|
 
 
@@ -68,14 +64,7 @@ ComboBox::default_style( )
 =cut
 
 void
-ComboBox::draw( )
-    CODE:
-        switch ( ix ) {
-            case 0: THIS->draw();   break;
-            case 1: THIS->layout(); break;
-        }
-    ALIAS:
-        layout = 1
+ComboBox::layout( )
 
 #ifndef DISABLE_HANDLE
 
