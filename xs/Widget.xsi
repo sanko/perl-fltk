@@ -40,18 +40,18 @@ yourself in order to see it.
 
 =cut
 
-Widget *
-Widget::new( int x, int y, int w, int h, char * label = 0)
-    CODE:
-        RETVAL = new Widget( x, y, w, h, label);
-        RETVAL->copy_label(label);
-#if VERBOSE >= 2
-        warn("%s|%s", RETVAL->label(), label);
-#endif
-    OUTPUT:
-        RETVAL
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
+void
+Widget::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<Widget>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 bool
 Widget::DESTROY ( )
