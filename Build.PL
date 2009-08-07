@@ -19,8 +19,8 @@ use File::Find qw[find];
 my $automated_testing = $ENV{AUTOMATED_TESTING} || $ENV{PERL_MM_USE_DEFAULT};
 my $is_developer = ((-d '.git') ? 1 : 0) or ($ENV{RELEASE_TESTING} ? 1 : 0);
 my @tests;
-find \&find_cb, qw[t/00000_basic t/20000_functions t/40000_widgets],
-    ($is_developer ? 't/90000_author' : ());
+find \&find_cb, qw[t/00000_basic t/20000_functions
+    t/40000_widgets t/60000_types], ($is_developer ? 't/90000_author' : ());
 @tests = sort @tests;
 
 #
