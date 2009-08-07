@@ -100,27 +100,18 @@ Creates a new C<FLTK::AnsiWidget> object.
 
 =cut
 
-AnsiWidget *
-AnsiWidget::new ( int x, int y, int w, int h, int defsize )
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-AnsiWidget::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, AnsiWidget" );
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // ENABLE_DESTROY
-
-=for apidoc |||draw|
-
-
+void
+AnsiWidget::new( int x, int y, int w, int h, int defsize )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<AnsiWidget>(CLASS,x,y,w,h,defsize);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||layout|
 

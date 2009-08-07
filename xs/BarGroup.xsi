@@ -29,23 +29,18 @@ Creates a new C<FLTK::BarGroup> object.
 
 =cut
 
-BarGroup *
+#include "include/WidgetSubclass.h"
+
+void
 BarGroup::new ( int x, int y, int w, int h, char * label = "", bool begin = false )
-
-#ifdef ENABLE_DESTROY
-
-bool
-BarGroup::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, BarGroup" );
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // ENABLE_DESTROY
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<BarGroup>(CLASS,x,y,w,h,label,begin);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 

@@ -33,23 +33,18 @@ Creates a new C<FLTK::Adjuster> object.
 
 =cut
 
-Adjuster *
-Adjuster::new ( int x, int y, int width, int height, char * label = 0 )
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-Adjuster::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Adjuster (label: '%s')", THIS->label());
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // ENABLE_DESTROY
+void
+Adjuster::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<Adjuster>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc d||FLTK::NamedStyle|default_style|
 

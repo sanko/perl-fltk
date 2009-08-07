@@ -29,23 +29,19 @@ Creates a new C<FLTK::AlignGroup> object.
 
 =cut
 
-AlignGroup *
-AlignGroup::new ( int X, int Y, int W, int H, const char* L = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-AlignGroup::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, AlignGroup (label: '%s')", THIS->label());
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // ENABLE_DESTROY
+void
+AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<AlignGroup>(CLASS,x,y,w,h,label,
+                                        n_to_break, vertical, align, dw, dh );
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||layout|
 
@@ -79,13 +75,23 @@ AlignGroup::vertical ( bool v = NO_INIT )
 
 =for apidoc ||char|n_to_break|
 
+
+
 =for apidoc |||n_to_break|value|
+
+
 
 =for apidoc ||char|dw|
 
+
+
 =for apidoc |||dw|value|
 
+
+
 =for apidoc ||char|dh|
+
+
 
 =for apidoc |||dh|value|
 
@@ -115,7 +121,11 @@ AlignGroup::n_to_break( uchar value = NO_INIT )
 
 =for apidoc ||flags|align|
 
+
+
 =for apidoc |||align|flags
+
+
 
 =cut
 
