@@ -250,8 +250,6 @@ INCLUDE: Window.xsi
     #INCLUDE: ~old/MultiBrowser.xsi
     #INCLUDE: ~old/MultiImage.xsi
 
-INCLUDE: Subclass.xsi
-
 MODULE = FLTK               PACKAGE = FLTK
 
 BOOT:
