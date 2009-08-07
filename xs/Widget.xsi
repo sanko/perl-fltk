@@ -53,18 +53,43 @@ Widget::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-bool
-Widget::DESTROY ( )
+=for apidoc ||int|handle|event
+
+Handle an event. Returns non-zero if the widget understood and used the event.
+
+The event numbers are listed in F<fltk/events.h>.  All other information about
+the current event (like mouse position) is accessed by various functions
+listed in the same header file.
+
+The default version returns true for C<FLTK::ENTER> and C<FLTK::MOVE> events,
+this is done so you can put tooltips on the base widget. All other events
+return zero.
+
+If you want to send an event to a widget you probably want to call
+L<C<send()>|/"send">, not L<C<handle()>|/"handle">. Send will do extra work
+with each event before calling this, such as turning C<HIGHLIGHT> and
+C<FOCUSED> flags on/off.
+
+=for apidoc |||destroy|
+
+Destroy the widget.
+
+=cut
+
+void
+Widget::destroy( )
     CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Widget (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
         delete THIS;
-        RETVAL = true;
+        sv_setsv(ST(0), &PL_sv_undef);
+
+bool
+Widget::draw ( ... )
+    CODE:
+        RETVAL = 0;
     OUTPUT:
         RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+    ALIAS:
+        handle = 1
 
 =for apidoc ||FLTK::Group|parent|
 
@@ -536,7 +561,7 @@ Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
         CODE:
 #ifdef ENABLE_CALLBACKS
             SV * widget = newSVsv((SV*)ST(0));
-            sv_rvweaken(widget);
+            //sv_rvweaken(widget);
             AV *arr = newAV();
             av_push(arr, newSVsv((SV*)ST(1))); // coderef
             av_push(arr, widget); // widget
@@ -592,7 +617,7 @@ Widget::user_data ( SV * args = NO_INIT )
             av_push(arr, av_shift((AV*)THIS->user_data()));
             SV * widget = newSVsv((SV*)ST(0));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-            sv_rvweaken(widget);
+            //sv_rvweaken(widget);
 #else // ifdef SvWEAKREF
             croak("weak references are not implemented in this release of perl");
             XSRETURN_EMPTY;
@@ -688,7 +713,7 @@ Widget::default_callback( Widget * w, SV * args = NO_INIT)
     CODE:
         SV * _widget = newSVsv((SV*)ST(1));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-        sv_rvweaken(_widget);
+        //sv_rvweaken(_widget);
 #else // ifdef SvWEAKREF
         croak("weak references are not implemented in this release of perl");
         XSRETURN_EMPTY;
@@ -722,7 +747,7 @@ Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
         CODE:
             SV * _widget = newSVsv((SV*)ST(1));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
-            sv_rvweaken(_widget);
+            //sv_rvweaken(_widget);
 #else // ifdef SvWEAKREF
         croak("weak references are not implemented in this release of perl");
         XSRETURN_EMPTY;
@@ -2132,25 +2157,6 @@ to turn bits on.
 void
 Widget::set_damage( uchar c )
 
-
-
-=for apidoc ||int|handle|event
-
-Handle an event. Returns non-zero if the widget understood and used the event.
-
-The event numbers are listed in F<fltk/events.h>.  All other information about
-the current event (like mouse position) is accessed by various functions
-listed in the same header file.
-
-The default version returns true for C<FLTK::ENTER> and C<FLTK::MOVE> events,
-this is done so you can put tooltips on the base widget. All other events
-return zero.
-
-If you want to send an event to a widget you probably want to call
-L<C<send()>|/"send">, not L<C<handle()>|/"handle">. Send will do extra work
-with each event before calling this, such as turning C<HIGHLIGHT> and
-C<FOCUSED> flags on/off.
-
 =for apidoc ||int|send|event
 
 Wrapper for L<C<handle()>|/"handle">. This should be called to send events. It
@@ -2180,21 +2186,8 @@ to reflect this.
 
 =cut
 
-#ifndef DISABLE_HANDLE
-
 int
-Widget::handle( int event )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = THIS->handle( event ); break;
-            case 1: RETVAL = THIS->send( event );   break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        send = 1
-
-#endif // #ifndef DISABLE_HANDLE
+Widget::send( int event )
 
 =for apidoc |||add_timeout|time
 
