@@ -13,7 +13,7 @@
 =cut
 use strict;
 use warnings;
-use Test::More tests => 147;
+use Test::More tests => 146;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -175,7 +175,6 @@ is(lerp(color(BLACK()), color(WHITE()), 1),
 is(lerp(BLACK(), WHITE(), 1), WHITE(), 'lerp(BLACK, WHITE, 1) == WHITE');
 
 # Grays out the color
-is(inactive(color(RED())), 2132745728, 'inactive(color(RED)) == 2132745728');
 is(inactive(color(RED()), color(BLUE())),
     -1878510848, 'inactive(color(RED), color(BLUE)) == -1878510848');
 is(inactive(color(RED()), color(RED())),
