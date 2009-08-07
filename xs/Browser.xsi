@@ -117,58 +117,21 @@ Creates a new C<FLTK::Browser> object.
 
 =cut
 
-Browser *
-Browser::new ( X, Y, Width, Height, Label = "" )
-    int     X
-    int     Y
-    int     Width
-    int     Height
-    char *  Label
-    CODE:
-        RETVAL = new Browser( X, Y, Width, Height, Label );
-    OUTPUT:
-        RETVAL
 
-#if ALLOW_DESTROY
+#include "include/WidgetSubclass.h"
 
-=for apidoc H|||DESTROY|
+void
+Browser::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<Browser>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
-The destructor deletes all the list items (because they are child
-L<widgets/FLTK::Widgets> of a L<group|FLTK::Group>).
-
-=cut
-
-bool
-Browser::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Browser (label: '%s')", THIS->label());
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=cut
-
-int
-Browser::handle ( int event )
-
-#endif // #ifndef DISABLE_HANDLE
-
-=for apidoc h|||layout|
-
-
-
-=for apidoc h|||draw|
+=for apidoc |||layout|
 
 
 
@@ -176,13 +139,6 @@ Browser::handle ( int event )
 
 void
 Browser::layout ( )
-    CODE:
-        switch ( ix ) {
-            case 0: THIS->layout(); break;
-            case 1: THIS->draw();   break;
-        }
-    ALIAS:
-        draw = 1
 
 =for apidoc ||FLTK::NamedStyle|default_style
 
@@ -1239,20 +1195,17 @@ Browser::Mark::new( Browser::Mark * mark = NO_INIT )
         OUTPUT:
             RETVAL
 
-#if ALLOW_DESTROY
+=for apidoc |||destroy|
 
-bool
-Browser::Mark::DESTROY ( )
+Destroy the mark.
+
+=cut
+
+void
+Browser::Mark::destroy( )
     CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Browser::Mark" );
-#endif
         delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif
+        sv_setsv(ST(0), &PL_sv_undef);
 
 =for apidoc ||int|compare|mark2
 
@@ -1293,8 +1246,5 @@ Browser::Mark::unset( )
 
 bool
 Browser::Mark::is_set( )
-
-BOOT:
-    // isa("FLTK::Browser::Mark");
 
 #endif // ifndef DISABLE_BROWSER_MARK
