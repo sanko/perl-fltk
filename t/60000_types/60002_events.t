@@ -13,7 +13,7 @@
 =cut
 use strict;
 use warnings;
-use Test::More tests => 147;
+use Test::More tests => 126;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
