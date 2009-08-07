@@ -116,9 +116,6 @@ L<C<glyph()>|/"glyph"> to your own function that draws whatever you want.
 
 =cut
 
-void
-Choice::draw()
-
 BOOT:
     isa("FLTK::Choice", "FLTK::Menu");
 
