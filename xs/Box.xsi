@@ -63,11 +63,13 @@ drawframe( char * s, int x, int y, int w, int h )
     ALIAS:
         drawframe2 = 1
 
+MODULE = FLTK               PACKAGE = FLTK::Box
+
 =for apidoc t[box]F||FLTK::Box|DOWN_BOX|
 
 Inset box in fltk's standard theme.
 
-=for apidoc t[box]F||FLTK::Box|NO_BOX|
+=for apidoc t[box]F||FLTK::Box|FLAT_BOX|
 
 Draws a flat rectangle of L<C<getbgcolor()>|/"getbgcolor">.
 
@@ -153,8 +155,6 @@ BOOT:
     isa("FLTK::Box", "FLTK::Symbol");
 
 #endif // ifndef DISABLE_BOX
-
-
 
 #ifndef DISABLE_FRAMEBOX
 
