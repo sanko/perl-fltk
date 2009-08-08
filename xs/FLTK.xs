@@ -195,6 +195,8 @@ INCLUDE: CycleButton.xsi
 
 INCLUDE: Dial.xsi
 
+INCLUDE: Divider.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

@@ -45,18 +45,19 @@ public:
             : X( x, y, w, h, lbl, begin ) { // Group
         _class = cls;
     };
-
     WidgetSubclass( char * cls, char * name, int dx, int dy, int dw, int dh,
                     char * pattern, Box * down )
             : X( name, dx, dy, dw, dh, pattern, down ) { // FrameBox
         _class = cls;
     };
-
     WidgetSubclass ( char * cls, char * name )
             : X( name ) { // FlatBox
         _class = cls;
     }
-
+    WidgetSubclass ( char * cls )
+            : X( ) { // Divider
+        _class = cls;
+    }
 
     ~WidgetSubclass() {
         delete _class;

@@ -38,6 +38,7 @@ xs/Cursor.xsi
 xs/CycleButton.xsi
 xs/damage.xsi
 xs/Dial.xsi
+xs/Divider.xsi
 xs/draw.xsi
 xs/events.xsi
 xs/FLTK.xs
