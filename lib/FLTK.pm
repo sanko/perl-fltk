@@ -66,6 +66,7 @@ use Exporter qw[import];
             DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS ]
     ],
     default => [qw[run message alert ask input password %FLTK]],
+    dial => [qw[NORMAL LINE FILL]],
     draw    => [
         qw[ push_matrix pop_matrix scale translate
             setcolor

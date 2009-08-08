@@ -1,0 +1,128 @@
+#ifndef DISABLE_DIAL
+
+MODULE = FLTK               PACKAGE = FLTK::Dial
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Rotating value control
+
+=for git $Id$
+
+=head1 Description
+
+The L<FLTK::Dial|FLTK::Dial> widget provides a circular dial to control a
+single floating point value.
+
+Use type() to change how it draws:
+
+=item L<C<NORMAL>/"NORMAL">
+Draws a normal dial with a knob.
+
+=item L<C<LINE>|/"LINE">
+Draws a dial with a line.
+
+=item L<C<FILL>|/"FILL">
+Draws a dial with a filled arc.
+
+You can change the L<C<box()>|/"box"> from the default of C<OVAL_BOX> to draw
+different borders. The L<C<box()>|/"box"> is filled with
+L<C<color()>|/"color">, the moving part is filled with
+L<C<selection_color()>|/"selection_color">, and the border around the moving
+part is set by L<C<textcolor()>|/"textcolor">.
+
+=cut
+
+#include <fltk/Dial.h>
+
+=for apidoc d|||new|x|y|width|height|label = ''
+
+Creates a new C<FLTK::Dial> object.
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+Dial::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<Dial>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=for apidoc ||FLTK::NamedStyle|default_style||
+
+
+
+=cut
+
+NamedStyle *
+Dial::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||int|angle1||
+
+See L<C<angles()>|/"angles">.
+
+=for apidoc ||int|angle1|int|
+
+See L<C<angles()>|/"angles">.
+
+=cut
+
+short
+Dial::angle1( short a = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->angle1( a );
+
+=for apidoc ||int|angle2||
+
+See L<C<angles()>|/"angles">.
+
+=for apidoc ||int|angle2|b|
+
+See L<C<angles()>|/"angles">.
+
+=cut
+
+short
+Dial::angle2( short b = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->angle2( b );
+
+=for apidoc |||angles|a|b
+
+Sets the angles used for the minimum and maximum values. The default values
+are C<45> and C<315> (C<0> degrees is straight down and the angles progress
+clockwise). Normally C<ANGLE1> is less than C<ANGLE2>, but if you reverse them
+the dial moves counter-clockwise.
+
+=cut
+
+void
+Dial::angles( short a, short b )
+
+BOOT:
+    isa("FLTK::Dial", "FLTK::Valuator");
+    // values for Dial->type()
+    newCONSTSUB(FLTK_stash, "NORMAL", newSViv(Dial::NORMAL));
+    newCONSTSUB(FLTK_stash, "LINE", newSViv(Dial::LINE));
+    newCONSTSUB(FLTK_stash, "FILL", newSViv(Dial::FILL));
+
+#endif // ifndef DISABLE_DIAL

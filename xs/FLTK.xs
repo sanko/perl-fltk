@@ -193,6 +193,8 @@ INCLUDE: Cursor.xsi
 
 INCLUDE: CycleButton.xsi
 
+INCLUDE: Dial.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi
