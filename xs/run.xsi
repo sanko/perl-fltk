@@ -1,3 +1,7 @@
+#ifndef DISABLE_RUN
+
+MODULE = FLTK               PACKAGE = FLTK::run
+
 =pod
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
@@ -7,10 +11,6 @@
 =for git $Id$ for got=
 
 =cut
-
-#ifndef DISABLE_RUN
-
-MODULE = FLTK               PACKAGE = FLTK
 
 #include <fltk/run.h>
 
@@ -31,8 +31,12 @@ on some versions of Windows so I commented it all out there, sigh.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 void
 display ( char * d )
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]F||bool|enable_tablet_events|
 
@@ -48,8 +52,12 @@ L<C<event_y_tilt()>|/"event_y_tilt">.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 bool
 enable_tablet_events( )
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]||int|wait|
 
@@ -74,6 +82,8 @@ expired. It is non-zero if any events or timeouts came in.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 int
 wait ( double time_to_wait = NO_INIT )
     CODE:
@@ -83,6 +93,8 @@ wait ( double time_to_wait = NO_INIT )
             RETVAL = wait( );
     OUTPUT:
         RETVAL
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]F||int|run|
 
@@ -124,6 +136,8 @@ the screen updating every time you check for events.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 int
 run ()
     CODE:
@@ -137,6 +151,8 @@ run ()
     ALIAS:
         check = 1
         ready = 2
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc F|||redraw|
 
@@ -158,6 +174,8 @@ L<C<wait()>|/"wait"> calls this before it waits for events.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 void
 redraw( )
     CODE:
@@ -167,6 +185,8 @@ redraw( )
         }
     ALIAS:
         flush = 1
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc ||int|damage|
 
@@ -186,6 +206,8 @@ Sets L<C<damage()>|/"damage"> to C<d>.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 int
 damage( int d = NO_INIT )
     CASE: !items
@@ -196,6 +218,8 @@ damage( int d = NO_INIT )
     CASE:
         CODE:
             damage();
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]||time|get_time_secs|
 
@@ -213,8 +237,12 @@ precision is 20ms.
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 double
 get_time_secs()
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]|||add_timeout|time|callback|args
 
@@ -246,6 +274,8 @@ accuracy:
 
 =cut
 
+MODULE = FLTK               PACKAGE = FLTK
+
 void
 add_timeout( double time, CV * callback, SV * args = NO_INIT )
     CODE:
@@ -259,6 +289,8 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
         }
     ALIAS:
         repeat_timeout = 1
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc Hxt[run]||bool|has_timeout|coderef|args
 
@@ -277,6 +309,8 @@ and C<args>, and L<C<remove_check()>|/"remove_check"> has not been done.
 Returns true if the specified idle callback is currently installed.
 
 =cut
+
+MODULE = FLTK               PACKAGE = FLTK
 
 bool
 has_timeout( CV * callback, SV * args = NO_INIT )
@@ -300,6 +334,8 @@ has_timeout( CV * callback, SV * args = NO_INIT )
     ALIAS:
         has_check = 1
          has_idle = 2
+
+MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc Hxt[run]|||remove_timeout|coderef|args
 
@@ -362,6 +398,8 @@ the idle callback.
 Removes the specified idle callback, if it is installed.
 
 =cut
+
+MODULE = FLTK               PACKAGE = FLTK
 
 void
 remove_timeout( CV * callback, SV * args = NO_INIT )

@@ -14,6 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 =head1 Description
 
+TODO
 
 =cut
 
@@ -29,8 +30,6 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 #include <fltk/events.h>
 
-=pod
-
 =head1 Events
 
 FLTK's event system passes numbered arguments to
@@ -40,55 +39,55 @@ C<events> tag and include the following:
 
 =over
 
-=itemC<NO_EVENT>
+=item C<NO_EVENT>
 
-=itemC<PUSH>
+=item C<PUSH>
 
-=itemC<RELEASE>
+=item C<RELEASE>
 
-=itemC<ENTER>
+=item C<ENTER>
 
-=itemC<LEAVE>
+=item C<LEAVE>
 
-=itemC<DRAG>
+=item C<DRAG>
 
-=itemC<FOCUS>
+=item C<FOCUS>
 
-=itemC<UNFOCUS>
+=item C<UNFOCUS>
 
-=itemC<KEY>
+=item C<KEY>
 
-=itemC<KEYUP>
+=item C<KEYUP>
 
-=itemC<FOCUS_CHANGE>
+=item C<FOCUS_CHANGE>
 
-=itemC<MOVE>
+=item C<MOVE>
 
-=itemC<SHORTCUT>
+=item C<SHORTCUT>
 
-=itemC<DEACTIVATE>
+=item C<DEACTIVATE>
 
-=itemC<ACTIVATE>
+=item C<ACTIVATE>
 
-=itemC<HIDE>
+=item C<HIDE>
 
-=itemC<SHOW>
+=item C<SHOW>
 
-=itemC<PASTE>
+=item C<PASTE>
 
-=itemC<TIMEOUT>
+=item C<TIMEOUT>
 
-=itemC<MOUSEWHEEL>
+=item C<MOUSEWHEEL>
 
-=itemC<DND_ENTER>
+=item C<DND_ENTER>
 
-=itemC<DND_DRAG>
+=item C<DND_DRAG>
 
-=itemC<DND_LEAVE>
+=item C<DND_LEAVE>
 
-=itemC<DND_RELEASE>
+=item C<DND_RELEASE>
 
-=itemC<TOOLTIP>
+=item C<TOOLTIP>
 
 =back
 
@@ -881,7 +880,7 @@ Use of this function is very simple. Any text editing widget should call this
 for each C<KEY> event.
 
 If a true value is returned, then it has modified the
-L<C<event_text()>/"event_text"> and L<C<event_length()>|/"event_length"> to a
+L<C<event_text()>|/"event_text"> and L<C<event_length()>|/"event_length"> to a
 set of bytes to insert (it may be of zero length!). It will also set the
 C<del> parameter to the number of bytes to the left of the cursor to delete,
 this is used to delete the results of the previous call to
@@ -1154,7 +1153,7 @@ is being held down, or if no widget responded to the C<PUSH> event.
 
 =for apidoc t[events]|||pushed|Widget|
 
-Change the L<C<pushed()>|/"pushed'> widget. This sends no events.
+Change the L<C<pushed()>|/"pushed"> widget. This sends no events.
 
 =cut
 
@@ -1211,7 +1210,7 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 Change the current selection. The block of text is copied to an internal
 buffer by FLTK (be careful if doing this in response to a C<PASTE> as this may
-be the same buffer returned by C<L<event_text()>|/"event_text">).
+be the same buffer returned by L<C<event_text()>|/"event_text">).
 
 The block of text may be retrieved (from this program or whatever program last
 set it) with L<C<paste()>|/"paste">.
@@ -1277,7 +1276,7 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 dnd( )
 
-MODULE = FLTK               PACKAGE = FLTK
+MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]|||modal|widget|grab = false
 
@@ -1360,7 +1359,7 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 exit_modal( )
 
-MODULE = FLTK               PACKAGE = FLTK
+MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|exit_modal_flag||
 

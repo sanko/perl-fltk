@@ -105,7 +105,7 @@ hex=69, dec=.41, framebox=I
 
 =for apidoc t[color]Ue||int|GRAY40|
 
-hex=76, dec=.46, framebox=J (18% gray card)
+hex=76, dec=.46, framebox=J (18%% gray card)
 
 =for apidoc t[color]Ue||int|GRAY45|
 

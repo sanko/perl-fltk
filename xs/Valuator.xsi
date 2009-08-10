@@ -276,8 +276,8 @@ Since this is a virtual function, you can override this in a subclass of those
 and change how the numbers are displayed.
 
 The default version prints enough digits for the current L<C<step()>|/"step">
-value. If L<C<step()>|/"step"> is zero it does a C<%g> format.  If step is an
-integer it does C<%d> format. Otherwise it does a C<%.nf> format where n is
+value. If L<C<step()>|/"step"> is zero it does a C<%%g> format.  If step is an
+integer it does C<%%d> format. Otherwise it does a C<%.nf> format where n is
 enough digits to show the step, maximum of 8.
 
 =cut
