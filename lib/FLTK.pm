@@ -68,11 +68,17 @@ use Exporter qw[import];
     default => [qw[run message alert ask input password %FLTK]],
     dial => [qw[NORMAL LINE FILL]],
     draw    => [
-        qw[ push_matrix pop_matrix scale translate
-            setcolor
-            addvertex
-            drawtext
-            fillstrokepath fillrect ]
+        qw[ push_matrix pop_matrix scale translate rotate concat load_identity
+            transform push_clip clipout pop_clip push_no_clip not_clipped
+            intersect_with_clip setcolor setcolor_alpha getcolor drawstyle
+            setdrawflags drawflags line_style line_width line_dashes SOLID
+            DASH DOT DASHDOT DASHDOTDOT CAP_FLAT CAP_ROUND CAP_SQUARE
+            JOIN_MITER JOIN_ROUND JOIN_BEVEL newpath addvertex addvertices
+            addvertices_transformed addcurve addarc addpie addchord closepath
+            strokepath fillpath fillstrokepath fillrect strokerect drawline
+            drowpoint setfont getfont getsize getwidth getdescent
+            drawtext_transformed drawtext measure column_widths drawimage
+            readimage scrollrect ]
     ],
     events => [
         qw[ NO_EVENT PUSH RELEASE ENTER LEAVE DRAG FOCUS UNFOCUS KEY KEYUP
@@ -127,6 +133,7 @@ use Exporter qw[import];
             SCREEN_FONT SCREEN_BOLD_FONT
             ZAPF_DINGBATS ]
     ],
+    gsave => [qw[push_matrix pop_matrix]],
     label => [
         qw[ NO_LABEL NORMAL_LABEL SYMBOL_LABEL SHADOW_LABEL ENGRAVED_LABEL
             EMBOSSED_LABEL ]

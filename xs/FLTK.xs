@@ -159,6 +159,8 @@ INCLUDE: damage.xsi
 
 INCLUDE: events.xsi
 
+INCLUDE: draw.xsi
+
 INCLUDE: run.xsi
 
     # Objects (Widgets, etc.)

@@ -113,6 +113,10 @@ L<C<FLTK::Browser::focus_index>|FLTK::Browser/"focus_index">
 L<C<FLTK::Browser::column_labels>|FLTK::Browser/"column_labels"> do not
 require a trailing zero (C<0>) and do not add one to return values.
 
+=item L<C<FLTK::addvertices>|FLTK::draw/"addvertices"> and
+L<C<FLTK::addvertices_transformed>|FLTK::draw/"addvertices_transformed"> don't
+require an initial total.
+
 =back
 
 =back

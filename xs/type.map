@@ -15,6 +15,7 @@ const uchar *   T_PV
 # Enum
 Flags               T_INT
 Browser::linepos    O_FLTK
+PixelType           O_FLTK
 
 # Objects
 Adjuster            *   O_FLTK
