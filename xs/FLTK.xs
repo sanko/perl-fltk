@@ -199,6 +199,8 @@ INCLUDE: Dial.xsi
 
 INCLUDE: Divider.xsi
 
+INCLUDE: FileBrowser.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

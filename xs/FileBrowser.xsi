@@ -1,0 +1,171 @@
+#ifndef DISABLE_FILEBROWSER
+
+MODULE = FLTK               PACKAGE = FLTK::FileBrowser
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Subclass of FLTK::Browser
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+#define dirent direct
+
+#include <fltk/FileBrowser.h>
+
+=for apidoc d||FileBrowser|new|X|Y|Width|Height|Label = ''
+
+Creates a new C<FLTK::FileBrowser> object.
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<FileBrowser>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=for apidoc d||float|icon_size||
+
+
+
+=for apidoc d|||icon_size|size|
+
+
+
+=cut
+
+double
+FileBrowser::icon_size( float size = NO_INIT )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->icon_size( size );
+
+=for apidoc d||pattern|filter||
+
+
+
+=for apidoc d|||filter|pattern|
+
+
+
+=cut
+
+const char *
+FileBrowser::filter( char * pattern = NO_INIT )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->filter( pattern );
+
+=for apidoc d||float|textsize||
+
+
+
+=for apidoc d|||textsize|size|
+
+
+
+=cut
+
+double
+FileBrowser::textsize( float size = NO_INIT )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->textsize( size );
+
+=for apidoc d||int|filetype||
+
+
+
+=for apidoc d|||filetype|type|
+
+
+
+=cut
+
+double
+FileBrowser::filetype( int type = NO_INIT )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->filetype( type );
+
+=for apidoc d||dir|directory||
+
+
+=cut
+
+const char *
+FileBrowser::directory( )
+
+=for apidoc d|||insert|n|label|icon|
+
+
+
+=for apidoc d|||insert|n|label|data|
+
+
+
+=cut
+
+void
+FileBrowser::insert( int n, char * label, data )
+    CASE: sv_isobject(ST(3)) && sv_derived_from(ST(3), "FLTK::FileIcon")
+        FileIcon * data
+    CASE:
+        void     * data
+
+=for apidoc d|||add|line|icon
+
+
+
+=cut
+
+void
+FileBrowser::add( char * line, FileIcon * icon )
+
+=for apidoc d|||show_hidden|show|
+
+Set this flag if you want to see the hidden files in the browser.
+
+=for apidoc d||show|show_hidden||
+
+
+
+=cut
+
+bool
+FileBrowser::show_hidden( bool show = NO_INIT )
+    CASE: items == 0
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->show_hidden( show );
+
+BOOT:
+    isa("FLTK::FileBrowser", "FLTK::Browser");
+
+#endif // ifndef DISABLE_FILEBROWSER

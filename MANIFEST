@@ -42,6 +42,7 @@ xs/Dial.xsi
 xs/Divider.xsi
 xs/draw.xsi
 xs/events.xsi
+xs/FileBrowser.xsi
 xs/FLTK.xs
 xs/Group.xsi
 xs/include/WidgetSubclass.h

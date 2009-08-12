@@ -45,6 +45,8 @@ ComboBox            *   O_FLTK
 Cursor              *   O_FLTK
 CycleButton         *   O_FLTK
 Dial                *   O_FLTK
+FileBrowser         *   O_FLTK
+FileIcon            *   O_FLTK
 FlatBox             *   O_FLTK
 Font                *   O_FLTK
 FrameBox            *   O_FLTK
