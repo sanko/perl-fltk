@@ -207,6 +207,8 @@ INCLUDE: FileInput.xsi
 
 INCLUDE: FillDial.xsi
 
+INCLUDE: FillSlider.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi
