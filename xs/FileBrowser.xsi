@@ -53,7 +53,7 @@ FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
 
 double
 FileBrowser::icon_size( float size = NO_INIT )
-    CASE: items == 0
+    CASE: items == 1
         C_ARGS:
     CASE:
         CODE:
@@ -71,7 +71,7 @@ FileBrowser::icon_size( float size = NO_INIT )
 
 const char *
 FileBrowser::filter( char * pattern = NO_INIT )
-    CASE: items == 0
+    CASE: items == 1
         C_ARGS:
     CASE:
         CODE:
@@ -89,7 +89,7 @@ FileBrowser::filter( char * pattern = NO_INIT )
 
 double
 FileBrowser::textsize( float size = NO_INIT )
-    CASE: items == 0
+    CASE: items == 1
         C_ARGS:
     CASE:
         CODE:
@@ -107,7 +107,7 @@ FileBrowser::textsize( float size = NO_INIT )
 
 double
 FileBrowser::filetype( int type = NO_INIT )
-    CASE: items == 0
+    CASE: items == 1
         C_ARGS:
     CASE:
         CODE:
@@ -159,7 +159,7 @@ Set this flag if you want to see the hidden files in the browser.
 
 bool
 FileBrowser::show_hidden( bool show = NO_INIT )
-    CASE: items == 0
+    CASE: items == 1
         C_ARGS:
     CASE:
         CODE:
