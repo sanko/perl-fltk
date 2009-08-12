@@ -49,6 +49,7 @@ FileBrowser         *   O_FLTK
 FileChooser         *   O_FLTK
 FileIcon            *   O_FLTK
 FileInput           *   O_FLTK
+FillDial            *   O_FLTK
 FlatBox             *   O_FLTK
 Font                *   O_FLTK
 FrameBox            *   O_FLTK
