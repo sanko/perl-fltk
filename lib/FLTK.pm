@@ -147,6 +147,10 @@ use Exporter qw[import];
             add_timeout repeat_timeout
             get_time_secs ]
     ],
+    version => [
+        qw[ FL_MAJOR_VERSION FL_MINOR_VERSION FL_PATCH_VERSION
+            FL_VERSION version]
+    ],
     visual => [
         qw[ RGB_COLOR INDEXED_COLOR SINGLE_BUFFER DOUBLE_BUFFER ACCUM_BUFFER
             ALPHA_BUFFER DEPTH_BUFFER STENCIL_BUFFER RGB24_COLOR MULTISAMPLE

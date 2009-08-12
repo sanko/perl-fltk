@@ -1,0 +1,51 @@
+#ifndef DISABLE_VERSION
+
+MODULE = FLTK               PACKAGE = FLTK::Version
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Version info for FLTK
+
+=for git $Id$
+
+=head1 Description
+
+Contains the version number for the FLTK library. This allows you to write
+conditionally compiled code for different versions of FLTK.
+
+C<FL_VERSION> describes the major, minor, and patch version numbers. The
+integer value is the major number. One digit is used for the minor number, and
+three for the "patch" number which is increased for each binary differnt
+release (it can go to C<999>).
+
+Import C<FL_VERSION>, C<FL_MAJOR_VERSION>, C<FL_MINOR_VERSION>, and
+C<FL_PATCH_VERSION> constants with the C<version> tag.
+
+=cut
+
+#include <fltk/FL_VERSION.h>
+
+=for apidoc t[version]||ver|version||
+
+Returns the value of C<FL_VERSION> that FLTK was compiled with. This can be
+compared to the C<FL_VERSION> function to see if the shared library of fltk
+your program linked with is up to date.
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+double
+version( )
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "FL_MAJOR_VERSION", newSViv(FL_MAJOR_VERSION));
+    newCONSTSUB(FLTK_stash, "FL_MINOR_VERSION", newSViv(FL_MINOR_VERSION));
+    newCONSTSUB(FLTK_stash, "FL_PATCH_VERSION", newSViv(FL_PATCH_VERSION));
+    newCONSTSUB(FLTK_stash, "FL_VERSION", newSVnv(FL_VERSION));
+
+#endif // ifndef DISABLE_VERSION
