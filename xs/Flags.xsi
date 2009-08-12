@@ -1,0 +1,286 @@
+#ifndef DISABLE_FLAGS
+
+MODULE = FLTK               PACKAGE = FLTK::Flags
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Unified flags set for FLTK
+
+=for git $Id$
+
+=head1 Description
+
+Type returned by L<C<Widget::flags()>|FLTK::Widget/"flags"> and passed to
+L<Box|FLTK::Box> and many other drawing functions.
+
+These flags control the appearance of boxes and widgets. This same value is
+used to:
+
+=over
+
+=item 1. store state and other information in a widget or menu item
+
+=item 2. provide hints to boxes, labeltypes, and images for how to draw
+
+=item 3. provide structural information to an array of menu items
+
+=back
+
+These are shared because various parts of the code, especially drawing, want
+all of this information at once, and providing it as a single word is the
+easiest way.
+
+=cut
+
+#include <fltk/Flags.h>
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "NO_FLAGS", newSViv( NO_FLAGS ));
+    newCONSTSUB(FLTK_stash, "ALIGN_TOP", newSViv( ALIGN_TOP ));
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOM", newSViv( ALIGN_BOTTOM ));
+    newCONSTSUB(FLTK_stash, "ALIGN_LEFT", newSViv( ALIGN_LEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_RIGHT", newSViv( ALIGN_RIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTER", newSViv( ALIGN_CENTER ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE", newSViv( ALIGN_INSIDE ));
+    newCONSTSUB(FLTK_stash, "ALIGN_CLIP", newSViv( ALIGN_CLIP ));
+    newCONSTSUB(FLTK_stash, "ALIGN_WRAP", newSViv( ALIGN_WRAP ));
+    newCONSTSUB(FLTK_stash, "ALIGN_MASK", newSViv( ALIGN_MASK ));
+    newCONSTSUB(FLTK_stash, "ALIGN_POSITIONMASK", newSViv( ALIGN_POSITIONMASK ));
+    newCONSTSUB(FLTK_stash, "ALIGN_TOPLEFT", newSViv( ALIGN_TOPLEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMLEFT", newSViv( ALIGN_BOTTOMLEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_TOPRIGHT", newSViv( ALIGN_TOPRIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMRIGHT", newSViv( ALIGN_BOTTOMRIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTERLEFT", newSViv( ALIGN_CENTERLEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTERRIGHT", newSViv( ALIGN_CENTERRIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOP", newSViv( ALIGN_INSIDE_TOP ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOM", newSViv( ALIGN_INSIDE_BOTTOM ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_LEFT", newSViv( ALIGN_INSIDE_LEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPLEFT", newSViv( ALIGN_INSIDE_TOPLEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMLEFT", newSViv( ALIGN_INSIDE_BOTTOMLEFT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_RIGHT", newSViv( ALIGN_INSIDE_RIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPRIGHT", newSViv( ALIGN_INSIDE_TOPRIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMRIGHT", newSViv( ALIGN_INSIDE_BOTTOMRIGHT ));
+    newCONSTSUB(FLTK_stash, "ALIGN_MENU", newSViv( ALIGN_MENU ));
+    newCONSTSUB(FLTK_stash, "ALIGN_BROWSER", newSViv( ALIGN_BROWSER ));
+    newCONSTSUB(FLTK_stash, "INACTIVE", newSViv( INACTIVE ));
+    newCONSTSUB(FLTK_stash, "OUTPUT", newSViv( OUTPUT ));
+    newCONSTSUB(FLTK_stash, "STATE", newSViv( STATE ));
+    newCONSTSUB(FLTK_stash, "SELECTED", newSViv( SELECTED ));
+    newCONSTSUB(FLTK_stash, "INVISIBLE", newSViv( INVISIBLE ));
+    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
+    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
+    newCONSTSUB(FLTK_stash, "CHANGED", newSViv( CHANGED ));
+    newCONSTSUB(FLTK_stash, "COPIED_LABEL", newSViv( COPIED_LABEL ));
+    newCONSTSUB(FLTK_stash, "RAW_LABEL", newSViv( RAW_LABEL ));
+    newCONSTSUB(FLTK_stash, "LAYOUT_VERTICAL", newSViv( LAYOUT_VERTICAL ));
+    newCONSTSUB(FLTK_stash, "TAB_TO_FOCUS", newSViv( TAB_TO_FOCUS ));
+    newCONSTSUB(FLTK_stash, "CLICK_TO_FOCUS", newSViv( CLICK_TO_FOCUS ));
+    newCONSTSUB(FLTK_stash, "INACTIVE_R", newSViv( INACTIVE_R ));
+    newCONSTSUB(FLTK_stash, "FOCUSED", newSViv( FOCUSED ));
+    newCONSTSUB(FLTK_stash, "PUSHED", newSViv( PUSHED ));
+    newCONSTSUB(FLTK_stash, "RESIZE_NONE", newSViv( RESIZE_NONE ));
+    newCONSTSUB(FLTK_stash, "RESIZE_FIT", newSViv( RESIZE_FIT ));
+    newCONSTSUB(FLTK_stash, "RESIZE_FILL", newSViv( RESIZE_FILL ));
+    newCONSTSUB(FLTK_stash, "OPENED", newSViv( OPENED ));
+
+=pod
+
+=head1 The Flags
+
+This is the complete list of flags. You may import them with the C<flags> tag
+or individually.
+
+=over
+
+=item C<NO_FLAGS>
+
+=item C<ALIGN_TOP>
+
+Label is centered above widget
+
+=item C<ALIGN_BOTTOM>
+
+Label is centered below widget
+
+=item C<ALIGN_LEFT>
+
+Label is to left of widget
+
+=item C<ALIGN_RIGHT>
+
+Label is to right of widget
+
+=item C<ALIGN_CENTER>
+
+The label is centered inside widget
+
+=item C<ALIGN_INSIDE>
+
+Label is inside widget, image centered
+
+=item C<ALIGN_CLIP>
+
+The label is clipped to the widget
+
+=item C<ALIGN_WRAP>
+
+The label is word-wrapped
+
+=item C<ALIGN_MASK>
+
+Used to split L<C<align()>|FLTK::Widget/"align"> from
+L<C<flags()>|FLTK::Widget/"flags">
+
+=item C<ALIGN_POSITIONMASK>
+
+Used to split L<C<align()>|FLTK::Widget/"align"> from
+L<C<flags()>|FLTK::Widget/"flags">
+=item C<ALIGN_TOPLEFT>
+
+Label is left-justified above widget
+
+=item C<ALIGN_BOTTOMLEFT>
+
+Label is left-justified below widget
+
+=item C<ALIGN_TOPRIGHT>
+
+Label is right-justified above widget
+
+=item C<ALIGN_BOTTOMRIGHT>
+
+Label is right-justified below widget
+
+=item C<ALIGN_CENTERLEFT>
+
+Label is centered in space left of widget
+
+=item C<ALIGN_CENTERRIGHT>
+
+Label is centered in space left of widget
+
+=item C<ALIGN_INSIDE_TOP>
+
+Label is inside widget at top
+
+=item C<ALIGN_INSIDE_BOTTOM>
+
+Label is inside widget at bottom
+
+=item C<ALIGN_INSIDE_LEFT>
+
+Label is inside widget at left
+
+=item C<ALIGN_INSIDE_TOPLEFT>
+
+Label is inside widget at top left
+
+=item C<ALIGN_INSIDE_BOTTOMLEFT>
+
+Label is inside widget at bottom left
+
+=item C<ALIGN_INSIDE_RIGHT>
+
+Label is inside widget at right
+
+=item C<ALIGN_INSIDE_TOPRIGHT>
+
+Label is inside widget at top right
+
+=item C<ALIGN_INSIDE_BOTTOMRIGHT>
+
+Label is inside widget bottom right
+
+=item C<ALIGN_MENU>
+
+Label is inside widget bottom right
+
+=item C<ALIGN_BROWSER>
+
+Label is inside widget bottom right
+
+=item C<INACTIVE>
+
+!active()
+
+=item C<OUTPUT>
+
+does not get events, draw text colors
+
+=item C<STATE>
+
+state(), value() for buttons
+
+=item C<SELECTED>
+
+chosen in browser/menu, draw selected colors
+
+=item C<INVISIBLE>
+
+!visible(), draw_frame()
+
+=item C<HIGHLIGHT>
+
+draw highlighted
+
+=item C<CHANGED>
+
+value changed since last callback
+
+=item C<COPIED_LABEL>
+
+copy_label() was called
+
+=item C<RAW_LABEL>
+
+don't interpret & or @ in label
+
+=item C<LAYOUT_VERTICAL>
+
+fltk::Pack puts this widget vertical
+
+=item C<TAB_TO_FOCUS>
+
+Widget::tab_to_focus();
+
+=item C<CLICK_TO_FOCUS>
+
+Widget::click_to_focus()
+
+=item C<INACTIVE_R>
+
+draw it grayed-out
+
+=item C<FOCUSED>
+
+draw with keyboard focus
+
+=item C<PUSHED>
+
+draw pushed-in
+
+=item C<RESIZE_NONE>
+
+default behavior
+
+=item C<RESIZE_FIT>
+
+proportionnaly resize img in widget
+
+=item C<RESIZE_FILL>
+
+resize img to fill the widget
+
+=item C<OPENED>
+
+opened browser hierarchy parent
+
+=back
+
+=cut
+
+#endif // ifndef DISABLE_FLAGS

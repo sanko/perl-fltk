@@ -161,6 +161,8 @@ INCLUDE: events.xsi
 
 INCLUDE: draw.xsi
 
+INCLUDE: Flags.xsi
+
 INCLUDE: run.xsi
 
     # Objects (Widgets, etc.)

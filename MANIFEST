@@ -14,6 +14,7 @@ README
 t/00000_basic/00001_use_ok.t
 t/20000_functions/20010_ask.t
 t/20000_functions/20014_draw.t
+t/20000_functions/20018_Flags.t
 t/40000_widgets/40010_clock.t
 t/40000_widgets/40013_dial.t
 t/40000_widgets/40016_filldial.t
@@ -48,6 +49,7 @@ xs/FileIcon.xsi
 xs/FileInput.xsi
 xs/FillDial.xsi
 xs/FillSlider.xsi
+xs/Flags.xsi
 xs/FLTK.xs
 xs/Group.xsi
 xs/include/WidgetSubclass.h
