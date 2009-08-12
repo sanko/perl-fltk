@@ -67,7 +67,7 @@ with the values of C<r,g,b>.
 
 =over
 
-=item * None yet.
+=item * L<FLTK::FileIcon|FLTK::FileIcon>
 
 =back
 

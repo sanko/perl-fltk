@@ -1,0 +1,35 @@
+#ifndef DISABLE_FILECHOOSER
+
+MODULE = FLTK               PACKAGE = FLTK::FileIcon
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+#include <fltk/FileIcon.h>
+
+=for apidoc d||FileIcon|new|pattern|type|ndata = 0|data = 0|
+
+Create a new file icon.
+
+=cut
+
+FileIcon *
+FileIcon::new( char * pattern, int type, int ndata = 0 )
+
+BOOT:
+    isa("FLTK::FileIcon", "FLTK::Symbol");
+
+#endif // ifndef DISABLE_FILECHOOSER

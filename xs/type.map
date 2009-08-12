@@ -46,7 +46,9 @@ Cursor              *   O_FLTK
 CycleButton         *   O_FLTK
 Dial                *   O_FLTK
 FileBrowser         *   O_FLTK
+FileChooser         *   O_FLTK
 FileIcon            *   O_FLTK
+FileInput           *   O_FLTK
 FlatBox             *   O_FLTK
 Font                *   O_FLTK
 FrameBox            *   O_FLTK

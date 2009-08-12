@@ -201,6 +201,10 @@ INCLUDE: Divider.xsi
 
 INCLUDE: FileBrowser.xsi
 
+INCLUDE: FileIcon.xsi
+
+INCLUDE: FileInput.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi
