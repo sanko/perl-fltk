@@ -213,6 +213,8 @@ INCLUDE: FillDial.xsi
 
 INCLUDE: FillSlider.xsi
 
+INCLUDE: FloatInput.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

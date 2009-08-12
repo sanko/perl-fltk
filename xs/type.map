@@ -52,6 +52,7 @@ FileInput           *   O_FLTK
 FillDial            *   O_FLTK
 FillSlider          *   O_FLTK
 FlatBox             *   O_FLTK
+FloatInput          *   O_FLTK
 Font                *   O_FLTK
 FrameBox            *   O_FLTK
 HighlightBox        *   O_FLTK
