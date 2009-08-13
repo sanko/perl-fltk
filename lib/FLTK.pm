@@ -12,6 +12,7 @@ package FLTK;
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 our $VERSION_BASE = 530; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
@@ -131,8 +132,11 @@ use Exporter qw[import];
             SYMBOL_FONT
             SCREEN_FONT SCREEN_BOLD_FONT
             ZAPF_DINGBATS
-            BOLD ITALIC BOLD_ITALIC font list_fonts
-            ]
+            BOLD ITALIC BOLD_ITALIC font list_fonts ]
+    ],
+    gl => [
+        qw[ glstart glfinish glsetcolor glstrokerect glfillrect glsetfont
+            glgetascent glgetdescent glgetwidth gldrawtext gldrawimage ]
     ],
     gsave => [qw[push_matrix pop_matrix]],
     label => [

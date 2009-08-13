@@ -56,6 +56,7 @@ xs/Flags.xsi
 xs/FloatInput.xsi
 xs/FLTK.xs
 xs/Font.xsi
+xs/gl.xsi
 xs/Group.xsi
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi

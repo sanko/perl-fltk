@@ -1,0 +1,156 @@
+#ifndef DISABLE_GL
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Portable OpenGL
+
+=for git $Id$
+
+=head1 Description
+
+=cut
+
+#include <fltk/gl.h>
+
+=for apidoc t[gl]|||glstart|||
+
+
+
+=for apidoc t[gl]|||glfinish|||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+glstart( )
+
+void
+glfinish( )
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||glsetcolor|color
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+glsetcolor( Color color )
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||glstrokerect|x|y|w|h|
+
+
+
+=for apidoc t[gl]|||glfillrect|x|y|w|h|
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+glstrokerect( int x, int y, int w, int h )
+
+void
+glfillrect ( int x, int y, int w, int h )
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||glsetfont|font|size||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+glsetfont( Font* f, float size )
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||glgetascent||||
+
+
+
+=for apidoc t[gl]|||glgetdescent||||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+float
+glgetascent( )
+
+float
+glgetdescent( )
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]||width|glgetwidth|string|||
+
+
+
+=for apidoc t[gl]||width|glgetwidth|string|length||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+float
+glgetwidth( char * string, int length = NO_INIT )
+    CASE: items == 1
+        C_ARGS: string
+    CASE:
+        C_ARGS: string, length
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||gldrawtext||||
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+gldrawtext ( char * string, float x = NO_INIT, float y = NO_INIT, float z = 0 )
+    CASE: items == 1
+        C_ARGS: string  /* NOTE: n (length) is not supported */
+    CASE: items >= 3
+        C_ARGS: string, /* NOTE: n (length) is not supported */ x, y, z
+
+MODULE = FLTK               PACKAGE = FLTK::gl
+
+=for apidoc t[gl]|||gldrawimage|data|x|y|w|h|d = 3|ld = 0
+
+
+
+=cut
+
+MODULE = FLTK               PACKAGE = FLTK
+
+void
+gldrawimage( uchar * data, int x, int y, int w,int h, int d = 3, int ld = 0 )
+
+#endif // ifndef DISABLE_GL
