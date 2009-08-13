@@ -73,13 +73,12 @@ public:
         av_push( args, sv_2mortal( newSViv( event ) ) );
         handled = _call_method( "handle", args );
         if ( handled != 1 )
-            handled = X::handle( event );
+            handled = this->X::handle( event );
         return handled;
     };
     void draw ( ) { // Just about everything supports this one
         int handled = 1; /* safe to assume for now */
         AV * args = newAV();
-        av_push( args, sv_2mortal( newSViv( 52 ) ) );
         handled = _call_method( "draw", args );
         if ( handled != 1 )
             this->X::draw( );
