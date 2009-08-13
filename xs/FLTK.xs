@@ -219,6 +219,8 @@ INCLUDE: FloatInput.xsi
 
 INCLUDE: Font.xsi
 
+INCLUDE: GlWindow.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

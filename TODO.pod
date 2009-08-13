@@ -69,6 +69,16 @@ with the values of C<r,g,b>.
 
 =item * L<FLTK::FileIcon|FLTK::FileIcon>
 
+=item * GL stuff
+
+=over
+
+=item GLUT emulation
+
+=item OpenGL Optimizer stuff in GlWindow subclass
+
+=back
+
 =back
 
 =head1 Production Ready Perl 6 (read 'One of these days')

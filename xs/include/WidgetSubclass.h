@@ -103,6 +103,14 @@ public:
         if ( handled != 1 )
             this->X::draw( sr, flags, slot );
     };
+    void draw_overlay( ) { // fltk::GlWindow
+        int handled = 1; /* safe to assume for now */
+        AV * args = newAV();
+        handled = _call_method( "draw_overlay", args );
+        if ( handled != 1 )
+            this->X::draw_overlay( );
+        return;
+    };
 private:
     char * _class;
     int _call_method ( char * method, AV * args ) {

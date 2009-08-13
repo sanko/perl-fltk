@@ -57,7 +57,9 @@ xs/FloatInput.xsi
 xs/FLTK.xs
 xs/Font.xsi
 xs/gl.xsi
+xs/GlWindow.xsi
 xs/Group.xsi
+xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
