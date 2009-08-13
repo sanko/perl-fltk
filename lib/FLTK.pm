@@ -12,7 +12,6 @@ package FLTK;
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 our $VERSION_BASE = 530; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
@@ -66,7 +65,7 @@ use Exporter qw[import];
             DAMAGE_HIGHLIGHT                DAMAGE_CONTENTS ]
     ],
     default => [qw[run message alert ask input password %FLTK]],
-    dial => [qw[NORMAL LINE FILL]],
+    dial    => [qw[NORMAL LINE FILL]],
     draw    => [
         qw[ push_matrix pop_matrix scale translate rotate concat load_identity
             transform push_clip clipout pop_clip push_no_clip not_clipped
@@ -131,7 +130,9 @@ use Exporter qw[import];
             TIMES     TIMES_BOLD     TIMES_ITALIC     TIMES_BOLD_ITALIC
             SYMBOL_FONT
             SCREEN_FONT SCREEN_BOLD_FONT
-            ZAPF_DINGBATS ]
+            ZAPF_DINGBATS
+            BOLD ITALIC BOLD_ITALIC font list_fonts
+            ]
     ],
     gsave => [qw[push_matrix pop_matrix]],
     label => [

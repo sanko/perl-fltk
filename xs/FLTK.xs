@@ -215,6 +215,8 @@ INCLUDE: FillSlider.xsi
 
 INCLUDE: FloatInput.xsi
 
+INCLUDE: Font.xsi
+
 INCLUDE: Group.xsi
 
 INCLUDE: MultiBrowser.xsi

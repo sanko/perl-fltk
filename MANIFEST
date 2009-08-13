@@ -24,6 +24,7 @@ t/40000_widgets/47010_subclass.t
 t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
 t/60000_types/60003_damage.t
+t/60000_types/60004_Font.t
 TODO.pod
 xs/Adjuster.xsi
 xs/AlignGroup.xsi
@@ -54,6 +55,7 @@ xs/FillSlider.xsi
 xs/Flags.xsi
 xs/FloatInput.xsi
 xs/FLTK.xs
+xs/Font.xsi
 xs/Group.xsi
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi
