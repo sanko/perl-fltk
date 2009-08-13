@@ -1,0 +1,179 @@
+#ifndef DISABLE_HELPDIALOG
+
+MODULE = FLTK               PACKAGE = FLTK::HelpDialog
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract ...uh, a Help Dialog
+
+=for git $Id$
+
+=head1 Description
+
+
+
+=cut
+
+#include <fltk/HelpDialog.h>
+
+=for apidoc ||FLTK::HelpDialog|new||||
+
+Creates a new L<HelpDialog|FLTK::HelpDialog>.
+
+=cut
+
+HelpDialog *
+HelpDialog::new( )
+
+=for apidoc |||destroy|
+
+Destroy the L<HelpDialog|FLTK::HelpDialog>.
+
+=cut
+
+void
+HelpDialog::destroy( )
+    CODE:
+        delete THIS;
+        sv_setsv(ST(0), &PL_sv_undef);
+
+=for apidoc ||int|h||
+
+
+
+=for apidoc ||int|w|||
+
+
+
+=for apidoc ||int|x|||
+
+
+
+=for apidoc ||int|y|||
+
+
+
+=cut
+
+int
+HelpDialog::h( )
+
+int
+HelpDialog::w()
+
+int
+HelpDialog::x( )
+
+int
+HelpDialog::y( )
+
+=for apidoc |||hide||
+
+
+
+=for apidoc |||show||
+
+
+
+=cut
+
+void
+HelpDialog::hide( )
+
+void
+HelpDialog::show( )
+
+=for apidoc |||load|string|
+
+
+
+=cut
+
+void
+HelpDialog::load( char * string )
+
+=for apidoc |||position|x|y
+
+Move the L<HelpDialog|FLTK::HelpDialog> to a new position.
+
+=cut
+
+void
+HelpDialog::position( int x, int y )
+
+=for apidoc |||resize|x|y|w|h|
+
+
+
+=cut
+
+void
+HelpDialog::resize( int x, int y, int w, int h )
+
+=for apidoc |||textsize|size|
+
+
+
+=for apidoc ||size|textsize||
+
+
+
+=cut
+
+uchar
+HelpDialog::textsize( uchar size = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->textsize( size );
+
+=for apidoc |||topline|string|
+
+
+
+=for apidoc |||topline|index||
+
+
+
+=cut
+
+void
+HelpDialog::topline( line )
+    CASE: SvIOK( ST(1) )
+        int line
+    CASE:
+        char * line
+
+=for apidoc |||value|string|
+
+
+
+=for apidoc ||string|value|||
+
+
+
+=cut
+
+const char *
+HelpDialog::value( char * string = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->value( string );
+
+=for apidoc ||int|visible|||
+
+
+
+=cut
+
+int
+HelpDialog::visible( )
+
+#endif // ifndef DISABLE_HELPDIALOG

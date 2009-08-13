@@ -57,6 +57,7 @@ Font                *   O_FLTK
 FrameBox            *   O_FLTK
 GlWindow            *   O_FLTK
 GLContext               O_FLTK
+HelpDialog          *   O_FLTK
 HighlightBox        *   O_FLTK
 Image               *   O_FLTK
 LabelType           *   O_FLTK

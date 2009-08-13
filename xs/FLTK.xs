@@ -223,6 +223,8 @@ INCLUDE: GlWindow.xsi
 
 INCLUDE: Group.xsi
 
+INCLUDE: HelpDialog.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi

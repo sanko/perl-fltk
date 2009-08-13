@@ -59,6 +59,7 @@ xs/Font.xsi
 xs/gl.xsi
 xs/GlWindow.xsi
 xs/Group.xsi
+xs/HelpDialog.xsi
 xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi
