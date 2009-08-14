@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::HelpDialog
 
 =head1 Description
 
-
+Uses L<HelpView|FLTK::HelpView> to display basic HTML in a standard dialog.
 
 =cut
 
@@ -43,19 +43,19 @@ HelpDialog::destroy( )
 
 =for apidoc ||int|h||
 
-
+Returns the vertical size of the help dialog.
 
 =for apidoc ||int|w|||
 
-
+Returns the horizontal size of the help dialog.
 
 =for apidoc ||int|x|||
 
-
+Returns the position of the help dialog.
 
 =for apidoc ||int|y|||
 
-
+Returns the position of the help dialog.
 
 =cut
 
@@ -73,11 +73,11 @@ HelpDialog::y( )
 
 =for apidoc |||hide||
 
-
+Hides the L<HelpDialog|FLTK::HelpDialog>.
 
 =for apidoc |||show||
 
-
+Shows the main L<HelpDialog|FLTK::HelpDialog>'s L<window|FLTK::Window>.
 
 =cut
 
@@ -87,14 +87,14 @@ HelpDialog::hide( )
 void
 HelpDialog::show( )
 
-=for apidoc |||load|string|
+=for apidoc |||load|filename|
 
-
+Load the specified HTML file into the L<HelpView|FLTK::HelpView>.
 
 =cut
 
 void
-HelpDialog::load( char * string )
+HelpDialog::load( char * filename )
 
 =for apidoc |||position|x|y
 
@@ -107,7 +107,8 @@ HelpDialog::position( int x, int y )
 
 =for apidoc |||resize|x|y|w|h|
 
-
+Set the screen position and size of the L<HelpDialog|FLTK::HelpDialog> of the
+dialog.
 
 =cut
 
@@ -116,11 +117,11 @@ HelpDialog::resize( int x, int y, int w, int h )
 
 =for apidoc |||textsize|size|
 
-
+Sets the default text size for the help view.
 
 =for apidoc ||size|textsize||
 
-
+Gets the default text size for the help view.
 
 =cut
 
@@ -134,11 +135,11 @@ HelpDialog::textsize( uchar size = NO_INIT )
 
 =for apidoc |||topline|string|
 
-
+Sets the top line in the L<HelpView|FLTK::HelpView> widget to the named line.
 
 =for apidoc |||topline|index||
 
-
+Sets the top line in the L<HelpView|FLTK::HelpView> widget to the I<index>th line.
 
 =cut
 
@@ -151,11 +152,11 @@ HelpDialog::topline( line )
 
 =for apidoc |||value|string|
 
-
+Sets the current buffer to the string provided and reformats the text.
 
 =for apidoc ||string|value|||
 
-
+Returns the current buffer.
 
 =cut
 
@@ -169,7 +170,7 @@ HelpDialog::value( char * string = NO_INIT )
 
 =for apidoc ||int|visible|||
 
-
+Returns C<1> if the L<HelpDialog|FLTK::HelpDialog> window is visible.
 
 =cut
 
