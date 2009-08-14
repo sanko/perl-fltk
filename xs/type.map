@@ -60,6 +60,7 @@ GLContext               O_FLTK
 HelpDialog          *   O_FLTK
 HelpView            *   O_FLTK
 HighlightBox        *   O_FLTK
+HighlightButton     *   O_FLTK
 Image               *   O_FLTK
 LabelType           *   O_FLTK
 const Monitor       *   O_FLTK

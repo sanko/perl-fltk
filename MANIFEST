@@ -61,6 +61,7 @@ xs/GlWindow.xsi
 xs/Group.xsi
 xs/HelpDialog.xsi
 xs/HelpView.xsi
+xs/HighlightButton.xsi
 xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi
