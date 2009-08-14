@@ -225,6 +225,8 @@ INCLUDE: Group.xsi
 
 INCLUDE: HelpDialog.xsi
 
+INCLUDE: HelpView.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi

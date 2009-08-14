@@ -1,0 +1,212 @@
+#ifndef DISABLE_HELPVIEW
+
+MODULE = FLTK               PACKAGE = FLTK::HelpView
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Basic HTML viewer
+
+=for git $Id$
+
+=head1 Description
+
+Most HTML 2.0 elements are supported, as well as a primitive implementation of
+tables. GIF, JPEG, and PNG images are displayed inline.
+
+=cut
+
+#include <fltk/HelpView.h>
+
+=for apidoc ||FLTK::HelpView|new|x|y|w|h|label = ''|
+
+Creates a new L<HelpView|FLTK::HelpView>.
+
+=for hackers Note that HelpView is not subclassed because, unlike every other
+widget in FLTK, HelpView::draw( ) is defined as private. Yeah, go figure...
+
+=cut
+
+HelpView *
+HelpView::new( int x, int y, int w, int h, char * label = 0 )
+
+=for apidoc |||dir|directory||
+
+
+
+=for apidoc |||file|filename||
+
+
+
+=cut
+
+const char *
+HelpView::directory ( )
+
+const char *
+HelpView::filename( )
+
+=for apidoc ||result|load|filename
+
+Load the specified file. Returns C<0> on success and C<-1> on error
+
+=cut
+
+int
+HelpView::load( char * filename )
+
+=for apidoc ||pixels|size||
+
+
+
+=cut
+
+int
+HelpView::size( )
+
+=for apidoc |||textcolor|color||
+
+
+
+=for apidoc ||FLTK::Color|textcolor|||
+
+
+
+=cut
+
+Color
+HelpView::textcolor( Color color = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->textcolor( color );
+
+=for apidoc |||textfont|font|
+
+
+
+=for apidoc ||FLTK::Font|textfont|||
+
+
+
+=cut
+
+Font *
+HelpView::textfont( Font * font = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->textfont( font );
+
+=for apidoc |||textsize|size|||
+
+
+
+=for apidoc ||size|textsize||
+
+
+
+=cut
+
+int
+HelpView::textsize( int size = NO_INIT )
+        CASE: items == 1
+            C_ARGS:
+        CASE:
+            CODE:
+                THIS->textsize( size );
+
+=for apidoc ||str|title||
+
+
+
+=cut
+
+const char *
+HelpView::title( )
+
+
+=for apidoc |||topline|string|
+
+Sets the top line to the named line.
+
+=for apidoc |||topline|index||
+
+Sets the top line to the I<index>th line.
+
+=for apidoc ||num|topline|||
+
+Retusn the index of the current top line.
+
+=cut
+
+int
+HelpView::topline( line = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: SvIOK( ST(1) )
+        int line
+        CODE:
+            THIS->topline( line );
+    CASE:
+        char * line
+        CODE:
+            THIS->topline( line );
+
+=for apidoc |||leftline|col||
+
+Set the left position.
+
+=for apidof ||col|leftline||||
+
+Get the left position.
+
+=cut
+
+int
+HelpView::leftline( int col = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->leftline( col );
+
+=for apidoc |||value|string||
+
+Set the help text directly.
+
+=for apidoc ||string|value||
+
+Get the current help text.
+
+=cut
+
+const char *
+HelpView::value( char * value = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE:
+        CODE:
+            THIS->value( value );
+
+=for apidoc ||int|find|string|start = 0
+
+Find the specified string in the current help text. This is a plain text
+search.
+
+Returns C<0> on success. Returns C<-1> on failure.
+
+=cut
+
+int
+HelpView::find( char * string, int start = 0 )
+
+BOOT:
+    isa("FLTK::HelpView", "FLTK::Group");
+
+#endif // ifndef DISABLE_HELPVIEW
