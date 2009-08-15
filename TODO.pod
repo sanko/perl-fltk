@@ -14,6 +14,8 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * Flag all GL-related stuff in apidoc
+
 =item * Creating new callbacks leaks memory
 
 =item * Finish all widgets, etc.
@@ -60,6 +62,8 @@ sets the values of C<r,g,b> which is very un-perl. I'd rather return an AV*
 with the values of C<r,g,b>.
 
 =back
+
+=item Subclass-able L<Image|FLTK::Image> and child classes
 
 =back
 

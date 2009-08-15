@@ -139,6 +139,7 @@ use Exporter qw[import];
             glgetascent glgetdescent glgetwidth gldrawtext gldrawimage ]
     ],
     gsave => [qw[push_matrix pop_matrix]],
+    image => [qw[drawimage]],
     label => [
         qw[ NO_LABEL NORMAL_LABEL SYMBOL_LABEL SHADOW_LABEL ENGRAVED_LABEL
             EMBOSSED_LABEL ]

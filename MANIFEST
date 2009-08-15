@@ -25,6 +25,7 @@ t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
 t/60000_types/60003_damage.t
 t/60000_types/60004_Font.t
+t/60000_types/60006_Image.t
 TODO.pod
 xs/Adjuster.xsi
 xs/AlignGroup.xsi
@@ -62,6 +63,7 @@ xs/Group.xsi
 xs/HelpDialog.xsi
 xs/HelpView.xsi
 xs/HighlightButton.xsi
+xs/Image.xsi
 xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
 xs/MultiBrowser.xsi

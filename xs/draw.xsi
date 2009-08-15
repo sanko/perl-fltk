@@ -1248,7 +1248,7 @@ column_widths( ... )
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawimage|pointer|type|rect|line_delta|
+=for apidoc t[draw,image]F|||drawimage|pointer|type|rect|line_delta|
 
 Draw a image (a rectangle of pixels) stored in your program's memory. The
 current transformation (scale, rotate) is applied.
@@ -1284,7 +1284,7 @@ The X version of FLTK will L<C<abort()>|/"abort"> if the default visual is one
 it cannot use for images. To avoid this call L<C<visual(fltk::RGB)>|/"visual">
 at the start of your program.
 
-=for apidoc t[draw]F|||drawimage|pointer|type|rect|
+=for apidoc t[draw,image]F|||drawimage|pointer|type|rect|
 
 Same except C<$line_delta> is set to C<$rect->w() * depth($type)>, indicating
 the rows are packed together one after another with no gap.

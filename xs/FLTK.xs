@@ -229,6 +229,8 @@ INCLUDE: HelpView.xsi
 
 INCLUDE: HighlightButton.xsi
 
+INCLUDE: Image.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi
