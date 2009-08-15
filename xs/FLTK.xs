@@ -5,9 +5,19 @@
 =for abstract Perl Interface to the Fast Light Toolkit
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-CPANID: SANKO
 
-=for git $Id$ for got=
+=for git $Id$
+
+=head1 Description
+
+FLTK is-
+
+=for html <span style="color:#F00;font-size:2em;">
+
+B<I am actively seeking volunteers to help test and develop this project.
+Please see the notes on L<joining the team|FLTK::Notes/"Join the Team">.>
+
+=for html </span>
 
 =cut
 
