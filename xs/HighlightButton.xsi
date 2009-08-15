@@ -31,7 +31,7 @@ Creates a new C<FLTK::HighlightButton> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-FLTK::HighlightButton::new( int x, int y, int w, int h, const char * label = 0 )
+HighlightButton::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<HighlightButton>(CLASS,x,y,w,h,label);
