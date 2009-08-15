@@ -89,15 +89,15 @@ const Window        *   O_FLTK
 
 OUTPUT
 O_FLTK
-  sv_setref_pv($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\", (void*)$var); /* ${ntype} */
+    sv_setref_pv( $arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\", ( void * ) $var ); /* ${ntype} */
 
 INPUT
 O_FLTK
-  if (sv_isobject($arg) && sv_derived_from($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")) /* ${ntype} */
-    $var = INT2PTR($type,SvIV((SV*)SvRV($arg)));
-  else
-    Perl_croak(aTHX_ \"%s: %s is not of type %s\",
-      ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")
+    if (sv_isobject($arg) && sv_derived_from($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")) /* ${ntype} */
+        $var = INT2PTR( $type, SvIV( ( SV * ) SvRV( $arg ) ) );
+    else
+        Perl_croak( aTHX_ \"%s: %s is not of type %s\",
+            ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )
 
 /*
 
