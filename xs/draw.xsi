@@ -1043,7 +1043,7 @@ setfont( Font * font, float size )
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apdioc t[draw]F||FLTK::Font|getfont||
+=for apidoc t[draw]F||FLTK::Font|getfont||
 
 Returns the L<font|FLTK::Font> sent to the last L<C<setfont()>|/"setfont">.
 

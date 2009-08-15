@@ -162,7 +162,7 @@ HelpView::topline( line = NO_INIT )
 
 Set the left position.
 
-=for apidof ||col|leftline||||
+=for apidoc ||col|leftline||||
 
 Get the left position.
 
