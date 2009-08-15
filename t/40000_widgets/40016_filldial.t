@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More tests => 13;
@@ -74,12 +73,12 @@ SKIP: {
     #
     for (0 .. 100) {
         $_ *= 2;
-        $C0->value($_ / 10);
-        $C1->value((360 - $_) / 100);
+        $C0->value($_ / 180);
+        $C1->value((360 - $_) / 360);
         FLTK::wait(0.01);
     }
 
     #
-    is($C0->value(), 20,  '$C0->value == 20');
-    is($C1->value(), 1.6, '$C1->value == 1.06');
+    is(int $C0->value(), 1, '$C0->value ~ 1');
+    is(int $C1->value(), 0, '$C1->value ~ 0');
 }
