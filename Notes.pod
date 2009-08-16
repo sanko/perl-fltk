@@ -87,6 +87,12 @@ reason) bug me about it until I reconsider. ...and, in turn, I am free to
 ignore you if I'm busy or just about any other reason. Drop such requests in
 the issue tracker.
 
+=head3 Major Differences
+
+[TODO]
+
+=head3 Minor Differences
+
 =over
 
 =item Support for C<args(...), arg(...), and show(...)>
@@ -132,6 +138,14 @@ require a trailing zero (C<0>) and do not add one to return values.
 =item L<C<FLTK::addvertices>|FLTK::draw/"addvertices"> and
 L<C<FLTK::addvertices_transformed>|FLTK::draw/"addvertices_transformed"> don't
 require an initial total.
+
+=item L<C<rgb2hsv($r, $g, $b)>|FLTK::ColorChooser/"rgb2hsv"> returns
+C<$h, $s, $v> as opposed the C function which is defined as
+C<void rgb2hsv(r,b,g,h,s,v)> and changes C<h, s, v> in place.
+
+=item L<C<hsv2rgb($h, $s, $v)>|FLTK::ColorChooser/"hsv2rbg"> returns
+C<$r, $b, $g> as opposed the C function which is defined as
+C<void hsv2rbg(h, s, v, r, b, g)> and changes C<r, b, g> in place.
 
 =back
 

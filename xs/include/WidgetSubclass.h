@@ -54,6 +54,10 @@ public:
             : X( w, h, label ) { // Window
         _class = cls;
     }
+    WidgetSubclass( char * cls, int x, int y, int w, int h )
+            : X( x, y, w, h ) { // ccCellBox, ccValueBox, ccHueBox
+        _class = cls;
+    };
     WidgetSubclass ( char * cls, char * name )
             : X( name ) { // FlatBox
         _class = cls;
