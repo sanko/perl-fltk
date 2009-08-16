@@ -193,15 +193,27 @@ Corner of color cube
 
 =for apidoc t[color]Ue||int|DARK_RED|
 
+
+
 =for apidoc t[color]Ue||int|DARK_GREEN|
+
+
 
 =for apidoc t[color]Ue||int|DARK_YELLOW|
 
+
+
 =for apidoc t[color]Ue||int|DARK_BLUE|
+
+
 
 =for apidoc t[color]Ue||int|DARK_MAGENTA|
 
+
+
 =for apidoc t[color]Ue||int|DARK_CYAN|
+
+
 
 =for apidoc t[color]Ue||int|WINDOWS_BLUE|
 
@@ -209,97 +221,48 @@ Default selection_color
 
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-int
-NO_COLOR ( )
-    CODE:
-        switch ( ix ) {
-            case  0: RETVAL = NO_COLOR; break;
-            case  1: RETVAL = FREE_COLOR; break;
-            case  2: RETVAL = NUM_FREE_COLOR; break;
-            case  3: RETVAL = GRAY00; break;
-            case  4: RETVAL = GRAY05; break;
-            case  5: RETVAL = GRAY10; break;
-            case  6: RETVAL = GRAY15; break;
-            case  7: RETVAL = GRAY20; break;
-            case  8: RETVAL = GRAY25; break;
-            case  9: RETVAL = GRAY30; break;
-            case 10: RETVAL = GRAY33; break;
-            case 11: RETVAL = GRAY35; break;
-            case 12: RETVAL = GRAY40; break;
-            case 13: RETVAL = GRAY45; break;
-            case 14: RETVAL = GRAY50; break;
-            case 15: RETVAL = GRAY55; break;
-            case 16: RETVAL = GRAY60; break;
-            case 17: RETVAL = GRAY65; break;
-            case 18: RETVAL = GRAY66; break;
-            case 19: RETVAL = GRAY70; break;
-            case 20: RETVAL = GRAY75; break;
-            case 21: RETVAL = GRAY80; break;
-            case 22: RETVAL = GRAY85; break;
-            case 23: RETVAL = GRAY90; break;
-            case 24: RETVAL = GRAY95; break;
-            case 25: RETVAL = GRAY99; break;
-            case 26: RETVAL = BLACK; break;
-            case 27: RETVAL = RED; break;
-            case 28: RETVAL = GREEN; break;
-            case 29: RETVAL = YELLOW; break;
-            case 30: RETVAL = BLUE; break;
-            case 31: RETVAL = MAGENTA; break;
-            case 32: RETVAL = CYAN; break;
-            case 33: RETVAL = WHITE; break;
-            case 34: RETVAL = DARK_RED; break;
-            case 35: RETVAL = DARK_GREEN; break;
-            case 36: RETVAL = DARK_YELLOW; break;
-            case 37: RETVAL = DARK_BLUE; break;
-            case 38: RETVAL = DARK_MAGENTA; break;
-            case 39: RETVAL = DARK_CYAN; break;
-            case 40: RETVAL = WINDOWS_BLUE; break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-            FREE_COLOR = 1
-        NUM_FREE_COLOR = 2
-                GRAY00 = 3
-                GRAY05 = 4
-                GRAY10 = 5
-                GRAY15 = 6
-                GRAY20 = 7
-                GRAY25 = 8
-                GRAY30 = 9
-                GRAY33 = 10
-                GRAY35 = 11
-                GRAY40 = 12
-                GRAY45 = 13
-                GRAY50 = 14
-                GRAY55 = 15
-                GRAY60 = 16
-                GRAY65 = 17
-                GRAY66 = 18
-                GRAY70 = 19
-                GRAY75 = 20
-                GRAY80 = 21
-                GRAY85 = 22
-                GRAY90 = 23
-                GRAY95 = 24
-                GRAY99 = 25
-                 BLACK = 26
-                   RED = 27
-                 GREEN = 28
-                YELLOW = 29
-                  BLUE = 30
-               MAGENTA = 31
-                  CYAN = 32
-                 WHITE = 33
-              DARK_RED = 34
-            DARK_GREEN = 35
-           DARK_YELLOW = 36
-             DARK_BLUE = 37
-          DARK_MAGENTA = 38
-             DARK_CYAN = 39
-          WINDOWS_BLUE = 40
+BOOT:
+    newCONSTSUB(FLTK_stash, "NO_COLOR", newSViv( NO_COLOR ));
+    newCONSTSUB(FLTK_stash, "FREE_COLOR", newSViv( FREE_COLOR ));
+    newCONSTSUB(FLTK_stash, "NUM_FREE_COLOR", newSViv( NUM_FREE_COLOR ));
+    newCONSTSUB(FLTK_stash, "GRAY00", newSViv( GRAY00 ));
+    newCONSTSUB(FLTK_stash, "GRAY05", newSViv( GRAY05 ));
+    newCONSTSUB(FLTK_stash, "GRAY10", newSViv( GRAY10 ));
+    newCONSTSUB(FLTK_stash, "GRAY15", newSViv( GRAY15 ));
+    newCONSTSUB(FLTK_stash, "GRAY20", newSViv( GRAY20 ));
+    newCONSTSUB(FLTK_stash, "GRAY25", newSViv( GRAY25 ));
+    newCONSTSUB(FLTK_stash, "GRAY30", newSViv( GRAY30 ));
+    newCONSTSUB(FLTK_stash, "GRAY33", newSViv( GRAY33 ));
+    newCONSTSUB(FLTK_stash, "GRAY35", newSViv( GRAY35 ));
+    newCONSTSUB(FLTK_stash, "GRAY40", newSViv( GRAY40 ));
+    newCONSTSUB(FLTK_stash, "GRAY45", newSViv( GRAY45 ));
+    newCONSTSUB(FLTK_stash, "GRAY50", newSViv( GRAY50 ));
+    newCONSTSUB(FLTK_stash, "GRAY55", newSViv( GRAY55 ));
+    newCONSTSUB(FLTK_stash, "GRAY60", newSViv( GRAY60 ));
+    newCONSTSUB(FLTK_stash, "GRAY65", newSViv( GRAY65 ));
+    newCONSTSUB(FLTK_stash, "GRAY66", newSViv( GRAY66 ));
+    newCONSTSUB(FLTK_stash, "GRAY70", newSViv( GRAY70 ));
+    newCONSTSUB(FLTK_stash, "GRAY75", newSViv( GRAY75 ));
+    newCONSTSUB(FLTK_stash, "GRAY80", newSViv( GRAY80 ));
+    newCONSTSUB(FLTK_stash, "GRAY85", newSViv( GRAY85 ));
+    newCONSTSUB(FLTK_stash, "GRAY90", newSViv( GRAY90 ));
+    newCONSTSUB(FLTK_stash, "GRAY95", newSViv( GRAY95 ));
+    newCONSTSUB(FLTK_stash, "GRAY99", newSViv( GRAY99 ));
+    newCONSTSUB(FLTK_stash, "BLACK", newSViv( BLACK ));
+    newCONSTSUB(FLTK_stash, "RED", newSViv( RED ));
+    newCONSTSUB(FLTK_stash, "GREEN", newSViv( GREEN ));
+    newCONSTSUB(FLTK_stash, "YELLOW", newSViv( YELLOW ));
+    newCONSTSUB(FLTK_stash, "BLUE", newSViv( BLUE ));
+    newCONSTSUB(FLTK_stash, "MAGENTA", newSViv( MAGENTA ));
+    newCONSTSUB(FLTK_stash, "CYAN", newSViv( CYAN ));
+    newCONSTSUB(FLTK_stash, "WHITE", newSViv( WHITE ));
+    newCONSTSUB(FLTK_stash, "DARK_RED", newSViv( DARK_RED ));
+    newCONSTSUB(FLTK_stash, "DARK_GREEN", newSViv( DARK_GREEN ));
+    newCONSTSUB(FLTK_stash, "DARK_YELLOW", newSViv( DARK_YELLOW ));
+    newCONSTSUB(FLTK_stash, "DARK_BLUE", newSViv( DARK_BLUE ));
+    newCONSTSUB(FLTK_stash, "DARK_MAGENTA", newSViv( DARK_MAGENTA ));
+    newCONSTSUB(FLTK_stash, "DARK_CYAN", newSViv( DARK_CYAN ));
+    newCONSTSUB(FLTK_stash, "WINDOWS_BLUE", newSViv( WINDOWS_BLUE ));
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 
@@ -314,17 +277,15 @@ L<C<FLTK::parsecolor(name, strlen(name))>|FLTK/"parsecolor">.
 MODULE = FLTK               PACKAGE = FLTK
 
 Color
-color ( name = "", ... )
-    CASE: items == 1 || ! items
-        const char * name
+color ( name = 0, g = NO_INIT, b = NO_INIT )
     CASE: items == 3
-        int r = (int)SvIV(ST(0));
-        int g = (int)SvIV(ST(1));
-        int b = (int)SvIV(ST(2));
-        CODE:
-            RETVAL = color( r, g, b );
-        OUTPUT:
-            RETVAL
+        int name
+        int g
+        int b
+        C_ARGS: name, g, b
+    CASE:
+        char * name
+        C_ARGS: name
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 
@@ -435,11 +396,8 @@ color number.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-split_color ( Color color, unsigned char r, unsigned char g, unsigned char b )
-    OUTPUT:
-        r
-        g
-        b
+split_color ( Color color, OUTLIST unsigned char r, OUTLIST unsigned char g, OUTLIST unsigned char b )
+    C_ARGS: color, r, g, b
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 

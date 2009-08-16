@@ -194,15 +194,11 @@ is(contrast(color(BLACK()), color(BLACK())),
     WHITE(), 'contrast(color(BLACK), color(BLACK)) == WHITE');
 
 #
-my ($r, $g, $b) = (0, 0, 0);
-split_color(WHITE(), $r, $g, $b);
-is_deeply([$r, $g, $b],
+is_deeply([split_color(WHITE())],
           [255, 255, 255],
-          'split_color(WHITE, ...) ~ [255, 255, 255]');
-split_color(BLACK(), $r, $g, $b);
-is_deeply([$r, $g, $b], [0, 0, 0], 'split_color(BLACK, ...) ~ [0, 0, 0]');
-split_color(RED(), $r, $g, $b);
-is_deeply([$r, $g, $b], [255, 0, 0], 'split_color(RED, ...) ~ [255, 0, 0]');
+          'split_color(WHITE) ~ [255, 255, 255]');
+is_deeply([split_color(BLACK())], [0, 0, 0], 'split_color(BLACK) ~ [0, 0, 0]');
+is_deeply([split_color(RED())], [255, 0, 0], 'split_color(RED) ~ [255, 0, 0]');
 
 #
 is(get_color_index(WHITE()), -256, 'get_color_index(WHITE) == -256');
@@ -231,3 +227,5 @@ is(nearest_index(YELLOW()), YELLOW(), 'nearest_index(YELLOW) == YELLOW');
 
 #
 diag 'TODO: color_chooser( ... )';
+
+
