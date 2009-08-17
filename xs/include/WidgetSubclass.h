@@ -119,6 +119,10 @@ private:
     char * _class;
     int _call_method ( const char * method, AV * args ) {
         int retval;
+        HV * pkg = gv_stashpv( _class, 0 );
+        GV * gv  = gv_fetchmethod_autoload( pkg, method, FALSE );
+        if ( !( gv && isGV( gv ) ) )
+            return retval;
         dSP;
         I32 ax;
         ENTER;
