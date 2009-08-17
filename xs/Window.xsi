@@ -529,7 +529,7 @@ Sets the window title, which is drawn in the titlebar by the system.
 =cut
 
 const char *
-Window::label( char * name = NO_INIT, char * iname = "" )
+Window::label( char * name = NO_INIT, char * iname = 0 )
     CASE: items == 1
         CODE:
             RETVAL = THIS->label();
