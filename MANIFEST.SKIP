@@ -118,6 +118,7 @@ examples/message.pl
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
 examples/tinker.pl
+\.html?
 
 # Tests for stuff I haven't (re)written yet
 t/~.+
