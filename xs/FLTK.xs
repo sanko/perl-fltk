@@ -41,6 +41,11 @@ using namespace fltk;
 #include <fltk/config.h> // created in / during fltk2's configure stage and
                          // installed to /fltk/include/ by Alien::FLTK
 
+#if HAVE_GL == 0
+#define DISABLE_GL 1
+#define DISABLE_GLWINDOW 1
+#endif
+
 #ifndef ENABLE_DEPRECATED
 #define DISABLE_ADJUSTER
 #endif // #ifndef ENABLE_DEPRECATED
