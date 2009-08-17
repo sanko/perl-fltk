@@ -80,6 +80,7 @@ xs/type.map
 xs/Valuator.xsi
 xs/ValueInput.xsi
 xs/ValueOutput.xsi
+xs/Version.xsi
 xs/Widget.xsi
 xs/WidgetAssociation.xsi
 xs/Window.xsi

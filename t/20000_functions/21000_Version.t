@@ -6,7 +6,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Tests for functions found in xs/FLTK_VERSION.xsi and lib/FLTK/Version.pm
+=for abstract Tests for functions found in xs/Version.xsi and lib/FLTK/Version.pm
 
 =for TODO ...create lib/FLTK/Version.pm
 

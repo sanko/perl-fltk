@@ -176,7 +176,7 @@ INCLUDE: draw.xsi
 
 INCLUDE: Flags.xsi
 
-INCLUDE: FLTK_VERSION.xsi
+INCLUDE: Version.xsi
 
 INCLUDE: gl.xsi
 
