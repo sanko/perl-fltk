@@ -30,6 +30,7 @@
 #endif
 
 namespace fltk {
+template<>
 void WidgetSubclass<GlWindow>::draw ( ) {
     int handled = 1; /* safe to assume for now */
     AV * args = newAV();
