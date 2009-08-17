@@ -117,7 +117,7 @@ public:
     };
 private:
     char * _class;
-    int _call_method ( char * method, AV * args ) {
+    int _call_method ( const char * method, AV * args ) {
         int retval;
         dSP;
         I32 ax;
