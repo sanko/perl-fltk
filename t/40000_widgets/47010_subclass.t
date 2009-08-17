@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More;
+use Test::More 0.82;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
