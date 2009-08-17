@@ -64,40 +64,31 @@ SKIP: {
     #
     diag 'Testing with ' . $FONT;
     isa_ok($Reg, 'FLTK::Font', sprintf 'font("%s")', $FONT);
-    is($Reg->name($type), $FONT, sprintf '$Reg->name( $type ) returns %s',
+    like($Reg->name($type), qr[$FONT]i, sprintf '$Reg->name( $type ) returns %s',
         $FONT);
     is($type, 0, '...and $type == 0');
     my $Bold = font($FONT . ' Bold');
     isa_ok($Bold, 'FLTK::Font', sprintf 'font("%s Bold")', $FONT);
-    is($Bold->name($type), $FONT, sprintf '$Bold->name( $type ) returns %s',
+    like($Bold->name($type), qr[$FONT]i, sprintf '$Bold->name( $type ) returns %s',
         $FONT);
     is($type, BOLD(), '...and $type == BOLD');
     my $Italic = font($FONT . ' Italic');
     isa_ok($Italic, 'FLTK::Font', sprintf 'font("%s Italic")', $FONT);
-    is($Italic->name($type), $FONT,
+    like($Italic->name($type), qr[$FONT]i,
         sprintf '$Italic->name( $type ) returns %s', $FONT);
     is($type, ITALIC(), '...and $type == ITALIC');
     my $BoldItalic = font($FONT . ' Bold Italic');
     isa_ok($BoldItalic, 'FLTK::Font', sprintf 'font("%s Bold Italic")',
            $FONT);
-    is($BoldItalic->name($type),
-        $FONT, sprintf '$BoldItalic->name( $type ) returns %s', $FONT);
+    like($BoldItalic->name($type),
+        qr[$FONT]i, sprintf '$BoldItalic->name( $type ) returns %s', $FONT);
     is($type, BOLD_ITALIC(), '...and $type == BOLD_ITALIC');
 
     #
-    is_deeply($Reg->sizes(), [0], sprintf 'Any size will work with %s',
-              $FONT);
-    is_deeply($Reg->encodings(), [qw[iso10646-1]],
-              sprintf '%s has a single encoding: iso10646-1', $FONT);
-    ok($Reg->system_name(), sprintf 'The system_name() for %s is "%s"',
+    isa_ok($Reg->sizes(), 'ARRAY', 'sizes( ) returns a list');
+    isa_ok($Reg->encodings(), 'ARRAY', 'encodings() returns a list'              );
+    ok($Reg->system_name(), sprintf 'The system_name( ) for %s is "%s"',
         $FONT, $Reg->system_name() || 'undef');
-}
-SKIP: {
-    my $Courier = font('Courier');
-    skip 'This system does not have the font Courier', 1 if !$Courier;
-    is_deeply($Courier->sizes(),
-              [13, 16, 20, 25],
-              sprintf 'Courier has four sizes: 13, 16, 20, 25');
 }
 isa_ok(list_fonts(), 'ARRAY', 'The return value from list_fonts( )');
 my $fonts = list_fonts();
