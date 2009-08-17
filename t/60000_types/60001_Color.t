@@ -13,7 +13,7 @@
 =cut
 use strict;
 use warnings;
-use Test::More tests => 146;
+use Test::More tests => 145;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -115,7 +115,6 @@ is(parsecolor('000222', 3), 56, 'parsecolor("000222", 3) == 56');
 # "" turns into NO_COLOR
 is(parsecolor(''), NO_COLOR(), 'parsecolor("") == NO_COLOR');
 is(parsecolor('', 0), NO_COLOR(), 'parsecolor("", 0) == NO_COLOR');
-is(parsecolor(), NO_COLOR(), 'parsecolor( ) == NO_COLOR');
 
 # "0"-"99" decimal fltk color number, only works for indexed color range
 is(parsecolor(1),  1,  'parsecolor(1) == 1');
@@ -155,7 +154,7 @@ for my $color (sort keys %web_safe) {
 }
 diag 'TODO: If FLTK is compiled to use X11, then XParseColor() is tried';
 
-#all other strings return NO_COLOR.
+# all other strings return NO_COLOR.
 for my $color (@not_colors) {
     is(parsecolor($color), NO_COLOR(), sprintf 'parsecolor("%s") == NO_COLOR',
         $color);

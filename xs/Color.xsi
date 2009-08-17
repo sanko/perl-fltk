@@ -327,7 +327,7 @@ Recognized values are:
 MODULE = FLTK               PACKAGE = FLTK
 
 Color
-parsecolor ( char * name = "", unsigned length = strlen(name) )
+parsecolor ( char * name, unsigned length = strlen(name) )
     OUTPUT:
         RETVAL
 
