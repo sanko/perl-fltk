@@ -258,10 +258,8 @@ between two positions, rather than a position.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-transform_distance( float x, float y)
-    OUTPUT:
-        x
-        y
+transform_distance( IN_OUTLIST float x, IN_OUTLIST float y)
+    C_ARGS: x, y
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1187,7 +1185,7 @@ drawtext( char * text, x, y, int length = NO_INIT )
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||measure|string|w|h|flags = 0|
+=for apidoc t[draw]F||[w,h]|measure|string|flags = 0|
 
 Measure the size of box necessary for L<C<drawtext()>|/"drawtext"> to draw the
 given string inside of it. The C<flags> are used to set the alignment, though
@@ -1201,10 +1199,8 @@ resulting box.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-measure( char * string, int w, int h, Flags flags = 0 )
-    OUTPUT:
-        w
-        h
+measure( char * string, OUTLIST int w, OUTLIST int h, Flags flags = 0 )
+    C_ARGS: string, w, h, flags
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1239,7 +1235,6 @@ column_widths( ... )
             sv_2mortal((SV*)RETVAL);
             const int * ret = column_widths( );
             int i = 0;
-            warn ("[%d]", ret[0]);
             while ( ret[ i ] )
                 av_push( RETVAL, newSViv( ret[ i++ ] ) );
         OUTPUT:
