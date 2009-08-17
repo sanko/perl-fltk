@@ -38,11 +38,8 @@ using namespace fltk;
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 #define DISABLE_HANDLE // Disables creation of [Widget]::handle( int event ) methods
 
-#define USE_IMAGE 0
-#define USE_GL    0
-#define USE_GLUT  0
-#define USE_CAIRO 0
-#define USE_X     0 // TODO
+#include <fltk/config.h> // created in / during fltk2's configure stage and
+                         // installed to /fltk/include/ by Alien::FLTK
 
 #ifndef ENABLE_DEPRECATED
 #define DISABLE_ADJUSTER
