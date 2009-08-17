@@ -140,8 +140,9 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 #endif // ifdef ENABLE_CALLBACKS
 }
 
-void isa(char * package, char * parent) {
-    av_push(perl_get_av(form("%s::ISA",package),TRUE),newSVpv(parent,0));
+void isa( const char * package, const char * parent ) {
+    av_push( perl_get_av( form( "%s::ISA", package ), TRUE ),
+             newSVpv( parent, 0 ) );
     /* TODO: make this spider up the list and make deeper connections? */
 }
 
