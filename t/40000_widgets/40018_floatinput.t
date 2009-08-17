@@ -24,13 +24,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-$SIG{__WARN__} = (
-    $verbose
-    ? sub {
-        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK');
@@ -47,6 +40,6 @@ my $FI = new_ok('FLTK::FloatInput' => [0, 0, 100, 100],
 $W->end();
 $W->show();
 
-diag 'TODO: ...everything';
+note 'TODO: ...everything';
 #
 #is($FI->value(), 0, 'value() is 1.2345678901234567890123456789012345678901');

@@ -25,13 +25,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-$SIG{__WARN__} = (
-    $verbose
-    ? sub {
-        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK', qw[:all]);
@@ -86,7 +79,7 @@ isa_ok(message_style(), 'FLTK::NamedStyle', 'message_style()');
 isa_ok(icon_style(),    'FLTK::NamedStyle', 'icon_style()');
 
 #
-warn
+note
     'These pop up and go a way quick because the message_window_timeout is now 0.25s';
 ok(!message("This is a test."),
     'message("This is a test.") always returns void');

@@ -24,13 +24,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-$SIG{__WARN__} = (
-    $verbose
-    ? sub {
-        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK', qw[:dial]);
@@ -50,13 +43,13 @@ $W->end();
 $W->show();
 
 #
-diag '$C0->angle1( 10 )';
+note '$C0->angle1( 10 )';
 $C0->angle1(10);
-diag '$C0->angle2( 100 )';
+note '$C0->angle2( 100 )';
 $C0->angle2(100);
 is($C0->angle1(), 10,  'angle1 == 10');
 is($C0->angle2(), 100, 'angle2 == 100');
-diag '$C0->angles( 0, 360 )';
+note '$C0->angles( 0, 360 )';
 $C0->angles(0, 360);
 is($C0->angle1(), 0,   'angle1 == 0');
 is($C0->angle2(), 360, 'angle2 == 360');

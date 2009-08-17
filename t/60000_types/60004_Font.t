@@ -23,13 +23,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-*Warn = (
-    $verbose
-    ? sub {
-        diag(sprintf('! %02.4f ' . shift, (Time::HiRes::time- $^T), @_));
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK', qw[:font]);
@@ -62,7 +55,7 @@ SKIP: {
     skip 'This system does not have the any of the fonts I need', 15 if !$Reg;
 
     #
-    diag 'Testing with ' . $FONT;
+    note 'Testing with ' . $FONT;
     isa_ok($Reg, 'FLTK::Font', sprintf 'font("%s")', $FONT);
     like($Reg->name($type), qr[$FONT]i, sprintf '$Reg->name( $type ) returns %s',
         $FONT);
@@ -92,8 +85,8 @@ SKIP: {
 }
 isa_ok(list_fonts(), 'ARRAY', 'The return value from list_fonts( )');
 my $fonts = list_fonts();
-Warn('This system has %d fonts:', scalar @$fonts);
-Warn('    %30s|%s|%s',
+note('This system has %d fonts:', scalar @$fonts);
+note('    %30s|%s|%s',
      $_->name(),
      join(', ', @{$_->encodings()}),
      join(', ', @{$_->sizes()}))

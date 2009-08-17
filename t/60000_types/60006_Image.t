@@ -24,13 +24,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-*Warn = (
-    $verbose
-    ? sub {
-        diag(sprintf('! %02.4f ' . shift, (Time::HiRes::time- $^T), @_));
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK');
@@ -72,7 +65,7 @@ my $image_h = new_ok(
 is($image_c->width(), 100, '$image_c->width( ) == 100');
 is($image_c->height(), 150, '$image_c->height( ) == 150');
 
-diag '$image_c->setsize( 200, 300 )';
+note '$image_c->setsize( 200, 300 )';
 $image_c->setsize(200, 300);
 
 is($image_c->width(), 200, '$image_c->width( ) == 200');
@@ -80,12 +73,12 @@ is($image_c->height(), 300, '$image_c->height( ) == 300');
 
 
 #use Data::Dump qw[dd pp];
-#warn pp $image_c->linebuffer( 1 );
-#warn pp $image_c->buffer( );
+#note pp $image_c->linebuffer( 1 );
+#note pp $image_c->buffer( );
 
 #
-#warn $image_a->pixeltype;
-#warn $image_b->pixeltype;
+#note $image_a->pixeltype;
+#note $image_b->pixeltype;
 
 
-diag 'TODO: Everything';
+note 'TODO: Everything';

@@ -23,13 +23,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-$SIG{__WARN__} = (
-    $verbose
-    ? sub {
-        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK', qw[:clock]);
@@ -52,23 +45,23 @@ $W->show();
 
 #
 is($CO->value(), 0, 'Default value for ClockOutput is 0');
-warn 'Changing ClockOutput value to ' . time;
+note 'Changing ClockOutput value to ' . time;
 $CO->value(time);
 is($CO->value(), time, 'New value for ClockOutput is current time');
-warn 'Changing ClockOutput value back to 0';
+note 'Changing ClockOutput value back to 0';
 $CO->value(0);
 
 #
-warn 'Changing ClockOutput time to 3:14:15';
+note 'Changing ClockOutput time to 3:14:15';
 $CO->value(3, 14, 15);
 is($CO->hour(),   3,  'ClockOutput->hour() is 3');
 is($CO->minute(), 14, 'ClockOutput->minute() is 14');
 is($CO->second(), 15, 'ClockOutput->second() is 15');
 
 #
-warn 'Changing ClockOutput time to 141:42:13';
+note 'Changing ClockOutput time to 141:42:13';
 $CO->value(141, 42, 13);
-warn
+note
     'In reality, values above 12:59:59 should be considered a bug in toolkit';
 is($CO->hour(),   141, 'ClockOutput->hour() is 141');
 is($CO->minute(), 42,  'ClockOutput->minute() is 42');
@@ -76,7 +69,7 @@ is($CO->second(), 13,  'ClockOutput->second() is 13');
 
 #
 is($CO->value(), 0, 'Calue for ClockOutput is still 0');
-warn 'value(h, m, s) does not change actual value()';
+note 'value(h, m, s) does not change actual value()';
 
 #
 is($C1->value(), time, 'Default value for Clock is the current time');

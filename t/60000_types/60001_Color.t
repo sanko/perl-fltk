@@ -23,13 +23,6 @@ my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
-$SIG{__WARN__} = (
-    $verbose
-    ? sub {
-        diag(sprintf('%02.4f', Time::HiRes::time- $^T), ' ', shift);
-        }
-    : sub { }
-);
 
 #
 use_ok('FLTK', qw[:color]);
@@ -152,7 +145,7 @@ for my $color (sort keys %web_safe) {
         sprintf 'parsecolor("%s") == %d',
         $color, $web_safe{$color});
 }
-diag 'TODO: If FLTK is compiled to use X11, then XParseColor() is tried';
+note 'TODO: If FLTK is compiled to use X11, then XParseColor() is tried';
 
 # all other strings return NO_COLOR.
 for my $color (@not_colors) {
@@ -201,7 +194,7 @@ is_deeply([split_color(RED())], [255, 0, 0], 'split_color(RED) ~ [255, 0, 0]');
 
 #
 is(get_color_index(WHITE()), -256, 'get_color_index(WHITE) == -256');
-diag 'set_color_index(WHITE, RED)';
+note 'set_color_index(WHITE, RED)';
 set_color_index(WHITE(), RED());
 is(get_color_index(WHITE()),
     RED(), 'get_color_index(WHITE) == RED (after set_color_index...)');
@@ -209,7 +202,7 @@ is(get_color_index(WHITE()),
 #
 is(get_color_index(GRAY75()),
     -522133504, 'get_color_index(GRAY75) == -522133504');
-diag 'set_background( color(WHITE) );';
+note 'set_background( color(WHITE) );';
 set_background(color(WHITE()));
 is(get_color_index(GRAY75()),
     color(WHITE()),
@@ -225,6 +218,6 @@ is(nearest_index(color(GREEN())),
 is(nearest_index(YELLOW()), YELLOW(), 'nearest_index(YELLOW) == YELLOW');
 
 #
-diag 'TODO: color_chooser( ... )';
+note 'TODO: color_chooser( ... )';
 
 
