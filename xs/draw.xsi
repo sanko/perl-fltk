@@ -1228,7 +1228,6 @@ column_widths( ... )
         CODE:
             RETVAL = newAV( );
             sv_2mortal((SV*)RETVAL);
-            warn ("items == %d", items);
             int widths[ items ];
             for ( int i = 0; i < items; i++ )
                 widths[ i ] = SvIV( ST( i ) );
