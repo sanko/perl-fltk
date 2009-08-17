@@ -53,7 +53,7 @@ used.
 
 =cut
 
-#include <fltk/color.h>
+#include <fltk/Color.h>
 
 =for apidoc t[color]Ue||int|NO_COLOR|
 
