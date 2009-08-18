@@ -25,6 +25,7 @@ Please see the notes on L<joining the team|FLTK::Notes/"Join the Team">.>
 #include <perl.h>
 #define NO_XSLOCKS // XSUB.h will otherwise override various things we need
 #include <XSUB.h>
+#define NEED_newCONSTSUB
 #include "./ppport.pl"
 
 #include <fltk/Widget.h>
