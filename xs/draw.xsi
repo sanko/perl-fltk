@@ -1371,8 +1371,9 @@ support copying screen regions.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-scrollrect( fltk::Rectangle * rect, int dx, int dy, CV * code, void * data)
+scrollrect( fltk::Rectangle * rect, int dx, int dy, CV * code, void * data )
     CODE:
+        croak( "FLTK::scrollrect( ... ) is incomplete" );
         /* TODO: */
 
 #endif // ifndef DISABLE_DRAW
