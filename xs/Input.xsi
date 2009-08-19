@@ -58,6 +58,35 @@ change them.
 All arguments that are lengths or offsets into the strings are in bytes, not
 the UTF-8 characters they represent.
 
+=head1 Subclassing
+
+You may override C<handle> which accepts an C<event> and a
+L<C<rectangle>|FLTK::Rectangle>. The passed rectangle is the area the text is
+to be drawn into. This method is provided so a subclass can place the text
+into a subrectangle.
+
+The default handle...
+
+=over
+
+=item * Handles C<FOCUS>, C<UNFOCUS>
+
+=item * May do callback on C<HIDE>
+
+=item * Any keystrokes call L<C<handle_key()>|/"handle_key">
+
+=item * Handles C<PUSH>, C<DRAG>, C<RELEASE> to select regions of text, move
+the cursor, and start drag & drop. Double click selects words, triple click
+selects lines (triple click is broken on Windows).
+
+=item * Receives drag&drop and accepts.
+
+=item * Handles C<PASTE> events caused by accepting the drag&drop or by
+calling L<C<paste()>|FLTK/"paste"> (which L<C<handle_key()>|/"handle_key">
+does for C<^V>)
+
+=back
+
 =cut
 
 #include <fltk/Input.h>
@@ -67,6 +96,8 @@ the UTF-8 characters they represent.
 =for apidoc ||FLTK::Input|new|x|y|w|h|label = ""
 
 Creates a new C<FLTK::Input> object. Obviously.
+
+=end apidoc
 
 =cut
 
@@ -85,7 +116,7 @@ Input::new( int x, int y, int w, int h, const char * label = 0 )
 
 =pod
 
-=head1 Values for L<C<type>|FLTK::Widget/"type">
+=head2 Values for L<C<type>|FLTK::Widget/"type">
 
 =over
 
@@ -97,8 +128,6 @@ Input::new( int x, int y, int w, int h, const char * label = 0 )
 
 =item C<SECRET>
 
-=item C<MULTILINE>
-
 =item C<WORDWRAP>
 
 =back
@@ -109,17 +138,21 @@ int
 NORMAL( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = Input::NORMAL;      break;
-            case 1: RETVAL = Input::FLOAT_INPUT; break;
-            case 2: RETVAL = Input::INT_INPUT;   break;
-            case 3: RETVAL = Input::SECRET;      break;
-            case 5: RETVAL = Input::WORDWRAP;    break;
+            case 0: RETVAL = fltk::Input::NORMAL;      break;
+            case 1: RETVAL = fltk::Input::FLOAT_INPUT; break;
+            case 2: RETVAL = fltk::Input::INT_INPUT;   break;
+            case 3: RETVAL = fltk::Input::SECRET;      break;
+            case 5: RETVAL = fltk::Input::WORDWRAP;    break;
         }
+    OUTPUT:
+        RETVAL
     ALIAS:
         FLOAT_INPUT = 1
           INT_INPUT = 2
              SECRET = 3
            WORDWRAP = 5
+
+=begin apidoc
 
 =for apidoc ||bool|handle_key||
 
@@ -183,6 +216,28 @@ the last two characters.
 
 =item All printing characters are run through L<C<compose()>|/"compose"> and
 the result used to insert text.
+
+=back
+
+For L<Input|FLTK::Input> widgets in C<WORDWRAP> mode, you can also do these:
+
+=over
+
+=item C<UpKey>, C<Ctrl+P>: move up one line
+
+=item C<DownKey>, C<Ctrl+N>: move down one line
+
+=item C<PageUpKey>: move up 1 line less than the vertical widget size
+
+=item C<PageDownKey>: move down 1 line less than the vertical widget size
+
+=item C<Ctrl+HomeKey>, C<Alt+A>: got to start of text
+
+=item C<Ctrl+EndKey>, C<Alt+E>: go to end of text
+
+=item C<Return>, C<KeypadEnter>: inserts a newline
+
+=item C<Ctrl+O>: insert a newline and leave the cursor before it.
 
 =back
 
@@ -321,88 +376,193 @@ Input::position( int new_position = NO_INIT, int new_mark = NO_INIT )
             THIS->position( new_position, new_mark );
             XSRETURN_EMPTY;
 
+=for apidoc ||int|mark||||||||
 
 
 
+=for apidoc |||mark|new_mark|||||||
 
+Same as L<C<$inputE<gt>position($input-E<gt>position(),$index)>|/"position">.
 
+=cut
 
+int
+Input::mark( int new_mark = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->mark( new_mark );
+            XSRETURN_EMPTY;
 
+=for apidoc |||up_down_position|position|keepmark|
 
+Does the correct thing for arrow keys. C<position> must be the location of the
+start of a line. Sets the L<position|/"position"> (and L<mark|/"mark"> if
+C<keepmark> is false) to somewhere after C<position>, such that pressing the
+arrows repeatedly will cause the point to move up and down.
 
+=cut
 
+void
+Input::up_down_position( int position, bool keepmark )
 
+=for apidoc ||bool|replace|begin|end|text|length
 
+This call does all editing of the text. It deletes the region between C<begin>
+and C<end> (either one may be less or equal to the other), and then inserts
+C<length> (which may be zero) characters from the string C<text> at that point
+and leaves the L<C<mark()>|/"mark"> and L<C<position()>|/"position"> after the
+insertion. If the text is changed the callback is done if the
+L<C<when()>|FLTK::Widget/"when"> flags indicate it should be done.
 
+C<begin> and C<end> are bounds checked so don't worry about sending values
+outside the length of the string.
 
+=cut
 
+bool
+Input::replace( int begin, int end, char * text, int length = strlen( text ) )
 
+=for apidoc ||bool|cut|||
 
+Wrapper around L<C<replace()>|/"replace">, this deletes the region between the
+point and the mark. It does nothing if they are equal.
 
+=for apidoc ||bool|cut|length||
 
+Wrapper around L<C<replace()>|/"replace"> this deletes up to C<length>
+characters after the point, or before the point if C<length> is negative.
+C<length> is bounds checked.
 
+=for apidoc ||bool|cut|begin|end|
 
+Wrapper around L<C<replace()>|/"replace"> this deletes the characters between
+C<begin> and C<end>. The values are clamped to the ends of the string, and
+C<end> can be less than C<begin>.
 
+=cut
 
+bool
+Input::cut( int begin = NO_INIT, int end = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        C_ARGS: begin
+    CASE: items == 3
+        C_ARGS: begin, end
 
+=for apidoc ||bool|insert|text||
 
+Wrapper around L<C<replace()>|/"replace">. This inserts the string at the
+point and leaves the point after it.
 
+=for apidoc ||bool|insert|text|length||
 
+Wrapper around L<C<replace()>|/"replace">. This inserts C<length> characters
+from the C<text> (including C<\0> characters!) at the point and leaves the
+point after it.
 
+=cut
 
+bool
+Input::insert( char * text, int length = strlen( text ) )
+    CASE: items == 2
+        C_ARGS: text
+    CASE: items == 3
+        C_ARGS: text, length
 
+=for apidoc ||bool|copy|to_clipboard = true|
 
+Put the current selection between L<C<mark()>|/"mark"> and
+L<C<position()>|/"position"> into the selection or clipboard by calling
+L<C<copy()>|FLTK/"copy">. If L<C<position()>|/"position"> and
+L<C<mark()>|/"mark"> are equal this does nothing (ie it does not clear the
+clipboard).
 
+If C<to_clipboard> is true, the text is put into the user-visible cut & paste
+clipboard (this is probably what you want). If C<to_clipboard> is false, it is
+put into the less-visible selection buffer that is used to do middle-mouse
+paste and drag & drop.
 
+To paste the clipboard, call L<C<paste(1)>|FLTK/"paste"> and fltk will send
+the widget a C<PASTE> event with the text, which will cause it to be inserted.
 
+=cut
 
+bool
+Input::copy( bool to_clipboard = true )
 
+=for apidoc ||bool|undo|||
 
+If this is the most recent widget on which L<C<replace()>|/"replace"> was done
+on, this will undo that L<C<replace()>|/"replace"> and probably several others
+(ie if the user has typed a lot of text it will undo all of it even though
+that was probably many calls to L<C<replace()>|/"replace">). Returns true if
+any change was made.
 
+=cut
 
+bool
+Input::undo( )
 
+=for apidoc ||index|word_start|position|
 
+Returns the location of the first word boundary at or before C<position>.
 
+=for apidoc ||index|word_end|position|
 
+Returns the location of the next word boundary at or after C<position>.
 
+=for apidoc ||index|line_start|position|
 
+Returns the location of the start of the line containing the C<position>.
 
+=for apidoc ||index|line_end|position|
 
+Returns the location of the next newline or wordwrap space at or after
+C<position>.
 
+=cut
 
+int
+Input::word_start( int position )
 
+int
+Input::word_end( int position )
 
+int
+Input::line_start( int position )
 
+int
+Input::line_end( int position )
 
+=for apidoc ||int|mouse_position|rectangle
 
+Figure out what character the most recent mouse event would be pointing to,
+assumming you drew the text by calling L<C<draw()>|FLTK::draw/"draw"> with the
+same L<C<rectangle>|FLTK::Rectangle>. Returns C<0> if the mouse is before the
+first character, and L<C<size()>|/"size"> if it is after the last one.
 
+=cut
 
+int
+Input::mouse_position( fltk::Rectangle * rectangle )
+    C_ARGS: * rectangle
 
+=for apidoc ||int|xscroll|||
 
 
+=for apidoc ||int|yscroll|||
 
 
+=cut
 
+int
+Input::xscroll( )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int
+Input::yscroll( )
 
 BOOT:
     isa("FLTK::Input", "FLTK::Widget");
