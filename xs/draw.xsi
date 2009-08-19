@@ -38,6 +38,8 @@ including crashing.
 
 #include <fltk/draw.h>
 
+=begin apidoc
+
 =for apidoc t[gsave,draw]|||push_matrix|
 
 Save the current transformation on a stack, so you can restore it with
@@ -71,6 +73,12 @@ push_matrix( )
     ALIAS:
         pop_matrix = 2
 
+BOOT:
+    export_tag("push_matrix", "gsave");
+    export_tag("push_matrix", "draw");
+    export_tag("pop_matrix", "gsave");
+    export_tag("pop_matrix", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||scale|x
@@ -99,6 +107,9 @@ scale( float x, float y = NO_INIT )
         C_ARGS: x
     CASE: items == 2
         C_ARGS: x, y
+
+BOOT:
+    export_tag("scale", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -132,6 +143,9 @@ translate ( x, y )
                 "where 'x' and 'y' = floats or integers"
             );
 
+BOOT:
+    export_tag("translate", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||rotate|d
@@ -150,6 +164,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 rotate( float d )
 
+BOOT:
+    export_tag("rotate", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||concat|a|b|c|d|x|y|
@@ -167,6 +184,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 concat( float a, float b, float c, float d, float x, float y )
 
+BOOT:
+    export_tag("concat", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||load_identity||
@@ -180,6 +200,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 load_identity( )
+
+BOOT:
+    export_tag("load_identity", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -245,6 +268,9 @@ transform ( x, y, int w = NO_INIT, int h = NO_INIT )
         OUTPUT:
             y
 
+BOOT:
+    export_tag("transform", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||transform_distance|x|y
@@ -260,6 +286,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 transform_distance( IN_OUTLIST float x, IN_OUTLIST float y)
     C_ARGS: x, y
+
+BOOT:
+    export_tag("transform_distance", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -289,6 +318,9 @@ push_clip( x, int y = NO_INIT, int w = NO_INIT, int h = NO_INIT )
         CODE:
             Perl_croak(aTHX_ "Usage: %s(%s)", "FLTK::push_clip", "x, [y, w, h]");
 
+BOOT:
+    export_tag("push_clip", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||clipout|rectangle
@@ -307,6 +339,8 @@ void
 clipout( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
 
+BOOT:
+    export_tag("clipout", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -336,6 +370,10 @@ pop_clip( )
     ALIAS:
         push_no_clip = 1
 
+BOOT:
+    export_tag("pop_clip", "draw");
+    export_tag("push_no_clip", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F||bool|not_clipped|rectangle
@@ -349,6 +387,9 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 not_clipped ( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
+
+BOOT:
+    export_tag("not_clipped", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -383,6 +424,9 @@ int
 intersect_with_clip( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
 
+BOOT:
+    export_tag("intersect_with_clip", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||setcolor|color
@@ -411,6 +455,10 @@ setcolor( Color color )
     ALIAS:
         setbgcolor = 1
 
+BOOT:
+    export_tag("setcolor", "draw");
+    export_tag("setbgcolor", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||setcolor_alpha|color|alpha
@@ -426,6 +474,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 setcolor_alpha( Color color, float alpha )
+
+BOOT:
+    export_tag("setcolor_alpha", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -458,6 +509,10 @@ getcolor( )
         RETVAL
     ALIAS:
         getbgcolor = 1
+
+BOOT:
+    export_tag("getcolor", "draw");
+    export_tag("getbgcolor", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -521,15 +576,24 @@ drawstyle(Style * style = NO_INIT , Flags flags = NO_INIT )
         CODE:
             drawstyle( style, flags );
 
+BOOT:
+    export_tag("drawstyle", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||setdrawflags|flags|
 
 
+
+=cut
+
 MODULE = FLTK               PACKAGE = FLTK
 
 void
 setdrawflags ( Flags flags )
+
+BOOT:
+    export_tag("setdrawflags", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -551,6 +615,9 @@ drawflags ( Flags flags )
         C_ARGS:
     CASE:
         C_ARGS: flags
+
+BOOT:
+    export_tag("drawflags", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -640,6 +707,31 @@ line_style( int style = NO_INIT , float width = 0, int dashes = NO_INIT, ...)
             c_dashes[items - 2] = '\0';
             line_style( style, width, c_dashes );
 
+BOOT:
+    export_tag("line_style", "draw");
+    newCONSTSUB(FLTK_stash, "SOLID", newSViv( SOLID ));
+    export_tag("SOLID", "draw");
+    newCONSTSUB(FLTK_stash, "DASH", newSViv( DASH ));
+    export_tag("DASH", "draw");
+    newCONSTSUB(FLTK_stash, "DOT", newSViv( DOT ));
+    export_tag("DOT", "draw");
+    newCONSTSUB(FLTK_stash, "DASHDOT", newSViv( DASHDOT ));
+    export_tag("DASHDOT", "draw");
+    newCONSTSUB(FLTK_stash, "DASHDOTDOT", newSViv( DASHDOTDOT ));
+    export_tag("DASHDOTDOT", "draw");
+    newCONSTSUB(FLTK_stash, "CAP_FLAT", newSViv( CAP_FLAT ));
+    export_tag("CAP_FLAT", "draw");
+    newCONSTSUB(FLTK_stash, "CAP_ROUND", newSViv( CAP_ROUND ));
+    export_tag("CAP_ROUND", "draw");
+    newCONSTSUB(FLTK_stash, "CAP_SQUARE", newSViv( CAP_SQUARE ));
+    export_tag("CAP_SQUARE", "draw");
+    newCONSTSUB(FLTK_stash, "JOIN_MITER", newSViv( JOIN_MITER ));
+    export_tag("JOIN_MITER", "draw");
+    newCONSTSUB(FLTK_stash, "JOIN_ROUND", newSViv( JOIN_ROUND ));
+    export_tag("JOIN_ROUND", "draw");
+    newCONSTSUB(FLTK_stash, "JOIN_BEVEL", newSViv( JOIN_BEVEL ));
+    export_tag("JOIN_BEVEL", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F||float|line_width||
@@ -653,6 +745,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 float
 line_width( )
+
+BOOT:
+    export_tag("line_width", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -679,6 +774,9 @@ line_dashes( )
     OUTPUT:
         RETVAL
 
+BOOT:
+    export_tag("line_dashes", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||newpath||
@@ -692,6 +790,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 newpath( )
+
+BOOT:
+    export_tag("newpath", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -726,6 +827,9 @@ addvertex ( x, y )
             Perl_croak(aTHX_ "Usage: %s(%s) # %s", "FLTK::addvertex", "x, y",
                 "where 'x' and 'y' = floats or integers"
             );
+
+BOOT:
+    export_tag("addvertex", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -773,6 +877,10 @@ addvertices( AV * xy1, AV * xy2 = NO_INIT, ... )
     ALIAS:
         addvertices_transformed = 1
 
+BOOT:
+    export_tag("addvertices", "draw");
+    export_tag("addvertices_transformed", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||addcurve|x0|y0|x1|y1|x2|y2|x3|y3|
@@ -787,6 +895,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 addcurve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
+
+BOOT:
+    export_tag("addcurve", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -804,6 +915,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 addarc(float l, float t, float w, float h, float start, float end)
+
+BOOT:
+    export_tag("addarc", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -845,6 +959,10 @@ addpie( fltk::Rectangle * rect, float start, float end )
         }
     ALIAS:
         addchord = 1
+
+BOOT:
+    export_tag("addpie", "draw");
+    export_tag("addchord", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -894,6 +1012,11 @@ closepath( )
         strokepath = 1
           fillpath = 2
 
+BOOT:
+    export_tag("closepath", "draw");
+    export_tag("strokepath", "draw");
+    export_tag("fillpath", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||fillstrokepath|color|
@@ -910,6 +1033,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 fillstrokepath( Color color )
+
+BOOT:
+    export_tag("fillstrokepath", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -954,6 +1080,10 @@ fillrect( x, int y = NO_INIT, int w = NO_INIT, int h = NO_INIT )
     ALIAS:
         strokerect = 1
 
+BOOT:
+    export_tag("fillrect", "draw");
+    export_tag("strokerect", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||drawline|x0|y0|x1|y1
@@ -982,6 +1112,9 @@ drawline( double x0, double y0, double x1, double y1 )
     CASE:
         C_ARGS: (float) x0, (float) y0, (float) x1, (float) y1
 
+BOOT:
+    export_tag("drawline", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||drawpoint|x|y|
@@ -1003,6 +1136,9 @@ drawpoint( double x, double y)
         C_ARGS: (int) x, (int) y
     CASE:
         C_ARGS: (float) x, (float) y
+
+BOOT:
+    export_tag("drawpoint", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1039,6 +1175,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 setfont( Font * font, float size )
 
+BOOT:
+    export_tag("setfont", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F||FLTK::Font|getfont||
@@ -1051,6 +1190,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 Font *
 getfont( )
+
+BOOT:
+    export_tag("getfont", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1067,6 +1209,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 double
 getsize( )
+
+BOOT:
+    export_tag("getsize", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1086,6 +1231,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 double
 getwidth( char * text, int n = strlen( text ) )
+
+BOOT:
+    export_tag("getwidth", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1115,6 +1263,10 @@ getascent( )
     ALIAS:
         getdescent = 1
 
+BOOT:
+    export_tag("getascent", "draw");
+    export_tag("getdescent", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F|||drawtext_transformed|text|n|x|y|
@@ -1129,6 +1281,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 drawtext_transformed( char * text, int n, float x, float y )
+
+BOOT:
+    export_tag("drawtext_transformed", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1183,6 +1338,9 @@ drawtext( char * text, x, y, int length = NO_INIT )
         float y
         C_ARGS: text, length, x, y /* Note order of arguments */
 
+BOOT:
+    export_tag("drawtext", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]F||[w,h]|measure|string|flags = 0|
@@ -1201,6 +1359,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 measure( char * string, OUTLIST int w, OUTLIST int h, Flags flags = 0 )
     C_ARGS: string, w, h, flags
+
+BOOT:
+    export_tag("measure", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1239,6 +1400,9 @@ column_widths( ... )
                 av_push( RETVAL, newSViv( ret[ i++ ] ) );
         OUTPUT:
             RETVAL
+
+BOOT:
+    export_tag("column_widths", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1293,6 +1457,9 @@ drawimage( uchar * pointer, PixelType type, fltk::Rectangle * rect, int line_del
         C_ARGS: pointer, type, * rect
     CASE: items == 4
         C_ARGS: pointer, type, * rect, line_delta
+
+BOOT:
+    export_tag("drawimage", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
@@ -1350,6 +1517,9 @@ readimage( uchar * pointer, PixelType type, fltk::Rectangle * rect, int line_del
         OUTPUT:
             RETVAL
 
+BOOT:
+    export_tag("readimage", "draw");
+
 MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for apidoc t[draw]FHx|||scrollrect|rect|dx|dy|code|data
@@ -1375,5 +1545,8 @@ scrollrect( fltk::Rectangle * rect, int dx, int dy, CV * code, void * data )
     CODE:
         croak( "FLTK::scrollrect( ... ) is incomplete" );
         /* TODO: */
+
+BOOT:
+    //export_tag("scrollrect", "draw"); /* TODO */
 
 #endif // ifndef DISABLE_DRAW
