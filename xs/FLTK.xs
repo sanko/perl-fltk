@@ -268,6 +268,8 @@ INCLUDE: Image.xsi
 
 INCLUDE: Input.xsi
 
+INCLUDE: InputBrowser.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi

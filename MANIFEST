@@ -69,6 +69,7 @@ xs/Image.xsi
 xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
 xs/Input.xsi
+xs/InputBrowser.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
