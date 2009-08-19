@@ -64,6 +64,7 @@ HighlightButton     *   O_FLTK
 Image               *   O_FLTK
 Input               *   O_FLTK
 fltk::InputBrowser  *   O_FLTK
+fltk::IntInput      *   O_FLTK
 LabelType           *   O_FLTK
 const Monitor       *   O_FLTK
 Monitor             *   O_FLTK

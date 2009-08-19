@@ -270,6 +270,8 @@ INCLUDE: Input.xsi
 
 INCLUDE: InputBrowser.xsi
 
+INCLUDE: IntInput.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi
