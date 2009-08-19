@@ -22,4 +22,15 @@ use Exporter qw[import];
 #
 our $NOXS ||= $0 eq __FILE__;    # for testing
 XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
+
+#
+@EXPORT_OK = sort map { @$_ = sort @$_; @$_ } values %EXPORT_TAGS;
+$EXPORT_TAGS{'all'} = \@EXPORT_OK;
+@{$EXPORT_TAGS{'style'}}
+    = sort map { defined $EXPORT_TAGS{$_} ? @{$EXPORT_TAGS{$_}} : () }
+    qw[box font label]
+    if 1 < scalar keys %EXPORT_TAGS;
+@EXPORT    # Export these tags (if prepended w/ ':') or functions by default
+    = sort map { m[^:(.+)] ? @{$EXPORT_TAGS{$1}} : $_ } qw[:style :default]
+    if 1 < scalar keys %EXPORT_TAGS;
 1;
