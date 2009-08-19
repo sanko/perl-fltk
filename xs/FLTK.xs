@@ -30,10 +30,9 @@ Please see the notes on L<joining the team|FLTK::Notes/"Join the Team">.>
 
 #include <fltk/Widget.h>
 
-using namespace fltk;
+using namespace fltk; // TODO: Remove this and use fully qualified names
 
 #define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
-//#define ENABLE_DESTROY    // Introduce pointless bugs :D
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
@@ -57,13 +56,17 @@ using namespace fltk;
 
 #include <fltk/Widget.h>
 
-//#define ENABLE_HASH_CALLBACKS // TODO - based on perlcall
+// #define ENABLE_HASH_CALLBACKS // TODO - based on perlcall
 #ifdef ENABLE_HASH_CALLBACKS
 static HV * Mapping = (HV*)NULL;
 #endif // #ifdef ENABLE_HASH_CALLBACKS
 
-/* For inserting stuff directly into FLTK's namespace */
-HV * FLTK_stash = gv_stashpv("FLTK", TRUE);
+// For inserting stuff directly into FLTK's namespace
+HV * FLTK_stash  = gv_stashpv( "FLTK", TRUE );
+// For inserting stuff directly into FLTK's exports
+HV * FLTK_export = get_hv( "FLTK::EXPORT_TAGS", TRUE );
+
+=begin apidoc
 
 =for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
 
@@ -75,8 +78,6 @@ the C<CODE> should be an AV* containing data that looks a little like this...
     FLTK::Widget widget,
     SV* args             # optional arguments sent along to coderef
   ]
-
-=back
 
 =cut
 
@@ -119,8 +120,10 @@ little like this...
 =cut
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
-#ifdef ENABLE_CALLBACKS // XXX - ...should weaken affect this?
-#ifndef ENABLE_HASH_CALLBACKS
+#ifdef ENABLE_CALLBACKS
+#ifdef ENABLE_HASH_CALLBACKS
+    warn("Hash based callbacks are not ready.");
+#else // #ifdef ENABLE_HASH_CALLBACKS
     AV *cbargs = (AV *) CODE;
     I32 alen = av_len(cbargs);
     SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
@@ -133,18 +136,34 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
     call_sv(thecb, G_DISCARD);
         FREETMPS;
     LEAVE;
-#else  // ifndef ENABLE_HASH_CALLBACKS
-    warn("It's not ready!");
-#endif // ifndef ENABLE_HASH_CALLBACKS
-#else // ifdef ENABLE_CALLBACKS
+#endif // ifdef ENABLE_HASH_CALLBACKS
+#else  // ifdef ENABLE_CALLBACKS
     warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
 #endif // ifdef ENABLE_CALLBACKS
 }
 
-void isa( const char * package, const char * parent ) {
-    av_push( perl_get_av( form( "%s::ISA", package ), TRUE ),
+=for apidoc |||isa|package|parent|
+
+This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance.
+
+=cut
+
+void isa ( const char * package, const char * parent ) {
+    av_push( get_av( form( "%s::ISA", package ), TRUE ),
              newSVpv( parent, 0 ) );
-    /* TODO: make this spider up the list and make deeper connections? */
+    // TODO: make this spider up the list and make deeper connections?
+}
+
+void export_tag (const char * what, const char * _tag ) {
+    SV ** tag = hv_fetch( FLTK_export, _tag, strlen(_tag), TRUE );
+    if (tag && SvOK(* tag) && SvROK(* tag ) && (SvTYPE(SvRV(*tag))) == SVt_PVAV)
+        av_push((AV*)SvRV(*tag), newSVpv(what, 0));
+    else {
+        SV * av;
+        av = (SV*) newAV( );
+        av_push((AV*)av, newSVpv(what, 0));
+        tag = hv_store( FLTK_export, _tag, strlen(_tag), newRV_noinc(av), 0 );
+    }
 }
 
 #ifdef WIN32
@@ -161,7 +180,9 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
 }
 #endif // #ifdef WIN32
 
-/* Alright, let's get things started, shall we? */
+
+
+// Alright, let's get things started, shall we?
 
 MODULE = FLTK               PACKAGE = FLTK
 
@@ -304,18 +325,11 @@ MODULE = FLTK               PACKAGE = FLTK
 
 BOOT:
 #ifndef ENABLE_CALLBACKS
-    warn( "FLTK's callback system has been disabled %s.\n",
-#ifndef SvWEAKREF
-            "because weak references are not implemented in this release of perl"
-#else  // #ifndef SvWEAKREF
-            "manually"
-#endif // #ifndef SvWEAKREF
-    );
+    warn( "FLTK's callback system was disabled during build.\n" );
+    // This warning should show up during compilation
 #endif
 
-=head1 Testing
-
-This is all in a section called Testing.
+=end apidoc
 
 =head1 Synopsis
 
