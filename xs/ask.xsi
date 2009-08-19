@@ -48,38 +48,30 @@ L<C<FLTK::input()>|/"input">.
 
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-int
-BEEP_DEFAULT ()
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL = BEEP_DEFAULT; break;
-            case 1: RETVAL = BEEP_MESSAGE; break;
-            case 2: RETVAL = BEEP_ERROR; break;
-            case 3: RETVAL = BEEP_QUESTION; break;
-            case 4: RETVAL = BEEP_PASSWORD; break;
-            case 5: RETVAL = BEEP_NOTIFICATION; break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-             BEEP_MESSAGE = 1
-               BEEP_ERROR = 2
-            BEEP_QUESTION = 3
-            BEEP_PASSWORD = 4
-        BEEP_NOTIFICATION = 5
+BOOT:
+    newCONSTSUB(FLTK_stash, "BEEP_DEFAULT", newSViv( BEEP_DEFAULT ));
+    export_tag("BEEP_DEFAULT", "ask");
+    newCONSTSUB(FLTK_stash, "BEEP_MESSAGE", newSViv( BEEP_MESSAGE ));
+    export_tag("BEEP_MESSAGE", "ask");
+    newCONSTSUB(FLTK_stash, "BEEP_ERROR", newSViv( BEEP_ERROR ));
+    export_tag("BEEP_ERROR", "ask");
+    newCONSTSUB(FLTK_stash, "BEEP_QUESTION", newSViv( BEEP_QUESTION ));
+    export_tag("BEEP_QUESTION", "ask");
+    newCONSTSUB(FLTK_stash, "BEEP_PASSWORD", newSViv( BEEP_PASSWORD ));
+    export_tag("BEEP_PASSWORD", "ask");
+    newCONSTSUB(FLTK_stash, "BEEP_NOTIFICATION", newSViv( BEEP_NOTIFICATION ));
+    export_tag("BEEP_NOTIFICATION", "ask");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc t[ask]F|||message|string|
+=for apidoc t[ask,default]F|||message|string|
 
 Displays a message in a pop-up box with an "OK" button, waits for the user to
 hit the button. The message will wrap to fit the window, or may be many lines
 by putting C<\n> characters into it. The enter key is a shortcut for the OK
 button.
 
-=for apidoc t[ask]F|||alert|string|
+=for apidoc t[ask,default]F|||alert|string|
 
 Same as L<C<FLTK::message()>|/"message"> except for the "!" symbol.
 
@@ -89,13 +81,17 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 message( char * string )
-    CODE:
-        switch ( ix ) {
-            case 0: message(string); break;
-            case 1:   alert(string); break;
-        }
-    ALIAS:
-        alert = 1
+
+BOOT:
+    export_tag("message", "ask");
+    export_tag("message", "default");
+
+void
+alert( char * string )
+
+BOOT:
+    export_tag("alert", "ask");
+    export_tag("alert", "default");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
@@ -116,9 +112,13 @@ MODULE = FLTK               PACKAGE = FLTK
 int
 ask( char * question )
 
+BOOT:
+    export_tag("ask", "ask");
+    export_tag("ask", "default");
+
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc t[ask]F||int|choice|question|answer_1|answer_2|answer_3
+=for apidoc t[ask,default]F||int|choice|question|answer_1|answer_2|answer_3
 
 Shows the message with three buttons below it marked with the strings
 C<answer_1>, C<answer_2>, and C<answer_3>. Returns C<0>, C<1>, or C<2>
@@ -130,7 +130,7 @@ C<answer_1>.
 If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<-1>
 will be returned if the timeout expires.
 
-=for apidoc t[ask]F||int|choice_alert|question|answer_1|answer_2|answer_3
+=for apidoc t[ask,default]F||int|choice_alert|question|answer_1|answer_2|answer_3
 
 Same as L<C<choice()>|/"choice"> except a "!" icon is used instead of a "?"
 
@@ -152,9 +152,15 @@ choice( char * question, char * answer_1, char * answer_2, char * answer_3)
     ALIAS:
         choice_alert = 1
 
+BOOT:
+    export_tag("choice", "ask");
+    export_tag("choice", "default");
+    export_tag("choice_alert", "ask");
+    export_tag("choice_alert", "default");
+
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc t[ask]F||string|input|label|default_value = ''
+=for apidoc t[ask,default]F||string|input|label|default_value = ''
 
 Pops up a window displaying a string, lets the user edit it, and return the
 new value. The cancel button returns C<undef>. The returned pointer is only
@@ -163,7 +169,7 @@ valid until the next time L<C<FLTK::input()>|FLTK::ask/"input"> is called.
 If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<0>
 will be returned if the timeout expires.
 
-=for apidoc t[ask]Fx||string|password|label|default_value = ''
+=for apidoc t[ask,default]Fx||string|password|label|default_value = ''
 
 Same as L<C<FLTK::input()>|FLTK::ask/"input"> except an
 L<FLTK::SecretInput|FLTK::SecretInput> field is used.
@@ -184,9 +190,15 @@ input( char * label, char * default_value = 0 )
     ALIAS:
         password = 1
 
+BOOT:
+    export_tag("input", "ask");
+    export_tag("input", "default");
+    export_tag("password", "ask");
+    export_tag("password", "default");
+
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc t[ask]F|||beep|type = BEEP_DEFAULT
+=for apidoc t[ask,default]F|||beep|type = BEEP_DEFAULT
 
 Generates a simple beep message.
 
@@ -196,6 +208,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 beep( int type = BEEP_DEFAULT )
+
+BOOT:
+    export_tag("beep", "ask");
+    export_tag("beep", "default");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
@@ -222,6 +238,9 @@ beep_on_dialog( bool value = NO_INIT )
             beep_on_dialog( value );
     CASE:
         C_ARGS:
+
+BOOT:
+    export_tag("beep_on_dialog", "ask");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
@@ -251,6 +270,10 @@ icon_style(  )
         RETVAL
     ALIAS:
         message_style = 1
+
+BOOT:
+    export_tag("icon_style", "ask");
+    export_tag("message_style", "ask");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
@@ -329,6 +352,9 @@ message_window_label ( char * label = NO_INIT )
             ok = 3
         cancel = 4
 
+BOOT:
+    export_tag("message_window_label", "ask");
+
 MODULE = FLTK               PACKAGE = FLTK::ask
 
 =for apidoc t[ask]F||timeout|message_window_timeout|
@@ -359,6 +385,9 @@ message_window_timeout( double timeout = NO_INIT )
         OUTPUT:
             RETVAL
 
+BOOT:
+    export_tag("message_window_timeout", "ask");
+
 MODULE = FLTK               PACKAGE = FLTK::ask
 
 =for apidoc t[ask]F||bool|message_window_scrollable|
@@ -386,79 +415,7 @@ message_window_scrollable( bool scroll = NO_INIT )
         OUTPUT:
             RETVAL
 
-
-
-#if 0
-
-
-MODULE = FLTK               PACKAGE = FLTK::ask
-
-=for apidoc t[ask]v||string|message_window_label|
-
-Set this to change the title of L<C<message()>|/"message">,
-L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
-windows.
-
-=cut
-
-MODULE = FLTK               PACKAGE = FLTK
-
-const char *
-_message_window_label ( char * value = NO_INIT )
-    CASE: ! items
-        CODE:
-            warn ("get");
-            switch ( ix ) {
-                case 0: RETVAL = message_window_label; break;
-                case 1: RETVAL = no; break;
-            }
-        OUTPUT:
-            RETVAL
-    CASE:
-        CODE:
-            warn ("set | %s | %d", value, ix);
-            switch ( ix ) {
-                case 0: message_window_label = value; break;
-                case 1: no = value; break;
-            }
-    ALIAS:
-        _no = 1
-
-MODULE = FLTK               PACKAGE = FLTK::ask
-
-=for apidoc t[ask]v||float|message_window_timeout|
-
-Set this to a positive value to cause the  L<C<message()>|/"message">,
-L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">,
-etc. windows to close automatically after this timeout.  If the timeout
-expires, C<-1> will be returned by the functions that return int. The timeout
-value is in seconds.
-
-=cut
-
-MODULE = FLTK               PACKAGE = FLTK
-
-double
-_message_window_timeout( double value = NO_INIT )
-    CASE: items == 0
-        CODE:
-            switch ( ix ) {
-                case 0: RETVAL = message_window_timeout; break;
-            }
-        OUTPUT:
-            RETVAL
-    CASE: items == 1
-        CODE:
-            switch ( ix ) {
-                case 0: message_window_timeout = value; break;
-            }
-    ALIAS:
-
-
-
-#endif
-
-
-
+BOOT:
+    export_tag("message_window_scrollable", "ask");
 
 #endif // ifndef DISABLE_ASK
