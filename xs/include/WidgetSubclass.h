@@ -45,7 +45,7 @@ public:
         _class = cls;
     };
     WidgetSubclass( char * cls, char * name, int dx, int dy, int dw, int dh,
-                    char * pattern, Box * down )
+                    char * pattern, fltk::Box * down )
             : X( name, dx, dy, dw, dh, pattern, down ) { // FrameBox
         _class = cls;
     };

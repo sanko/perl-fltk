@@ -30,6 +30,7 @@ Browser             *   O_FLTK
 Browser::Mark       *   O_FLTK
 fltk::Rectangle     *   O_FLTK
 Box                 *   O_FLTK
+fltk::Box           *   O_FLTK
 Button              *   O_FLTK
 Callback            *   O_FLTK
 ccHueBox            *   O_FLTK
