@@ -98,30 +98,55 @@ L<FLTK::Subclass|FLTK::Subclass>), you're gonna need these.
 
 BOOT:
     newCONSTSUB(FLTK_stash, "NO_EVENT", newSViv( NO_EVENT ));
+    export_tag("NO_EVENT", "events");
     newCONSTSUB(FLTK_stash, "PUSH", newSViv( PUSH ));
+    export_tag("PUSH", "events");
     newCONSTSUB(FLTK_stash, "RELEASE", newSViv( RELEASE ));
+    export_tag("RELEASE", "events");
     newCONSTSUB(FLTK_stash, "ENTER", newSViv( ENTER ));
+    export_tag("ENTER", "events");
     newCONSTSUB(FLTK_stash, "LEAVE", newSViv( LEAVE ));
+    export_tag("LEAVE", "events");
     newCONSTSUB(FLTK_stash, "DRAG", newSViv( DRAG ));
+    export_tag("DRAG", "events");
     newCONSTSUB(FLTK_stash, "FOCUS", newSViv( FOCUS ));
+    export_tag("FOCUS", "events");
     newCONSTSUB(FLTK_stash, "UNFOCUS", newSViv( UNFOCUS ));
+    export_tag("UNFOCUS", "events");
     newCONSTSUB(FLTK_stash, "KEY", newSViv( KEY ));
+    export_tag("KEY", "events");
     newCONSTSUB(FLTK_stash, "KEYUP", newSViv( KEYUP ));
-    newCONSTSUB(FLTK_stash, "FOCUS_CHANGE", newSViv(FOCUS_CHANGE ));
+    export_tag("KEYUP", "events");
+    newCONSTSUB(FLTK_stash, "FOCUS_CHANGE", newSViv( FOCUS_CHANGE ));
+    export_tag("FOCUS_CHANGE", "events");
     newCONSTSUB(FLTK_stash, "MOVE", newSViv( MOVE ));
+    export_tag("MOVE", "events");
     newCONSTSUB(FLTK_stash, "SHORTCUT", newSViv( SHORTCUT ));
+    export_tag("SHORTCUT", "events");
     newCONSTSUB(FLTK_stash, "DEACTIVATE", newSViv( DEACTIVATE ));
+    export_tag("DEACTIVATE", "events");
     newCONSTSUB(FLTK_stash, "ACTIVATE", newSViv( ACTIVATE ));
+    export_tag("ACTIVATE", "events");
     newCONSTSUB(FLTK_stash, "HIDE", newSViv( HIDE ));
+    export_tag("HIDE", "events");
     newCONSTSUB(FLTK_stash, "SHOW", newSViv( SHOW ));
+    export_tag("SHOW", "events");
     newCONSTSUB(FLTK_stash, "PASTE", newSViv( PASTE ));
+    export_tag("PASTE", "events");
     newCONSTSUB(FLTK_stash, "TIMEOUT", newSViv( TIMEOUT ));
+    export_tag("TIMEOUT", "events");
     newCONSTSUB(FLTK_stash, "MOUSEWHEEL", newSViv( MOUSEWHEEL ));
+    export_tag("MOUSEWHEEL", "events");
     newCONSTSUB(FLTK_stash, "DND_ENTER", newSViv( DND_ENTER ));
+    export_tag("DND_ENTER", "events");
     newCONSTSUB(FLTK_stash, "DND_DRAG", newSViv( DND_DRAG ));
+    export_tag("DND_DRAG", "events");
     newCONSTSUB(FLTK_stash, "DND_LEAVE", newSViv( DND_LEAVE ));
+    export_tag("DND_LEAVE", "events");
     newCONSTSUB(FLTK_stash, "DND_RELEASE", newSViv( DND_RELEASE ));
+    export_tag("DND_RELEASE", "events");
     newCONSTSUB(FLTK_stash, "TOOLTIP", newSViv( TOOLTIP ));
+    export_tag("TOOLTIP", "events");
 
 =pod
 
@@ -380,76 +405,146 @@ by their ordinal values.
 =cut
 
 BOOT:
-    newCONSTSUB(FLTK_stash, "LeftButton", newSViv(LeftButton));
-    newCONSTSUB(FLTK_stash, "MiddleButton", newSViv(MiddleButton));
-    newCONSTSUB(FLTK_stash, "RightButton", newSViv(RightButton));
-    newCONSTSUB(FLTK_stash, "SpaceKey", newSViv(SpaceKey));
-    newCONSTSUB(FLTK_stash, "BackSpaceKey", newSViv(BackSpaceKey));
-    newCONSTSUB(FLTK_stash, "TabKey", newSViv(TabKey));
-    newCONSTSUB(FLTK_stash, "ClearKey", newSViv(ClearKey));
-    newCONSTSUB(FLTK_stash, "ReturnKey", newSViv(ReturnKey));
-    newCONSTSUB(FLTK_stash, "PauseKey", newSViv(PauseKey));
-    newCONSTSUB(FLTK_stash, "ScrollLockKey", newSViv(ScrollLockKey));
-    newCONSTSUB(FLTK_stash, "EscapeKey", newSViv(EscapeKey));
-    newCONSTSUB(FLTK_stash, "HomeKey", newSViv(HomeKey));
-    newCONSTSUB(FLTK_stash, "LeftKey", newSViv(LeftKey));
-    newCONSTSUB(FLTK_stash, "UpKey", newSViv(UpKey));
-    newCONSTSUB(FLTK_stash, "RightKey", newSViv(RightKey));
-    newCONSTSUB(FLTK_stash, "DownKey", newSViv(DownKey));
-    newCONSTSUB(FLTK_stash, "PageUpKey", newSViv(PageUpKey));
-    newCONSTSUB(FLTK_stash, "PageDownKey", newSViv(PageDownKey));
-    newCONSTSUB(FLTK_stash, "EndKey", newSViv(EndKey));
-    newCONSTSUB(FLTK_stash, "PrintKey", newSViv(PrintKey));
-    newCONSTSUB(FLTK_stash, "InsertKey", newSViv(InsertKey));
-    newCONSTSUB(FLTK_stash, "MenuKey", newSViv(MenuKey));
-    newCONSTSUB(FLTK_stash, "HelpKey", newSViv(HelpKey));
-    newCONSTSUB(FLTK_stash, "NumLockKey", newSViv(NumLockKey));
-    newCONSTSUB(FLTK_stash, "Keypad", newSViv(Keypad));
-    newCONSTSUB(FLTK_stash, "KeypadEnter", newSViv(KeypadEnter));
-    newCONSTSUB(FLTK_stash, "MultiplyKey", newSViv(MultiplyKey));
-    newCONSTSUB(FLTK_stash, "AddKey", newSViv(AddKey));
-    newCONSTSUB(FLTK_stash, "SubtractKey", newSViv(SubtractKey));
-    newCONSTSUB(FLTK_stash, "DecimalKey", newSViv(DecimalKey));
-    newCONSTSUB(FLTK_stash, "DivideKey", newSViv(DivideKey));
-    newCONSTSUB(FLTK_stash, "Keypad0", newSViv(Keypad0));
-    newCONSTSUB(FLTK_stash, "Keypad1", newSViv(Keypad1));
-    newCONSTSUB(FLTK_stash, "Keypad2", newSViv(Keypad2));
-    newCONSTSUB(FLTK_stash, "Keypad3", newSViv(Keypad3));
-    newCONSTSUB(FLTK_stash, "Keypad4", newSViv(Keypad4));
-    newCONSTSUB(FLTK_stash, "Keypad5", newSViv(Keypad5));
-    newCONSTSUB(FLTK_stash, "Keypad6", newSViv(Keypad6));
-    newCONSTSUB(FLTK_stash, "Keypad7", newSViv(Keypad7));
-    newCONSTSUB(FLTK_stash, "Keypad8", newSViv(Keypad8));
-    newCONSTSUB(FLTK_stash, "Keypad9", newSViv(Keypad9));
-    newCONSTSUB(FLTK_stash, "KeypadLast", newSViv(KeypadLast));
-    newCONSTSUB(FLTK_stash, "F0Key", newSViv(F0Key));
-    newCONSTSUB(FLTK_stash, "F1Key", newSViv(F1Key));
-    newCONSTSUB(FLTK_stash, "F2Key", newSViv(F2Key));
-    newCONSTSUB(FLTK_stash, "F3Key", newSViv(F3Key));
-    newCONSTSUB(FLTK_stash, "F4Key", newSViv(F4Key));
-    newCONSTSUB(FLTK_stash, "F5Key", newSViv(F5Key));
-    newCONSTSUB(FLTK_stash, "F6Key", newSViv(F6Key));
-    newCONSTSUB(FLTK_stash, "F7Key", newSViv(F7Key));
-    newCONSTSUB(FLTK_stash, "F8Key", newSViv(F8Key));
-    newCONSTSUB(FLTK_stash, "F9Key", newSViv(F9Key));
-    newCONSTSUB(FLTK_stash, "F10Key", newSViv(F10Key));
-    newCONSTSUB(FLTK_stash, "F11Key", newSViv(F11Key));
-    newCONSTSUB(FLTK_stash, "F12Key", newSViv(F12Key));
-    newCONSTSUB(FLTK_stash, "LastFunctionKey", newSViv(LastFunctionKey));
-    newCONSTSUB(FLTK_stash, "LeftShiftKey", newSViv(LeftShiftKey));
-    newCONSTSUB(FLTK_stash, "RightShiftKey", newSViv(RightShiftKey));
-    newCONSTSUB(FLTK_stash, "LeftCtrlKey", newSViv(LeftCtrlKey));
-    newCONSTSUB(FLTK_stash, "RightCtrlKey", newSViv(RightCtrlKey));
-    newCONSTSUB(FLTK_stash, "CapsLockKey", newSViv(CapsLockKey));
-    newCONSTSUB(FLTK_stash, "LeftMetaKey", newSViv(LeftMetaKey));
-    newCONSTSUB(FLTK_stash, "RightMetaKey", newSViv(RightMetaKey));
-    newCONSTSUB(FLTK_stash, "LeftAltKey", newSViv(LeftAltKey));
-    newCONSTSUB(FLTK_stash, "RightAltKey", newSViv(RightAltKey));
-    newCONSTSUB(FLTK_stash, "DeleteKey", newSViv(DeleteKey));
-    newCONSTSUB(FLTK_stash, "LeftAccKey", newSViv(LeftAccKey));
-    newCONSTSUB(FLTK_stash, "RightAccKey", newSViv(RightAccKey));
-    newCONSTSUB(FLTK_stash, "LeftCmdKey", newSViv(LeftCmdKey));
-    newCONSTSUB(FLTK_stash, "RightCmdKey", newSViv(RightCmdKey));
+    newCONSTSUB(FLTK_stash, "LeftButton", newSViv( LeftButton ));
+    export_tag("LeftButton", "events");
+    newCONSTSUB(FLTK_stash, "MiddleButton", newSViv( MiddleButton ));
+    export_tag("MiddleButton", "events");
+    newCONSTSUB(FLTK_stash, "RightButton", newSViv( RightButton ));
+    export_tag("RightButton", "events");
+    newCONSTSUB(FLTK_stash, "SpaceKey", newSViv( SpaceKey ));
+    export_tag("SpaceKey", "events");
+    newCONSTSUB(FLTK_stash, "BackSpaceKey", newSViv( BackSpaceKey ));
+    export_tag("BackSpaceKey", "events");
+    newCONSTSUB(FLTK_stash, "TabKey", newSViv( TabKey ));
+    export_tag("TabKey", "events");
+    newCONSTSUB(FLTK_stash, "ClearKey", newSViv( ClearKey ));
+    export_tag("ClearKey", "events");
+    newCONSTSUB(FLTK_stash, "ReturnKey", newSViv( ReturnKey ));
+    export_tag("ReturnKey", "events");
+    newCONSTSUB(FLTK_stash, "PauseKey", newSViv( PauseKey ));
+    export_tag("PauseKey", "events");
+    newCONSTSUB(FLTK_stash, "ScrollLockKey", newSViv( ScrollLockKey ));
+    export_tag("ScrollLockKey", "events");
+    newCONSTSUB(FLTK_stash, "EscapeKey", newSViv( EscapeKey ));
+    export_tag("EscapeKey", "events");
+    newCONSTSUB(FLTK_stash, "HomeKey", newSViv( HomeKey ));
+    export_tag("HomeKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftKey", newSViv( LeftKey ));
+    export_tag("LeftKey", "events");
+    newCONSTSUB(FLTK_stash, "UpKey", newSViv( UpKey ));
+    export_tag("UpKey", "events");
+    newCONSTSUB(FLTK_stash, "RightKey", newSViv( RightKey ));
+    export_tag("RightKey", "events");
+    newCONSTSUB(FLTK_stash, "DownKey", newSViv( DownKey ));
+    export_tag("DownKey", "events");
+    newCONSTSUB(FLTK_stash, "PageUpKey", newSViv( PageUpKey ));
+    export_tag("PageUpKey", "events");
+    newCONSTSUB(FLTK_stash, "PageDownKey", newSViv( PageDownKey ));
+    export_tag("PageDownKey", "events");
+    newCONSTSUB(FLTK_stash, "EndKey", newSViv( EndKey ));
+    export_tag("EndKey", "events");
+    newCONSTSUB(FLTK_stash, "PrintKey", newSViv( PrintKey ));
+    export_tag("PrintKey", "events");
+    newCONSTSUB(FLTK_stash, "InsertKey", newSViv( InsertKey ));
+    export_tag("InsertKey", "events");
+    newCONSTSUB(FLTK_stash, "MenuKey", newSViv( MenuKey ));
+    export_tag("MenuKey", "events");
+    newCONSTSUB(FLTK_stash, "HelpKey", newSViv( HelpKey ));
+    export_tag("HelpKey", "events");
+    newCONSTSUB(FLTK_stash, "NumLockKey", newSViv( NumLockKey ));
+    export_tag("NumLockKey", "events");
+    newCONSTSUB(FLTK_stash, "Keypad", newSViv( Keypad ));
+    export_tag("Keypad", "events");
+    newCONSTSUB(FLTK_stash, "KeypadEnter", newSViv( KeypadEnter ));
+    export_tag("KeypadEnter", "events");
+    newCONSTSUB(FLTK_stash, "MultiplyKey", newSViv( MultiplyKey ));
+    export_tag("MultiplyKey", "events");
+    newCONSTSUB(FLTK_stash, "AddKey", newSViv( AddKey ));
+    export_tag("AddKey", "events");
+    newCONSTSUB(FLTK_stash, "SubtractKey", newSViv( SubtractKey ));
+    export_tag("SubtractKey", "events");
+    newCONSTSUB(FLTK_stash, "DecimalKey", newSViv( DecimalKey ));
+    export_tag("DecimalKey", "events");
+    newCONSTSUB(FLTK_stash, "DivideKey", newSViv( DivideKey ));
+    export_tag("DivideKey", "events");
+    newCONSTSUB(FLTK_stash, "Keypad0", newSViv( Keypad0 ));
+    export_tag("Keypad0", "events");
+    newCONSTSUB(FLTK_stash, "Keypad1", newSViv( Keypad1 ));
+    export_tag("Keypad1", "events");
+    newCONSTSUB(FLTK_stash, "Keypad2", newSViv( Keypad2 ));
+    export_tag("Keypad2", "events");
+    newCONSTSUB(FLTK_stash, "Keypad3", newSViv( Keypad3 ));
+    export_tag("Keypad3", "events");
+    newCONSTSUB(FLTK_stash, "Keypad4", newSViv( Keypad4 ));
+    export_tag("Keypad4", "events");
+    newCONSTSUB(FLTK_stash, "Keypad5", newSViv( Keypad5 ));
+    export_tag("Keypad5", "events");
+    newCONSTSUB(FLTK_stash, "Keypad6", newSViv( Keypad6 ));
+    export_tag("Keypad6", "events");
+    newCONSTSUB(FLTK_stash, "Keypad7", newSViv( Keypad7 ));
+    export_tag("Keypad7", "events");
+    newCONSTSUB(FLTK_stash, "Keypad8", newSViv( Keypad8 ));
+    export_tag("Keypad8", "events");
+    newCONSTSUB(FLTK_stash, "Keypad9", newSViv( Keypad9 ));
+    export_tag("Keypad9", "events");
+    newCONSTSUB(FLTK_stash, "KeypadLast", newSViv( KeypadLast ));
+    export_tag("KeypadLast", "events");
+    newCONSTSUB(FLTK_stash, "F0Key", newSViv( F0Key ));
+    export_tag("F0Key", "events");
+    newCONSTSUB(FLTK_stash, "F1Key", newSViv( F1Key ));
+    export_tag("F1Key", "events");
+    newCONSTSUB(FLTK_stash, "F2Key", newSViv( F2Key ));
+    export_tag("F2Key", "events");
+    newCONSTSUB(FLTK_stash, "F3Key", newSViv( F3Key ));
+    export_tag("F3Key", "events");
+    newCONSTSUB(FLTK_stash, "F4Key", newSViv( F4Key ));
+    export_tag("F4Key", "events");
+    newCONSTSUB(FLTK_stash, "F5Key", newSViv( F5Key ));
+    export_tag("F5Key", "events");
+    newCONSTSUB(FLTK_stash, "F6Key", newSViv( F6Key ));
+    export_tag("F6Key", "events");
+    newCONSTSUB(FLTK_stash, "F7Key", newSViv( F7Key ));
+    export_tag("F7Key", "events");
+    newCONSTSUB(FLTK_stash, "F8Key", newSViv( F8Key ));
+    export_tag("F8Key", "events");
+    newCONSTSUB(FLTK_stash, "F9Key", newSViv( F9Key ));
+    export_tag("F9Key", "events");
+    newCONSTSUB(FLTK_stash, "F10Key", newSViv( F10Key ));
+    export_tag("F10Key", "events");
+    newCONSTSUB(FLTK_stash, "F11Key", newSViv( F11Key ));
+    export_tag("F11Key", "events");
+    newCONSTSUB(FLTK_stash, "F12Key", newSViv( F12Key ));
+    export_tag("F12Key", "events");
+    newCONSTSUB(FLTK_stash, "LastFunctionKey", newSViv( LastFunctionKey ));
+    export_tag("LastFunctionKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftShiftKey", newSViv( LeftShiftKey ));
+    export_tag("LeftShiftKey", "events");
+    newCONSTSUB(FLTK_stash, "RightShiftKey", newSViv( RightShiftKey ));
+    export_tag("RightShiftKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftCtrlKey", newSViv( LeftCtrlKey ));
+    export_tag("LeftCtrlKey", "events");
+    newCONSTSUB(FLTK_stash, "RightCtrlKey", newSViv( RightCtrlKey ));
+    export_tag("RightCtrlKey", "events");
+    newCONSTSUB(FLTK_stash, "CapsLockKey", newSViv( CapsLockKey ));
+    export_tag("CapsLockKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftMetaKey", newSViv( LeftMetaKey ));
+    export_tag("LeftMetaKey", "events");
+    newCONSTSUB(FLTK_stash, "RightMetaKey", newSViv( RightMetaKey ));
+    export_tag("RightMetaKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftAltKey", newSViv( LeftAltKey ));
+    export_tag("LeftAltKey", "events");
+    newCONSTSUB(FLTK_stash, "RightAltKey", newSViv( RightAltKey ));
+    export_tag("RightAltKey", "events");
+    newCONSTSUB(FLTK_stash, "DeleteKey", newSViv( DeleteKey ));
+    export_tag("DeleteKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftAccKey", newSViv( LeftAccKey ));
+    export_tag("LeftAccKey", "events");
+    newCONSTSUB(FLTK_stash, "RightAccKey", newSViv( RightAccKey ));
+    export_tag("RightAccKey", "events");
+    newCONSTSUB(FLTK_stash, "LeftCmdKey", newSViv( LeftCmdKey ));
+    export_tag("LeftCmdKey", "events");
+    newCONSTSUB(FLTK_stash, "RightCmdKey", newSViv( RightCmdKey ));
+    export_tag("RightCmdKey", "events");
 
 =pod
 
@@ -526,20 +621,36 @@ C<ALT|META> on Windows/Linux, just C<ALT> on OS/X, use as a drag modifier.
 =cut
 
 BOOT:
-    newCONSTSUB(FLTK_stash, "SHIFT", newSViv(SHIFT));
-    newCONSTSUB(FLTK_stash, "CAPSLOCK", newSViv(CAPSLOCK));
-    newCONSTSUB(FLTK_stash, "CTRL", newSViv(CTRL));
-    newCONSTSUB(FLTK_stash, "ALT", newSViv(ALT));
-    newCONSTSUB(FLTK_stash, "NUMLOCK", newSViv(NUMLOCK));
-    newCONSTSUB(FLTK_stash, "META", newSViv(META));
-    newCONSTSUB(FLTK_stash, "SCROLLLOCK", newSViv(SCROLLLOCK));
-    newCONSTSUB(FLTK_stash, "BUTTON1", newSViv(BUTTON1));
-    newCONSTSUB(FLTK_stash, "BUTTON2", newSViv(BUTTON2));
-    newCONSTSUB(FLTK_stash, "BUTTON3", newSViv(BUTTON3));
-    newCONSTSUB(FLTK_stash, "ANY_BUTTON", newSViv(ANY_BUTTON));
-    newCONSTSUB(FLTK_stash, "ACCELERATOR", newSViv(ACCELERATOR));
-    newCONSTSUB(FLTK_stash, "OPTION", newSViv(OPTION));
-    newCONSTSUB(FLTK_stash, "COMMAND", newSViv(COMMAND));
+    newCONSTSUB(FLTK_stash, "SHIFT", newSViv( SHIFT ));
+    export_tag("SHIFT", "events");
+    newCONSTSUB(FLTK_stash, "CAPSLOCK", newSViv( CAPSLOCK ));
+    export_tag("CAPSLOCK", "events");
+    newCONSTSUB(FLTK_stash, "CTRL", newSViv( CTRL ));
+    export_tag("CTRL", "events");
+    newCONSTSUB(FLTK_stash, "ALT", newSViv( ALT ));
+    export_tag("ALT", "events");
+    newCONSTSUB(FLTK_stash, "NUMLOCK", newSViv( NUMLOCK ));
+    export_tag("NUMLOCK", "events");
+    newCONSTSUB(FLTK_stash, "META", newSViv( META ));
+    export_tag("META", "events");
+    newCONSTSUB(FLTK_stash, "SCROLLLOCK", newSViv( SCROLLLOCK ));
+    export_tag("SCROLLLOCK", "events");
+    newCONSTSUB(FLTK_stash, "BUTTON1", newSViv( BUTTON1 ));
+    export_tag("BUTTON1", "events");
+    newCONSTSUB(FLTK_stash, "BUTTON2", newSViv( BUTTON2 ));
+    export_tag("BUTTON2", "events");
+    newCONSTSUB(FLTK_stash, "BUTTON3", newSViv( BUTTON3 ));
+    export_tag("BUTTON3", "events");
+    newCONSTSUB(FLTK_stash, "ANY_BUTTON", newSViv( ANY_BUTTON ));
+    export_tag("ANY_BUTTON", "events");
+    newCONSTSUB(FLTK_stash, "ACCELERATOR", newSViv( ACCELERATOR ));
+    export_tag("ACCELERATOR", "events");
+    newCONSTSUB(FLTK_stash, "OPTION", newSViv( OPTION ));
+    export_tag("OPTION", "events");
+    newCONSTSUB(FLTK_stash, "COMMAND", newSViv( COMMAND ));
+    export_tag("COMMAND", "events");
+
+=begin apidoc
 
 =for apidoc t[events]||int|BUTTON|number
 
@@ -552,6 +663,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
 BUTTON( int n )
+
+BOOT:
+    export_tag( "BUTTON", "events" );
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -595,12 +709,18 @@ Event triggered by touch a touch screen device.
 =cut
 
 BOOT:
-    newCONSTSUB(FLTK_stash, "DEVICE_MOUSE", newSViv(DEVICE_MOUSE));
-    newCONSTSUB(FLTK_stash, "DEVICE_STYLUS", newSViv(DEVICE_STYLUS));
-    newCONSTSUB(FLTK_stash, "DEVICE_ERASER", newSViv(DEVICE_ERASER));
-    newCONSTSUB(FLTK_stash, "DEVICE_CURSOR", newSViv(DEVICE_CURSOR));
-    newCONSTSUB(FLTK_stash, "DEVICE_AIRBRUSH", newSViv(DEVICE_AIRBRUSH));
-    newCONSTSUB(FLTK_stash, "DEVICE_TOUCH", newSViv(DEVICE_TOUCH));
+    newCONSTSUB(FLTK_stash, "DEVICE_MOUSE", newSViv( DEVICE_MOUSE ));
+    export_tag("DEVICE_MOUSE", "events");
+    newCONSTSUB(FLTK_stash, "DEVICE_STYLUS", newSViv( DEVICE_STYLUS ));
+    export_tag("DEVICE_STYLUS", "events");
+    newCONSTSUB(FLTK_stash, "DEVICE_ERASER", newSViv( DEVICE_ERASER ));
+    export_tag("DEVICE_ERASER", "events");
+    newCONSTSUB(FLTK_stash, "DEVICE_CURSOR", newSViv( DEVICE_CURSOR ));
+    export_tag("DEVICE_CURSOR", "events");
+    newCONSTSUB(FLTK_stash, "DEVICE_AIRBRUSH", newSViv( DEVICE_AIRBRUSH ));
+    export_tag("DEVICE_AIRBRUSH", "events");
+    newCONSTSUB(FLTK_stash, "DEVICE_TOUCH", newSViv( DEVICE_TOUCH ));
+    export_tag("DEVICE_TOUCH", "events");
 
 =for apidoc t[events]||int|event||
 
@@ -656,6 +776,15 @@ event( )
         event_x_root = 5
         event_y_root = 6
 
+BOOT:
+    export_tag("event_y_root", "events");
+    export_tag("event_x_root", "events");
+    export_tag("event_dy", "events");
+    export_tag("event_dx", "events");
+    export_tag("event_y", "events");
+    export_tag("event_x", "events");
+    export_tag("event", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||int|event_clicks||
@@ -680,6 +809,9 @@ event_clicks( int i = NO_INIT )
     CASE: items == 1
         CODE:
             event_clicks( i );
+
+BOOT:
+    export_tag("event_clicks", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -706,6 +838,9 @@ event_is_click( bool i = NO_INIT )
         CODE:
             event_is_click( i ); /* Really? Only false works? */
 
+BOOT:
+    export_tag("event_is_click", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||int|event_state||
@@ -730,6 +865,9 @@ event_state( unsigned i = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = (unsigned) event_state( i );
+
+BOOT:
+    export_tag("event_state", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -756,6 +894,10 @@ event_key( )
     ALIAS:
         event_button = 1
 
+BOOT:
+    export_tag("event_key", "events");
+    export_tag("event_button", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|event_key_state|state|
@@ -769,6 +911,9 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 event_key_state( unsigned x )
 
+BOOT:
+    export_tag("event_key_state", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||string|event_text||
@@ -781,6 +926,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 event_text( )
+
+BOOT:
+    export_tag("event_text", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -807,6 +955,10 @@ event_length( )
         RETVAL
     ALIAS:
         event_key_repeated = 1
+
+BOOT:
+    export_tag("event_length", "events");
+    export_tag("event_key_repeated", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -840,6 +992,11 @@ event_pressure( )
         event_x_tilt = 1
         event_y_tilt = 2
 
+BOOT:
+    export_tag("event_pressure", "events");
+    export_tag("event_x_tilt", "events");
+    export_tag("event_y_tilt", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||int|event_device||
@@ -852,6 +1009,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 int
 event_device( )
+
+BOOT:
+    export_tag("event_device", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -871,6 +1031,9 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 event_inside( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
+
+BOOT:
+    export_tag("event_inside", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -899,10 +1062,11 @@ things to allow international characters to be selected.
 MODULE = FLTK               PACKAGE = FLTK
 
 bool
-compose( int del )
-    OUTPUT:
-        RETVAL
-        del
+compose( IN_OUTLIST int del )
+    C_ARGS: del
+
+BOOT:
+    export_tag("compose", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -920,6 +1084,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 compose_reset( )
+
+BOOT:
+    export_tag("compose_reset", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -948,7 +1115,10 @@ you want the key to do.
 MODULE = FLTK               PACKAGE = FLTK
 
 bool
-try_shortcut()
+try_shortcut( )
+
+BOOT:
+    export_tag("try_shortcut", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -967,6 +1137,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 key_name( unsigned hotkey )
+
+BOOT:
+    export_tag("key_name", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -998,6 +1171,9 @@ MODULE = FLTK               PACKAGE = FLTK
 unsigned
 key( const char * name )
 
+BOOT:
+    export_tag("key", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]|int|foreachShortcut|SF|widget
@@ -1028,6 +1204,9 @@ foreachShortcut( ShortcutFunctor * SF, Widget * widget = NO_INIT )
     CASE: items == 2
         C_ARGS: widget, * SF
 
+BOOT:
+    export_tag("foreachShortcut", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|get_key_state|key
@@ -1045,6 +1224,9 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 get_key_state( unsigned key )
 
+BOOT:
+    export_tag("get_key_state", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]|||get_mouse|x|y
@@ -1061,10 +1243,11 @@ your first window). If the display is not open, this will open it.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-get_mouse( int x, int y )
-    OUTPUT:
-        x
-        y
+get_mouse( IN_OUTLIST int x, IN_OUTLIST int y )
+    C_ARGS: x, y
+
+BOOT:
+    export_tag("get_mouse", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1081,6 +1264,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 warp_mouse ( int x, int y )
+
+BOOT:
+    export_tag("warp_mouse", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1109,6 +1295,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 handle( int event, Window * window )
+
+BOOT:
+    export_tag("handle", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1143,6 +1332,9 @@ belowmouse( Widget * widget = NO_INIT )
         CODE:
             belowmouse( widget );
 
+BOOT:
+    export_tag("belowmouse", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||Widget|pushed||
@@ -1169,6 +1361,9 @@ pushed( Widget * widget = NO_INIT )
     CASE: items == 1
         CODE:
             pushed( widget );
+
+BOOT:
+    export_tag("pushed", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1204,6 +1399,9 @@ focus( Widget * widget = NO_INIT )
         CODE:
             focus( widget );
 
+BOOT:
+    export_tag("focus", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]|||copy|stuff|length = strlen(stuff)|clipboard = false
@@ -1227,6 +1425,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 copy ( const char * stuff, int len = strlen(stuff), bool clipboard = false )
+
+BOOT:
+    export_tag("copy", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1258,6 +1459,9 @@ void
 paste ( Widget * reciever, bool clipboard = false )
     C_ARGS: * reciever, clipboard
 
+BOOT:
+    export_tag("paste", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|dnd||
@@ -1275,6 +1479,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 dnd( )
+
+BOOT:
+    export_tag("dnd", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1330,6 +1537,9 @@ modal( Widget * widget = NO_INIT, bool grab = false )
         CODE:
             modal( widget, grab );
 
+BOOT:
+    export_tag("modal", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|grab||
@@ -1343,6 +1553,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 grab( )
+
+BOOT:
+    export_tag("grab", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1359,6 +1572,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 exit_modal( )
 
+BOOT:
+    export_tag("exit_modal", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||bool|exit_modal_flag||
@@ -1374,6 +1590,9 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 exit_modal_flag( )
 
+BOOT:
+    export_tag("exit_modal_flag", "events");
+
 MODULE = FLTK               PACKAGE = FLTK::events
 
 =for apidoc t[events]||string|event_name|event
@@ -1387,6 +1606,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 event_name( int event )
+
+BOOT:
+    export_tag("event_name", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
