@@ -79,14 +79,24 @@ The folowing default may be imported using the C<damage> tag:
 
 BOOT:
     newCONSTSUB(FLTK_stash, "DAMAGE_VALUE", newSViv(DAMAGE_VALUE));
+    export_tag( "DAMAGE_VALUE", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_PUSHED", newSViv(DAMAGE_PUSHED));
+    export_tag( "DAMAGE_PUSHED", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_SCROLL", newSViv(DAMAGE_SCROLL));
+    export_tag( "DAMAGE_SCROLL", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_OVERLAY", newSViv(DAMAGE_OVERLAY));
+    export_tag( "DAMAGE_OVERLAY", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_HIGHLIGHT", newSViv(DAMAGE_HIGHLIGHT));
+    export_tag( "DAMAGE_HIGHLIGHT", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_CHILD", newSViv(DAMAGE_CHILD));
+    export_tag( "DAMAGE_CHILD", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_CHILD_LABEL", newSViv(DAMAGE_CHILD_LABEL));
+    export_tag( "DAMAGE_CHILD_LABEL", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_EXPOSE", newSViv(DAMAGE_EXPOSE));
+    export_tag( "DAMAGE_EXPOSE", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_CONTENTS", newSViv(DAMAGE_CONTENTS));
+    export_tag( "DAMAGE_CONTENTS", "damage" );
     newCONSTSUB(FLTK_stash, "DAMAGE_ALL", newSViv(DAMAGE_ALL));
+    export_tag( "DAMAGE_ALL", "damage" );
 
 #endif // ifndef DISABLE_DAMAGE
