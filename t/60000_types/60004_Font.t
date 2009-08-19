@@ -45,6 +45,16 @@ for my $sub (qw[
 is(font('Does not exist'), undef, 'Missing fonts return undef');
 
 #
+isa_ok(list_fonts(), 'ARRAY', 'The return value from list_fonts( )');
+my $fonts = list_fonts();
+note(sprintf 'This system has %d fonts:', scalar @$fonts);
+note(sprintf '    %30s|%s|%s',
+     $_->name(),
+     join(', ', @{$_->encodings()}),
+     join(', ', @{$_->sizes()}))
+    for @$fonts;
+
+#
 SKIP: {
     my $type = 100;
     my $FONT;
@@ -83,11 +93,4 @@ SKIP: {
     ok($Reg->system_name(), sprintf 'The system_name( ) for %s is "%s"',
         $FONT, $Reg->system_name() || 'undef');
 }
-isa_ok(list_fonts(), 'ARRAY', 'The return value from list_fonts( )');
-my $fonts = list_fonts();
-note('This system has %d fonts:', scalar @$fonts);
-note('    %30s|%s|%s',
-     $_->name(),
-     join(', ', @{$_->encodings()}),
-     join(', ', @{$_->sizes()}))
-    for @$fonts;
+
