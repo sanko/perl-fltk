@@ -223,46 +223,87 @@ Default selection_color
 
 BOOT:
     newCONSTSUB(FLTK_stash, "NO_COLOR", newSViv( NO_COLOR ));
+    export_tag("NO_COLOR", "color");
     newCONSTSUB(FLTK_stash, "FREE_COLOR", newSViv( FREE_COLOR ));
+    export_tag("FREE_COLOR", "color");
     newCONSTSUB(FLTK_stash, "NUM_FREE_COLOR", newSViv( NUM_FREE_COLOR ));
+    export_tag("NUM_FREE_COLOR", "color");
     newCONSTSUB(FLTK_stash, "GRAY00", newSViv( GRAY00 ));
+    export_tag("GRAY00", "color");
     newCONSTSUB(FLTK_stash, "GRAY05", newSViv( GRAY05 ));
+    export_tag("GRAY05", "color");
     newCONSTSUB(FLTK_stash, "GRAY10", newSViv( GRAY10 ));
+    export_tag("GRAY10", "color");
     newCONSTSUB(FLTK_stash, "GRAY15", newSViv( GRAY15 ));
+    export_tag("GRAY15", "color");
     newCONSTSUB(FLTK_stash, "GRAY20", newSViv( GRAY20 ));
+    export_tag("GRAY20", "color");
     newCONSTSUB(FLTK_stash, "GRAY25", newSViv( GRAY25 ));
+    export_tag("GRAY25", "color");
     newCONSTSUB(FLTK_stash, "GRAY30", newSViv( GRAY30 ));
+    export_tag("GRAY30", "color");
     newCONSTSUB(FLTK_stash, "GRAY33", newSViv( GRAY33 ));
+    export_tag("GRAY33", "color");
     newCONSTSUB(FLTK_stash, "GRAY35", newSViv( GRAY35 ));
+    export_tag("GRAY35", "color");
     newCONSTSUB(FLTK_stash, "GRAY40", newSViv( GRAY40 ));
+    export_tag("GRAY40", "color");
     newCONSTSUB(FLTK_stash, "GRAY45", newSViv( GRAY45 ));
+    export_tag("GRAY45", "color");
     newCONSTSUB(FLTK_stash, "GRAY50", newSViv( GRAY50 ));
+    export_tag("GRAY50", "color");
     newCONSTSUB(FLTK_stash, "GRAY55", newSViv( GRAY55 ));
+    export_tag("GRAY55", "color");
     newCONSTSUB(FLTK_stash, "GRAY60", newSViv( GRAY60 ));
+    export_tag("GRAY60", "color");
     newCONSTSUB(FLTK_stash, "GRAY65", newSViv( GRAY65 ));
+    export_tag("GRAY65", "color");
     newCONSTSUB(FLTK_stash, "GRAY66", newSViv( GRAY66 ));
+    export_tag("GRAY66", "color");
     newCONSTSUB(FLTK_stash, "GRAY70", newSViv( GRAY70 ));
+    export_tag("GRAY70", "color");
     newCONSTSUB(FLTK_stash, "GRAY75", newSViv( GRAY75 ));
+    export_tag("GRAY75", "color");
     newCONSTSUB(FLTK_stash, "GRAY80", newSViv( GRAY80 ));
+    export_tag("GRAY80", "color");
     newCONSTSUB(FLTK_stash, "GRAY85", newSViv( GRAY85 ));
+    export_tag("GRAY85", "color");
     newCONSTSUB(FLTK_stash, "GRAY90", newSViv( GRAY90 ));
+    export_tag("GRAY90", "color");
     newCONSTSUB(FLTK_stash, "GRAY95", newSViv( GRAY95 ));
+    export_tag("GRAY95", "color");
     newCONSTSUB(FLTK_stash, "GRAY99", newSViv( GRAY99 ));
+    export_tag("GRAY99", "color");
     newCONSTSUB(FLTK_stash, "BLACK", newSViv( BLACK ));
+    export_tag("BLACK", "color");
     newCONSTSUB(FLTK_stash, "RED", newSViv( RED ));
+    export_tag("RED", "color");
     newCONSTSUB(FLTK_stash, "GREEN", newSViv( GREEN ));
+    export_tag("GREEN", "color");
     newCONSTSUB(FLTK_stash, "YELLOW", newSViv( YELLOW ));
+    export_tag("YELLOW", "color");
     newCONSTSUB(FLTK_stash, "BLUE", newSViv( BLUE ));
+    export_tag("BLUE", "color");
     newCONSTSUB(FLTK_stash, "MAGENTA", newSViv( MAGENTA ));
+    export_tag("MAGENTA", "color");
     newCONSTSUB(FLTK_stash, "CYAN", newSViv( CYAN ));
+    export_tag("CYAN", "color");
     newCONSTSUB(FLTK_stash, "WHITE", newSViv( WHITE ));
+    export_tag("WHITE", "color");
     newCONSTSUB(FLTK_stash, "DARK_RED", newSViv( DARK_RED ));
+    export_tag("DARK_RED", "color");
     newCONSTSUB(FLTK_stash, "DARK_GREEN", newSViv( DARK_GREEN ));
+    export_tag("DARK_GREEN", "color");
     newCONSTSUB(FLTK_stash, "DARK_YELLOW", newSViv( DARK_YELLOW ));
+    export_tag("DARK_YELLOW", "color");
     newCONSTSUB(FLTK_stash, "DARK_BLUE", newSViv( DARK_BLUE ));
+    export_tag("DARK_BLUE", "color");
     newCONSTSUB(FLTK_stash, "DARK_MAGENTA", newSViv( DARK_MAGENTA ));
+    export_tag("DARK_MAGENTA", "color");
     newCONSTSUB(FLTK_stash, "DARK_CYAN", newSViv( DARK_CYAN ));
+    export_tag("DARK_CYAN", "color");
     newCONSTSUB(FLTK_stash, "WINDOWS_BLUE", newSViv( WINDOWS_BLUE ));
+    export_tag("WINDOWS_BLUE", "color");
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 
@@ -287,9 +328,12 @@ color ( name = 0, g = NO_INIT, b = NO_INIT )
         char * name
         C_ARGS: name
 
+BOOT:
+    export_tag("color", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||color|parsecolor|name|n
+=for apidoc t[color]||color|parsecolor|name|n
 
 Turn the first C<n> bytes of C<name> into an FLTK color. This allows you to
 parse a color out of the middle of a string.
@@ -331,9 +375,12 @@ parsecolor ( char * name, unsigned length = strlen(name) )
     OUTPUT:
         RETVAL
 
+BOOT:
+    export_tag("parsecolor", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||color|lerp|color1|color2|weight
+=for apidoc t[color]||color|lerp|color1|color2|weight
 
 Return C<(1-weight)*color1 + weight*color2>. C<weight> is clamped to the 0-1
 range before use.
@@ -347,14 +394,16 @@ MODULE = FLTK               PACKAGE = FLTK
 Color
 lerp ( Color color1, Color color2, float weight )
 
+BOOT:
+    export_tag("lerp", "color");
 
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||color|inactive|fore|back
+=for apidoc t[color]||color|inactive|fore|back
 
 Same as L<C<lerp(fg, bg, .5)>|/"lerp">, it grays out the color.
 
-=for apidoc ||color|inactive|fore|
+=for apidoc t[color]||color|inactive|fore|
 
 Same as L<C<lerp(fg, getbgcolor(), .5)>|/"lerp">. This is for
 back-compatability only?
@@ -368,9 +417,12 @@ MODULE = FLTK               PACKAGE = FLTK
 Color
 inactive ( Color fore, Color back = NO_INIT )
 
+BOOT:
+    export_tag("inactive", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||Color|contrast|fg|bg
+=for apidoc t[color]||Color|contrast|fg|bg
 
 Returns C<fg> if fltk decides it can be seen well when drawn against a C<bg>.
 Otherwise it returns either L<C<FLTK::BLACK>|FLTK/"BLACK"> or
@@ -383,9 +435,12 @@ MODULE = FLTK               PACKAGE = FLTK
 Color
 contrast ( Color fore, Color back )
 
+BOOT:
+    export_tag("contrast", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc |||split_color|color|r|g|b
+=for apidoc t[color]|||split_color|color|r|g|b
 
 Set C<r,g,b> to the 8-bit components of this color. If it is an indexed color
 they are looked up in the table, otherwise they are simply copied out of the
@@ -399,9 +454,12 @@ void
 split_color ( Color color, OUTLIST unsigned char r, OUTLIST unsigned char g, OUTLIST unsigned char b )
     C_ARGS: color, r, g, b
 
+BOOT:
+    export_tag("split_color", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc |||set_color_index|index|color
+=for apidoc t[color]|||set_color_index|index|color
 
 Set one of the indexed colors to the given rgb color. \C<index> must be in the
 range 0-255, and C<color> must be a non-indexed rgb color.
@@ -413,9 +471,12 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 set_color_index ( Color index, Color color )
 
+BOOT:
+    export_tag("set_color_index", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||get_color_index|color
+=for apidoc t[color]||get_color_index|color
 
 Return the rgb form of C<color>. If it is an indexed color that entry is
 returned. If it is an rgb color it is returned unchanged.
@@ -427,9 +488,12 @@ MODULE = FLTK               PACKAGE = FLTK
 Color
 get_color_index ( Color color )
 
+BOOT:
+    export_tag("get_color_index", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||set_background|color
+=for apidoc t[color]||set_background|color
 
 C<FLTK::GRAY75> is replaced with the passed color, and all the other
 C<FLTK::GRAY*> colors are replaced with a color ramp (or sometimes a straight
@@ -445,9 +509,12 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 set_background ( Color COLOR )
 
+BOOT:
+    export_tag("set_background", "color");
+
 MODULE = FLTK               PACKAGE = FLTK::Color
 
-=for apidoc ||Color|nearest_index|color
+=for apidoc t[color]||Color|nearest_index|color
 
 Find an indexed color in the range 56-127 that is closest to this color. If
 this is an indexed color it is returned unchanged.
@@ -458,5 +525,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 Color
 nearest_index ( Color COLOR )
+
+BOOT:
+    export_tag("nearest_index", "color");
 
 #endif // #ifndef DISABLE_COLOR
