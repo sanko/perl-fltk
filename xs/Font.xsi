@@ -24,8 +24,11 @@ or modify it.
 
 BOOT:
     newCONSTSUB(FLTK_stash, "BOLD", newSViv(BOLD));
+    export_tag( "BOLD", "font" );
     newCONSTSUB(FLTK_stash, "ITALIC", newSViv(ITALIC));
+    export_tag( "ITALIC", "font" );
     newCONSTSUB(FLTK_stash, "BOLD_ITALIC", newSViv(BOLD_ITALIC));
+    export_tag( "BOLD_ITALIC", "font" );
 
 =for apidoc t[font]||FLTK::Font|font|name|attributes = 0
 
@@ -56,6 +59,9 @@ font( name, int attributes = 0 )
     CASE:
         char * name
         C_ARGS: name, attributes
+
+BOOT:
+    export_tag( "font", "font" );
 
 MODULE = FLTK               PACKAGE = FLTK::Font
 
@@ -89,6 +95,9 @@ list_fonts ( )
         }
     OUTPUT:
         RETVAL
+
+BOOT:
+    export_tag( "list_fonts", "font" );
 
 MODULE = FLTK               PACKAGE = FLTK::Font
 
