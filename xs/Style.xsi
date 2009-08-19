@@ -41,6 +41,8 @@ directly access the local member variables using names like C<box_>.
 
 #include <fltk/Style.h>
 
+=begin apidoc
+
 =for apidoc ||FLTK::Style|new|
 
 The constructor clears the style to entirely zeros, including the C<parent_>
@@ -60,74 +62,113 @@ Style::new( )
     OUTPUT:
         RETVAL
 
-#ifdef ENABLE_DESTROY
+=for apidoc et[box,style]||Box|UP_BOX|
 
-bool
-Style::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Style" );
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
 
-#endif // #ifdef ENABLE_DESTROY
 
-=for apidoc et[box]||Box|UP_BOX|
+=for apidoc et[box,style]||Box|DOWN_BOX|
 
-=for apidoc et[box]||Box|DOWN_BOX|
 
-=for apidoc et[box]||Box|THIN_UP_BOX|
 
-=for apidoc et[box]||Box|THIN_DOWN_BOX|
+=for apidoc et[box,style]||Box|THIN_UP_BOX|
 
-=for apidoc et[box]||Box|DOWN_BOX|
 
-=for apidoc et[box]||Box|THIN_UP_BOX|
 
-=for apidoc et[box]||Box|THIN_DOWN_BOX|
+=for apidoc et[box,style]||Box|THIN_DOWN_BOX|
 
-=for apidoc et[box]||Box|ENGRAVED_BOX|
 
-=for apidoc et[box]||Box|EMBOSSED_BOX|
 
-=for apidoc et[box]||Box|BORDER_BOX|
+=for apidoc et[box,style]||Box|DOWN_BOX|
 
-=for apidoc et[box]||Box|FLAT_BOX|
 
-=for apidoc et[box]||Box|HIGHLIGHT_UP_BOX|
 
-=for apidoc et[box]||Box|HIGHLIGHT_DOWN_BOX|
+=for apidoc et[box,style]||Box|THIN_UP_BOX|
 
-=for apidoc et[box]||Box|ROUND_UP_BOX|
 
-=for apidoc et[box]||Box|ROUND_DOWN_BOX|
 
-=for apidoc et[box]||Box|DIAMOND_UP_BOX|
+=for apidoc et[box,style]||Box|THIN_DOWN_BOX|
 
-=for apidoc et[box]||Box|DIAMOND_DOWN_BOX|
 
-=for apidoc et[box]||Box|SHADOW_BOX|
 
-=for apidoc et[box]||Box|ROUNDED_BOX|
+=for apidoc et[box,style]||Box|ENGRAVED_BOX|
 
-=for apidoc et[box]||Box|RSHADOW_BOX|
 
-=for apidoc et[box]||Box|RFLAT_BOX|
 
-=for apidoc et[box]||Box|OVAL_BOX|
+=for apidoc et[box,style]||Box|EMBOSSED_BOX|
 
-=for apidoc et[box]||Box|OSHADOW_BOX|
 
-=for apidoc et[box]||Box|OFLAT_BOX|
 
-=for apidoc et[box]||Box|BORDER_FRAME|
+=for apidoc et[box,style]||Box|BORDER_BOX|
 
-=for apidoc et[box]||Box|PLASTIC_UP_BOX|
 
-=for apidoc et[box]||Box|PLASTIC_DOWN_BOX|
+
+=for apidoc et[box,style]||Box|FLAT_BOX|
+
+
+
+=for apidoc et[box,style]||Box|HIGHLIGHT_UP_BOX|
+
+
+
+=for apidoc et[box,style]||Box|HIGHLIGHT_DOWN_BOX|
+
+
+
+=for apidoc et[box,style]||Box|ROUND_UP_BOX|
+
+
+
+=for apidoc et[box,style]||Box|ROUND_DOWN_BOX|
+
+
+
+=for apidoc et[box,style]||Box|DIAMOND_UP_BOX|
+
+
+
+=for apidoc et[box,style]||Box|DIAMOND_DOWN_BOX|
+
+
+
+=for apidoc et[box,style]||Box|SHADOW_BOX|
+
+
+
+=for apidoc et[box,style]||Box|ROUNDED_BOX|
+
+
+
+=for apidoc et[box,style]||Box|RSHADOW_BOX|
+
+
+
+=for apidoc et[box,style]||Box|RFLAT_BOX|
+
+
+
+=for apidoc et[box,style]||Box|OVAL_BOX|
+
+
+
+=for apidoc et[box,style]||Box|OSHADOW_BOX|
+
+
+
+=for apidoc et[box,style]||Box|OFLAT_BOX|
+
+
+
+=for apidoc et[box,style]||Box|BORDER_FRAME|
+
+
+
+=for apidoc et[box,style]||Box|PLASTIC_UP_BOX|
+
+
+
+=for apidoc et[box,style]||Box|PLASTIC_DOWN_BOX|
+
+
 
 =cut
 
@@ -189,39 +230,121 @@ UP_BOX ( )
             PLASTIC_UP_BOX = 22
           PLASTIC_DOWN_BOX = 23
 
+BOOT:
+    export_tag("PLASTIC_DOWN_BOX","box" );
+    export_tag("PLASTIC_DOWN_BOX","style" );
+    export_tag("PLASTIC_UP_BOX","box" );
+    export_tag("PLASTIC_UP_BOX","style" );
+    export_tag("BORDER_FRAME","box" );
+    export_tag("BORDER_FRAME","style" );
+    export_tag("OFLAT_BOX","box" );
+    export_tag("OFLAT_BOX","style" );
+    export_tag("OSHADOW_BOX","box" );
+    export_tag("OSHADOW_BOX","style" );
+    export_tag("OVAL_BOX","box" );
+    export_tag("OVAL_BOX","style" );
+    export_tag("RFLAT_BOX","box" );
+    export_tag("RFLAT_BOX","style" );
+    export_tag("RSHADOW_BOX","box" );
+    export_tag("RSHADOW_BOX","style" );
+    export_tag("ROUNDED_BOX","box" );
+    export_tag("ROUNDED_BOX","style" );
+    export_tag("SHADOW_BOX","box" );
+    export_tag("SHADOW_BOX","style" );
+    export_tag("DIAMOND_DOWN_BOX","box" );
+    export_tag("DIAMOND_DOWN_BOX","style" );
+    export_tag("DIAMOND_UP_BOX","box" );
+    export_tag("DIAMOND_UP_BOX","style" );
+    export_tag("ROUND_DOWN_BOX","box" );
+    export_tag("ROUND_DOWN_BOX","style" );
+    export_tag("ROUND_UP_BOX","box" );
+    export_tag("ROUND_UP_BOX","style" );
+    export_tag("HIGHLIGHT_DOWN_BOX","box" );
+    export_tag("HIGHLIGHT_DOWN_BOX","style" );
+    export_tag("HIGHLIGHT_UP_BOX","box" );
+    export_tag("HIGHLIGHT_UP_BOX","style" );
+    export_tag("FLAT_BOX","box" );
+    export_tag("FLAT_BOX","style" );
+    export_tag("BORDER_BOX","box" );
+    export_tag("BORDER_BOX","style" );
+    export_tag("EMBOSSED_BOX","box" );
+    export_tag("EMBOSSED_BOX","style" );
+    export_tag("ENGRAVED_BOX","box" );
+    export_tag("ENGRAVED_BOX","style" );
+    export_tag("THIN_DOWN_BOX","box" );
+    export_tag("THIN_DOWN_BOX","style" );
+    export_tag("THIN_UP_BOX","box" );
+    export_tag("THIN_UP_BOX","style" );
+    export_tag("DOWN_BOX","box" );
+    export_tag("DOWN_BOX","style" );
+    export_tag("BOX_UP","box" );
+    export_tag("BOX_UP","style" );
+
 MODULE = FLTK               PACKAGE = FLTK::Style
 
-=for apidoc et[font]||Font|HELVETICA|
+=for apidoc et[font,style]||Font|HELVETICA|
 
-=for apidoc et[font]||Font|HELVETICA_BOLD|
 
-=for apidoc et[font]||Font|HELVETICA_ITALIC|
 
-=for apidoc et[font]||Font|HELVETICA_BOLD_ITALIC|
+=for apidoc et[font,style]||Font|HELVETICA_BOLD|
 
-=for apidoc et[font]||Font|COURIER|
 
-=for apidoc et[font]||Font|COURIER_BOLD|
 
-=for apidoc et[font]||Font|COURIER_ITALIC|
+=for apidoc et[font,style]||Font|HELVETICA_ITALIC|
 
-=for apidoc et[font]||Font|COURIER_BOLD_ITALIC|
 
-=for apidoc et[font]||Font|TIMES|
 
-=for apidoc et[font]||Font|TIMES_BOLD|
+=for apidoc et[font,style]||Font|HELVETICA_BOLD_ITALIC|
 
-=for apidoc et[font]||Font|TIMES_ITALIC|
 
-=for apidoc et[font]||Font|TIMES_BOLD_ITALIC|
 
-=for apidoc et[font]||Font|SYMBOL_FONT|
+=for apidoc et[font,style]||Font|COURIER|
 
-=for apidoc et[font]||Font|SCREEN_FONT|
 
-=for apidoc et[font]||Font|SCREEN_BOLD_FONT|
 
-=for apidoc et[font]||Font|ZAPF_DINGBATS|
+=for apidoc et[font,style]||Font|COURIER_BOLD|
+
+
+
+=for apidoc et[font,style]||Font|COURIER_ITALIC|
+
+
+
+=for apidoc et[font,style]||Font|COURIER_BOLD_ITALIC|
+
+
+
+=for apidoc et[font,style]||Font|TIMES|
+
+
+
+=for apidoc et[font,style]||Font|TIMES_BOLD|
+
+
+
+=for apidoc et[font,style]||Font|TIMES_ITALIC|
+
+
+
+=for apidoc et[font,style]||Font|TIMES_BOLD_ITALIC|
+
+
+
+=for apidoc et[font,style]||Font|SYMBOL_FONT|
+
+
+
+=for apidoc et[font,style]||Font|SCREEN_FONT|
+
+
+
+=for apidoc et[font,style]||Font|SCREEN_BOLD_FONT|
+
+
+
+=for apidoc et[font,style]||Font|ZAPF_DINGBATS|
+
+
 
 =cut
 
@@ -264,6 +387,40 @@ HELVETICA ()
                   SCREEN_FONT = 12
              SCREEN_BOLD_FONT = 13
                 ZAPF_DINGBATS = 14
+
+BOOT:
+    export_tag( "HELVETICA", "font" );
+    export_tag( "HELVETICA", "style" );
+    export_tag( "HELVETICA_BOLD", "font" );
+    export_tag( "HELVETICA_BOLD", "style" );
+    export_tag( "HELVETICA_ITALIC", "font" );
+    export_tag( "HELVETICA_ITALIC", "style" );
+    export_tag( "HELVETICA_BOLD_ITALIC", "font" );
+    export_tag( "HELVETICA_BOLD_ITALIC", "style" );
+    export_tag( "COURIER", "font" );
+    export_tag( "COURIER", "style" );
+    export_tag( "COURIER_BOLD", "font" );
+    export_tag( "COURIER_BOLD", "style" );
+    export_tag( "COURIER_ITALIC", "font" );
+    export_tag( "COURIER_ITALIC", "style" );
+    export_tag( "COURIER_BOLD_ITALIC", "font" );
+    export_tag( "COURIER_BOLD_ITALIC", "style" );
+    export_tag( "TIMES", "font" );
+    export_tag( "TIMES", "style" );
+    export_tag( "TIMES_BOLD", "font" );
+    export_tag( "TIMES_BOLD", "style" );
+    export_tag( "TIMES_ITALIC", "font" );
+    export_tag( "TIMES_ITALIC", "style" );
+    export_tag( "TIMES_BOLD_ITALIC", "font" );
+    export_tag( "TIMES_BOLD_ITALIC", "style" );
+    export_tag( "SYMBOL_FONT", "font" );
+    export_tag( "SYMBOL_FONT", "style" );
+    export_tag( "SCREEN_FONT", "font" );
+    export_tag( "SCREEN_FONT", "style" );
+    export_tag( "SCREEN_BOLD_FONT", "font" );
+    export_tag( "SCREEN_BOLD_FONT", "style" );
+    export_tag( "ZAPF_DINGBATS", "font" );
+    export_tag( "ZAPF_DINGBATS", "style" );
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
@@ -756,10 +913,8 @@ Style::wheel_scroll_lines ( int value = NO_INIT )
         CODE:
             THIS->wheel_scroll_lines( value );
 
-
-
     # Children
 
 INCLUDE: NamedStyle.xsi
 
-#endif // ifndef DISABLE_STYLE
+#endif // #ifndef DISABLE_STYLE
