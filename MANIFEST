@@ -26,6 +26,7 @@ t/60000_types/60002_events.t
 t/60000_types/60003_damage.t
 t/60000_types/60004_Font.t
 t/60000_types/60006_Image.t
+t/60000_types/60030_Style.t
 TODO.pod
 xs/Adjuster.xsi
 xs/AlignGroup.xsi
