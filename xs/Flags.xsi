@@ -34,61 +34,6 @@ These are shared because various parts of the code, especially drawing, want
 all of this information at once, and providing it as a single word is the
 easiest way.
 
-=cut
-
-#include <fltk/Flags.h>
-
-BOOT:
-    newCONSTSUB(FLTK_stash, "NO_FLAGS", newSViv( NO_FLAGS ));
-    newCONSTSUB(FLTK_stash, "ALIGN_TOP", newSViv( ALIGN_TOP ));
-    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOM", newSViv( ALIGN_BOTTOM ));
-    newCONSTSUB(FLTK_stash, "ALIGN_LEFT", newSViv( ALIGN_LEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_RIGHT", newSViv( ALIGN_RIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_CENTER", newSViv( ALIGN_CENTER ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE", newSViv( ALIGN_INSIDE ));
-    newCONSTSUB(FLTK_stash, "ALIGN_CLIP", newSViv( ALIGN_CLIP ));
-    newCONSTSUB(FLTK_stash, "ALIGN_WRAP", newSViv( ALIGN_WRAP ));
-    newCONSTSUB(FLTK_stash, "ALIGN_MASK", newSViv( ALIGN_MASK ));
-    newCONSTSUB(FLTK_stash, "ALIGN_POSITIONMASK", newSViv( ALIGN_POSITIONMASK ));
-    newCONSTSUB(FLTK_stash, "ALIGN_TOPLEFT", newSViv( ALIGN_TOPLEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMLEFT", newSViv( ALIGN_BOTTOMLEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_TOPRIGHT", newSViv( ALIGN_TOPRIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMRIGHT", newSViv( ALIGN_BOTTOMRIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_CENTERLEFT", newSViv( ALIGN_CENTERLEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_CENTERRIGHT", newSViv( ALIGN_CENTERRIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOP", newSViv( ALIGN_INSIDE_TOP ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOM", newSViv( ALIGN_INSIDE_BOTTOM ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_LEFT", newSViv( ALIGN_INSIDE_LEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPLEFT", newSViv( ALIGN_INSIDE_TOPLEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMLEFT", newSViv( ALIGN_INSIDE_BOTTOMLEFT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_RIGHT", newSViv( ALIGN_INSIDE_RIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPRIGHT", newSViv( ALIGN_INSIDE_TOPRIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMRIGHT", newSViv( ALIGN_INSIDE_BOTTOMRIGHT ));
-    newCONSTSUB(FLTK_stash, "ALIGN_MENU", newSViv( ALIGN_MENU ));
-    newCONSTSUB(FLTK_stash, "ALIGN_BROWSER", newSViv( ALIGN_BROWSER ));
-    newCONSTSUB(FLTK_stash, "INACTIVE", newSViv( INACTIVE ));
-    newCONSTSUB(FLTK_stash, "OUTPUT", newSViv( OUTPUT ));
-    newCONSTSUB(FLTK_stash, "STATE", newSViv( STATE ));
-    newCONSTSUB(FLTK_stash, "SELECTED", newSViv( SELECTED ));
-    newCONSTSUB(FLTK_stash, "INVISIBLE", newSViv( INVISIBLE ));
-    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
-    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
-    newCONSTSUB(FLTK_stash, "CHANGED", newSViv( CHANGED ));
-    newCONSTSUB(FLTK_stash, "COPIED_LABEL", newSViv( COPIED_LABEL ));
-    newCONSTSUB(FLTK_stash, "RAW_LABEL", newSViv( RAW_LABEL ));
-    newCONSTSUB(FLTK_stash, "LAYOUT_VERTICAL", newSViv( LAYOUT_VERTICAL ));
-    newCONSTSUB(FLTK_stash, "TAB_TO_FOCUS", newSViv( TAB_TO_FOCUS ));
-    newCONSTSUB(FLTK_stash, "CLICK_TO_FOCUS", newSViv( CLICK_TO_FOCUS ));
-    newCONSTSUB(FLTK_stash, "INACTIVE_R", newSViv( INACTIVE_R ));
-    newCONSTSUB(FLTK_stash, "FOCUSED", newSViv( FOCUSED ));
-    newCONSTSUB(FLTK_stash, "PUSHED", newSViv( PUSHED ));
-    newCONSTSUB(FLTK_stash, "RESIZE_NONE", newSViv( RESIZE_NONE ));
-    newCONSTSUB(FLTK_stash, "RESIZE_FIT", newSViv( RESIZE_FIT ));
-    newCONSTSUB(FLTK_stash, "RESIZE_FILL", newSViv( RESIZE_FILL ));
-    newCONSTSUB(FLTK_stash, "OPENED", newSViv( OPENED ));
-
-=pod
-
 =head1 The Flags
 
 This is the complete list of flags. You may import them with the C<flags> tag
@@ -282,5 +227,103 @@ opened browser hierarchy parent
 =back
 
 =cut
+
+#include <fltk/Flags.h>
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "NO_FLAGS", newSViv( NO_FLAGS ));
+    export_tag("NO_FLAGS", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_TOP", newSViv( ALIGN_TOP ));
+    export_tag("ALIGN_TOP", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOM", newSViv( ALIGN_BOTTOM ));
+    export_tag("ALIGN_BOTTOM", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_LEFT", newSViv( ALIGN_LEFT ));
+    export_tag("ALIGN_LEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_RIGHT", newSViv( ALIGN_RIGHT ));
+    export_tag("ALIGN_RIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTER", newSViv( ALIGN_CENTER ));
+    export_tag("ALIGN_CENTER", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE", newSViv( ALIGN_INSIDE ));
+    export_tag("ALIGN_INSIDE", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_CLIP", newSViv( ALIGN_CLIP ));
+    export_tag("ALIGN_CLIP", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_WRAP", newSViv( ALIGN_WRAP ));
+    export_tag("ALIGN_WRAP", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_MASK", newSViv( ALIGN_MASK ));
+    export_tag("ALIGN_MASK", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_POSITIONMASK", newSViv( ALIGN_POSITIONMASK ));
+    export_tag("ALIGN_POSITIONMASK", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_TOPLEFT", newSViv( ALIGN_TOPLEFT ));
+    export_tag("ALIGN_TOPLEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMLEFT", newSViv( ALIGN_BOTTOMLEFT ));
+    export_tag("ALIGN_BOTTOMLEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_TOPRIGHT", newSViv( ALIGN_TOPRIGHT ));
+    export_tag("ALIGN_TOPRIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_BOTTOMRIGHT", newSViv( ALIGN_BOTTOMRIGHT ));
+    export_tag("ALIGN_BOTTOMRIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTERLEFT", newSViv( ALIGN_CENTERLEFT ));
+    export_tag("ALIGN_CENTERLEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_CENTERRIGHT", newSViv( ALIGN_CENTERRIGHT ));
+    export_tag("ALIGN_CENTERRIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOP", newSViv( ALIGN_INSIDE_TOP ));
+    export_tag("ALIGN_INSIDE_TOP", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOM", newSViv( ALIGN_INSIDE_BOTTOM ));
+    export_tag("ALIGN_INSIDE_BOTTOM", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_LEFT", newSViv( ALIGN_INSIDE_LEFT ));
+    export_tag("ALIGN_INSIDE_LEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPLEFT", newSViv( ALIGN_INSIDE_TOPLEFT ));
+    export_tag("ALIGN_INSIDE_TOPLEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMLEFT", newSViv( ALIGN_INSIDE_BOTTOMLEFT ));
+    export_tag("ALIGN_INSIDE_BOTTOMLEFT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_RIGHT", newSViv( ALIGN_INSIDE_RIGHT ));
+    export_tag("ALIGN_INSIDE_RIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_TOPRIGHT", newSViv( ALIGN_INSIDE_TOPRIGHT ));
+    export_tag("ALIGN_INSIDE_TOPRIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_INSIDE_BOTTOMRIGHT", newSViv( ALIGN_INSIDE_BOTTOMRIGHT ));
+    export_tag("ALIGN_INSIDE_BOTTOMRIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_MENU", newSViv( ALIGN_MENU ));
+    export_tag("ALIGN_MENU", "flags");
+    newCONSTSUB(FLTK_stash, "ALIGN_BROWSER", newSViv( ALIGN_BROWSER ));
+    export_tag("ALIGN_BROWSER", "flags");
+    newCONSTSUB(FLTK_stash, "INACTIVE", newSViv( INACTIVE ));
+    export_tag("INACTIVE", "flags");
+    newCONSTSUB(FLTK_stash, "OUTPUT", newSViv( OUTPUT ));
+    export_tag("OUTPUT", "flags");
+    newCONSTSUB(FLTK_stash, "STATE", newSViv( STATE ));
+    export_tag("STATE", "flags");
+    newCONSTSUB(FLTK_stash, "SELECTED", newSViv( SELECTED ));
+    export_tag("SELECTED", "flags");
+    newCONSTSUB(FLTK_stash, "INVISIBLE", newSViv( INVISIBLE ));
+    export_tag("INVISIBLE", "flags");
+    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
+    export_tag("HIGHLIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "HIGHLIGHT", newSViv( HIGHLIGHT ));
+    export_tag("HIGHLIGHT", "flags");
+    newCONSTSUB(FLTK_stash, "CHANGED", newSViv( CHANGED ));
+    export_tag("CHANGED", "flags");
+    newCONSTSUB(FLTK_stash, "COPIED_LABEL", newSViv( COPIED_LABEL ));
+    export_tag("COPIED_LABEL", "flags");
+    newCONSTSUB(FLTK_stash, "RAW_LABEL", newSViv( RAW_LABEL ));
+    export_tag("RAW_LABEL", "flags");
+    newCONSTSUB(FLTK_stash, "LAYOUT_VERTICAL", newSViv( LAYOUT_VERTICAL ));
+    export_tag("LAYOUT_VERTICAL", "flags");
+    newCONSTSUB(FLTK_stash, "TAB_TO_FOCUS", newSViv( TAB_TO_FOCUS ));
+    export_tag("TAB_TO_FOCUS", "flags");
+    newCONSTSUB(FLTK_stash, "CLICK_TO_FOCUS", newSViv( CLICK_TO_FOCUS ));
+    export_tag("CLICK_TO_FOCUS", "flags");
+    newCONSTSUB(FLTK_stash, "INACTIVE_R", newSViv( INACTIVE_R ));
+    export_tag("INACTIVE_R", "flags");
+    newCONSTSUB(FLTK_stash, "FOCUSED", newSViv( FOCUSED ));
+    export_tag("FOCUSED", "flags");
+    newCONSTSUB(FLTK_stash, "PUSHED", newSViv( PUSHED ));
+    export_tag("PUSHED", "flags");
+    newCONSTSUB(FLTK_stash, "RESIZE_NONE", newSViv( RESIZE_NONE ));
+    export_tag("RESIZE_NONE", "flags");
+    newCONSTSUB(FLTK_stash, "RESIZE_FIT", newSViv( RESIZE_FIT ));
+    export_tag("RESIZE_FIT", "flags");
+    newCONSTSUB(FLTK_stash, "RESIZE_FILL", newSViv( RESIZE_FILL ));
+    export_tag("RESIZE_FILL", "flags");
+    newCONSTSUB(FLTK_stash, "OPENED", newSViv( OPENED ));
+    export_tag("OPENED", "flags");
 
 #endif // ifndef DISABLE_FLAGS
