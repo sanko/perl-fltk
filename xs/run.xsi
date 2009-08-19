@@ -36,6 +36,9 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 display ( char * d )
 
+BOOT:
+    export_tag("display", "run");
+
 MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc t[run]F||bool|enable_tablet_events|
@@ -56,6 +59,9 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 enable_tablet_events( )
+
+BOOT:
+    export_tag("enable_tablet_events", "run");
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
@@ -94,9 +100,12 @@ wait ( double time_to_wait = NO_INIT )
     OUTPUT:
         RETVAL
 
+BOOT:
+    export_tag("wait", "run");
+
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run]F||int|run|
+=for apidoc t[run,default]F||int|run|
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
 all the windows are hidden or destroyed (checked by seeing if
@@ -152,6 +161,12 @@ run ()
         check = 1
         ready = 2
 
+BOOT:
+    export_tag("run", "run");
+    export_tag("run", "default");
+    export_tag("check", "run");
+    export_tag("ready", "run");
+
 MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc F|||redraw|
@@ -186,6 +201,10 @@ redraw( )
     ALIAS:
         flush = 1
 
+BOOT:
+    export_tag("redraw", "run");
+    export_tag("flush", "run");
+
 MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc ||int|damage|
@@ -212,12 +231,15 @@ int
 damage( int d = NO_INIT )
     CASE: !items
         CODE:
-            RETVAL = damage();
+            RETVAL = damage( );
         OUTPUT:
             RETVAL
     CASE:
         CODE:
             damage();
+
+BOOT:
+    export_tag("damage", "run");
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
@@ -240,7 +262,10 @@ precision is 20ms.
 MODULE = FLTK               PACKAGE = FLTK
 
 double
-get_time_secs()
+get_time_secs( )
+
+BOOT:
+    export_tag("get_time_secs", "run");
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
@@ -290,6 +315,10 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
     ALIAS:
         repeat_timeout = 1
 
+BOOT:
+    export_tag("add_timeout", "run");
+    export_tag("repeat_timeout", "run");
+
 MODULE = FLTK               PACKAGE = FLTK::run
 
 =for apidoc Hxt[run]||bool|has_timeout|coderef|args
@@ -334,6 +363,11 @@ has_timeout( CV * callback, SV * args = NO_INIT )
     ALIAS:
         has_check = 1
          has_idle = 2
+
+BOOT:
+    export_tag("has_timeout", "run");
+    export_tag("has_check", "run");
+    export_tag("has_idle", "run");
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
@@ -420,5 +454,12 @@ remove_timeout( CV * callback, SV * args = NO_INIT )
         remove_check = 2
             add_idle = 3
          remove_idle = 4
+
+BOOT:
+    export_tag("remove_timeout", "run");
+    export_tag("add_check", "run");
+    export_tag("remove_check", "run");
+    export_tag("add_idle", "run");
+    export_tag("remove_idle", "run");
 
 #endif // ifndef DISABLE_RUN
