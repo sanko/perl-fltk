@@ -61,25 +61,15 @@ ClockOutput::new( int x, int y, int w, int h, const char * label = 0 )
 
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-int
-SQUARE( )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = ClockOutput::SQUARE;  break;
-            case 1: RETVAL = ClockOutput::ANALOG;  break;
-            case 2: RETVAL = ClockOutput::ROUND;   break;
-            case 3: RETVAL = ClockOutput::DIGITAL; break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-         ANALOG = 1
-          ROUND = 2
-        DIGITAL = 3
-
-MODULE = FLTK               PACKAGE = FLTK::ClockOutput
+BOOT:
+    newCONSTSUB(FLTK_stash, "SQUARE", newSViv(fltk::ClockOutput::SQUARE));
+    export_tag("SQUARE", "clock");
+    newCONSTSUB(FLTK_stash, "ANALOG", newSViv(fltk::ClockOutput::ANALOG));
+    export_tag("ANALOG", "clock");
+    newCONSTSUB(FLTK_stash, "ROUND", newSViv(fltk::ClockOutput::ROUND));
+    export_tag("ROUND", "clock");
+    newCONSTSUB(FLTK_stash, "DIGITAL", newSViv(fltk::ClockOutput::DIGITAL));
+    export_tag("DIGITAL", "clock");
 
 =for apidoc |||value|time
 
