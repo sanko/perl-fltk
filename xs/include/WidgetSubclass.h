@@ -5,7 +5,7 @@
 
 =pod
 
-=for license Artistic License 2.0 |Copyright (C) 2009 by Sanko Robinson
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
@@ -23,7 +23,6 @@
 #include "Widget.h" // Minimum.
 #endif
 
-namespace fltk {
 template< class X >
 class FL_API WidgetSubclass : public X {
 public:
@@ -148,5 +147,4 @@ private:
         return retval;
     };
 };
-}
 #endif // #ifndef fltk_WidgetSubclass_h
