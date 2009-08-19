@@ -76,9 +76,10 @@ is($C1->value(), time, 'Default value for Clock is the current time');
 is($C2->value(), 0,    'Orphan Clock objects do not keep track of time');
 
 my $_value = $C1->value();
-for (1 .. 3) {
+for my $countdown (reverse 1 .. 3) {
     sleep 1;
     FLTK::wait(1);
+    $W->label("Closing in $countdown seconds");
 }
 FLTK::wait();
 ok(    # XXX - ...timestamps may be off due to processing time; close enough?
