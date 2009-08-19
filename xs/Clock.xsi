@@ -17,7 +17,8 @@ MODULE = FLTK               PACKAGE = FLTK::ClockOutput
 Base class of L<C<Clock>|FLTK::Clock>, this one does not move, it just
 displays whatever time  you set into it.
 
-L<C<type()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
+L<C<type()>|FLTK::Widget/"type"> may be set to C<SQUARE>, C<ROUND>, or
+C<DIGITAL> (nyi).
 
 =cut
 
@@ -29,23 +30,18 @@ L<C<type()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
 
 =cut
 
-ClockOutput *
-ClockOutput::new(int x, int y, int w, int h, char * label = 0)
+void
+ClockOutput::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::ClockOutput>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
-#ifdef ENABLE_DESTROY
-
-bool
-ClockOutput::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, ClockOutput (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+=begin apidoc
 
 =for apidoc et[clock]||int|SQUARE|
 
@@ -116,9 +112,11 @@ ClockOutput::value( unsigned long time = NO_INIT, int minute = NO_INIT, int seco
     CASE: items == 2
         CODE:
             THIS->value( time );
+            XSRETURN_EMPTY;
     CASE: items == 4
         CODE:
             THIS->value( time, minute, second );
+            XSRETURN_EMPTY;
 
 =for apidoc ||h|hour|
 
@@ -151,11 +149,13 @@ ClockOutput::hour( )
 BOOT:
     isa("FLTK::ClockOutput", "FLTK::Widget");
 
-#endif // ifndef DISABLE_CLOCKOUTPUT
+#endif // #ifndef DISABLE_CLOCKOUTPUT
 
 #ifndef DISABLE_CLOCK
 
 MODULE = FLTK               PACKAGE = FLTK::Clock
+
+=end apidoc
 
 =pod
 
@@ -174,12 +174,13 @@ compatibility. It installs a 1-second timeout callback using
 L<C<FLTK::add_timeout()>|FLTK/"add_timeout">.
 
 The L<C<color()>|FLTK::Color/"color"> fills the background. The
-L<C<selectioncolor()>|FLTK/"selectioncolor"> (which defaults to C<GRAY85>)
-fills the hands. The L<C<textcolor()>|/"textcolor"> is used to color in the
-tick marks and outline the hands.
+L<C<selectioncolor()>|FLTK::color/"selectioncolor"> (which defaults to
+C<GRAY85>) fills the hands. The L<C<textcolor()>|FLTK::color/"textcolor"> is
+used to color in the tick marks and outline the hands.
 
-L<C<type()>|/"type"> may be set to C<SQUARE>, C<ROUND>, or C<DIGITAL> (nyi).
-See the base class ClockOutput for some other methods.
+L<C<type()>|FLTK::Widget/"type"> may be set to C<SQUARE>, C<ROUND>, or
+C<DIGITAL>). See the base class L<ClockOutput|FLTK::ClockOutput> for some
+other methods.
 
 =head1 Design credits
 
@@ -193,55 +194,24 @@ Further changes by Bill Spitzak for fltk
 
 #include <fltk/Clock.h>
 
+=begin apidoc
+
 =for apidoc ||FLTK::Clock|new|x|y|w|h|label = ""
 
 
 
 =cut
 
-Clock *
-Clock::new(int x, int y, int w, int h, char * label = 0)
-
-#ifdef ENABLE_DESTROY
-
-bool
-Clock::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Clock (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=cut
-
-int
-Clock::handle( int event )
-
-#endif // #ifndef DISABLE_HANDLE
-
-=for apidoc ||FLTK::NamedStyle|default_style|
-
-
-
-=cut
-
-NamedStyle *
-Clock::default_style ( )
-    CODE:
-        RETVAL = THIS->default_style;
-    OUTPUT:
-        RETVAL
+void
+Clock::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::Clock>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 BOOT:
     isa("FLTK::Clock", "FLTK::ClockOutput");
