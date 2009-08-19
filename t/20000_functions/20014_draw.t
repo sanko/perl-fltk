@@ -30,7 +30,7 @@ my $interactive     = $build->notes('interactive');
 #
 use_ok('FLTK', qw[:draw]);
 
-# Event types and Event Keys imported with :event tag
+# imported with :draw tag
 for my $sub (qw[ push_matrix pop_matrix scale translate rotate concat
              load_identity transform push_clip clipout pop_clip push_no_clip
              not_clipped intersect_with_clip setcolor setcolor_alpha getcolor
@@ -39,9 +39,14 @@ for my $sub (qw[ push_matrix pop_matrix scale translate rotate concat
              CAP_SQUARE JOIN_MITER JOIN_ROUND JOIN_BEVEL newpath addvertex
              addvertices addvertices_transformed addcurve addarc addpie
              addchord closepath strokepath fillpath fillstrokepath fillrect
-             strokerect drawline drowpoint setfont getfont getsize getwidth
+             strokerect drawline drawpoint setfont getfont getsize getwidth
              getdescent drawtext_transformed drawtext measure column_widths
-             drawimage readimage scrollrect ]
+             drawimage readimage ]
     )
 {   can_ok(__PACKAGE__, $sub);
+}
+
+TODO: {
+    local $TODO = 'scrollrect(...) is incomplete...';
+    can_ok(__PACKAGE__, 'scrollrect');
 }
