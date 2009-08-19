@@ -270,7 +270,9 @@ INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi
 #INCLUDE: Slider.xsi
-#INCLUDE: Style.xsi
+
+INCLUDE: Style.xsi
+
 #INCLUDE: Valuator.xsi
 #INCLUDE: ValueInput.xsi
 #INCLUDE: ValueOutput.xsi
