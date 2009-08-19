@@ -29,6 +29,8 @@ C<FL_PATCH_VERSION> constants with the C<version> tag.
 
 #include <fltk/FL_VERSION.h>
 
+=begin apidoc
+
 =for apidoc t[version]||ver|version||
 
 Returns the value of C<FL_VERSION> that FLTK was compiled with. This can be
@@ -43,9 +45,14 @@ double
 version( )
 
 BOOT:
+    export_tag("version", "version");
     newCONSTSUB(FLTK_stash, "FL_MAJOR_VERSION", newSViv(FL_MAJOR_VERSION));
+    export_tag("FL_MAJOR_VERSION", "version");
     newCONSTSUB(FLTK_stash, "FL_MINOR_VERSION", newSViv(FL_MINOR_VERSION));
+    export_tag("FL_MINOR_VERSION", "version");
     newCONSTSUB(FLTK_stash, "FL_PATCH_VERSION", newSViv(FL_PATCH_VERSION));
+    export_tag("FL_PATCH_VERSION", "version");
     newCONSTSUB(FLTK_stash, "FL_VERSION", newSVnv(FL_VERSION));
+    export_tag("FL_VERSION", "version");
 
 #endif // ifndef DISABLE_VERSION
