@@ -20,6 +20,7 @@ t/40000_widgets/40010_clock.t
 t/40000_widgets/40013_dial.t
 t/40000_widgets/40016_filldial.t
 t/40000_widgets/40018_floatinput.t
+t/40000_widgets/40020_input.t
 t/40000_widgets/47010_subclass.t
 t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
@@ -67,6 +68,7 @@ xs/HighlightButton.xsi
 xs/Image.xsi
 xs/include/GlWindowSubclass.h
 xs/include/WidgetSubclass.h
+xs/Input.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl

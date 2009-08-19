@@ -79,6 +79,18 @@ public:
             handled = this->X::handle( event );
         return handled;
     };
+    int handle( int event, fltk::Rectangle rect ) { // fltk::Input
+        int handled = 1; /* safe to assume for now */
+        AV * args = newAV();
+        av_push( args, sv_2mortal( newSViv( event ) ) );
+        SV * sv_rect = sv_newmortal();
+        sv_setref_pv( sv_rect, "FLTK::Rectangle", ( void * ) rect );
+        av_push( args, sv_2mortal( newSViv( sv_rect ) ) );
+        handled = _call_method( "handle", args );
+        if ( handled != 1 )
+            handled = this->X::handle( event );
+        return handled;
+    };
     void draw ( ) { // Just about everything supports this one
         int handled = 1; /* safe to assume for now */
         AV * args = newAV();
@@ -93,6 +105,16 @@ public:
         handled = _call_method( "draw", args );
         if ( handled != 1 )
             this->X::draw( glyph_width );
+    };
+    void draw( fltk::Rectangle * sr ) { // fltk::Input
+        int handled = 1; /* safe to assume for now */
+        AV * args = newAV();
+        SV * sv_rect = sv_newmortal();
+        sv_setref_pv( sv_rect, "FLTK::Rectangle", ( void * ) sr );
+        av_push( args, sv_2mortal( newSViv( sv_rect ) ) );
+        handled = _call_method( "draw", args );
+        if ( handled != 1 )
+            this->X::draw( sr );
     };
     void draw( fltk::Rectangle * sr, Flags flags, bool slot ) { // fltk::Slider
         int handled = 1; /* safe to assume for now */

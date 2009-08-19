@@ -1,0 +1,410 @@
+#ifndef DISABLE_INPUT
+
+MODULE = FLTK               PACKAGE = FLTK::Input
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract One-line text input field
+
+=for git $Id$
+
+=head1 Description
+
+This is the FLTK text input widget. It displays a single line of text and lets
+the user edit it. The text may contain any bytes (even C<\0>). The bytes 0..31
+are displayed in ^X notation, the rest are interpreted as UTF-8 (see
+L<C<utf8decode()>|/"utf8decode">).
+
+The default L<C<when()>|FLTK::Widget/"when"> is C<WHEN_RELEASE>. This is fine
+for a popup control panel where nothing happens until the panel is closed. But
+for most other uses of the input field you want to change it. Useful values
+are:
+
+=over
+
+=item C<WHEN_NEVER>
+
+The callback is not done, but L<C<changed()>|/"changed"> is turned on.
+
+=item C<WHEN_CHANGED>
+
+The callback is done each time the text is changed by the user.
+
+=item C<WHEN_ENTER_KEY>
+
+Hitting the enter key after changing the text will cause the callback.
+
+=item C<WHEN_ENTER_KEY_ALWAYS>
+
+The Enter key will do the callback even if the text has not changed. Useful
+for command fields. Also you need to do this if you want both the enter key
+and either C<WHEN_CHANGED> or C<WHEN_RELEASE>, in this case you can tell if
+Enter was typed by testing C<event_key() == FLTK::EnterKey>.
+
+=back
+
+If you wish to restrict the text the user can type (such as limiting it to
+numbers, a particular length, etc), you should subclass this and override the
+L<C<replace()>|/"replace"> function with a version that rejects changes you
+don't want to allow.
+
+If you don't like the keybindings you can override L<C<handle()>|/"handle"> to
+change them.
+
+All arguments that are lengths or offsets into the strings are in bytes, not
+the UTF-8 characters they represent.
+
+=cut
+
+#include <fltk/Input.h>
+
+=begin apidoc
+
+=for apidoc ||FLTK::Input|new|x|y|w|h|label = ""
+
+Creates a new C<FLTK::Input> object. Obviously.
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+Input::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::Input>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=pod
+
+=head1 Values for L<C<type>|FLTK::Widget/"type">
+
+=over
+
+=item C<NORMAL>
+
+=item C<FLOAT_INPUT>
+
+=item C<INT_INPUT>
+
+=item C<SECRET>
+
+=item C<MULTILINE>
+
+=item C<WORDWRAP>
+
+=back
+
+=cut
+
+int
+NORMAL( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = Input::NORMAL;      break;
+            case 1: RETVAL = Input::FLOAT_INPUT; break;
+            case 2: RETVAL = Input::INT_INPUT;   break;
+            case 3: RETVAL = Input::SECRET;      break;
+            case 5: RETVAL = Input::WORDWRAP;    break;
+        }
+    ALIAS:
+        FLOAT_INPUT = 1
+          INT_INPUT = 2
+             SECRET = 3
+           WORDWRAP = 5
+
+=for apidoc ||bool|handle_key||
+
+Handle C<KEY> events. The default L<C<handle()>|FLTK::Widget/"handle"> method
+calls this. This provides an Emacs and Windows style of editing. Most Emacs
+commands are first run through L<C<try_shortcut()>|/"try_shortcut"> to test if
+they are menu items for the program.
+
+=over
+
+=item C<Shift>: do not move the mark when moving the point
+
+=item C<LeftKey>, C<Ctrl+B>: move left one character
+
+=item C<Ctrl+LeftKey>, C<Alt+B>: move left one word
+
+=item C<RightKey>, C<Ctrl+F>: move right one character
+
+=item C<Ctrl+RightKey>, C<Alt+F>: move right one word
+
+=item C<Ctrl+A>: go to start of line, if already there select all text
+
+=item C<HomeKey>: go to start of line
+
+=item C<EndKey>, Ctrl+E>: go to end of line
+
+=item C<Ctrl+Insert>: copy
+
+=item C<Shift+Insert>: paste
+
+=item C<Shift+Delete>: cut
+
+=item C<Delete>, C<Ctrl+D>: delete region or one character
+
+=item C<Ctrl+Delete>, C<Alt+D>: delete region or one word
+
+=item C<BackSpace>, C<Ctrl+H>: delete region or left one character
+
+=item C<Ctrl+BackSpace>, C<Alt+H>: delete region or left one word
+
+=item C<Return>, C<KeypadEnter>: if
+L<C<when() & WHEN_ENTER_KEY>|FLTK::Widget/"when">, and no shift keys held
+down, this selects all and does the callback. Otherwise key is ignored.
+
+=item C<Ctrl+K>: cuts from the position to the end of line
+
+=item C<Ctrl+C>: copy
+
+=item C<Ctrl+T>: swap the two characters around point. If point is at end swap
+the last two characters.
+
+=item C<Ctrl+U>: delete all the text
+
+=item C<Ctrl+V>: paste
+
+=item C<Ctrl+X>, C<Ctrl+W>: cut
+
+=item C<Ctrl+Y>: redo
+
+=item C<Ctrl+Z>, C<Ctrl+/>: undo
+
+=item All printing characters are run through L<C<compose()>|/"compose"> and
+the result used to insert text.
+
+=back
+
+This method may be overridden for subclassing.
+
+=for apidoc ||bool|text|string|length
+
+Change the L<C<text()>|/"text"> to return the first C<length> bytes of
+C<string> and L<C<size()>|/"size"> to return C<length>, and set the
+L<C<position()>|/"position"> to C<length> and the L<C<mark()>|/"mark"> to zero
+(thus highlighting the entire value).
+
+Returns true if the bytes in the new string are different than the old string.
+
+=for apidoc ||bool|text|string|||
+
+Same as
+L<C<$input-E<gt>text($string, $string ? length($string) : 0)>|/"text">.
+
+=for apidoc ||string|text||||
+
+The current string, as edited by the user. L<C<size()>|/"size"> returns how
+many bytes are in the string.
+
+=cut
+
+SV *
+Input::text( char * string = NO_INIT, int length = NO_INIT )
+    CASE: items == 1
+        CODE:
+            ST( 0 ) = newSVpv( (char *) THIS->text( ), 0 );
+            sv_2mortal( ST( 0 ) );
+            XSRETURN( 1 );
+    CASE: items == 2
+        CODE:
+            ST( 0 ) = boolSV( THIS->text( string ) );
+            sv_2mortal( ST( 0 ) );
+            XSRETURN( 1 );
+    CASE: items == 3
+        CODE:
+            ST( 0 ) = boolSV( THIS->text( string, length ) );
+            sv_2mortal( ST( 0 ) );
+            XSRETURN( 1 );
+
+
+=for apidoc ||bool|static_text|string|length
+
+Same as L<C<text($string, $length)>|/"text_string_length_">, except it does
+not copy the string, instead it makes L<C<text()>|/"text"> return a pointer to
+C<$string> (unless C<$length> is 0, in which case it makes it point to a
+zero-length string).
+
+C<$string> must point to static memory that will not be altered until at least
+the L<Input|Input> widget is destroyed or the L<C<text()>|/"text"> is changed
+again. If the user attempts to edit the string it is then copied to the
+internal buffer and the editing done there. This can save a lot of time and
+memory if your program is changing the string to various constants a lot but
+the user rarely edits it.
+
+=for apidoc ||bool|static_text|string||
+
+Same as
+L<C<$input-E<gt>static_text($string, $string ? length($string) : 0)>|/"static_text">.
+
+=cut
+
+bool
+Input::static_text( char * string, int length = NO_INIT )
+    CASE: items == 2
+        C_ARGS: string
+    CASE: items == 3
+        C_ARGS: string, length
+
+=for apidoc ||char|at|index
+
+Same as L<C<text()[$index]>|/"text">, but may be faster in plausible
+implementations. No bounds checking is done.
+
+=for apidoc ||length|size||
+
+Returns the number of characters in L<C<text()>|/"text">. This may be greater
+than C<length($input->text())> if there are C<NULL> characters in it.
+
+=for apidoc |||reserve|newsize|
+
+Reserve the interal private buffer of at least C<newsize> bytes, even if the
+current L<C<text()>|/"text"> is not that long. Can be used to avoid
+unnecessary memory reallocations if you know you will be replacing the
+L<C<text()>|/"text"> with a longer one later.
+
+=cut
+
+char
+Input::at( int index )
+
+int
+Input::size( )
+
+void
+Input::reserve( int newsize )
+
+=for apidoc ||int|position|||
+
+Returns the current location of the cursor.
+
+=for apidoc |||position|new_position|
+
+Same as
+L<C<position($new_position, $new_position)>|/"position_new_position_new_mark_">.
+
+=for apidoc |||position|new_position|new_mark
+
+The input widget maintains two pointers into the string. The "position" is
+where the cursor is. The "mark" is the other end of the selected text. If they
+are equal then there is no selection. Changing this does not affect the X
+selection, call L<C<copy()>|/"copy"> if you want that.
+
+Changing these values causes a L<C<redraw()>|/"redraw">. The new values are
+bounds checked and limited to the size of the string.
+
+It is up to the caller to make sure the position and mark are at the borders
+of UTF-8 characters!
+
+=cut
+
+int
+Input::position( int new_position = NO_INIT, int new_mark = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        CODE:
+            THIS->position( new_position );
+            XSRETURN_EMPTY;
+    CASE: items == 3
+        CODE:
+            THIS->position( new_position, new_mark );
+            XSRETURN_EMPTY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BOOT:
+    isa("FLTK::Input", "FLTK::Widget");
+
+#endif // ifndef DISABLE_INPUT

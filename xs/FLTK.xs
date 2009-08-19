@@ -266,6 +266,8 @@ INCLUDE: HighlightButton.xsi
 
 INCLUDE: Image.xsi
 
+INCLUDE: Input.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi

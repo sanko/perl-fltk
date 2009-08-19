@@ -62,6 +62,7 @@ HelpView            *   O_FLTK
 HighlightBox        *   O_FLTK
 HighlightButton     *   O_FLTK
 Image               *   O_FLTK
+Input               *   O_FLTK
 LabelType           *   O_FLTK
 const Monitor       *   O_FLTK
 Monitor             *   O_FLTK
