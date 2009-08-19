@@ -13,7 +13,7 @@
 =cut
 use strict;
 use warnings;
-use Test::More tests => 145;
+use Test::More tests => 154;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -35,7 +35,9 @@ for my $sub (
          GRAY00 GRAY05 GRAY10 GRAY15 GRAY20 GRAY25 GRAY30 GRAY33 GRAY35 GRAY40
          GRAY45 GRAY50 GRAY55 GRAY60 GRAY65 GRAY66 GRAY70 GRAY75 GRAY80 GRAY85
          GRAY90 GRAY95 GRAY99 BLACK WHITE NO_COLOR FREE_COLOR NUM_FREE_COLOR
-         WINDOWS_BLUE]
+         WINDOWS_BLUE
+         color contrast get_color_index inactive lerp nearest_index parsecolor
+         set_background set_color_index ]
     )
 {   can_ok(__PACKAGE__, $sub);
 }
@@ -219,5 +221,3 @@ is(nearest_index(YELLOW()), YELLOW(), 'nearest_index(YELLOW) == YELLOW');
 
 #
 note 'TODO: color_chooser( ... )';
-
-
