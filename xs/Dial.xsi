@@ -19,7 +19,9 @@ single floating point value.
 
 Use type() to change how it draws:
 
-=item L<C<NORMAL>/"NORMAL">
+=over
+
+=item L<C<NORMAL>|/"NORMAL">
 Draws a normal dial with a knob.
 
 =item L<C<LINE>|/"LINE">
@@ -28,15 +30,19 @@ Draws a dial with a line.
 =item L<C<FILL>|/"FILL">
 Draws a dial with a filled arc.
 
-You can change the L<C<box()>|/"box"> from the default of C<OVAL_BOX> to draw
-different borders. The L<C<box()>|/"box"> is filled with
-L<C<color()>|/"color">, the moving part is filled with
-L<C<selection_color()>|/"selection_color">, and the border around the moving
-part is set by L<C<textcolor()>|/"textcolor">.
+=back
+
+You can change the L<C<box()>|FLTK::Widget/"box"> from the default of
+C<OVAL_BOX> to draw different borders. The L<C<box()>|FLTK::Widget/"box"> is
+filled with L<C<color()>|FLTK::color/"color">, the moving part is filled with
+L<C<selection_color()>|FLTK::color/"selection_color">, and the border around
+the moving part is set by L<C<textcolor()>|FLTK::color/"textcolor">.
 
 =cut
 
 #include <fltk/Dial.h>
+
+=begin apidoc
 
 =for apidoc d|||new|x|y|width|height|label = ''
 
@@ -56,19 +62,6 @@ Dial::new( int x, int y, int w, int h, const char * label = 0 )
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
-
-=for apidoc ||FLTK::NamedStyle|default_style||
-
-
-
-=cut
-
-NamedStyle *
-Dial::default_style( )
-    CODE:
-        RETVAL = THIS->default_style;
-    OUTPUT:
-        RETVAL
 
 =for apidoc ||int|angle1||
 
@@ -122,7 +115,10 @@ BOOT:
     isa("FLTK::Dial", "FLTK::Valuator");
     // values for Dial->type()
     newCONSTSUB(FLTK_stash, "NORMAL", newSViv(Dial::NORMAL));
+    export_tag( "NORMAL", "dial" );
     newCONSTSUB(FLTK_stash, "LINE", newSViv(Dial::LINE));
+    export_tag( "LINE", "dial" );
     newCONSTSUB(FLTK_stash, "FILL", newSViv(Dial::FILL));
+    export_tag( "FILL", "dial" );
 
 #endif // ifndef DISABLE_DIAL
