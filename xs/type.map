@@ -65,6 +65,7 @@ fltk::Image           *   O_FLTK
 fltk::Input           *   O_FLTK
 fltk::InputBrowser    *   O_FLTK
 fltk::IntInput        *   O_FLTK
+fltk::InvisibleBox    *   O_FLTK
 fltk::LabelType       *   O_FLTK
       fltk::Monitor   *   O_FLTK
 const fltk::Monitor   *   O_FLTK

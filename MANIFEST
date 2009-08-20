@@ -73,6 +73,7 @@ xs/include/WidgetSubclass.h
 xs/Input.xsi
 xs/InputBrowser.xsi
 xs/IntInput.xsi
+xs/InvisibleBox.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
