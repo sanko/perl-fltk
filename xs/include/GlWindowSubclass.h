@@ -29,7 +29,6 @@
 #include <include/WidgetSubclass.h>
 #endif
 
-namespace fltk {
 template<>
 void WidgetSubclass<fltk::GlWindow>::draw ( ) {
     int handled = 1; /* safe to assume for now */
@@ -38,5 +37,4 @@ void WidgetSubclass<fltk::GlWindow>::draw ( ) {
     /* GlWindow::draw( ) is a pure virtual function */
 };
 
-}
 #endif // #ifndef fltk_GlWindowSubclass_h
