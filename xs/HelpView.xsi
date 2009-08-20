@@ -17,7 +17,6 @@ MODULE = FLTK               PACKAGE = FLTK::HelpView
 Most HTML 2.0 elements are supported, as well as a primitive implementation of
 tables. GIF, JPEG, and PNG images are displayed inline.
 
-
 =head1 Subclassing
 
 Note that L<C<HelpView>|FLTK::HelpView> may not be subclassed like every other
