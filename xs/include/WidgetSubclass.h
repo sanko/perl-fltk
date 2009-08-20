@@ -54,6 +54,12 @@ public:
             : X( box, x, y, w, h, lbl ) { // InvisibleBox
         _class = cls;
     };
+    WidgetSubclass( char * cls, const char* label, int shortcut,
+                    fltk::Callback * callback, void * user_data_,
+                    fltk::Flags flags )
+            : X( label, shortcut, callback, user_data_, flags ) { // Item
+        _class = cls;
+    }
     WidgetSubclass ( char * cls, int w, int h, char * label )
             : X( w, h, label ) { // Window
         _class = cls;

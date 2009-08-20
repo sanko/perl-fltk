@@ -22,6 +22,7 @@ t/40000_widgets/40016_filldial.t
 t/40000_widgets/40018_floatinput.t
 t/40000_widgets/40020_input.t
 t/40000_widgets/40022_intinput.t
+t/40000_widgets/40024_item.t
 t/40000_widgets/47010_subclass.t
 t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
@@ -74,6 +75,7 @@ xs/Input.xsi
 xs/InputBrowser.xsi
 xs/IntInput.xsi
 xs/InvisibleBox.xsi
+xs/Item.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl

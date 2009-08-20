@@ -1,0 +1,150 @@
+#ifndef DISABLE_ITEM
+
+MODULE = FLTK               PACKAGE = FLTK::Item
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Widget designed to be a menu or browser item
+
+=for git $Id$
+
+=head1 Description
+
+This widget is designed to be put into L<FLTK::Menu|FLTK::Menu> and
+L<FLTK::Browser|FLTK::Browser> widgets and draw plain-text items. All events
+are ignored, thus causing the menu and browser to set/clear the C<SELECTED>
+flag on these widgets. If they are selected they draw in the
+L<C<selection_color()>|FLTK/"selection_color">, otherwise in the
+L<C<color()>|FLTK::Color/"color">.
+
+=cut
+
+#include <fltk/Item.h>
+
+=begin apidoc
+
+=for apidoc ||FLTK::Item|new|label = ""|||
+
+Unlike other widgets the constructor does not take any dimensions, since it is
+assummed the container widget will size this correctly.
+
+=for apidoc ||FLTK::Item|new|label|FLTK::Symbol||
+
+This constructor also sets the L<C<image()>|FLTK::Widget/"image">, useful for
+a browser item.
+
+=for apidoc ||FLTK::Item|new|label|shortcut|callback = 0|user_data = 0|flags = 0
+
+This constructor is provided to match the L<C<Menu::add()>|FLTK::Menu/"add">
+function arguments. See L<C<Menu::add()>|FLTK::Menu/"add"> for more details.
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+fltk::Item::new( char * label = 0, arg2 = NO_INIT, CV * callback = NO_INIT, SV * user_data = 0, fltk::Flags flags = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        if ( items <= 2 )
+            RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label);
+        else if ( items == 3 ) {
+            fltk::Symbol * symbol;
+            if (sv_isobject(ST(2)) && sv_derived_from(ST(2), "FLTK::Symbol"))
+                symbol = INT2PTR( fltk::Symbol *, SvIV( ( SV * ) SvRV( ST(2) ) ) );
+            else
+                Perl_croak( aTHX_ "%s: %s is not of type %s",
+                    GvNAME(CvGV(cv)), "symbol", "FLTK::Symbol" );
+	        RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label,symbol);
+        }
+        else {
+#ifdef ENABLE_CALLBACKS
+            int shortcut = SvIV( ST(2) );
+            AV *arr = newAV( );
+            av_push(arr, newSVsv((SV*)ST(3))); // coderef
+            // We add the rest of the arguments B<after> we create the widget
+            RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label,
+                                            shortcut,_cb_w,(void *)arr,flags);
+            if (RETVAL != NULL) {
+                ST(0) = sv_newmortal();
+                sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+                // Now that we have the widget, we can add it to the list of
+                // arguments and C<user_data>.
+                av_push(arr, newSVsv(ST(0)));
+                if ( items >= 5 )
+                    av_push(arr, newSVsv(user_data));
+                XSRETURN(1);
+            }
+#else  // ifdef ENABLE_CALLBACKS
+            warn("Callbacks have been disabled."); // TODO: Expain why in POD
+#endif // ifdef ENABLE_CALLBACKS
+        }
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=for apidoc |||set_style|style|menubar|||
+
+Modify the parent of the L<C<Item::default_style>|FLTK::Item/"default_style">
+to this style. If no style settings have been done to an Item, it will use the
+textfont, textsize, textcolor, and possibly other settings inherited from this
+style to draw itself. This is used by menus and browsers to cause all the
+elements inside them to draw using their settings.
+
+The C<menubar> flag causes it to mangle the style so that the buttonbox of
+C<style> is used as the box, and the highlight_color is used as the
+selection_color. This is done to replicate the rather inconsistent appearance
+on Windows of menubars.
+
+Use L<C<Item::clear_style()>|FLTK::Item/"clear_style"> to put this back so
+that C<style> can be deleted. This is the same as setting it to
+L<C<Widget::default_style>|FLTK::Widget/"default_style">.
+
+=for apidoc |||set_style|widget|menubar|||
+
+Use the style of this C<widget>.
+
+=cut
+
+void
+fltk::Item::set_style( style, bool menubar )
+    CASE: sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Style")
+        fltk::Style  * style
+    CASE:
+        fltk::Widget * style
+
+=for apidoc ||
+
+Reset the style set by calling L<C<set_style( )>|FLTK::Item/"set_style">.
+
+=cut
+
+void
+fltk::Item::clear_style( )
+
+=for apidoc ||FLTK::NamedStyle|default_style|||
+
+The default style sets C<FLAT_BOX>. Changing this will mess up the appearance
+of both menus and browsers. All the rest of the style is blank, and normally
+it inherits from the current browser or menu, which should call
+L<C<set_style()>|FLTK::Item/"set_style"> before drawing any items.
+
+=cut
+
+fltk::NamedStyle *
+fltk::Item::default_style_( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+BOOT:
+    isa("FLTK::Item", "FLTK::Widget");
+
+#endif // ifndef DISABLE_ITEM

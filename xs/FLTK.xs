@@ -274,6 +274,8 @@ INCLUDE: IntInput.xsi
 
 INCLUDE: InvisibleBox.xsi
 
+INCLUDE: Item.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi
