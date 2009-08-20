@@ -17,6 +17,16 @@ MODULE = FLTK               PACKAGE = FLTK::HelpView
 Most HTML 2.0 elements are supported, as well as a primitive implementation of
 tables. GIF, JPEG, and PNG images are displayed inline.
 
+
+=head1 Subclassing
+
+Note that L<C<HelpView>|FLTK::HelpView> may not be subclassed like every other
+widget in FLTK because fltk::HelpView::draw( ) and
+fltk::HelpView::handle( ... ) are private. If I subclass them, I lose basic
+functionality because I cannot access those functions from a child class.
+
+This is a "bug" and I'll report it when I have the time.
+
 =begin apidoc
 
 =cut
@@ -27,23 +37,10 @@ tables. GIF, JPEG, and PNG images are displayed inline.
 
 Creates a new L<HelpView|FLTK::HelpView>.
 
-=for hackers Note that HelpView is not subclassed because, unlike every other
-widget in FLTK, HelpView::draw( ) is defined as private. Yeah, go figure...
-
 =cut
-
-#include "include/HelpViewSubclass.h"
 
 void
 fltk::HelpView::new( int x, int y, int w, int h, char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new HelpViewSubclass(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal( );
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
 
 =for apidoc |||dir|directory||
 
