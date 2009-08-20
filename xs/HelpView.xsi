@@ -17,6 +17,8 @@ MODULE = FLTK               PACKAGE = FLTK::HelpView
 Most HTML 2.0 elements are supported, as well as a primitive implementation of
 tables. GIF, JPEG, and PNG images are displayed inline.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/HelpView.h>
@@ -30,8 +32,18 @@ widget in FLTK, HelpView::draw( ) is defined as private. Yeah, go figure...
 
 =cut
 
-HelpView *
-HelpView::new( int x, int y, int w, int h, char * label = 0 )
+#include "include/HelpViewSubclass.h"
+
+void
+fltk::HelpView::new( int x, int y, int w, int h, char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new HelpViewSubclass(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal( );
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||dir|directory||
 
@@ -44,10 +56,10 @@ HelpView::new( int x, int y, int w, int h, char * label = 0 )
 =cut
 
 const char *
-HelpView::directory ( )
+fltk::HelpView::directory ( )
 
 const char *
-HelpView::filename( )
+fltk::HelpView::filename( )
 
 =for apidoc ||result|load|filename
 
@@ -56,7 +68,7 @@ Load the specified file. Returns C<0> on success and C<-1> on error
 =cut
 
 int
-HelpView::load( char * filename )
+fltk::HelpView::load( char * filename )
 
 =for apidoc ||pixels|size||
 
@@ -65,7 +77,7 @@ HelpView::load( char * filename )
 =cut
 
 int
-HelpView::size( )
+fltk::HelpView::size( )
 
 =for apidoc |||textcolor|color||
 
@@ -77,8 +89,8 @@ HelpView::size( )
 
 =cut
 
-Color
-HelpView::textcolor( Color color = NO_INIT )
+fltk::Color
+fltk::HelpView::textcolor( fltk::Color color = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -95,8 +107,8 @@ HelpView::textcolor( Color color = NO_INIT )
 
 =cut
 
-Font *
-HelpView::textfont( Font * font = NO_INIT )
+fltk::Font *
+fltk::HelpView::textfont( fltk::Font * font = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -114,7 +126,7 @@ HelpView::textfont( Font * font = NO_INIT )
 =cut
 
 int
-HelpView::textsize( int size = NO_INIT )
+fltk::HelpView::textsize( int size = NO_INIT )
         CASE: items == 1
             C_ARGS:
         CASE:
@@ -128,8 +140,7 @@ HelpView::textsize( int size = NO_INIT )
 =cut
 
 const char *
-HelpView::title( )
-
+fltk::HelpView::title( )
 
 =for apidoc |||topline|string|
 
@@ -146,7 +157,7 @@ Retusn the index of the current top line.
 =cut
 
 int
-HelpView::topline( line = NO_INIT )
+fltk::HelpView::topline( line = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: SvIOK( ST(1) )
@@ -169,7 +180,7 @@ Get the left position.
 =cut
 
 int
-HelpView::leftline( int col = NO_INIT )
+fltk::HelpView::leftline( int col = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -187,7 +198,7 @@ Get the current help text.
 =cut
 
 const char *
-HelpView::value( char * value = NO_INIT )
+fltk::HelpView::value( char * value = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -204,7 +215,7 @@ Returns C<0> on success. Returns C<-1> on failure.
 =cut
 
 int
-HelpView::find( char * string, int start = 0 )
+fltk::HelpView::find( char * string, int start = 0 )
 
 BOOT:
     isa("FLTK::HelpView", "FLTK::Group");

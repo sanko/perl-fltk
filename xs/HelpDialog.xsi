@@ -16,6 +16,8 @@ MODULE = FLTK               PACKAGE = FLTK::HelpDialog
 
 Uses L<HelpView|FLTK::HelpView> to display basic HTML in a standard dialog.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/HelpDialog.h>
@@ -26,8 +28,8 @@ Creates a new L<HelpDialog|FLTK::HelpDialog>.
 
 =cut
 
-HelpDialog *
-HelpDialog::new( )
+fltk::HelpDialog *
+fltk::HelpDialog::new( )
 
 =for apidoc |||destroy|
 
@@ -36,7 +38,7 @@ Destroy the L<HelpDialog|FLTK::HelpDialog>.
 =cut
 
 void
-HelpDialog::destroy( )
+fltk::HelpDialog::destroy( )
     CODE:
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
@@ -60,16 +62,16 @@ Returns the position of the help dialog.
 =cut
 
 int
-HelpDialog::h( )
+fltk::HelpDialog::h( )
 
 int
-HelpDialog::w()
+fltk::HelpDialog::w( )
 
 int
-HelpDialog::x( )
+fltk::HelpDialog::x( )
 
 int
-HelpDialog::y( )
+fltk::HelpDialog::y( )
 
 =for apidoc |||hide||
 
@@ -82,10 +84,10 @@ Shows the main L<HelpDialog|FLTK::HelpDialog>'s L<window|FLTK::Window>.
 =cut
 
 void
-HelpDialog::hide( )
+fltk::HelpDialog::hide( )
 
 void
-HelpDialog::show( )
+fltk::HelpDialog::show( )
 
 =for apidoc |||load|filename|
 
@@ -94,7 +96,7 @@ Load the specified HTML file into the L<HelpView|FLTK::HelpView>.
 =cut
 
 void
-HelpDialog::load( char * filename )
+fltk::HelpDialog::load( char * filename )
 
 =for apidoc |||position|x|y
 
@@ -103,7 +105,7 @@ Move the L<HelpDialog|FLTK::HelpDialog> to a new position.
 =cut
 
 void
-HelpDialog::position( int x, int y )
+fltk::HelpDialog::position( int x, int y )
 
 =for apidoc |||resize|x|y|w|h|
 
@@ -113,7 +115,7 @@ dialog.
 =cut
 
 void
-HelpDialog::resize( int x, int y, int w, int h )
+fltk::HelpDialog::resize( int x, int y, int w, int h )
 
 =for apidoc |||textsize|size|
 
@@ -126,7 +128,7 @@ Gets the default text size for the help view.
 =cut
 
 uchar
-HelpDialog::textsize( uchar size = NO_INIT )
+fltk::HelpDialog::textsize( uchar size = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -144,7 +146,7 @@ Sets the top line in the L<HelpView|FLTK::HelpView> widget to the I<index>th lin
 =cut
 
 void
-HelpDialog::topline( line )
+fltk::HelpDialog::topline( line )
     CASE: SvIOK( ST(1) )
         int line
     CASE:
@@ -161,7 +163,7 @@ Returns the current buffer.
 =cut
 
 const char *
-HelpDialog::value( char * string = NO_INIT )
+fltk::HelpDialog::value( char * string = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -175,6 +177,6 @@ Returns C<1> if the L<HelpDialog|FLTK::HelpDialog> window is visible.
 =cut
 
 int
-HelpDialog::visible( )
+fltk::HelpDialog::visible( )
 
 #endif // ifndef DISABLE_HELPDIALOG

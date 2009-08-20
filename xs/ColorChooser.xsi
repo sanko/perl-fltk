@@ -18,6 +18,8 @@ The color chooser object and the color chooser popup.  The popup is just a
 window containing a single color chooser and some boxes to indicate the
 current and cancelled color.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/ColorChooser.h>
@@ -31,10 +33,10 @@ current and cancelled color.
 #include "include/WidgetSubclass.h"
 
 void
-ColorChooser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::ColorChooser::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<ColorChooser>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::ColorChooser>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -68,7 +70,7 @@ ColorChooser::new( int x, int y, int w, int h, const char * label = 0 )
 =cut
 
 double
-ColorChooser::h( )
+fltk::ColorChooser::h( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->h( ); break;
@@ -98,7 +100,7 @@ ColorChooser::h( )
 =cut
 
 bool
-ColorChooser::no_value ( bool value = NO_INIT )
+fltk::ColorChooser::no_value ( bool value = NO_INIT )
     CASE: items == 1
         C_ARGS:
         OUTPUT:
@@ -118,14 +120,14 @@ ColorChooser::no_value ( bool value = NO_INIT )
 =cut
 
 int
-ColorChooser::value( Color color = NO_INIT )
+fltk::ColorChooser::value( fltk::Color color = NO_INIT )
     PPCODE:
         if ( items == 1 ) {
-            Color RETVAL = THIS->value();
+            Color RETVAL = THIS->value( );
             XSprePUSH; PUSHi((IV)RETVAL);
         }
         else if ( items == 2 ) {
-            bool RETVAL = THIS->value ( color );
+            bool RETVAL = THIS->value( color );
             ST(0) = boolSV(RETVAL);
             sv_2mortal(ST(0));
         }
@@ -138,7 +140,7 @@ ColorChooser::value( Color color = NO_INIT )
 =cut
 
 bool
-ColorChooser::hsv( float h, float s, float v )
+fltk::ColorChooser::hsv( float h, float s, float v )
 
 =for apidoc ||bool|rgb|r|g|b
 
@@ -147,7 +149,7 @@ ColorChooser::hsv( float h, float s, float v )
 =cut
 
 bool
-ColorChooser::rgb( float r, float g, float b )
+fltk::ColorChooser::rgb( float r, float g, float b )
 
 =for apidoc ||double|a|
 
@@ -160,7 +162,7 @@ ColorChooser::rgb( float r, float g, float b )
 =cut
 
 double
-ColorChooser::a( float a )
+fltk::ColorChooser::a( float a )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -177,7 +179,7 @@ ColorChooser::a( float a )
 =cut
 
 void
-ColorChooser::hide_a( )
+fltk::ColorChooser::hide_a( )
     CODE:
         switch( ix ) {
             case 0: THIS->hide_a( );        break;
@@ -193,7 +195,7 @@ ColorChooser::hide_a( )
 =cut
 
 void
-ColorChooser::hsv2rgb( float h, float s, float v, OUTLIST float r, OUTLIST float g, OUTLIST float b )
+fltk::ColorChooser::hsv2rgb( float h, float s, float v, OUTLIST float r, OUTLIST float g, OUTLIST float b )
     C_ARGS: h, s, v, r, g, b
 
 =for apidoc |[h,s,v]|rgb2hsv|r|g|b|
@@ -203,7 +205,7 @@ ColorChooser::hsv2rgb( float h, float s, float v, OUTLIST float r, OUTLIST float
 =cut
 
 void
-ColorChooser::rgb2hsv( float r, float g, float b, OUTLIST float h, OUTLIST float s, OUTLIST float v )
+fltk::ColorChooser::rgb2hsv( float r, float g, float b, OUTLIST float h, OUTLIST float s, OUTLIST float v )
     C_ARGS: r, g, b, h, s, v
 
 =for apidoc |||layout|
@@ -213,7 +215,7 @@ ColorChooser::rgb2hsv( float r, float g, float b, OUTLIST float h, OUTLIST float
 =cut
 
 void
-ColorChooser::layout( )
+fltk::ColorChooser::layout( )
 
 =for apidoc ||bool|color_chooser|name|r|g|b
 
@@ -250,7 +252,7 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 color_chooser ( const char * name, r, g = 0, b = 0, a = 0 )
     CASE: items == 2
-        Color r;
+        fltk::Color r;
         C_ARGS:
             name, r
         OUTPUT:
@@ -337,10 +339,10 @@ MODULE = FLTK               PACKAGE = FLTK::ccHueBox
 #include "include/WidgetSubclass.h"
 
 void
-ccHueBox::new( int x, int y, int w, int h )
+fltk::ccHueBox::new( int x, int y, int w, int h )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<ccHueBox>(CLASS,x,y,w,h);
+        RETVAL = (void *) new WidgetSubclass<fltk::ccHueBox>(CLASS,x,y,w,h);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -383,10 +385,10 @@ MODULE = FLTK               PACKAGE = FLTK::ccValueBox
 #include "include/WidgetSubclass.h"
 
 void
-ccValueBox::new( int x, int y, int w, int h )
+fltk::ccValueBox::new( int x, int y, int w, int h )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<ccValueBox>(CLASS,x,y,w,h);
+        RETVAL = (void *) new WidgetSubclass<fltk::ccValueBox>(CLASS,x,y,w,h);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -429,10 +431,10 @@ MODULE = FLTK               PACKAGE = FLTK::ccCellBox
 #include "include/WidgetSubclass.h"
 
 void
-ccCellBox::new( int x, int y, int w, int h )
+fltk::ccCellBox::new( int x, int y, int w, int h )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<ccCellBox>(CLASS,x,y,w,h);
+        RETVAL = (void *) new WidgetSubclass<fltk::ccCellBox>(CLASS,x,y,w,h);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */

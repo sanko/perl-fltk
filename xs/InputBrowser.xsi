@@ -36,7 +36,7 @@ Creates a new C<FLTK::InputBrowser> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-InputBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::InputBrowser::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::InputBrowser>(CLASS,x,y,w,h,label);
@@ -108,8 +108,8 @@ fltk::InputBrowser::hide_popup( )
 
 =cut
 
-Widget *
-fltk::InputBrowser::item( Widget * widget = NO_INIT )
+fltk::Widget *
+fltk::InputBrowser::item( fltk::Widget * widget = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2

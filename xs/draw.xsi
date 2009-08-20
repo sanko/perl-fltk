@@ -34,6 +34,8 @@ L<C<wait()>|FLTK/"wait"> or L<C<flush()>|FLTK/"flush">.
 Calling the drawing functions at other times produces undefined results,
 including crashing.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/draw.h>
@@ -67,8 +69,8 @@ void
 push_matrix( )
     CODE:
         switch( ix ) {
-            case 0: push_matrix(); break;
-            case 1:  pop_matrix(); break;
+            case 0: fltk::push_matrix(); break;
+            case 1:  fltk::pop_matrix(); break;
         }
     ALIAS:
         pop_matrix = 2
@@ -136,7 +138,7 @@ translate ( x, y )
         double x
         double y
         CODE:
-            translate((float) x, (float) y);
+            fltk::translate((float) x, (float) y);
     CASE:
         CODE:
             Perl_croak(aTHX_ "Usage: %s(%s) # %s", "FLTK::translate", "x, y",
@@ -364,8 +366,8 @@ void
 pop_clip( )
     CODE:
         switch ( ix ) {
-            case 0:     pop_clip(); break;
-            case 1: push_no_clip(); break;
+            case 0:     fltk::pop_clip(); break;
+            case 1: fltk::push_no_clip(); break;
         }
     ALIAS:
         push_no_clip = 1
@@ -446,11 +448,11 @@ L<C<getbgcolor()>|/"getbgcolor">.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-setcolor( Color color )
+setcolor( fltk::Color color )
     CODE:
         switch( ix ) {
-            case 0:   setcolor( color ); break;
-            case 1: setbgcolor( color ); break;
+            case 0:   fltk::setcolor( color ); break;
+            case 1: fltk::setbgcolor( color ); break;
         }
     ALIAS:
         setbgcolor = 1
@@ -473,7 +475,7 @@ be a different, nyi, call.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-setcolor_alpha( Color color, float alpha )
+setcolor_alpha( fltk::Color color, float alpha )
 
 BOOT:
     export_tag("setcolor_alpha", "draw");
@@ -498,12 +500,12 @@ draw in the bg color, do this:
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Color
+fltk::Color
 getcolor( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL =   getcolor(); break;
-            case 1: RETVAL = getbgcolor(); break;
+            case 0: RETVAL =   fltk::getcolor(); break;
+            case 1: RETVAL = fltk::getbgcolor(); break;
         }
     OUTPUT:
         RETVAL
@@ -565,16 +567,16 @@ It then further modifies fg so that it contrasts with the bg.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Style *
-drawstyle(Style * style = NO_INIT , Flags flags = NO_INIT )
+fltk::Style *
+drawstyle( fltk::Style * style = NO_INIT, fltk::Flags flags = NO_INIT )
     CASE: items == 0
         CODE:
-            RETVAL = (fltk::Style *) drawstyle( );
+            RETVAL = (fltk::Style *) fltk::drawstyle( );
         OUTPUT:
             RETVAL
     CASE: items == 2
         CODE:
-            drawstyle( style, flags );
+            fltk::drawstyle( style, flags );
 
 BOOT:
     export_tag("drawstyle", "draw");
@@ -590,7 +592,7 @@ MODULE = FLTK               PACKAGE = FLTK::draw
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-setdrawflags ( Flags flags )
+setdrawflags ( fltk::Flags flags )
 
 BOOT:
     export_tag("setdrawflags", "draw");
@@ -609,8 +611,8 @@ MODULE = FLTK               PACKAGE = FLTK::draw
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Flags
-drawflags ( Flags flags )
+fltk::Flags
+drawflags ( fltk::Flags flags )
     CASE: items == 0
         C_ARGS:
     CASE:
@@ -705,31 +707,31 @@ line_style( int style = NO_INIT , float width = 0, int dashes = NO_INIT, ...)
             for (int i = 2; i < items; i++ )
                 c_dashes[i - 2] = (char) SvIV(ST(i));
             c_dashes[items - 2] = '\0';
-            line_style( style, width, c_dashes );
+            fltk::line_style( style, width, c_dashes );
 
 BOOT:
     export_tag("line_style", "draw");
-    newCONSTSUB(FLTK_stash, "SOLID", newSViv( SOLID ));
+    newCONSTSUB(FLTK_stash, "SOLID", newSViv( fltk::SOLID ));
     export_tag("SOLID", "draw");
-    newCONSTSUB(FLTK_stash, "DASH", newSViv( DASH ));
+    newCONSTSUB(FLTK_stash, "DASH", newSViv( fltk::DASH ));
     export_tag("DASH", "draw");
-    newCONSTSUB(FLTK_stash, "DOT", newSViv( DOT ));
+    newCONSTSUB(FLTK_stash, "DOT", newSViv( fltk::DOT ));
     export_tag("DOT", "draw");
-    newCONSTSUB(FLTK_stash, "DASHDOT", newSViv( DASHDOT ));
+    newCONSTSUB(FLTK_stash, "DASHDOT", newSViv( fltk::DASHDOT ));
     export_tag("DASHDOT", "draw");
-    newCONSTSUB(FLTK_stash, "DASHDOTDOT", newSViv( DASHDOTDOT ));
+    newCONSTSUB(FLTK_stash, "DASHDOTDOT", newSViv( fltk::DASHDOTDOT ));
     export_tag("DASHDOTDOT", "draw");
-    newCONSTSUB(FLTK_stash, "CAP_FLAT", newSViv( CAP_FLAT ));
+    newCONSTSUB(FLTK_stash, "CAP_FLAT", newSViv( fltk::CAP_FLAT ));
     export_tag("CAP_FLAT", "draw");
-    newCONSTSUB(FLTK_stash, "CAP_ROUND", newSViv( CAP_ROUND ));
+    newCONSTSUB(FLTK_stash, "CAP_ROUND", newSViv( fltk::CAP_ROUND ));
     export_tag("CAP_ROUND", "draw");
-    newCONSTSUB(FLTK_stash, "CAP_SQUARE", newSViv( CAP_SQUARE ));
+    newCONSTSUB(FLTK_stash, "CAP_SQUARE", newSViv( fltk::CAP_SQUARE ));
     export_tag("CAP_SQUARE", "draw");
-    newCONSTSUB(FLTK_stash, "JOIN_MITER", newSViv( JOIN_MITER ));
+    newCONSTSUB(FLTK_stash, "JOIN_MITER", newSViv( fltk::JOIN_MITER ));
     export_tag("JOIN_MITER", "draw");
-    newCONSTSUB(FLTK_stash, "JOIN_ROUND", newSViv( JOIN_ROUND ));
+    newCONSTSUB(FLTK_stash, "JOIN_ROUND", newSViv( fltk::JOIN_ROUND ));
     export_tag("JOIN_ROUND", "draw");
-    newCONSTSUB(FLTK_stash, "JOIN_BEVEL", newSViv( JOIN_BEVEL ));
+    newCONSTSUB(FLTK_stash, "JOIN_BEVEL", newSViv( fltk::JOIN_BEVEL ));
     export_tag("JOIN_BEVEL", "draw");
 
 MODULE = FLTK               PACKAGE = FLTK::draw
@@ -766,7 +768,7 @@ line_dashes( )
     CODE:
         RETVAL = newAV( );
         sv_2mortal((SV*)RETVAL);
-        const char * ret = line_dashes( );
+        const char * ret = fltk::line_dashes( );
         warn ("|%s|", ret);
         int i = 0;
         while ( ret[ i ] )
@@ -868,8 +870,8 @@ addvertices( AV * xy1, AV * xy2 = NO_INIT, ... )
         }
         if ( count ) {
             switch( ix ) {
-                case 0: addvertices(count, array); break;
-                case 1: addvertices_transformed(count, array); break;
+                case 0: fltk::addvertices(count, array); break;
+                case 1: fltk::addvertices_transformed(count, array); break;
             }
         }
         /* TODO: I'd like to say... return the number of vertices added or
@@ -954,8 +956,8 @@ void
 addpie( fltk::Rectangle * rect, float start, float end )
     CODE:
         switch( ix ) {
-            case 0:   addpie( * rect, start, end ); break;
-            case 1: addchord( * rect, start, end ); break;
+            case 0:   fltk::addpie( * rect, start, end ); break;
+            case 1: fltk::addchord( * rect, start, end ); break;
         }
     ALIAS:
         addchord = 1
@@ -1004,9 +1006,9 @@ void
 closepath( )
     CODE:
         switch ( ix ) {
-            case 0:  closepath( ); break;
-            case 1: strokepath( ); break;
-            case 2:   fillpath( ); break;
+            case 0:  fltk::closepath( ); break;
+            case 1: fltk::strokepath( ); break;
+            case 2:   fltk::fillpath( ); break;
         }
     ALIAS:
         strokepath = 1
@@ -1032,7 +1034,7 @@ advantage of a single GDI32 call that does this and should be faster.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-fillstrokepath( Color color )
+fillstrokepath( fltk::Color color )
 
 BOOT:
     export_tag("fillstrokepath", "draw");
@@ -1067,15 +1069,15 @@ fillrect( x, int y = NO_INIT, int w = NO_INIT, int h = NO_INIT )
         fltk::Rectangle * x
         CODE:
             switch( ix ) {
-                case 0:   fillrect( * x ); break;
-                case 1: strokerect( * x ); break;
+                case 0:   fltk::fillrect( * x ); break;
+                case 1: fltk::strokerect( * x ); break;
             }
     CASE: items == 4
         int x
         CODE:
             switch( ix ) {
-                case 0:   fillrect( x, y, w, h ); break;
-                case 1: strokerect( x, y, w, h ); break;
+                case 0:   fltk::fillrect( x, y, w, h ); break;
+                case 1: fltk::strokerect( x, y, w, h ); break;
             }
     ALIAS:
         strokerect = 1
@@ -1173,7 +1175,7 @@ can be used.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-setfont( Font * font, float size )
+setfont( fltk::Font * font, float size )
 
 BOOT:
     export_tag("setfont", "draw");
@@ -1188,7 +1190,7 @@ Returns the L<font|FLTK::Font> sent to the last L<C<setfont()>|/"setfont">.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Font *
+fltk::Font *
 getfont( )
 
 BOOT:
@@ -1255,8 +1257,8 @@ double
 getascent( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL =  getascent(); break;
-            case 1: RETVAL = getdescent(); break;
+            case 0: RETVAL =  fltk::getascent(); break;
+            case 1: RETVAL = fltk::getdescent(); break;
         }
     OUTPUT:
         RETVAL
@@ -1327,7 +1329,7 @@ void
 drawtext( char * text, x, y, int length = NO_INIT )
     CASE: items == 3 && sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Rectangle")
         fltk::Rectangle * x
-        Flags             y
+        fltk::Flags       y
         C_ARGS: text, * x, y
     CASE: items == 3
         float x
@@ -1357,7 +1359,7 @@ resulting box.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-measure( char * string, OUTLIST int w, OUTLIST int h, Flags flags = 0 )
+measure( char * string, OUTLIST int w, OUTLIST int h, fltk::Flags flags = 0 )
     C_ARGS: string, w, h, flags
 
 BOOT:
@@ -1388,13 +1390,13 @@ column_widths( ... )
             int widths[ items ];
             for ( int i = 0; i < items; i++ )
                 widths[ i ] = SvIV( ST( i ) );
-            column_widths( widths );
+            fltk::column_widths( widths );
         OUTPUT:
     CASE:
         CODE:
             RETVAL = newAV( );
             sv_2mortal((SV*)RETVAL);
-            const int * ret = column_widths( );
+            const int * ret = fltk::column_widths( );
             int i = 0;
             while ( ret[ i ] )
                 av_push( RETVAL, newSViv( ret[ i++ ] ) );
@@ -1452,7 +1454,7 @@ the rows are packed together one after another with no gap.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-drawimage( uchar * pointer, PixelType type, fltk::Rectangle * rect, int line_delta = NO_INIT )
+drawimage( uchar * pointer, fltk::PixelType type, fltk::Rectangle * rect, int line_delta = NO_INIT )
     CASE: items == 3
         C_ARGS: pointer, type, * rect
     CASE: items == 4
@@ -1505,15 +1507,15 @@ Same except C<line_delta> is set to C<$rect->w() * depth($type)>.
 MODULE = FLTK               PACKAGE = FLTK
 
 char *
-readimage( uchar * pointer, PixelType type, fltk::Rectangle * rect, int line_delta = NO_INIT )
+readimage( uchar * pointer, fltk::PixelType type, fltk::Rectangle * rect, int line_delta = NO_INIT )
     CASE: items == 3
         CODE:
-            RETVAL = (char *) readimage( pointer, type, * rect );
+            RETVAL = (char *) fltk::readimage( pointer, type, * rect );
         OUTPUT:
             RETVAL
     CASE: items == 4
         CODE:
-            RETVAL = (char *) readimage( pointer, type, * rect, line_delta );
+            RETVAL = (char *) fltk::readimage( pointer, type, * rect, line_delta );
         OUTPUT:
             RETVAL
 

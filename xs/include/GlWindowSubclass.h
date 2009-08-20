@@ -31,7 +31,7 @@
 
 namespace fltk {
 template<>
-void WidgetSubclass<GlWindow>::draw ( ) {
+void WidgetSubclass<fltk::GlWindow>::draw ( ) {
     int handled = 1; /* safe to assume for now */
     AV * args = newAV();
     handled = _call_method( "draw", args );

@@ -19,6 +19,8 @@ alignments to it's own L<C<align()>|/"align"> value, tiles and
 L<C<resize()>|/"resize">s the children to fit in the space not required by the
 (outsize) labels.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/AlignGroup.h>
@@ -32,10 +34,10 @@ Creates a new C<FLTK::AlignGroup> object.
 #include "include/WidgetSubclass.h"
 
 void
-AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
+fltk::AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, fltk::Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<AlignGroup>(CLASS,x,y,w,h,label,
+        RETVAL = (void *) new WidgetSubclass<fltk::AlignGroup>(CLASS,x,y,w,h,label,
                                         n_to_break, vertical, align, dw, dh );
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
@@ -50,7 +52,7 @@ AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_
 =cut
 
 void
-AlignGroup::layout( )
+fltk::AlignGroup::layout( )
 
 =for apidoc ||bool|vertical|
 
@@ -63,7 +65,7 @@ AlignGroup::layout( )
 =cut
 
 bool
-AlignGroup::vertical ( bool v = NO_INIT )
+fltk::AlignGroup::vertical ( bool v = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->vertical( );
@@ -98,7 +100,7 @@ AlignGroup::vertical ( bool v = NO_INIT )
 =cut
 
 uchar
-AlignGroup::n_to_break( uchar value = NO_INIT )
+fltk::AlignGroup::n_to_break( uchar value = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
@@ -129,8 +131,8 @@ AlignGroup::n_to_break( uchar value = NO_INIT )
 
 =cut
 
-Flags
-AlignGroup::align( Flags a = NO_INIT )
+fltk::Flags
+fltk::AlignGroup::align( fltk::Flags a = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->align( );

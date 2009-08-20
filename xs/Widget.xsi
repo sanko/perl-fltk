@@ -19,6 +19,12 @@ L<C<box()>|/"box"> and the L<C<label()>|/"label">, and ignores all events.
 This can be useful for making decorations or providing areas that pop up a
 L<C<tooltip()>|/"tooltip">.
 
+=head1 Subclassing Widgets
+
+...todo
+
+=begin apidoc
+
 =cut
 
 #include <fltk/Widget.h>
@@ -43,12 +49,12 @@ yourself in order to see it.
 #include "include/WidgetSubclass.h"
 
 void
-Widget::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Widget::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Widget>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
+            ST(0) = sv_newmortal( );
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
@@ -77,19 +83,10 @@ Destroy the widget.
 =cut
 
 void
-Widget::destroy( )
+fltk::Widget::destroy( )
     CODE:
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
-
-bool
-Widget::draw ( ... )
-    CODE:
-        RETVAL = 0;
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        handle = 1
 
 =for apidoc ||FLTK::Group|parent|
 
@@ -102,11 +99,11 @@ Sets the parent.
 
 =cut
 
-Group *
-Widget::parent ( Group * w )
+fltk::Group *
+fltk::Widget::parent ( fltk::Group * w )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->parent();
+            RETVAL = THIS->parent( );
         OUTPUT:
             RETVAL
     CASE:
@@ -122,31 +119,41 @@ window (if any), not I<this> window.
 
 =cut
 
-Window *
-Widget::window ( )
+fltk::Window *
+fltk::Widget::window ( )
 
 
 =for apidoc et[widget]||int|RESREVED_TYPE|
 
+
+
 =for apidoc e||int|TOGGLE|
+
+
 
 =for apidoc e||int|RADIO|
 
+
+
 =for apidoc e||int|GROUP_TYPE|
 
+
+
 =for apidoc e||int|WINDOW_TYPE|
+
+
 
 =cut
 
 int
-RESERVED_TYPE ()
+RESERVED_TYPE ( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = Widget::RESERVED_TYPE; break;
-            case 1: RETVAL = Widget::TOGGLE;        break;
-            case 2: RETVAL = Widget::RADIO;         break;
-            case 3: RETVAL = Widget::GROUP_TYPE;    break;
-            case 4: RETVAL = Widget::WINDOW_TYPE;   break;
+            case 0: RETVAL = fltk::Widget::RESERVED_TYPE; break;
+            case 1: RETVAL = fltk::Widget::TOGGLE;        break;
+            case 2: RETVAL = fltk::Widget::RADIO;         break;
+            case 3: RETVAL = fltk::Widget::GROUP_TYPE;    break;
+            case 4: RETVAL = fltk::Widget::WINDOW_TYPE;   break;
         }
     OUTPUT:
         RETVAL
@@ -186,7 +193,7 @@ work.
 =cut
 
 uchar
-Widget::type( uchar value = NO_INIT )
+fltk::Widget::type( uchar value = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->type( );
@@ -220,13 +227,13 @@ Same as L<C<!horizontal()>|/"horizontal">
 =cut
 
 bool
-Widget::is_group( )
+fltk::Widget::is_group( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = THIS->is_group();  break;
-            case 1: RETVAL = THIS->is_window(); break;
-            case 2: RETVAL = THIS->horizontal(); break;
-            case 3: RETVAL = THIS->vertical();   break;
+            case 0: RETVAL = THIS->is_group( );  break;
+            case 1: RETVAL = THIS->is_window( ); break;
+            case 2: RETVAL = THIS->horizontal( ); break;
+            case 3: RETVAL = THIS->vertical( );   break;
         }
     OUTPUT:
         RETVAL
@@ -249,7 +256,7 @@ Same as L<C<resize( x(), y(), $W, $H)>|/"resize">.
 =cut
 
 bool
-Widget::resize ( int X = NO_INIT, int Y = NO_INIT, int W, int H )
+fltk::Widget::resize ( int X = NO_INIT, int Y = NO_INIT, int W, int H )
     CASE: items == 3
         CODE:
             RETVAL = THIS->resize( X, Y, W, H );
@@ -266,9 +273,7 @@ Same as L<C<resize( X, Y, w(), h() )>|/"resize">
 =cut
 
 bool
-Widget::position ( int X, int Y )
-    OUTPUT:
-        RETVAL
+fltk::Widget::position ( int X, int Y )
 
 =for apidoc |||get_absolute_rect|rect
 
@@ -278,7 +283,7 @@ widget's rectangle expressed in absolute (i.e. screen) coordinates.
 =cut
 
 void
-Widget::get_absolute_rect( fltk::Rectangle * rect )
+fltk::Widget::get_absolute_rect( fltk::Rectangle * rect )
 
 =for apidoc |||label|string
 
@@ -301,7 +306,7 @@ a lot of interesting things to be put into the tooltip.
 =cut
 
 const char *
-Widget::label ( char * STRING = NO_INIT )
+fltk::Widget::label ( char * STRING = NO_INIT )
     CASE: items == 1
         CODE:
             switch( ix ) {
@@ -331,7 +336,7 @@ Passing C<undef> will set L<C<label()>|/"label"> to C<undef>.
 =cut
 
 void
-Widget::copy_label( char * STRING )
+fltk::Widget::copy_label( char * STRING )
 
 =for apidoc |||image|image
 
@@ -347,11 +352,11 @@ putting C<@> commands into the L<C<label()>|/"label">.
 
 #include <fltk/Image.h>
 
-const Symbol *
-Widget::image ( Image * image = NO_INIT )
+const fltk::Symbol *
+fltk::Widget::image ( fltk::Image * image = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->image();
+            RETVAL = THIS->image( );
         OUTPUT:
             RETVAL
     CASE:
@@ -374,7 +379,7 @@ Return value is intended to indicate if the shortcut changed, but that is nyi.
 =cut
 
 unsigned
-Widget::shortcut ( unsigned KEY = NO_INIT )
+fltk::Widget::shortcut ( unsigned KEY = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->shortcut( );
@@ -438,7 +443,7 @@ Delete a shortcut assignment. Returns true if it actually existed.
 =cut
 
 bool
-Widget::add_shortcut ( unsigned key )
+fltk::Widget::add_shortcut ( unsigned key )
     CODE:
         switch( ix ) {
             case 0:    RETVAL = THIS->add_shortcut( key ); break;
@@ -460,7 +465,7 @@ sign or if L<C<flag(RAW_LABEL)>|/"flag"> is on.
 =cut
 
 unsigned
-Widget::label_shortcut ( )
+fltk::Widget::label_shortcut ( )
 
 =for apidoc ||bool|test_labe_shortcut|
 
@@ -480,7 +485,7 @@ that is used to print a plain '&' in the label.
 =cut
 
 bool
-Widget::test_label_shortcut ( )
+fltk::Widget::test_label_shortcut ( )
 
 =for apidoc ||bool|test_shortcut|
 
@@ -509,7 +514,7 @@ rules about what ones are "better".
 =cut
 
 bool
-Widget::test_shortcut ( bool test_label = NO_INIT )
+fltk::Widget::test_shortcut ( bool test_label = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->test_shortcut( );
@@ -549,8 +554,8 @@ Accepts a blessed L<FLTK::Callback|FLTK::Callback> object.
 
 =cut
 
-Callback *
-Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
+fltk::Callback *
+fltk::Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->callback( );
@@ -562,7 +567,7 @@ Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
 #ifdef ENABLE_CALLBACKS
             SV * widget = newSVsv((SV*)ST(0));
             //sv_rvweaken(widget);
-            AV *arr = newAV();
+            AV *arr = newAV( );
             av_push(arr, newSVsv((SV*)ST(1))); // coderef
             av_push(arr, widget); // widget
             if ( items == 3 )
@@ -572,7 +577,7 @@ Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
             warn("Callbacks have been disabled."); // TODO: Expain why in POD
 #endif // ifdef ENABLE_CALLBACKS
     CASE:
-        Callback * callback
+        fltk::Callback * callback
         CODE:
 #ifdef ENABLE_CALLBACKS
             THIS->callback( callback );
@@ -604,16 +609,16 @@ Returns the second argument to the callback.
 =cut
 
 SV *
-Widget::user_data ( SV * args = NO_INIT )
+fltk::Widget::user_data ( SV * args = NO_INIT )
     CASE: items == 1
         CODE:
-            AV * arr = (AV*)THIS->user_data(); // XXX - check if arr == NULL
+            AV * arr = (AV*)THIS->user_data( ); // XXX - check if arr == NULL
             RETVAL = av_len(arr) == 2 ? *av_fetch(arr, 2, 0) : &PL_sv_undef;
         OUTPUT:
             RETVAL
     CASE:
         CODE:
-            AV * arr = newAV();
+            AV * arr = newAV( );
             av_push(arr, av_shift((AV*)THIS->user_data()));
             SV * widget = newSVsv((SV*)ST(0));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
@@ -687,10 +692,10 @@ changes.
 =cut
 
 uchar
-Widget::when ( uchar flag = NO_INIT )
+fltk::Widget::when ( uchar flag = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->when();
+            RETVAL = THIS->when( );
         OUTPUT:
             RETVAL
     CASE:
@@ -709,7 +714,7 @@ want no action.
 =cut
 
 void
-Widget::default_callback( Widget * w, SV * args = NO_INIT)
+fltk::Widget::default_callback( fltk::Widget * w, SV * args = NO_INIT)
     CODE:
         SV * _widget = newSVsv((SV*)ST(1));
 #ifdef SvWEAKREF // XXX - Do I need to check this here? See FLTK::cb_w()
@@ -718,7 +723,7 @@ Widget::default_callback( Widget * w, SV * args = NO_INIT)
         croak("weak references are not implemented in this release of perl");
         XSRETURN_EMPTY;
 #endif // ifdef SvWEAKREF
-        AV  * arr     = newAV();
+        AV  * arr     = newAV( );
         if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
             return;
         SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
@@ -739,7 +744,7 @@ You can also call the callback function with arbitrary arguments.
 =cut
 
 void
-Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
+fltk::Widget::do_callback( fltk::Widget * widget = NO_INIT, SV * args = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->do_callback( );
@@ -752,7 +757,7 @@ Widget::do_callback( Widget * widget = NO_INIT, SV * args = NO_INIT )
         croak("weak references are not implemented in this release of perl");
         XSRETURN_EMPTY;
 #endif // ifdef SvWEAKREF
-            AV  * arr     = newAV();
+            AV  * arr     = newAV( );
             if (THIS->user_data() == NULL) // if THIS has no cb, do nothing
                 return;
             SV ** coderef = av_fetch((AV*)THIS->user_data(), 0, 0);
@@ -777,7 +782,7 @@ Returns false if C<parent> is undef.
 =cut
 
 bool
-Widget::contains ( Widget * child )
+fltk::Widget::contains ( fltk::Widget * child )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->contains(child); break;
@@ -916,25 +921,25 @@ window when the user types a key.
 =cut
 
 bool
-Widget::active( )
+fltk::Widget::active( )
     CODE:
         switch ( ix ) {
-            case  0: RETVAL = THIS->active();         break;
-            case  1: RETVAL = THIS->active_r();       break;
-            case  2: RETVAL = THIS->output();         break;
-            case  3: RETVAL = THIS->visible();        break;
-            case  4: RETVAL = THIS->visible_r();      break;
-            case  5: RETVAL = THIS->takesevents();    break;
-            case  6: RETVAL = THIS->click_to_focus(); break;
-            case  7: RETVAL = THIS->tab_to_focus();   break;
-            case  8: RETVAL = THIS->changed();        break;
-          //case  9: RETVAL = THIS->value();          break;
-            case 10: RETVAL = THIS->selected();       break;
-            case 11: RETVAL = THIS->pushed();         break;
-            case 12: RETVAL = THIS->focused();        break;
-            case 13: RETVAL = THIS->belowmouse();     break;
-            case 15: RETVAL = THIS->clear();          break;
-            case 16: RETVAL = THIS->take_focus();     break;
+            case  0: RETVAL = THIS->active( );         break;
+            case  1: RETVAL = THIS->active_r( );       break;
+            case  2: RETVAL = THIS->output( );         break;
+            case  3: RETVAL = THIS->visible( );        break;
+            case  4: RETVAL = THIS->visible_r( );      break;
+            case  5: RETVAL = THIS->takesevents( );    break;
+            case  6: RETVAL = THIS->click_to_focus( ); break;
+            case  7: RETVAL = THIS->tab_to_focus( );   break;
+            case  8: RETVAL = THIS->changed( );        break;
+          //case  9: RETVAL = THIS->value( );          break;
+            case 10: RETVAL = THIS->selected( );       break;
+            case 11: RETVAL = THIS->pushed( );         break;
+            case 12: RETVAL = THIS->focused( );        break;
+            case 13: RETVAL = THIS->belowmouse( );     break;
+            case 15: RETVAL = THIS->clear( );          break;
+            case 16: RETVAL = THIS->take_focus( );     break;
         }
     OUTPUT:
         RETVAL
@@ -971,8 +976,8 @@ elsewhere.
 
 =cut
 
-Flags
-Widget::flags( Flags f = NO_INIT )
+fltk::Flags
+fltk::Widget::flags( fltk::Flags f = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->flags( );
@@ -1005,7 +1010,7 @@ together bits it will flip them all.
 =cut
 
 void
-Widget::set_flag( unsigned f, bool b = NO_INIT )
+fltk::Widget::set_flag( unsigned f, bool b = NO_INIT )
     CASE: items == 2
         CODE:
             switch( ix ) {
@@ -1040,7 +1045,7 @@ or'd together, otherwise this is the same as L<C<flag(f)>|/"flag">.
 =cut
 
 bool
-Widget::flag( unsigned f )
+fltk::Widget::flag( unsigned f )
     ALIAS:
         any_of = 1
         all_of = 2
@@ -1069,7 +1074,7 @@ state is the same then false is returned and the widget is not redrawn.
 =cut
 
 bool
-Widget::state( bool value = NO_INIT )
+fltk::Widget::state( bool value = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->state( );
@@ -1090,11 +1095,11 @@ of the C<ALIGN> flags or'd together.
 
 =cut
 
-Flags
-Widget::align( unsigned flags = NO_INIT )
+fltk::Flags
+fltk::Widget::align( unsigned flags = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->align();
+            RETVAL = THIS->align( );
         OUTPUT:
             RETVAL
     CASE:
@@ -1114,31 +1119,49 @@ Toggle between L<C<activate()>|/"activate"> and L<C<deactivate()>|/"deactivate">
 =cut
 
 void
-Widget::activate( int b = NO_INIT )
+fltk::Widget::activate( int b = NO_INIT )
     CASE: items == 1
         CODE:
-            THIS->activate();
+            THIS->activate( );
     CASE:
         CODE:
             THIS->activate( b );
 
 =for apidoc |||set_output|
 
+
+
 =for apidoc |||clear_output|
+
+
 
 =for apidoc |||set_changed|
 
+
+
 =for apidoc |||clear_changed|
+
+
 
 =for apidoc |||clear_selected|
 
+
+
 =for apidoc |||set_click_to_focus|
+
+
 
 =for apidoc |||clear_click_to_focus|
 
+
+
 =for apidoc |||set_tab_to_focus|
 
+
+
 =for apidoc |||clear_tab_to_focus|
+
+
 
 =for apidoc |||set_vertical|
 
@@ -1215,26 +1238,26 @@ redrawnig them anyway (ie anything displaying text).
 =cut
 
 void
-Widget::set_output( )
+fltk::Widget::set_output( )
     CODE:
         switch( ix ) {
-            case  0:           THIS->set_output(); break;
-            case  1:         THIS->clear_output(); break;
-            case  2:          THIS->set_changed(); break;
-            case  3:        THIS->clear_changed(); break;
-            case  4:         THIS->set_selected(); break;
-            case  5:       THIS->clear_selected(); break;
-            case  6:   THIS->set_click_to_focus(); break;
-            case  7: THIS->clear_click_to_focus(); break;
-            case  8:     THIS->set_tab_to_focus(); break;
-            case  9:   THIS->clear_tab_to_focus(); break;
-            case 10:         THIS->set_vertical(); break;
-            case 11:       THIS->set_horizontal(); break;
-            case 12:          THIS->throw_focus(); break;
-            case 13:     THIS->remove_shortcuts(); break;
-            case 14:         THIS->make_current(); break;
-            case 15:      THIS->draw_background(); break;
-            case 16:           THIS->draw_frame(); break;
+            case  0:           THIS->set_output( ); break;
+            case  1:         THIS->clear_output( ); break;
+            case  2:          THIS->set_changed( ); break;
+            case  3:        THIS->clear_changed( ); break;
+            case  4:         THIS->set_selected( ); break;
+            case  5:       THIS->clear_selected( ); break;
+            case  6:   THIS->set_click_to_focus( ); break;
+            case  7: THIS->clear_click_to_focus( ); break;
+            case  8:     THIS->set_tab_to_focus( ); break;
+            case  9:   THIS->clear_tab_to_focus( ); break;
+            case 10:         THIS->set_vertical( ); break;
+            case 11:       THIS->set_horizontal( ); break;
+            case 12:          THIS->throw_focus( ); break;
+            case 13:     THIS->remove_shortcuts( ); break;
+            case 14:         THIS->make_current( ); break;
+            case 15:      THIS->draw_background( ); break;
+            case 16:           THIS->draw_frame( ); break;
         }
     ALIAS:
                 clear_output =  1
@@ -1271,10 +1294,10 @@ will still be on when L<C<draw()>|/"draw"> is called.
 =cut
 
 void
-Widget::redraw( args = NO_INIT )
+fltk::Widget::redraw( args = NO_INIT )
     CASE: items == 1
         CODE:
-            THIS->redraw();
+            THIS->redraw( );
     CASE: sv_isobject(ST(0))
         fltk::Rectangle * args
         CODE:
@@ -1303,11 +1326,11 @@ highlight color is being used.
 =cut
 
 void
-Widget::redraw_label( )
+fltk::Widget::redraw_label( )
     CODE:
         switch ( ix ) {
-            case 0: THIS->redraw_label();     break;
-            case 1: THIS->redraw_highlight(); break;
+            case 0: THIS->redraw_label( );     break;
+            case 1: THIS->redraw_highlight( ); break;
         }
     ALIAS:
         redraw_highlight = 1
@@ -1330,10 +1353,10 @@ L<C<rect>|FLTK::Rectangle>.
 =cut
 
 void
-Widget::draw_box ( fltk::Rectangle * rect = NO_INIT )
+fltk::Widget::draw_box ( fltk::Rectangle * rect = NO_INIT )
     CASE: items == 1
         CODE:
-            THIS->draw_box();
+            THIS->draw_box( );
     CASE:
         CODE:
             THIS->draw_box( *rect );
@@ -1365,10 +1388,10 @@ L<C<label()>|/"label"> is put next to that.
 =cut
 
 void
-Widget::draw_label ( fltk::Rectangle * ir = NO_INIT, Flags flags = NO_INIT )
+fltk::Widget::draw_label ( fltk::Rectangle * ir = NO_INIT, fltk::Flags flags = NO_INIT )
     CASE: items == 1
         CODE:
-            THIS->draw_label();
+            THIS->draw_label( );
     CASE: items == 3
         CODE:
             THIS->draw_label( *ir, flags );
@@ -1389,7 +1412,7 @@ being an L<FLTK::MultiImage>|FLTK::MultiImage>.
 =cut
 
 void
-Widget::draw_glyph ( int which, fltk::Rectangle * rect )
+fltk::Widget::draw_glyph ( int which, fltk::Rectangle * rect )
     C_ARGS: which, * rect
 
 =for apidoc |||measure_label|w|h
@@ -1408,10 +1431,8 @@ not for back-compatability reasons.
 =cut
 
 void
-Widget::measure_label( int w, int h )
-    OUTPUT:
-        w
-        h
+fltk::Widget::measure_label( IN_OUTLIST int w, IN_OUTLIST int h )
+    C_ARGS: w, h
 
 =for apidoc ||Box|box|
 
@@ -1443,13 +1464,13 @@ Returns the type of box to draw buttions internal the widget.
 
 =cut
 
-Box *
-Widget::box( Box * box = NO_INIT )
+fltk::Box *
+fltk::Widget::box( fltk::Box * box = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL =       THIS->box(); break;
-                case 1: RETVAL = THIS->buttonbox(); break;
+                case 0: RETVAL =       THIS->box( ); break;
+                case 1: RETVAL = THIS->buttonbox( ); break;
             }
         OUTPUT:
             RETVAL
@@ -1483,11 +1504,11 @@ Sets a small image that some Widgets use to draw part of themselves.
 
 =cut
 
-Symbol *
-Widget::glyph( Symbol * symbol = NO_INIT )
+fltk::Symbol *
+fltk::Widget::glyph( fltk::Symbol * symbol = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->glyph();
+            RETVAL = THIS->glyph( );
         OUTPUT:
             RETVAL
     CASE:
@@ -1517,13 +1538,13 @@ editor or menu or browser. Default is C<FLTK::HELVETICA>.
 
 =cut
 
-Font *
-Widget::labelfont ( Font * font = NO_INIT )
+fltk::Font *
+fltk::Widget::labelfont ( fltk::Font * font = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->labelfont(); break;
-                case 1: RETVAL =  THIS->textfont(); break;
+                case 0: RETVAL = THIS->labelfont( ); break;
+                case 1: RETVAL =  THIS->textfont( ); break;
             }
         OUTPUT:
             RETVAL
@@ -1545,11 +1566,11 @@ symbols. C<FLTK::NORMAL_LABEL>.
 
 =cut
 
-LabelType *
-Widget::labeltype( LabelType * type = NO_INIT )
+fltk::LabelType *
+fltk::Widget::labeltype( fltk::LabelType * type = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->labeltype();
+            RETVAL = THIS->labeltype( );
         OUTPUT:
             RETVAL
     CASE:
@@ -1659,8 +1680,8 @@ white or black). I recommend you use the default if possible.
 
 =cut
 
-Color
-Widget::color ( Color color = NO_INIT )
+fltk::Color
+fltk::Widget::color ( fltk::Color color = NO_INIT )
     CASE: items == 1
         CODE:
             switch( ix ) {
@@ -1734,13 +1755,13 @@ browsers and menus and similar widgets will use the local value.
 =cut
 
 float
-Widget::labelsize( float size = NO_INIT )
+fltk::Widget::labelsize( float size = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->labelsize(); break;
-                case 1:  RETVAL = THIS->textsize(); break;
-                case 2:   RETVAL = THIS->leading(); break;
+                case 0: RETVAL = THIS->labelsize( ); break;
+                case 1:  RETVAL = THIS->textsize( ); break;
+                case 2:   RETVAL = THIS->leading( ); break;
             }
         OUTPUT:
             RETVAL
@@ -1772,12 +1793,12 @@ default is 15.
 =cut
 
 unsigned char
-Widget::scrollbar_align ( unsigned char value = NO_INIT )
+fltk::Widget::scrollbar_align ( unsigned char value = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->scrollbar_align(); break;
-                case 1: RETVAL = THIS->scrollbar_width(); break;
+                case 0: RETVAL = THIS->scrollbar_align( ); break;
+                case 1: RETVAL = THIS->scrollbar_width( ); break;
             }
         OUTPUT:
             RETVAL
@@ -1803,7 +1824,7 @@ added as association.
 #include <fltk/WidgetAssociation.h>
 
 void
-Widget::add ( AssociationType ATYPE, SV * DATA = NO_INIT )
+fltk::Widget::add ( fltk::AssociationType ATYPE, SV * DATA = NO_INIT )
     CODE:
         THIS->add( ATYPE, (void *) DATA );
 
@@ -1828,7 +1849,7 @@ type.
 #ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 bool
-Widget::set (AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
+fltk::Widget::set ( fltk::AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->set( );
@@ -1841,7 +1862,7 @@ Widget::set (AssociationType ATYPE = NO_INIT , SV * DATA = NO_INIT )
 #else  // ifndef DISABLE_ASSOCIATIONFUNCTOR
 
 bool
-Widget::set ( )
+fltk::Widget::set ( )
     OUTPUT:
         RETVAL
 
@@ -1859,7 +1880,7 @@ Returns C<undef> if none.
 =cut
 
 SV *
-Widget::get( AssociationType ATYPE )
+fltk::Widget::get( fltk::AssociationType ATYPE )
     CODE:
         RETVAL = THIS->get( ATYPE );
     OUTPUT:
@@ -1875,7 +1896,7 @@ This is a wrapper for C<::foreach(&at, this, fkt)>.
 =cut
 
 SV *
-Widget::foreach( AssociationType at, AssociationFunctor fkt )
+fltk::Widget::foreach( fltk::AssociationType at, fltk::AssociationFunctor fkt )
 
 =for apidoc Hx||bool|remove|at|data
 
@@ -1891,7 +1912,7 @@ function returns true, else false.
 =cut
 
 bool
-Widget::remove( AssociationType at, SV * data )
+fltk::Widget::remove( fltk::AssociationType at, SV * data )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->remove(at, (void *) data); break;
@@ -1908,42 +1929,53 @@ Widget::remove( AssociationType at, SV * data )
 
 =for apidoc et[when]||int|WHEN_NEVER|
 
+
+
 =for apidoc et[when]||int|WHEN_CHANGED|
+
+
 
 =for apidoc et[when]||int|WHEN_RELEASE|
 
+
+
 =for apidoc et[when]||int|WHEN_RELEASE_ALWAYS|
+
+
 
 =for apidoc et[when]||int|WHEN_ENTER_KEY|
 
+
+
 =for apidoc et[when]||int|WHEN_ENTER_KEY_ALWAYS|
+
+
 
 =for apidoc et[when]||int|WHEN_ENTER_KEY_CHANGED|
 
+
+
 =for apidoc et[when]||int|WHEN_NOT_CHANGED|
+
+
 
 =cut
 
-    # ...the variables are actually in the top level
-
-MODULE = FLTK               PACKAGE = FLTK
-
-int
-WHEN_NEVER ( )
-    CODE:
-        RETVAL = ix; // Cheap hack. The ALIAS values are the real values
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        WHEN_CHANGED          = 1
-        WHEN_RELEASE          = 4
-        WHEN_RELEASE_ALWAYS   = 6
-        WHEN_ENTER_KEY        = 8
-        WHEN_ENTER_KEY_ALWAYS =10
-        WHEN_ENTER_KEY_CHANGED=11
-        WHEN_NOT_CHANGED      = 2
-
-MODULE = FLTK               PACKAGE = FLTK::Widget
+BOOT:
+    newCONSTSUB(FLTK_stash, "WHEN_CHANGED", newSViv( fltk::WHEN_CHANGED ));
+    export_tag( "WHEN_CHANGED", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_RELEASE", newSViv( fltk::WHEN_RELEASE ));
+    export_tag( "WHEN_RELEASE", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_RELEASE_ALWAYS", newSViv( fltk::WHEN_RELEASE_ALWAYS ));
+    export_tag( "WHEN_RELEASE_ALWAYS", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_ENTER_KEY", newSViv( fltk::WHEN_ENTER_KEY ));
+    export_tag( "WHEN_ENTER_KEY", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_ENTER_KEY_ALWAYS", newSViv( fltk::WHEN_ENTER_KEY_ALWAYS ));
+    export_tag( "WHEN_ENTER_KEY_ALWAYS", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_ENTER_KEY_CHANGED", newSViv( fltk::WHEN_ENTER_KEY_CHANGED ));
+    export_tag( "WHEN_ENTER_KEY_CHANGED", "when" );
+    newCONSTSUB(FLTK_stash, "WHEN_NOT_CHANGED", newSViv( fltk::WHEN_NOT_CHANGED ));
+    export_tag( "WHEN_NOT_CHANGED", "when" );
 
 
 
@@ -2006,7 +2038,7 @@ flags is listed under F<fltk/layout.h>.
 =cut
 
 void
-Widget::relayout( uchar flags = NO_INIT )
+fltk::Widget::relayout( uchar flags = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->relayout( );
@@ -2027,8 +2059,8 @@ to skip it is as follows:
         sub layout {
             my ($self) = @_;
             return if !($self->layout_damage() & ~LAYOUT_XY);
-            do_expensive_layout();
-            $self->redraw();
+            do_expensive_layout( );
+            $self->redraw( );
         }
     }
 
@@ -2039,7 +2071,7 @@ Directly change the value returned by L<C<layout_damage()>|/"layout_damage">.
 =cut
 
 uchar
-Widget::layout_damage ( uchar VALUE = NO_INIT )
+fltk::Widget::layout_damage ( uchar VALUE = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->layout_damage( );
@@ -2049,12 +2081,12 @@ Widget::layout_damage ( uchar VALUE = NO_INIT )
         CODE:
             THIS->layout_damage( VALUE );
 
-=for apidoc e|||DAMAGE_CHILD|
+=for apidoc et[damage]|||DAMAGE_CHILD|
 
 A child of this group widget needs to be redrawn (non-group widgets can use
 this bit for their own purposes).
 
-=for apidoc e|||DAMAGE_CHILD_LABEL|
+=for apidoc et[damage]|||DAMAGE_CHILD_LABEL|
 
 An outside label of this widget needs to be redrawn. This is handled (and this
 bit is cleared) by the parent group.
@@ -2063,42 +2095,42 @@ Because anti-aliasing cannot be redrawn atop itself, this is not
 used anymore. Instead if an outside label needs to change the entire
 parent widget is redrawn.
 
-=for apidoc e|||DAMAGE_EXPOSE|
+=for apidoc et[damage]|||DAMAGE_EXPOSE|
 
 Damage caused by L<C<damage()>|/"damage"> or by expose events from the
 operating system. If this and L<C<FLTK::DAMAGE_ALL>|/"DAMAGE_ALL"> is on the
 widget should draw every pixel inside it's region.
 
-=for apidoc e|||fltk::DAMAGE_ALL|
+=for apidoc et[damage]|||fltk::DAMAGE_ALL|
 
 This bit is set by L<C<redraw()>|/"redraw"> and indicates that all of the
 widget (but not "holes" where the background shows through) needs to be
 redraw.
 
-=for apidoc e|||DAMAGE_VALUE|
+=for apidoc et[damage]|||DAMAGE_VALUE|
 
 A widget may use this to indicate that the displayed value has changed.
 
-=for apidoc e|||DAMAGE_PUSHED|
+=for apidoc et[damage]|||DAMAGE_PUSHED|
 
 A widget may use this to indicate that the user has pushed or released a
 button.
 
-=for apidoc e|||DAMAGE_SCROLL|
+=for apidoc et[damage]|||DAMAGE_SCROLL|
 
 A widget may use this to indicate that the displayed data has scrolled moved
 horizontally and/or vertically.
 
-=for apidoc e|||DAMAGE_OVERLAY|
+=for apidoc et[damage]|||DAMAGE_OVERLAY|
 
 Same value as L<C<FLTK::DAMAGE_SCROLL>|/"FLTK::DAMAGE_SCROLL">.
 
-=for apidoc e|||DAMAGE_HIGHLIGHT
+=for apidoc et[damage]|||DAMAGE_HIGHLIGHT
 
 A widget may use this to indicate that the mouse has entered/exited part of
 the widget.
 
-=for apidoc e|||DAMAGE_CONTENTS
+=for apidoc et[damage]|||DAMAGE_CONTENTS
 
 Same as L<C<FLTK::DAMAGE_EXPOSE>|/"DAMAGE_EXPOSE"> but if
 L<C<FLTK::DAMAGE_ALL>|/"FLTK::DAMAGE_ALL"> is off a widget can use this for
@@ -2108,31 +2140,29 @@ it's own purposes.
 
 #include <fltk/damage.h>
 
-uchar
-DAMAGE_CHILD( )
-    CODE:
-        switch( ix ) {
-            case 0: RETVAL = DAMAGE_CHILD;       break;
-            case 1: RETVAL = DAMAGE_CHILD_LABEL; break;
-            case 2: RETVAL = DAMAGE_EXPOSE;      break;
-            case 3: RETVAL = DAMAGE_ALL;         break;
-            case 4: RETVAL = DAMAGE_VALUE;       break;
-            case 5: RETVAL = DAMAGE_SCROLL;      break;
-            case 6: RETVAL = DAMAGE_OVERLAY;     break;
-            case 7: RETVAL = DAMAGE_HIGHLIGHT;   break;
-            case 8: RETVAL = DAMAGE_CONTENTS;    break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        DAMAGE_CHILD_LABEL = 1
-        DAMAGE_EXPOSE      = 2
-        DAMAGE_ALL         = 3
-        DAMAGE_VALUE       = 4
-        DAMAGE_SCROLL      = 5
-        DAMAGE_OVERLAY     = 6
-        DAMAGE_HIGHLIGHT   = 7
-        DAMAGE_CONTENTS    = 8
+
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "DAMAGE_CHILD", newSViv( fltk::DAMAGE_CHILD ));
+    export_tag( "DAMAGE_CHILD", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_CHILD_LABEL", newSViv( fltk::DAMAGE_CHILD_LABEL ));
+    export_tag( "DAMAGE_CHILD_LABEL", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_EXPOSE", newSViv( fltk::DAMAGE_EXPOSE ));
+    export_tag( "DAMAGE_EXPOSE", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_ALL", newSViv( fltk::DAMAGE_ALL ));
+    export_tag( "DAMAGE_ALL", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_VALUE", newSViv( fltk::DAMAGE_VALUE ));
+    export_tag( "DAMAGE_VALUE", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_SCROLL", newSViv( fltk::DAMAGE_SCROLL ));
+    export_tag( "DAMAGE_SCROLL", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_OVERLAY", newSViv( fltk::DAMAGE_OVERLAY ));
+    export_tag( "DAMAGE_OVERLAY", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_HIGHLIGHT", newSViv( fltk::DAMAGE_HIGHLIGHT ));
+    export_tag( "DAMAGE_HIGHLIGHT", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_HIGHLIGHT", newSViv( fltk::DAMAGE_HIGHLIGHT ));
+    export_tag( "DAMAGE_HIGHLIGHT", "damage" );
+    newCONSTSUB(FLTK_stash, "DAMAGE_CONTENTS", newSViv( fltk::DAMAGE_CONTENTS ));
+    export_tag( "DAMAGE_CONTENTS", "damage" );
 
 =for apidoc ||uchar|damage|
 
@@ -2142,7 +2172,7 @@ L<C<draw()>|/"draw">. Cleared to zero after L<C<draw()>|/"draw"> is called.
 =cut
 
 uchar
-Widget::damage( )
+fltk::Widget::damage( )
     OUTPUT:
         RETVAL
 
@@ -2155,7 +2185,7 @@ to turn bits on.
 =cut
 
 void
-Widget::set_damage( uchar c )
+fltk::Widget::set_damage( uchar c )
 
 =for apidoc ||int|send|event
 
@@ -2187,7 +2217,7 @@ to reflect this.
 =cut
 
 int
-Widget::send( int event )
+fltk::Widget::send( int event )
 
 =for apidoc |||add_timeout|time
 
@@ -2205,7 +2235,7 @@ L<C<add_timeout>|/"add_timeout">.
 =cut
 
 void
-Widget::add_timeout( float time )
+fltk::Widget::add_timeout( float time )
     CODE:
         switch ( ix ) {
             case 0: THIS->add_timeout( time );    break;
@@ -2249,16 +2279,16 @@ L<C<type()>|/"type"> set to C<RADIO>.
 =cut
 
 void
-Widget::remove_timeout( )
+fltk::Widget::remove_timeout( )
     CODE:
         switch( ix ) {
             case 0: THIS->remove_timeout( ); break;
-            case 2: THIS->deactivate();      break;
-            case 3: THIS->show();            break;
-            case 4: THIS->hide();            break;
-            case 5: THIS->setonly();         break;
-            case 6: THIS->set_visible();     break;
-            case 7: THIS->clear_visible();   break;
+            case 2: THIS->deactivate( );      break;
+            case 3: THIS->show( );            break;
+            case 4: THIS->hide( );            break;
+            case 5: THIS->setonly( );         break;
+            case 6: THIS->set_visible( );     break;
+            case 7: THIS->clear_visible( );   break;
         }
     ALIAS:
            deactivate = 2
@@ -2278,7 +2308,7 @@ non-dynamic styles the pointer is copied.
 =cut
 
 bool
-Widget::copy_style( Style * s )
+fltk::Widget::copy_style( fltk::Style * s )
 
 
 
@@ -2307,7 +2337,7 @@ Widget::copy_style( Style * s )
 
 
 void
-Widget::layout ( )
+fltk::Widget::layout ( )
 
 
  # TODO: Make this look more like the C++ version
@@ -2315,7 +2345,7 @@ Widget::layout ( )
  # Widget::default_callback ( WIDGET, CODE )
  #     Widget * WIDGET
  #     CODE:
- #         AV *arr = newAV();
+ #         AV *arr = newAV( );
  #         av_store(arr, 0, newSVsv((SV*)ST(1))); // coderef
  #         av_store(arr, 1, newSVsv((SV*)ST(0))); // widget
  #         for (int i = 2; i < items; i++) {
@@ -2407,7 +2437,7 @@ Widget::layout ( )
  # From fltk::Rectangle
 
 int
-Widget::x ( int x = NO_INIT )
+fltk::Widget::x ( int x = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->x( );
@@ -2421,7 +2451,7 @@ Widget::x ( int x = NO_INIT )
             RETVAL
 
 int
-Widget::y ( int y = NO_INIT )
+fltk::Widget::y ( int y = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->y( );
@@ -2435,7 +2465,7 @@ Widget::y ( int y = NO_INIT )
             RETVAL
 
 int
-Widget::w ( int w = NO_INIT )
+fltk::Widget::w ( int w = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->w( );
@@ -2449,7 +2479,7 @@ Widget::w ( int w = NO_INIT )
             RETVAL
 
 int
-Widget::h ( int h = NO_INIT )
+fltk::Widget::h ( int h = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->h( );
@@ -2463,21 +2493,21 @@ Widget::h ( int h = NO_INIT )
             RETVAL
 
 int
-Widget::r ( ... )
+fltk::Widget::r ( ... )
     CODE:
         RETVAL = THIS->r( );
     OUTPUT:
         RETVAL
 
 int
-Widget::b ( ... )
+fltk::Widget::b ( ... )
     CODE:
         RETVAL = THIS->b( );
     OUTPUT:
         RETVAL
 
 bool
-Widget::set_x ( int v )
+fltk::Widget::set_x ( int v )
     CODE:
         THIS->set_x( v );
         RETVAL = THIS->x( ) == v ? true : false;
@@ -2485,7 +2515,7 @@ Widget::set_x ( int v )
         RETVAL
 
 bool
-Widget::set_y ( int v )
+fltk::Widget::set_y ( int v )
     CODE:
         THIS->set_y( v );
         RETVAL = THIS->y( ) == v ? true : false;
@@ -2493,7 +2523,7 @@ Widget::set_y ( int v )
         RETVAL
 
 bool
-Widget::set_r ( int v )
+fltk::Widget::set_r ( int v )
     CODE:
         THIS->set_r( v );
         RETVAL = THIS->r( ) == v ? true : false;
@@ -2501,7 +2531,7 @@ Widget::set_r ( int v )
         RETVAL
 
 bool
-Widget::set_b ( int v )
+fltk::Widget::set_b ( int v )
     CODE:
         THIS->set_b( v );
         RETVAL = THIS->b( ) == v ? true : false;
@@ -2522,7 +2552,7 @@ Widget::set_b ( int v )
 
 
 bool
-Widget::move_x ( int v )
+fltk::Widget::move_x ( int v )
     CODE:
         int pre_x = THIS->x( );
         THIS->move_x( v );
@@ -2531,7 +2561,7 @@ Widget::move_x ( int v )
         RETVAL
 
 bool
-Widget::move_y ( int v )
+fltk::Widget::move_y ( int v )
     CODE:
         int pre_y = THIS->y( );
         THIS->move_y( v );
@@ -2540,7 +2570,7 @@ Widget::move_y ( int v )
         RETVAL
 
 bool
-Widget::move_r ( int v )
+fltk::Widget::move_r ( int v )
     CODE:
         int pre_r = THIS->r( );
         THIS->move_r( v );
@@ -2549,7 +2579,7 @@ Widget::move_r ( int v )
         RETVAL
 
 bool
-Widget::move_b ( int v )
+fltk::Widget::move_b ( int v )
     CODE:
         int pre_b = THIS->b( );
         THIS->move_b( v );
@@ -2558,7 +2588,7 @@ Widget::move_b ( int v )
         RETVAL
 
 bool
-Widget::inset ( int v )
+fltk::Widget::inset ( int v )
     CODE:
         int pre_w = THIS->w( );
         int pre_h = THIS->h( );
@@ -2571,7 +2601,7 @@ Widget::inset ( int v )
         RETVAL
 
 bool
-Widget::move ( int dx, int dy )
+fltk::Widget::move ( int dx, int dy )
     CODE:
         int pre_x = THIS->x( );
         int pre_y = THIS->y( );
@@ -2584,28 +2614,28 @@ Widget::move ( int dx, int dy )
         RETVAL
 
 bool
-Widget::empty ( )
+fltk::Widget::empty ( )
     CODE:
         RETVAL = THIS->empty( );
     OUTPUT:
         RETVAL
 
 bool
-Widget::not_empty ( )
+fltk::Widget::not_empty ( )
     CODE:
         RETVAL = THIS->not_empty( );
     OUTPUT:
         RETVAL
 
 int
-Widget::center_y ( )
+fltk::Widget::center_y ( )
     CODE:
         RETVAL = THIS->center_y( );
     OUTPUT:
         RETVAL
 
 int
-Widget::baseline_y ( )
+fltk::Widget::baseline_y ( )
     CODE:
         RETVAL = THIS->baseline_y( );
     OUTPUT:

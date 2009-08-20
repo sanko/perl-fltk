@@ -16,6 +16,8 @@ MODULE = FLTK               PACKAGE = FLTK::FileIcon
 
 
 
+=begin apidoc
+
 =cut
 
 #include <fltk/FileIcon.h>
@@ -26,8 +28,8 @@ Create a new file icon.
 
 =cut
 
-FileIcon *
-FileIcon::new( char * pattern, int type, int ndata = 0 )
+fltk::FileIcon *
+fltk::FileIcon::new( char * pattern, int type, int ndata = 0 )
 
 BOOT:
     isa("FLTK::FileIcon", "FLTK::Symbol");

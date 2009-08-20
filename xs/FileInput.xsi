@@ -16,6 +16,8 @@ MODULE = FLTK               PACKAGE = FLTK::FileInput
 
 
 
+=begin apidoc
+
 =cut
 
 #include <fltk/FileInput.h>
@@ -29,10 +31,10 @@ Creates a new C<FLTK::FileInput> object.
 #include "include/WidgetSubclass.h"
 
 void
-FileInput::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FileInput::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<FileInput>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::FileInput>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -46,7 +48,7 @@ Draw directory buttons.
 =cut
 
 void
-FileInput::draw_boxes( bool pressed, fltk::Rectangle * rect )
+fltk::FileInput::draw_boxes( bool pressed, fltk::Rectangle * rect )
     C_ARGS: pressed, * rect
 
 =for apidoc ||FLTK::Color|errorcolor||
@@ -59,8 +61,8 @@ FileInput::draw_boxes( bool pressed, fltk::Rectangle * rect )
 
 =cut
 
-Color
-FileInput::errorcolor( Color color )
+fltk::Color
+fltk::FileInput::errorcolor( fltk::Color color )
     CASE: items == 1
         CODE:
             RETVAL = THIS->errorcolor( );
@@ -77,7 +79,7 @@ Set the string stored in the widget.
 =cut
 
 const char *
-FileInput::text( char * string = NO_INIT, int length = strlen( string ) )
+fltk::FileInput::text( char * string = NO_INIT, int length = strlen( string ) )
     CASE: items == 1
         CODE:
             RETVAL = THIS->text( );

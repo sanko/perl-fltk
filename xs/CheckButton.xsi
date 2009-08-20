@@ -25,6 +25,8 @@ L<C<selection_color()>|FLTK::Widget/"selection_color"> and
 L<C<selection_textcolor()>|FLTK::Widget/"selection_textcolor"> on the widget
 (these are ignored if set in an inherited L<C<style()>|/"style">).
 
+=begin apidoc
+
 =cut
 
 #include <fltk/CheckButton.h>
@@ -38,10 +40,10 @@ Creates a new C<FLTK::CheckButton> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-FLTK::CheckButton::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::CheckButton::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<CheckButton>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::CheckButton>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -54,8 +56,8 @@ NFI
 
 =cut
 
-NamedStyle *
-CheckButton::default_style ( )
+fltk::NamedStyle *
+fltk::CheckButton::default_style ( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:

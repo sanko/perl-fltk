@@ -39,9 +39,11 @@ control which item has the keyboard focus in a multi-browser. You must use the
 
 =item L<C<select()>|FLTK::Browser/"select">
 
-=item L<C<selected()>>|FLTK::Browser/"selected">
+=item L<C<selected()>|FLTK::Browser/"selected">
 
 =back
+
+=begin apidoc
 
 =cut
 
@@ -53,24 +55,18 @@ control which item has the keyboard focus in a multi-browser. You must use the
 
 =cut
 
-MultiBrowser *
-MultiBrowser::new( int x, int y, int w, int h, char * label = 0 )
-    C_ARGS: x, y, w, h, (const char *) label
+#include "include/WidgetSubclass.h"
 
-#if ALLOW_DESTROY
-
-bool
-MultiBrowser::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, MultiBrowser" );
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif
+void
+fltk::MultiBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::MultiBrowser>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 BOOT:
     isa("FLTK::MultiBrowser", "FLTK::Browser");

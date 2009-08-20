@@ -18,6 +18,8 @@ Implementation of L<C<FLTK::message()>|/"message">,
 L<C<FLTK::ask(...)>|/"ask">, L<C<FLTK::choice(...)>|/"choice">,
 L<C<FLTK::input()>|/"input">.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/ask.h>
@@ -143,8 +145,8 @@ choice( char * question, char * answer_1, char * answer_2, char * answer_3)
     CODE:
         int a;
         switch ( ix ) {
-            case 0: a = choice(question, answer_3, answer_2, answer_1); break;
-            case 1: a = choice_alert(question, answer_3, answer_2, answer_1); break;
+            case 0: a = fltk::choice(question, answer_3, answer_2, answer_1); break;
+            case 1: a = fltk::choice_alert(question, answer_3, answer_2, answer_1); break;
         }
         RETVAL = a == 0 ? 2 : a == 2 ? 0 : a;
     OUTPUT:
@@ -182,8 +184,8 @@ const char *
 input( char * label, char * default_value = 0 )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = input( label, default_value ); break;
-            case 1: RETVAL = password( label, default_value ); break;
+            case 0: RETVAL = fltk::input( label, default_value ); break;
+            case 1: RETVAL = fltk::password( label, default_value ); break;
         }
     OUTPUT:
         RETVAL
@@ -207,7 +209,7 @@ Generates a simple beep message.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-beep( int type = BEEP_DEFAULT )
+beep( int type = fltk::BEEP_DEFAULT )
 
 BOOT:
     export_tag("beep", "ask");
@@ -235,7 +237,7 @@ bool
 beep_on_dialog( bool value = NO_INIT )
     CASE: items == 1
         CODE:
-            beep_on_dialog( value );
+            fltk::beep_on_dialog( value );
     CASE:
         C_ARGS:
 
@@ -259,12 +261,12 @@ L<C<textsize()>|FLTK::Style/"textsize"> to make them print differently.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-NamedStyle *
+fltk::NamedStyle *
 icon_style(  )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = icon_style; break;
-            case 1: RETVAL = message_style; break;
+            case 0: RETVAL = fltk::icon_style; break;
+            case 1: RETVAL = fltk::message_style; break;
         }
     OUTPUT:
         RETVAL
@@ -329,20 +331,20 @@ message_window_label ( char * label = NO_INIT )
     CASE: items == 1
         CODE:
             switch( ix ) {
-                case 0: message_window_label = label; break;
-                case 1:                   no = label; break;
-                case 2:                  yes = label; break;
-                case 3:                   ok = label; break;
-                case 4:               cancel = label; break;
+                case 0: fltk::message_window_label = label; break;
+                case 1:                   fltk::no = label; break;
+                case 2:                  fltk::yes = label; break;
+                case 3:                   fltk::ok = label; break;
+                case 4:               fltk::cancel = label; break;
             }
     CASE:
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = message_window_label; break;
-                case 1: RETVAL = no;     break;
-                case 2: RETVAL = yes;    break;
-                case 3: RETVAL = ok;     break;
-                case 4: RETVAL = cancel; break;
+                case 0: RETVAL = fltk::message_window_label; break;
+                case 1: RETVAL = fltk::no;     break;
+                case 2: RETVAL = fltk::yes;    break;
+                case 3: RETVAL = fltk::ok;     break;
+                case 4: RETVAL = fltk::cancel; break;
             }
         OUTPUT:
             RETVAL
@@ -378,10 +380,10 @@ double
 message_window_timeout( double timeout = NO_INIT )
     CASE: items == 1
         CODE:
-            message_window_timeout = timeout;
+            fltk::message_window_timeout = timeout;
     CASE:
         CODE:
-            RETVAL = message_window_timeout;
+            RETVAL = fltk::message_window_timeout;
         OUTPUT:
             RETVAL
 
@@ -408,10 +410,10 @@ bool
 message_window_scrollable( bool scroll = NO_INIT )
     CASE: items == 1
         CODE:
-            message_window_scrollable = scroll;
+            fltk::message_window_scrollable = scroll;
     CASE:
         CODE:
-            RETVAL = message_window_scrollable;
+            RETVAL = fltk::message_window_scrollable;
         OUTPUT:
             RETVAL
 

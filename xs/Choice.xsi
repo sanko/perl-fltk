@@ -45,6 +45,8 @@ If you want a "real" ComboBox where the user edits the text, this is a planned
 addition to the L<FLTK::Input> widget. All text input will have menus of
 possible replacements and completions. Not yet implemented, unfortunately.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Choice.h>
@@ -57,44 +59,19 @@ list of items.
 
 =cut
 
-Choice *
-Choice::new(int x, int y, int w, int h, char * label = 0)
 
-#ifdef ENABLE_DESTROY
+#include "include/WidgetSubclass.h"
 
-bool
-Choice::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Choice (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=for apidoc ||int|handle|event|rectangle
-
-
-
-=cut
-
-int
-Choice::handle( int event, fltk::Rectangle * rectangle )
-    CASE: items == 2
-        C_ARGS: event
-    CASE: items == 3
-        C_ARGS: event, (const fltk::Rectangle) * rectangle
-
-#endif // #ifndef DISABLE_HANDLE
+void
+fltk::Choice::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::Choice>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc ||FLTK::NamedStyle|default_style|
 
@@ -102,8 +79,8 @@ NFI
 
 =cut
 
-NamedStyle *
-Choice::default_style ( )
+fltk::NamedStyle *
+fltk::Choice::default_style ( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:

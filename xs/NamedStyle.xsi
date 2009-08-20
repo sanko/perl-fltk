@@ -28,23 +28,22 @@ fields even though C++ does not allow a structure constant. It is also used to
 undo theme changes when L<C<FLTK::reset_theme()>|FLTK/"reset_theme"> is
 called.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Style.h>
 
-#ifdef ENABLE_DESTROY
+=for apidoc |||destroy|
 
-bool
-NamedStyle::DESTROY ( )
+Destroy the L<NamedStyle|FLTK::NamedStyle>.
+
+=cut
+
+void
+fltk::NamedStyle::destroy( )
     CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, NamedStyle" );
-#endif // #if VERBOSE >= 2
         delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+        sv_setsv(ST(0), &PL_sv_undef);
 
 #endif // ifndef DISABLE_NAMEDSTYLE

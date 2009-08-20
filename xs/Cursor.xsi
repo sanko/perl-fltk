@@ -82,6 +82,8 @@ invisible
 
 =back
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Cursor.h>
@@ -94,46 +96,29 @@ invisible
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Cursor *
-cursor( Image * image, int x, int y )
-
-MODULE = FLTK               PACKAGE = FLTK::Cursor
-
-#ifdef ENABLE_DESTROY
-
-bool
-Cursor::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, Cursor" );
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+fltk::Cursor *
+cursor( fltk::Image * image, int x, int y )
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Cursor *
+fltk::Cursor *
 CURSOR_DEFAULT( )
     CODE:
         switch( ix ) {
-            case  0: RETVAL = CURSOR_DEFAULT; break;
-            case  1: RETVAL = CURSOR_ARROW;   break;
-            case  2: RETVAL = CURSOR_CROSS;   break;
-            case  3: RETVAL = CURSOR_WAIT;    break;
-            case  4: RETVAL = CURSOR_INSERT;  break;
-            case  5: RETVAL = CURSOR_HAND;    break;
-            case  6: RETVAL = CURSOR_HELP;    break;
-            case  7: RETVAL = CURSOR_MOVE;    break;
-            case  8: RETVAL = CURSOR_NS;      break;
-            case  9: RETVAL = CURSOR_WE;      break;
-            case 10: RETVAL = CURSOR_NWSE;    break;
-            case 11: RETVAL = CURSOR_NESW;    break;
-            case 12: RETVAL = CURSOR_NO;      break;
-            case 13: RETVAL = CURSOR_NONE;    break;
+            case  0: RETVAL = fltk::CURSOR_DEFAULT; break;
+            case  1: RETVAL = fltk::CURSOR_ARROW;   break;
+            case  2: RETVAL = fltk::CURSOR_CROSS;   break;
+            case  3: RETVAL = fltk::CURSOR_WAIT;    break;
+            case  4: RETVAL = fltk::CURSOR_INSERT;  break;
+            case  5: RETVAL = fltk::CURSOR_HAND;    break;
+            case  6: RETVAL = fltk::CURSOR_HELP;    break;
+            case  7: RETVAL = fltk::CURSOR_MOVE;    break;
+            case  8: RETVAL = fltk::CURSOR_NS;      break;
+            case  9: RETVAL = fltk::CURSOR_WE;      break;
+            case 10: RETVAL = fltk::CURSOR_NWSE;    break;
+            case 11: RETVAL = fltk::CURSOR_NESW;    break;
+            case 12: RETVAL = fltk::CURSOR_NO;      break;
+            case 13: RETVAL = fltk::CURSOR_NONE;    break;
         }
     OUTPUT:
         RETVAL
@@ -168,7 +153,7 @@ calling this.
 =cut
 
 void
-Widget::cursor ( Cursor * c )
+fltk::Widget::cursor ( fltk::Cursor * c )
 
 MODULE = FLTK               PACKAGE = FLTK::Cursor
 

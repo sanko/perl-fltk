@@ -31,7 +31,7 @@ public:
         _class = cls;
     };
     WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
-                    uchar nbr, bool v, Flags a, uchar dw, uchar dh )
+                    uchar nbr, bool v, fltk::Flags a, uchar dw, uchar dh )
             : X( x, y, w, h, lbl, nbr, v, a, dw, dh ) { // AlignGroup
         _class = cls;
     };
@@ -49,12 +49,21 @@ public:
             : X( name, dx, dy, dw, dh, pattern, down ) { // FrameBox
         _class = cls;
     };
+    WidgetSubclass( char * cls, fltk::Box * box, int x, int y, int w, int h,
+                    const char * lbl )
+            : X( box, x, y, w, h, lbl ) { // InvisibleBox
+        _class = cls;
+    };
     WidgetSubclass ( char * cls, int w, int h, char * label )
             : X( w, h, label ) { // Window
         _class = cls;
     }
     WidgetSubclass( char * cls, int x, int y, int w, int h )
             : X( x, y, w, h ) { // ccCellBox, ccValueBox, ccHueBox
+        _class = cls;
+    };
+    WidgetSubclass( char * cls, char * name, fltk::Box * down )
+            : X( name, down ) { // HighlightBox
         _class = cls;
     };
     WidgetSubclass ( char * cls, char * name )
@@ -116,7 +125,7 @@ public:
         if ( handled != 1 )
             this->X::draw( sr );
     };
-    void draw( fltk::Rectangle * sr, Flags flags, bool slot ) { // fltk::Slider
+    void draw( fltk::Rectangle * sr, fltk::Flags flags, bool slot ) { // fltk::Slider
         int handled = 1; /* safe to assume for now */
         AV * args = newAV();
         SV * sv_rect = sv_newmortal();
@@ -138,8 +147,9 @@ public:
     };
 private:
     char * _class;
+protected:
     int _call_method ( const char * method, AV * args ) {
-        int retval;
+        int retval = 0;
         HV * pkg = gv_stashpv( _class, 0 );
         GV * gv  = gv_fetchmethod_autoload( pkg, method, FALSE );
         if ( !( gv && isGV( gv ) ) )

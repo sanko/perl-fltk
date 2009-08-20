@@ -96,11 +96,7 @@ item like double-click.
 
 =back
 
-Inherits L<FLTK::Menu|FLTK::Menu>.
-
-Inherited by L<FLTK::ComboBrowser|FLTK::ComboBrowser>,
-L<FLTK::FileBrowser|FLTK::FileBrowser>, and
-L<FLTK::MultiBrowser|FLTK::MultiBrowser>.
+=begin apidoc
 
 =cut
 
@@ -121,10 +117,10 @@ Creates a new C<FLTK::Browser> object.
 #include "include/WidgetSubclass.h"
 
 void
-Browser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Browser::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<Browser>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::Browser>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -138,7 +134,7 @@ Browser::new( int x, int y, int w, int h, const char * label = 0 )
 =cut
 
 void
-Browser::layout ( )
+fltk::Browser::layout ( )
 
 =for apidoc ||FLTK::NamedStyle|default_style
 
@@ -146,8 +142,8 @@ Browser::layout ( )
 
 =cut
 
-NamedStyle *
-Browser::default_style( )
+fltk::NamedStyle *
+fltk::Browser::default_style( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:
@@ -184,10 +180,10 @@ IS_MULTI ( )
         NO_COLUMN_SELECTED = 3
     CODE:
         switch ( ix ) {
-            case 0 : RETVAL = Browser::IS_MULTI;           break;
-            case 1 : RETVAL = Browser::NORMAL;             break;
-            case 2 : RETVAL = Browser::MULTI;              break;
-            case 3 : RETVAL = Browser::NO_COLUMN_SELECTED; break;
+            case 0 : RETVAL = fltk::Browser::IS_MULTI;           break;
+            case 1 : RETVAL = fltk::Browser::NORMAL;             break;
+            case 2 : RETVAL = fltk::Browser::MULTI;              break;
+            case 3 : RETVAL = fltk::Browser::NO_COLUMN_SELECTED; break;
         }
     OUTPUT:
         RETVAL
@@ -217,14 +213,14 @@ put them in the top level.
 
 =cut
 
-Browser::linepos
+fltk::Browser::linepos
 NOSCROLL ( )
     CODE:
         switch ( ix ) {
-            case 0 : RETVAL = Browser::NOSCROLL; break;
-            case 1 : RETVAL = Browser::TOP;      break;
-            case 2 : RETVAL = Browser::MIDDLE;   break;
-            case 3 : RETVAL = Browser::BOTTOM;   break;
+            case 0 : RETVAL = fltk::Browser::NOSCROLL; break;
+            case 1 : RETVAL = fltk::Browser::TOP;      break;
+            case 2 : RETVAL = fltk::Browser::MIDDLE;   break;
+            case 3 : RETVAL = fltk::Browser::BOTTOM;   break;
         }
     OUTPUT:
         RETVAL
@@ -266,7 +262,7 @@ before this is correct.
 =cut
 
 int
-Browser::width( )
+fltk::Browser::width( )
     CODE:
         switch( ix ) {
             case 0: RETVAL =      THIS->width(); break;
@@ -300,7 +296,7 @@ the first item is visible. Positive numbers scroll the display up.
 =cut
 
 int
-Browser::xposition( int x = NO_INIT )
+fltk::Browser::xposition( int x = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
@@ -333,7 +329,7 @@ false.
 =cut
 
 bool
-Browser::indented( bool value = NO_INIT )
+fltk::Browser::indented( bool value = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->indented( );
@@ -353,8 +349,8 @@ Browser::indented( bool value = NO_INIT )
 
 =cut
 
-Scrollbar *
-Browser::scrollbar ( )
+fltk::Scrollbar *
+fltk::Browser::scrollbar ( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = &(THIS->scrollbar);  break;
@@ -410,8 +406,8 @@ C<undef> if we are at the top.
 
 =cut
 
-Widget *
-Browser::goto_top( )
+fltk::Widget *
+fltk::Browser::goto_top( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->goto_top(); break;
@@ -435,8 +431,8 @@ C<Y> pixels from the top.
 
 =cut
 
-Widget *
-Browser::goto_position( int Y )
+fltk::Widget *
+fltk::Browser::goto_position( int Y )
     CODE:
         THIS->goto_position( Y );
     OUTPUT:
@@ -466,8 +462,8 @@ levels should be looked at.
 
 =cut
 
-Widget *
-Browser::goto_index( int index, int level = NO_INIT, int deep = -1, int deeper = -1, int deepest = -1 )
+fltk::Widget *
+fltk::Browser::goto_index( int index, int level = NO_INIT, int deep = -1, int deeper = -1, int deepest = -1 )
     CASE: items == 2
         CODE:
             RETVAL = THIS->goto_index( index );
@@ -490,8 +486,8 @@ Set current item to a particular mark.
 
 =cut
 
-Widget *
-Browser::goto_mark( Browser::Mark * mark )
+fltk::Widget *
+fltk::Browser::goto_mark( fltk::Browser::Mark * mark )
     CODE:
         RETVAL = THIS->goto_mark( * mark );
     OUTPUT:
@@ -502,7 +498,7 @@ Browser::goto_mark( Browser::Mark * mark )
 =cut
 
 bool
-Browser::at_mark ( Browser::Mark * mark )
+fltk::Browser::at_mark ( fltk::Browser::Mark * mark )
     CODE:
         RETVAL = THIS->at_mark( * mark );
     OUTPUT:
@@ -513,7 +509,7 @@ Browser::at_mark ( Browser::Mark * mark )
 =cut
 
 int
-Browser::compare_to_mark( Browser::Mark * mark )
+fltk::Browser::compare_to_mark( fltk::Browser::Mark * mark )
     CODE:
         RETVAL = THIS->compare_to_mark( * mark );
     OUTPUT:
@@ -545,7 +541,7 @@ L<C<make_item_visible()>|/"make_item_visible">.
 =cut
 
 bool
-Browser::item_is_visible()
+fltk::Browser::item_is_visible()
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->item_is_visible(); break;
@@ -567,7 +563,7 @@ The item height.
 =cut
 
 int
-Browser::item_h( )
+fltk::Browser::item_h( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->item_h(); break;
@@ -587,7 +583,7 @@ Browser::item_h( )
 =cut
 
 void
-Browser::set_mark( Browser::Mark * destination )
+fltk::Browser::set_mark( fltk::Browser::Mark * destination )
     CODE:
         switch ( ix ) {
             case 0: THIS->set_mark( * destination ); break;
@@ -614,9 +610,9 @@ Note: This is an FLTK 1.0 emulation method.
 =cut
 
 bool
-Browser::select( item, value, int do_callback = 0 )
+fltk::Browser::select( item, value, int do_callback = 0 )
     CASE: sv_isobject(ST(1)) /* Hopefully, it's FLTK::Widget based */
-        Widget * item;
+        fltk::Widget * item;
         int value;
         CODE:
             RETVAL = THIS->select( item, value, do_callback );
@@ -642,7 +638,7 @@ callback is done for each item that changes selected state.
 =cut
 
 bool
-Browser::set_item_selected( bool value = true, int do_callback = 0 )
+fltk::Browser::set_item_selected( bool value = true, int do_callback = 0 )
 
 =for apidoc ||bool|select_only_this|do_callback
 
@@ -671,7 +667,7 @@ callback is done for each item that changes selected state.
 =cut
 
 bool
-Browser::select_only_this( int do_callback = 0 )
+fltk::Browser::select_only_this( int do_callback = 0 )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->select_only_this( do_callback ); break;
@@ -708,7 +704,7 @@ This does nothing if the current item is C<undef>.
 =cut
 
 bool
-Browser::make_item_visible( Browser::linepos where )
+fltk::Browser::make_item_visible( fltk::Browser::linepos where )
 
 =for apidoc |||damage_item|mark
 
@@ -723,7 +719,7 @@ it will blink a lot less.
 =cut
 
 void
-Browser::damage_item ( Browser::Mark *  mark = NO_INIT )
+fltk::Browser::damage_item ( fltk::Browser::Mark * mark = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->damage_item( );
@@ -747,7 +743,7 @@ actually changed, returns C<false> if it was already in that state.
 =cut
 
 bool
-Browser::set_item_opened ( bool value )
+fltk::Browser::set_item_opened ( bool value )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->set_item_opened( value );
@@ -785,7 +781,7 @@ Returns the currently selected column.
 =cut
 
 int
-Browser::current_level ( )
+fltk::Browser::current_level ( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->current_level( );    break;
@@ -817,7 +813,7 @@ which child at each level includes the focus.
 =cut
 
 AV *
-Browser::current_index ( )
+fltk::Browser::current_index ( )
     CODE:
         RETVAL = newAV( );
         sv_2mortal((SV*)RETVAL);
@@ -880,7 +876,7 @@ but total width is kept always.
 =cut
 
 AV *
-Browser::column_widths ( int col1 = NO_INIT, ... )
+fltk::Browser::column_widths ( int col1 = NO_INIT, ... )
     CASE: items == 1
         CODE:
             RETVAL = newAV( );
@@ -915,7 +911,7 @@ find the settings from their L<C<draw()>|/"draw"> methods.
 =cut
 
 AV*
-Browser::column_labels ( char * col1 = NO_INIT, ... )
+fltk::Browser::column_labels ( char * col1 = NO_INIT, ... )
     CASE: items == 1
         CODE:
             RETVAL = newAV( );
@@ -942,7 +938,7 @@ Browser::column_labels ( char * col1 = NO_INIT, ... )
 =cut
 
 int
-Browser::set_column_start ( int column, int x )
+fltk::Browser::set_column_start ( int column, int x )
 
 =for apidoc ||FLTK::Widget|header|column
 
@@ -951,8 +947,8 @@ C<column>'th column is invalid, C<undef> is returned.
 
 =cut
 
-Widget *
-Browser::header( int col )
+fltk::Widget *
+fltk::Browser::header( int col )
 
 =for apidoc |||value|val
 
@@ -967,7 +963,7 @@ browser.
 =cut
 
 int
-Browser::value( int val = NO_INIT )
+fltk::Browser::value( int val = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->value( );
@@ -988,7 +984,7 @@ Note: This is an FLTK 1.0 emulation method.
 =cut
 
 bool
-Browser::selected( int line )
+fltk::Browser::selected( int line )
 
 =for apidoc ||int|topline|
 
@@ -1003,7 +999,7 @@ visible and scroll to put it at the top of the browser.
 =cut
 
 int
-Browser::topline( int line = NO_INIT )
+fltk::Browser::topline( int line = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->topline( );
@@ -1028,7 +1024,7 @@ L<C<make_item_visible()>|/"make_item_visible">.
 =cut
 
 void
-Browser::bottomline ( int line )
+fltk::Browser::bottomline ( int line )
     CODE:
         switch( ix ) {
             case 0: THIS->bottomline ( line ); break;
@@ -1045,7 +1041,7 @@ visible and scroll to put it at the bottom of the browser.
 =cut
 
 bool
-Browser::displayed( int line )
+fltk::Browser::displayed( int line )
 
 =for apidoc ||bool|display|line|value = true
 
@@ -1056,7 +1052,7 @@ user.
 =cut
 
 bool
-Browser::display( int line, bool value = true )
+fltk::Browser::display( int line, bool value = true )
 
 =for apidoc ||bool|display_lines|
 
@@ -1072,7 +1068,7 @@ want lines of the tree to be displayed.
 =cut
 
 bool
-Browser::display_lines ( bool display = NO_INIT )
+fltk::Browser::display_lines ( bool display = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->display_lines( );
@@ -1089,7 +1085,7 @@ Browser::display_lines ( bool display = NO_INIT )
 =cut
 
 int
-Browser::load( char * filename )
+fltk::Browser::load( char * filename )
 
 =for apidoc ||int|multi|
 
@@ -1098,7 +1094,7 @@ Browser::load( char * filename )
 =cut
 
 int
-Browser::multi( )
+fltk::Browser::multi( )
 
 =for apidoc ||FLTK::Symbol|leaf_symbol|
 
@@ -1126,13 +1122,13 @@ one is used for it.
 
 =cut
 
-Symbol *
-Browser::leaf_symbol( Symbol * symbol = NO_INIT )
+fltk::Symbol *
+fltk::Browser::leaf_symbol( fltk::Symbol * symbol = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = (Symbol *) THIS->leaf_symbol( );  break;
-                case 1: RETVAL = (Symbol *) THIS->group_symbol( ); break;
+                case 0: RETVAL = (fltk::Symbol *) THIS->leaf_symbol( );  break;
+                case 1: RETVAL = (fltk::Symbol *) THIS->group_symbol( ); break;
             }
         OUTPUT:
             RETVAL
@@ -1182,16 +1178,16 @@ MODULE = FLTK               PACKAGE = FLTK::Browser::Mark
 
 =cut
 
-Browser::Mark *
-Browser::Mark::new( Browser::Mark * mark = NO_INIT )
+fltk::Browser::Mark *
+fltk::Browser::Mark::new( fltk::Browser::Mark * mark = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = new Browser::Mark;
+            RETVAL = new fltk::Browser::Mark;
         OUTPUT:
             RETVAL
     CASE:
         CODE:
-            RETVAL = new Browser::Mark( * mark );
+            RETVAL = new fltk::Browser::Mark( * mark );
         OUTPUT:
             RETVAL
 
@@ -1202,7 +1198,7 @@ Destroy the mark.
 =cut
 
 void
-Browser::Mark::destroy( )
+fltk::Browser::Mark::destroy( )
     CODE:
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
@@ -1226,7 +1222,7 @@ Browser::Mark::destroy( )
 =cut
 
 int
-Browser::Mark::compare( Browser::Mark * mark2 )
+fltk::Browser::Mark::compare( fltk::Browser::Mark * mark2 )
     C_ARGS: * mark2
 
 =for apidoc |||unset|
@@ -1236,7 +1232,7 @@ Browser::Mark::compare( Browser::Mark * mark2 )
 =cut
 
 void
-Browser::Mark::unset( )
+fltk::Browser::Mark::unset( )
 
 =for apidoc ||bool|is_set|
 
@@ -1245,6 +1241,6 @@ Browser::Mark::unset( )
 =cut
 
 bool
-Browser::Mark::is_set( )
+fltk::Browser::Mark::is_set( )
 
 #endif // ifndef DISABLE_BROWSER_MARK

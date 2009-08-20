@@ -14,6 +14,10 @@ MODULE = FLTK               PACKAGE = FLTK::gl
 
 =head1 Description
 
+
+
+=begin apidoc
+
 =cut
 
 #include <fltk/gl.h>
@@ -47,7 +51,7 @@ MODULE = FLTK               PACKAGE = FLTK::gl
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-glsetcolor( Color color )
+glsetcolor( fltk::Color color )
 
 MODULE = FLTK               PACKAGE = FLTK::gl
 
@@ -80,7 +84,7 @@ MODULE = FLTK               PACKAGE = FLTK::gl
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-glsetfont( Font* f, float size )
+glsetfont( fltk::Font * f, float size )
 
 MODULE = FLTK               PACKAGE = FLTK::gl
 

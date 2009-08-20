@@ -68,6 +68,7 @@ xs/HelpView.xsi
 xs/HighlightButton.xsi
 xs/Image.xsi
 xs/include/GlWindowSubclass.h
+xs/include/HelpViewSubclass.h
 xs/include/WidgetSubclass.h
 xs/Input.xsi
 xs/InputBrowser.xsi

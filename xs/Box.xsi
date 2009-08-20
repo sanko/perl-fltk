@@ -28,7 +28,7 @@ widget by making one of these
 =cut
 
 void
-Box::_draw( fltk::Rectangle * rect )
+fltk::Box::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
 =for apidoc t[box]|||drawframe|s|x|y|w|h
@@ -57,11 +57,15 @@ void
 drawframe( char * s, int x, int y, int w, int h )
     CODE:
         switch( ix ) {
-            case 0:  drawframe( s, x, y, w, h ); break;
-            case 1: drawframe2( s, x, y, w, h ); break;
+            case 0:  fltk::drawframe( s, x, y, w, h ); break;
+            case 1: fltk::drawframe2( s, x, y, w, h ); break;
         }
     ALIAS:
         drawframe2 = 1
+
+BOOT:
+    export_tag("drawframe", "box");
+    export_tag("drawframe2", "box");
 
 MODULE = FLTK               PACKAGE = FLTK::Box
 
@@ -119,21 +123,21 @@ mouse pointer points at it or the value of the widget is turned on.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Box *
+fltk::Box *
 DOWN_BOX( )
     CODE:
         switch ( ix ) {
-            case  0: RETVAL =           DOWN_BOX; break;
-            case  1: RETVAL =           FLAT_BOX; break;
-            case  2: RETVAL =             NO_BOX; break;
-            case  3: RETVAL =             UP_BOX; break;
-            case  4: RETVAL =      THIN_DOWN_BOX; break;
-            case  5: RETVAL =        THIN_UP_BOX; break;
-            case  6: RETVAL =       ENGRAVED_BOX; break;
-            case  7: RETVAL =       EMBOSSED_BOX; break;
-            case  8: RETVAL =         BORDER_BOX; break;
-            case  9: RETVAL =   HIGHLIGHT_UP_BOX; break;
-            case 10: RETVAL = HIGHLIGHT_DOWN_BOX; break;
+            case  0: RETVAL =           fltk::DOWN_BOX; break;
+            case  1: RETVAL =           fltk::FLAT_BOX; break;
+            case  2: RETVAL =             fltk::NO_BOX; break;
+            case  3: RETVAL =             fltk::UP_BOX; break;
+            case  4: RETVAL =      fltk::THIN_DOWN_BOX; break;
+            case  5: RETVAL =        fltk::THIN_UP_BOX; break;
+            case  6: RETVAL =       fltk::ENGRAVED_BOX; break;
+            case  7: RETVAL =       fltk::EMBOSSED_BOX; break;
+            case  8: RETVAL =         fltk::BORDER_BOX; break;
+            case  9: RETVAL =   fltk::HIGHLIGHT_UP_BOX; break;
+            case 10: RETVAL = fltk::HIGHLIGHT_DOWN_BOX; break;
         }
     OUTPUT:
         RETVAL
@@ -204,10 +208,10 @@ L<C<inset()>|/"inset">.
 #include "include/WidgetSubclass.h"
 
 void
-FrameBox::new( char * name, int dx, int dy, int dw, int dh, char * pattern, Box * down = 0  )
+fltk::FrameBox::new( char * name, int dx, int dy, int dw, int dh, char * pattern, fltk::Box * down = 0  )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<FrameBox>(CLASS,name,dx,dy,dw,dh,pattern,down);
+        RETVAL = (void *) new WidgetSubclass<fltk::FrameBox>(CLASS,name,dx,dy,dw,dh,pattern,down);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -225,7 +229,7 @@ FrameBox::new( char * name, int dx, int dy, int dw, int dh, char * pattern, Box 
 =cut
 
 const char *
-FrameBox::data( char * string = NO_INIT )
+fltk::FrameBox::data( char * string = NO_INIT )
     CASE: ! items
         C_ARGS:
     CASE:
@@ -240,7 +244,7 @@ FrameBox::data( char * string = NO_INIT )
 =cut
 
 void
-FrameBox::_draw( fltk::Rectangle * rect )
+fltk::FrameBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
 =for apidoc |||inset|rect
@@ -250,7 +254,7 @@ FrameBox::_draw( fltk::Rectangle * rect )
 =cut
 
 void
-FrameBox::inset( fltk::Rectangle * rect )
+fltk::FrameBox::inset( fltk::Rectangle * rect )
     C_ARGS: * rect
 
 =for apidoc ||bool|fills_rectangle|
@@ -264,7 +268,7 @@ FrameBox::inset( fltk::Rectangle * rect )
 =cut
 
 bool
-FrameBox::fills_rectangle(  )
+fltk::FrameBox::fills_rectangle(  )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->fills_rectangle( ); break;
@@ -280,13 +284,9 @@ BOOT:
 
 #endif // #ifndef DISABLE_FRAMEBOX
 
-
-
-
 #ifndef DISABLE_FLATBOX
 
 MODULE = FLTK               PACKAGE = FLTK::FlatBox
-
 
 =pod
 
@@ -316,10 +316,10 @@ Creates a new C<FLTK::FlatBox> object.
 #include "include/WidgetSubclass.h"
 
 void
-FlatBox::new( char * name )
+fltk::FlatBox::new( char * name )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<FlatBox>(CLASS,name);
+        RETVAL = (void *) new WidgetSubclass<fltk::FlatBox>(CLASS,name);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -333,7 +333,7 @@ FlatBox::new( char * name )
 =cut
 
 void
-FlatBox::_draw( fltk::Rectangle * rect )
+fltk::FlatBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
 =for apidoc ||bool|fills_rectangle|
@@ -347,7 +347,7 @@ FlatBox::_draw( fltk::Rectangle * rect )
 =cut
 
 bool
-FlatBox::fills_rectangle(  )
+fltk::FlatBox::fills_rectangle(  )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->fills_rectangle( ); break;
@@ -395,23 +395,16 @@ Creates a new C<FLTK::HighlightBox> object.
 
 =cut
 
-HighlightBox *
-HighlightBox::new ( char * name, Box * d )
-
-#ifdef ENABLE_DESTROY
-
-bool
-HighlightBox::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, HighlightBox" );
-#endif
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // ENABLE_DESTROY
+void
+fltk::HighlightBox::new( char * name, fltk::Box * down )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::HighlightBox>(CLASS,name,down);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||_draw|rect
 
@@ -420,7 +413,7 @@ HighlightBox::DESTROY ( )
 =cut
 
 void
-HighlightBox::_draw( fltk::Rectangle * rect )
+fltk::HighlightBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
 =for apidoc ||bool|fills_rectangle|
@@ -434,7 +427,7 @@ HighlightBox::_draw( fltk::Rectangle * rect )
 =cut
 
 bool
-HighlightBox::fills_rectangle(  )
+fltk::HighlightBox::fills_rectangle(  )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->fills_rectangle( ); break;

@@ -104,7 +104,7 @@ Creates a new C<FLTK::Input> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-Input::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Input::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Input>(CLASS,x,y,w,h,label);
@@ -265,7 +265,7 @@ many bytes are in the string.
 =cut
 
 SV *
-Input::text( char * string = NO_INIT, int length = NO_INIT )
+fltk::Input::text( char * string = NO_INIT, int length = NO_INIT )
     CASE: items == 1
         CODE:
             ST( 0 ) = newSVpv( (char *) THIS->text( ), 0 );
@@ -305,7 +305,7 @@ L<C<$input-E<gt>static_text($string, $string ? length($string) : 0)>|/"static_te
 =cut
 
 bool
-Input::static_text( char * string, int length = NO_INIT )
+fltk::Input::static_text( char * string, int length = NO_INIT )
     CASE: items == 2
         C_ARGS: string
     CASE: items == 3
@@ -331,13 +331,13 @@ L<C<text()>|/"text"> with a longer one later.
 =cut
 
 char
-Input::at( int index )
+fltk::Input::at( int index )
 
 int
-Input::size( )
+fltk::Input::size( )
 
 void
-Input::reserve( int newsize )
+fltk::Input::reserve( int newsize )
 
 =for apidoc ||int|position|||
 
@@ -364,7 +364,7 @@ of UTF-8 characters!
 =cut
 
 int
-Input::position( int new_position = NO_INIT, int new_mark = NO_INIT )
+fltk::Input::position( int new_position = NO_INIT, int new_mark = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -387,7 +387,7 @@ Same as L<C<$inputE<gt>position($input-E<gt>position(),$index)>|/"position">.
 =cut
 
 int
-Input::mark( int new_mark = NO_INIT )
+fltk::Input::mark( int new_mark = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -405,7 +405,7 @@ arrows repeatedly will cause the point to move up and down.
 =cut
 
 void
-Input::up_down_position( int position, bool keepmark )
+fltk::Input::up_down_position( int position, bool keepmark )
 
 =for apidoc ||bool|replace|begin|end|text|length
 
@@ -422,7 +422,7 @@ outside the length of the string.
 =cut
 
 bool
-Input::replace( int begin, int end, char * text, int length = strlen( text ) )
+fltk::Input::replace( int begin, int end, char * text, int length = strlen( text ) )
 
 =for apidoc ||bool|cut|||
 
@@ -444,7 +444,7 @@ C<end> can be less than C<begin>.
 =cut
 
 bool
-Input::cut( int begin = NO_INIT, int end = NO_INIT )
+fltk::Input::cut( int begin = NO_INIT, int end = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -466,7 +466,7 @@ point after it.
 =cut
 
 bool
-Input::insert( char * text, int length = strlen( text ) )
+fltk::Input::insert( char * text, int length = strlen( text ) )
     CASE: items == 2
         C_ARGS: text
     CASE: items == 3
@@ -491,7 +491,7 @@ the widget a C<PASTE> event with the text, which will cause it to be inserted.
 =cut
 
 bool
-Input::copy( bool to_clipboard = true )
+fltk::Input::copy( bool to_clipboard = true )
 
 =for apidoc ||bool|undo|||
 
@@ -504,7 +504,7 @@ any change was made.
 =cut
 
 bool
-Input::undo( )
+fltk::Input::undo( )
 
 =for apidoc ||index|word_start|position|
 
@@ -526,16 +526,16 @@ C<position>.
 =cut
 
 int
-Input::word_start( int position )
+fltk::Input::word_start( int position )
 
 int
-Input::word_end( int position )
+fltk::Input::word_end( int position )
 
 int
-Input::line_start( int position )
+fltk::Input::line_start( int position )
 
 int
-Input::line_end( int position )
+fltk::Input::line_end( int position )
 
 =for apidoc ||int|mouse_position|rectangle
 
@@ -547,7 +547,7 @@ first character, and L<C<size()>|/"size"> if it is after the last one.
 =cut
 
 int
-Input::mouse_position( fltk::Rectangle * rectangle )
+fltk::Input::mouse_position( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
 
 =for apidoc ||int|xscroll|||
@@ -559,10 +559,10 @@ Input::mouse_position( fltk::Rectangle * rectangle )
 =cut
 
 int
-Input::xscroll( )
+fltk::Input::xscroll( )
 
 int
-Input::yscroll( )
+fltk::Input::yscroll( )
 
 BOOT:
     isa("FLTK::Input", "FLTK::Widget");

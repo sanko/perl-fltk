@@ -43,6 +43,8 @@ an input field in the same window, the user will have to hold down the C<Alt>
 key so that the input field does not eat the event first as an
 L<C<FLTK::KEY>|FLTK/"KEY"> event.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Button.h>
@@ -56,10 +58,10 @@ Creates a new C<FLTK::Button> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-FLTK::Button::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FLTK::Button::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<Button>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::Button>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -75,7 +77,7 @@ Back-comptability value to hide the button
 int
 HIDDEN ( )
     CODE:
-        RETVAL = Button::HIDDEN;
+        RETVAL = fltk::Button::HIDDEN;
     OUTPUT:
         RETVAL
 
@@ -103,7 +105,7 @@ This is the same as L<Widget::state()|FLTK::Widget/"state">.
 =cut
 
 bool
-Button::value ( bool value = NO_INIT )
+fltk::Button::value ( bool value = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->value( );
@@ -126,7 +128,7 @@ Button::value ( bool value = NO_INIT )
 =cut
 
 int
-Button::handle ( int event, fltk::Rectangle * rectangle = NO_INIT )
+fltk::Button::handle ( int event, fltk::Rectangle * rectangle = NO_INIT )
     CASE: items == 2
         C_ARGS: event
     CASE:
@@ -140,8 +142,8 @@ NFI
 
 =cut
 
-NamedStyle *
-Button::default_style ( )
+fltk::NamedStyle *
+fltk::Button::default_style ( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:

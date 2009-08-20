@@ -74,6 +74,8 @@ There are a number of subclasses such as L<jpgImage|FLTK::jpgImage> and
 L<pngImage|FLTK::pngImage> that display compressed image data, either from
 in-memory data buffers or from files.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Image.h>
@@ -91,15 +93,15 @@ and allows the image to be drawn by putting C<@name;> into a label.
 =cut
 
 void
-Image::new( ... )
+fltk::Image::new( ... )
     INIT:
-        Image * RETVAL = NULL;
+        fltk::Image * RETVAL = NULL;
     PPCODE:
         if ( items == 1 || items == 2 ) {
             char *	name = 0;
             if ( items == 2 )
                 name = (char *) SvPV_nolen( ST( 1 ) );
-            RETVAL = new Image( name ); /* char * name = 0 */
+            RETVAL = new fltk::Image( name ); /* char * name = 0 */
         }
         else if( ( items == 3 || items == 4 ) ) {
             int w = (int) SvIV( ST( 1 ) );
@@ -107,24 +109,24 @@ Image::new( ... )
             char * name = 0;
             if ( items == 4 )
                 name = (char *) SvPV_nolen( ST( 3 ) );
-            RETVAL = new Image( w, h, name ); /* int w, int h, char * name = 0 */
+            RETVAL = new fltk::Image( w, h, name ); /* int w, int h, char * name = 0 */
         }
         else if ( ( items == 4 || items == 5 ) && sv_isobject( ST( 1 ) ) ) {
             if (! sv_derived_from(ST(1), "FLTK::PixelType")) /* -- hand rolled -- */
                 XSRETURN_UNDEF;
-            PixelType p = INT2PTR(PixelType,SvIV((SV*)SvRV(ST(1))));
+            PixelType p = INT2PTR(fltk::PixelType,SvIV((SV*)SvRV(ST(1))));
             int    w    = (int) SvIV( ST( 2 ) );
             int    h    = (int) SvIV( ST( 3 ) );
             char * name = 0;
             if ( items == 5 )
                 name = (char *) SvPV_nolen( ST( 4 ) );
-            RETVAL   = new Image( p, w, h, name ); /* PixelType p, int w, int h, const char* name=0 */
+            RETVAL   = new fltk::Image( p, w, h, name ); /* PixelType p, int w, int h, const char* name=0 */
         }
         else if ( items == 5 ) { /* TODO: untested */
             if (! sv_derived_from(ST( 2 ), "FLTK::PixelType")) /* -- hand rolled -- */
                 XSRETURN_UNDEF;
             uchar *   d = (uchar *) SvPV_nolen( ST( 1 ) );
-            PixelType p = INT2PTR(PixelType,SvIV((SV*)SvRV(ST(2))));
+            PixelType p = INT2PTR(fltk::PixelType,SvIV((SV*)SvRV(ST(2))));
             int       w = (int) SvIV( ST( 3 ) );
             int       h = (int) SvIV( ST( 4 ) );
             RETVAL      = new Image( d, p, w, h ); /* const uchar* d, PixelType p, int w, int h */
@@ -132,12 +134,12 @@ Image::new( ... )
         else if ( items == 6 ) { /* TODO: untested */
             if (! sv_derived_from(ST( 2 ), "FLTK::PixelType")) /* -- hand rolled -- */
                 XSRETURN_UNDEF;
-            uchar *   d         = (uchar *) SvPV_nolen( ST( 1 ) );
-            PixelType p         = INT2PTR(PixelType,SvIV((SV*)SvRV(ST(2))));
-            int       w         = (int) SvIV( ST( 3 ) );
-            int       h         = (int) SvIV( ST( 4 ) );
-            int       linedelta = (int) SvIV( ST( 5 ) );
-            RETVAL              = new Image( d, p, w, h, linedelta ); /* const uchar* d, PixelType p, int w, int h, int linedelta */
+            uchar *         d = (uchar *) SvPV_nolen( ST( 1 ) );
+            fltk::PixelType p = INT2PTR(fltk::PixelType,SvIV((SV*)SvRV(ST(2))));
+            int             w = (int) SvIV( ST( 3 ) );
+            int             h = (int) SvIV( ST( 4 ) );
+            int     linedelta = (int) SvIV( ST( 5 ) );
+            RETVAL            = new fltk::Image( d, p, w, h, linedelta ); /* const uchar* d, PixelType p, int w, int h, int linedelta */
         }
         if ( RETVAL == NULL )
             XSRETURN_UNDEF; /* TODO: They really should be told about their FAIL */
@@ -156,8 +158,8 @@ what that is.
 
 =cut
 
-PixelType
-Image::pixeltype( )
+fltk::PixelType
+fltk::Image::pixeltype( )
 
 =for apidoc ||int|depth|||
 
@@ -186,15 +188,15 @@ Same as L<C<height()>|/"height">.
 =cut
 
 int
-Image::depth( )
+fltk::Image::depth( )
 
 int
-Image::width( )
+fltk::Image::width( )
     ALIAS:
         w = 1
 
 int
-Image::height( )
+fltk::Image::height( )
     ALIAS:
         h = 1
 
@@ -206,7 +208,7 @@ L<Image|FLTK::Image> is destroyed.
 =cut
 
 void
-Image::setpixeltype( PixelType pixeltype )
+fltk::Image::setpixeltype( fltk::PixelType pixeltype )
 
 =for apidoc |||setsize|w|h|
 
@@ -217,7 +219,7 @@ destroyed.
 =cut
 
 void
-Image::setsize( int w, int h )
+fltk::Image::setsize( int w, int h )
 
 =for apidoc |||setpixels|data|rect|linedelta||
 
@@ -239,7 +241,7 @@ sets one entire row of pixels.
 =cut
 
 void
-Image::setpixels( uchar * data, rect, int linedelta = NO_INIT )
+fltk::Image::setpixels( uchar * data, rect, int linedelta = NO_INIT )
     CASE: items == 3 && SvIOK( ST( 2 ) )
         int rect
         C_ARGS: data, rect
@@ -262,7 +264,7 @@ setpixels will detect this and do nothing.
 =cut
 
 char *
-Image::linebuffer( int y )
+fltk::Image::linebuffer( int y )
     CODE:
         RETVAL = (char *) THIS->linebuffer( y ); /* XXX - ParseXS can't cast uchar* as char* ...ugh. */
     OUTPUT:
@@ -288,7 +290,7 @@ Figures out linedelta for you as C<$w * $image-E<gt>depth($p)>.
 =cut
 
 void
-Image::setimage( uchar * source, PixelType pixeltype, int w, int h, int linedelta = NO_INIT )
+fltk::Image::setimage( uchar * source, fltk::PixelType pixeltype, int w, int h, int linedelta = NO_INIT )
     CASE: items == 5
         C_ARGS: source, pixeltype, w, h
     CASE: items == 6
@@ -305,7 +307,7 @@ and write the pixels directly.
 =cut
 
 char *
-Image::buffer( )
+fltk::Image::buffer( )
     CODE:
         RETVAL = (char *) THIS->buffer( ); /* XXX - ParseXS can't cast uchar* as char* ...ugh. */
     OUTPUT:
@@ -320,10 +322,10 @@ It pretty much does this already except for mono.
 =cut
 
 void
-Image::set_forceARGB32( )
+fltk::Image::set_forceARGB32( )
 
 void
-Image::clear_forceARGB32( )
+fltk::Image::clear_forceARGB32( )
 
 =for apidoc ||bool|forceARGB32|||
 
@@ -332,7 +334,7 @@ Image::clear_forceARGB32( )
 =cut
 
 bool
-Image::forceARGB32( )
+fltk::Image::forceARGB32( )
 
 =for apidoc ||FLTK::PixelType|buffer_pixeltype||
 
@@ -342,8 +344,8 @@ C<ARGB32>. On older (non-XRender) X system the types 1 and 2 indicate 1 and
 
 =cut
 
-PixelType
-Image::buffer_pixeltype( )
+fltk::PixelType
+fltk::Image::buffer_pixeltype( )
 
 =for apidoc ||depth|buffer_depth||
 
@@ -365,16 +367,16 @@ Return the distance between each row of pixels in L<C<buffer()>|/"buffer">.
 =cut
 
 int
-Image::buffer_depth( )
+fltk::Image::buffer_depth( )
 
 int
-Image::buffer_width( )
+fltk::Image::buffer_width( )
 
 int
-Image::buffer_height( )
+fltk::Image::buffer_height( )
 
 int
-Image::buffer_linedelta( )
+fltk::Image::buffer_linedelta( )
 
 =for apidoc |||buffer_changed|||
 
@@ -386,7 +388,7 @@ L<C<setpixels()>|/"setpixels"> calls this for you.
 =cut
 
 void
-Image::buffer_changed( )
+fltk::Image::buffer_changed( )
 
 =for apidoc |||destroy|||
 
@@ -395,8 +397,9 @@ Destroys the L<C<buffer()>|/"buffer"> and any related system structures.
 =cut
 
 void
-Image::destroy(  )
-    POSTCALL:
+fltk::Image::destroy( )
+    CODE:
+        delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
 
 =for apidoc |||draw|x|y||
@@ -451,7 +454,7 @@ L<xbmImage|FLTK::xbmImage> does not do any transformations.
 =cut
 
 void
-Image::draw( from, destination = NO_INIT )
+fltk::Image::draw( from, destination = NO_INIT )
     CASE: items == 2
         fltk::Rectangle * from
         C_ARGS: * from
@@ -471,7 +474,7 @@ Returns true if hte pixeltype does not support alpha.
 =cut
 
 bool
-Image::fills_rectangle( )
+fltk::Image::fills_rectangle( )
 
 =for apidoc |||fetch_if_needed||||
 
@@ -481,7 +484,7 @@ L<C<refetch()>|/"refetch"> was called.
 =cut
 
 void
-Image::fetch_if_needed( )
+fltk::Image::fetch_if_needed( )
 
 =for apidoc |||refetch||
 
@@ -491,7 +494,7 @@ image if the file name or contents have changed.
 =cut
 
 void
-Image::refetch( )
+fltk::Image::refetch( )
 
 =for apidoc ||bytes|mem_used||
 
@@ -502,7 +505,7 @@ has not been called.
 =cut
 
 unsigned long
-Image::mem_used( )
+fltk::Image::mem_used( )
 
 =for apidoc ||bytes|total_mem_used||
 
@@ -513,7 +516,7 @@ cached images.
 =cut
 
 unsigned long
-Image::total_mem_used( )
+fltk::Image::total_mem_used( )
 
 =for apidoc |||make_current||
 
@@ -522,9 +525,9 @@ See L<GSave|FLTK::GSave>.
 =cut
 
 void
-Image::make_current( )
+fltk::Image::make_current( )
 
-=pod
+=end apidoc
 
 =head1 See Also
 

@@ -20,6 +20,8 @@ displays whatever time  you set into it.
 L<C<type()>|FLTK::Widget/"type"> may be set to C<SQUARE>, C<ROUND>, or
 C<DIGITAL> (nyi).
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Clock.h>
@@ -31,12 +33,12 @@ C<DIGITAL> (nyi).
 =cut
 
 void
-ClockOutput::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::ClockOutput::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::ClockOutput>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
+            ST(0) = sv_newmortal( );
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
@@ -93,7 +95,7 @@ Return the last Unix timestamp the clock was set to.
 =cut
 
 unsigned long
-ClockOutput::value( unsigned long time = NO_INIT, int minute = NO_INIT, int second = NO_INIT )
+fltk::ClockOutput::value( unsigned long time = NO_INIT, int minute = NO_INIT, int second = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->value( );
@@ -123,18 +125,13 @@ Return the second sent to the last call to L<C<value()>|/"value">.
 =cut
 
 int
-ClockOutput::hour( )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = THIS->hour( );   break;
-            case 1: RETVAL = THIS->minute( ); break;
-            case 2: RETVAL = THIS->second( ); break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        minute = 1
-        second = 2
+fltk::ClockOutput::hour( )
+
+int
+fltk::ClockOutput::minute( )
+
+int
+fltk::ClockOutput::second( )
 
 BOOT:
     isa("FLTK::ClockOutput", "FLTK::Widget");
@@ -193,7 +190,7 @@ Further changes by Bill Spitzak for fltk
 =cut
 
 void
-Clock::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Clock::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Clock>(CLASS,x,y,w,h,label);

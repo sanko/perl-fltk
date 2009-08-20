@@ -18,16 +18,18 @@ Identifies a font. You can create these with L<C<font(name)>|/"font_name_"> or
 with L<C<list_fonts()>|/"list_fonts">. Do not attempt to create your instances
 or modify it.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Font.h>
 
 BOOT:
-    newCONSTSUB(FLTK_stash, "BOLD", newSViv(BOLD));
+    newCONSTSUB(FLTK_stash, "BOLD", newSViv(fltk::BOLD));
     export_tag( "BOLD", "font" );
-    newCONSTSUB(FLTK_stash, "ITALIC", newSViv(ITALIC));
+    newCONSTSUB(FLTK_stash, "ITALIC", newSViv(fltk::ITALIC));
     export_tag( "ITALIC", "font" );
-    newCONSTSUB(FLTK_stash, "BOLD_ITALIC", newSViv(BOLD_ITALIC));
+    newCONSTSUB(FLTK_stash, "BOLD_ITALIC", newSViv(fltk::BOLD_ITALIC));
     export_tag( "BOLD_ITALIC", "font" );
 
 =for apidoc t[font]||FLTK::Font|font|name|attributes = 0
@@ -51,7 +53,7 @@ Find a L<Font|FLTK::Font> from an fltk1 integer font id.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Font *
+fltk::Font *
 font( name, int attributes = 0 )
     CASE: items == 1 && SvIOK(ST(0)) && SvIOK(ST(0))
         int name
@@ -82,8 +84,8 @@ MODULE = FLTK               PACKAGE = FLTK
 AV *
 list_fonts ( )
     PREINIT:
-        Font ** fonts;
-        int     total;
+        fltk::Font ** fonts;
+        int           total;
     CODE:
         RETVAL = newAV( );
         sv_2mortal( (SV*) RETVAL );
@@ -120,7 +122,7 @@ will return the same font.
 =cut
 
 const char *
-Font::name( int attributes = NO_INIT )
+fltk::Font::name( int attributes = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -137,8 +139,8 @@ or there is no font with those attributes.
 
 =cut
 
-Font *
-Font::plus( int attributes )
+fltk::Font *
+fltk::Font::plus( int attributes )
 
 =for apidoc |||FLTK::Font||bold||
 
@@ -150,11 +152,11 @@ Same as L<C<plus(ITALIC)>|/"plus">, returns an italic version of this font.
 
 =cut
 
-Font *
-Font::bold( )
+fltk::Font *
+fltk::Font::bold( )
 
-Font *
-Font::italic( )
+fltk::Font *
+fltk::Font::italic( )
 
 =for apidoc ||list|sizes||
 
@@ -170,7 +172,7 @@ plan to keep it.
 =cut
 
 AV *
-Font::sizes ( )
+fltk::Font::sizes ( )
     PREINIT:
         int * sizes;
         int   total;
@@ -191,12 +193,12 @@ L<C<set_encoding()>|/"set_encodings"> before using the font.
 =cut
 
 AV *
-Font::encodings ( )
+fltk::Font::encodings ( )
     PREINIT:
         const char ** encodings;
         int           total;
     CODE:
-        RETVAL = newAV();
+        RETVAL = newAV( );
         sv_2mortal((SV*)RETVAL);
         total = THIS->encodings( encodings );
         for ( int i = 0; i < total; i++ )
@@ -215,6 +217,6 @@ other systems this is the same as L<C<name()>|/"name"> without any attributes.
 =cut
 
 const char *
-Font::system_name( )
+fltk::Font::system_name( )
 
 #endif // ifndef DISABLE_FONT

@@ -90,6 +90,8 @@ For more information about ANSI code see:
 
 =back
 
+=begin apidoc
+
 =cut
 
 #include <fltk/AnsiWidget.h>
@@ -121,19 +123,6 @@ AnsiWidget::new( int x, int y, int w, int h, int defsize )
 
 void
 AnsiWidget::layout( )
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=cut
-
-int
-AnsiWidget::handle( int event )
-
-#endif // #ifndef DISABLE_HANDLE
 
 =for apidoc |||clearScreen|
 
@@ -197,7 +186,7 @@ Draws the given image onto the offscreen buffer.
 =cut
 
 void
-AnsiWidget::drawImage( Image* img, int x, int y, int sx, int sy, int w, int h )
+AnsiWidget::drawImage( fltk::Image* img, int x, int y, int sx, int sy, int w, int h )
 
 
 =for apidoc |||saveImage|filename|x|y|w|h
@@ -330,7 +319,7 @@ Converts ANSI colors to FLTK colors.
 
 =cut
 
-Color
+fltk::Color
 AnsiWidget::ansiToFltk( long color )
 
 BOOT:

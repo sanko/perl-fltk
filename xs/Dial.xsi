@@ -53,10 +53,10 @@ Creates a new C<FLTK::Dial> object.
 #include "include/WidgetSubclass.h"
 
 void
-Dial::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Dial::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<Dial>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::Dial>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -74,7 +74,7 @@ See L<C<angles()>|/"angles">.
 =cut
 
 short
-Dial::angle1( short a = NO_INIT )
+fltk::Dial::angle1( short a = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -92,7 +92,7 @@ See L<C<angles()>|/"angles">.
 =cut
 
 short
-Dial::angle2( short b = NO_INIT )
+fltk::Dial::angle2( short b = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -109,16 +109,16 @@ the dial moves counter-clockwise.
 =cut
 
 void
-Dial::angles( short a, short b )
+fltk::Dial::angles( short a, short b )
 
 BOOT:
     isa("FLTK::Dial", "FLTK::Valuator");
     // values for Dial->type()
-    newCONSTSUB(FLTK_stash, "NORMAL", newSViv(Dial::NORMAL));
+    newCONSTSUB(FLTK_stash, "NORMAL", newSViv(fltk::Dial::NORMAL));
     export_tag( "NORMAL", "dial" );
-    newCONSTSUB(FLTK_stash, "LINE", newSViv(Dial::LINE));
+    newCONSTSUB(FLTK_stash, "LINE", newSViv(fltk::Dial::LINE));
     export_tag( "LINE", "dial" );
-    newCONSTSUB(FLTK_stash, "FILL", newSViv(Dial::FILL));
+    newCONSTSUB(FLTK_stash, "FILL", newSViv(fltk::Dial::FILL));
     export_tag( "FILL", "dial" );
 
 #endif // ifndef DISABLE_DIAL

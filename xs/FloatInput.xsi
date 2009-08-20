@@ -33,6 +33,8 @@ The L<C<type()>|FLTK::Widget/"type"> can either be either
 C<FLTK::FloatInput::FLOAT> or C<FLTK::FloatInput::INT>. Setting it to C<INT>
 makes this act like the L<IntInput|FLTK::IntInput> subclass.
 
+=begin apidoc
+
 =cut
 
 #include <fltk/FloatInput.h>
@@ -46,10 +48,10 @@ Creates a new C<FLTK::FloatInput> object.
 #include "include/WidgetSubclass.h"
 
 void
-FloatInput::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FloatInput::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<FloatInput>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::FloatInput>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -71,13 +73,13 @@ Convert the string to a double using C<strtod()>.
 =cut
 
 int
-FloatInput::ivalue( )
+fltk::FloatInput::ivalue( )
 
 long
-FloatInput::lvalue( )
+fltk::FloatInput::lvalue( )
 
 double
-FloatInput::fvalue( )
+fltk::FloatInput::fvalue( )
 
  # I want these under FLTK::FloatInput's namespace
 
@@ -85,8 +87,8 @@ int
 FLOAT ( )
     CODE:
         switch( ix ) {
-            case 0: RETVAL = FloatInput::FLOAT; break;
-            case 1: RETVAL = FloatInput::INT;   break;
+            case 0: RETVAL = fltk::FloatInput::FLOAT; break;
+            case 1: RETVAL = fltk::FloatInput::INT;   break;
         }
     OUTPUT:
         RETVAL

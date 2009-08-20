@@ -16,6 +16,8 @@ MODULE = FLTK               PACKAGE = FLTK::FileBrowser
 
 
 
+=begin apidoc
+
 =cut
 
 #define dirent direct
@@ -31,10 +33,10 @@ Creates a new C<FLTK::FileBrowser> object.
 #include "include/WidgetSubclass.h"
 
 void
-FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<FileBrowser>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::FileBrowser>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -52,7 +54,7 @@ FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
 =cut
 
 double
-FileBrowser::icon_size( float size = NO_INIT )
+fltk::FileBrowser::icon_size( float size = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -70,7 +72,7 @@ FileBrowser::icon_size( float size = NO_INIT )
 =cut
 
 const char *
-FileBrowser::filter( char * pattern = NO_INIT )
+fltk::FileBrowser::filter( char * pattern = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -88,7 +90,7 @@ FileBrowser::filter( char * pattern = NO_INIT )
 =cut
 
 double
-FileBrowser::textsize( float size = NO_INIT )
+fltk::FileBrowser::textsize( float size = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -106,7 +108,7 @@ FileBrowser::textsize( float size = NO_INIT )
 =cut
 
 double
-FileBrowser::filetype( int type = NO_INIT )
+fltk::FileBrowser::filetype( int type = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -119,7 +121,7 @@ FileBrowser::filetype( int type = NO_INIT )
 =cut
 
 const char *
-FileBrowser::directory( )
+fltk::FileBrowser::directory( )
 
 =for apidoc d|||insert|n|label|icon|
 
@@ -132,11 +134,11 @@ FileBrowser::directory( )
 =cut
 
 void
-FileBrowser::insert( int n, char * label, data )
+fltk::FileBrowser::insert( int n, char * label, data )
     CASE: sv_isobject(ST(3)) && sv_derived_from(ST(3), "FLTK::FileIcon")
-        FileIcon * data
+        fltk::FileIcon * data
     CASE:
-        void     * data
+        void           * data
 
 =for apidoc d|||add|line|icon
 
@@ -145,7 +147,7 @@ FileBrowser::insert( int n, char * label, data )
 =cut
 
 void
-FileBrowser::add( char * line, FileIcon * icon )
+fltk::FileBrowser::add( char * line, fltk::FileIcon * icon )
 
 =for apidoc d|||show_hidden|show|
 
@@ -158,7 +160,7 @@ Set this flag if you want to see the hidden files in the browser.
 =cut
 
 bool
-FileBrowser::show_hidden( bool show = NO_INIT )
+fltk::FileBrowser::show_hidden( bool show = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:

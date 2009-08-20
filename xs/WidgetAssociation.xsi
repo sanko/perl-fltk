@@ -23,8 +23,7 @@ specific actions to do with the associated data found by the
 L<foreach()|FLTK::AssociationType/"foreach"> functions you need to derive from
 this class and provide a new handle function.
 
-Inherited by L<FLTK::keyCompareFunctor|FLTK::GlueFunctor>, and
-L<FLTK::keyCompareFunctor|FLTK::keyCompareFunctor>.
+=begin apidoc
 
 =for apidoc xH||bool|handle|at|widget|coderef
 
@@ -35,7 +34,7 @@ returned.
 =cut
 
 bool
-AssociationFunctor::handle( AssociationType at, Widget * widget, CV * coderef)
+fltk::AssociationFunctor::handle( fltk::AssociationType at, fltk::Widget * widget, CV * coderef)
     CODE:
         THIS->handle(at, widget, _cb_w);
 
@@ -47,7 +46,7 @@ MODULE = FLTK               PACKAGE = FLTK::AssociationType
 
 #include <fltk/WidgetAssociation.h>
 
-=pod
+=end apidoc
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
 
@@ -92,7 +91,7 @@ possible uses:
 
 =back
 
-Inherited by L<FLTK::shortcutAssociationType|FLTK::shortcutAssociationType>.
+=begin apidoc
 
 =cut
 
@@ -116,7 +115,7 @@ L<AssociationType::foreach()|FLTK::AssociationType/"foreach">.
 =cut
 
 SV *
-AssociationType::foreach( AssociationType * at, Widget * widget, AssociationFunctor af )
+fltk::AssociationType::foreach( fltk::AssociationType * at, fltk::Widget * widget, fltk::AssociationFunctor af )
     CODE:
         RETVAL = (SV*) THIS->foreach( at, widget, at );
 

@@ -17,7 +17,7 @@ pointers to the same one. Styles are linked into a hierarchy tree by the
 C<parent_> pointers.
 
 When you look up a value from a style (such as when
-L<C<box()>|FLTK::Widget/"box"> is called) it looks at that style and each
+L<C<box( )>|FLTK::Widget/"box"> is called) it looks at that style and each
 parent up until it finds a non-zero value to return, or until there are no
 more parents, in which case zero is returned. Thus changing a parent style
 can make global changes as long as widgets do not have local values set.
@@ -28,7 +28,7 @@ Notice that by setting a zero value you will indicate that it should return
 the parent value.
 
 The method L<C<Widget::box(BOX)>|FLTK::Widget/"box"> will create a
-L<C<dynamic()>|/"dynamic"> style for that widget, which is a child of the
+L<C<dynamic( )>|/"dynamic"> style for that widget, which is a child of the
 original style, and set the box in that style. This "unique" style is reused
 for any other changes to that widget and it is deleted when the widget is
 deleted. Thus changes to a single widget do not affect other widgets, but the
@@ -52,15 +52,8 @@ the global settings.
 
 =cut
 
-Style *
-Style::new( )
-    CODE:
-        RETVAL = new Style( );
-#if VERBOSE >= 2
-        warn("new Style");
-#endif
-    OUTPUT:
-        RETVAL
+fltk::Style *
+fltk::Style::new( )
 
 =for apidoc et[box,style]||Box|UP_BOX|
 
@@ -174,34 +167,34 @@ Style::new( )
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Box *
+fltk::Box *
 UP_BOX ( )
     CODE:
         switch ( ix ) {
-            case  0: RETVAL = UP_BOX; break;
-            case  1: RETVAL = DOWN_BOX; break;
-            case  2: RETVAL = THIN_UP_BOX; break;
-            case  3: RETVAL = THIN_DOWN_BOX; break;
-            case  4: RETVAL = ENGRAVED_BOX; break;
-            case  5: RETVAL = EMBOSSED_BOX; break;
-            case  6: RETVAL = BORDER_BOX; break;
-            case  7: RETVAL = FLAT_BOX; break;
-            case  8: RETVAL = HIGHLIGHT_UP_BOX; break;
-            case  9: RETVAL = HIGHLIGHT_DOWN_BOX; break;
-            case 10: RETVAL = ROUND_UP_BOX; break;
-            case 11: RETVAL = ROUND_DOWN_BOX; break;
-            case 12: RETVAL = DIAMOND_UP_BOX; break;
-            case 13: RETVAL = DIAMOND_DOWN_BOX; break;
-            case 14: RETVAL = SHADOW_BOX; break;
-            case 15: RETVAL = ROUNDED_BOX; break;
-            case 16: RETVAL = RSHADOW_BOX; break;
-            case 17: RETVAL = RFLAT_BOX; break;
-            case 18: RETVAL = OVAL_BOX; break;
-            case 19: RETVAL = OSHADOW_BOX; break;
-            case 20: RETVAL = OFLAT_BOX; break;
-            case 21: RETVAL = BORDER_FRAME; break;
-            case 22: RETVAL = PLASTIC_UP_BOX; break;
-            case 23: RETVAL = PLASTIC_DOWN_BOX; break;
+            case  0: RETVAL =             fltk::UP_BOX; break;
+            case  1: RETVAL =           fltk::DOWN_BOX; break;
+            case  2: RETVAL =        fltk::THIN_UP_BOX; break;
+            case  3: RETVAL =      fltk::THIN_DOWN_BOX; break;
+            case  4: RETVAL =       fltk::ENGRAVED_BOX; break;
+            case  5: RETVAL =       fltk::EMBOSSED_BOX; break;
+            case  6: RETVAL =         fltk::BORDER_BOX; break;
+            case  7: RETVAL =           fltk::FLAT_BOX; break;
+            case  8: RETVAL =   fltk::HIGHLIGHT_UP_BOX; break;
+            case  9: RETVAL = fltk::HIGHLIGHT_DOWN_BOX; break;
+            case 10: RETVAL =       fltk::ROUND_UP_BOX; break;
+            case 11: RETVAL =     fltk::ROUND_DOWN_BOX; break;
+            case 12: RETVAL =     fltk::DIAMOND_UP_BOX; break;
+            case 13: RETVAL =   fltk::DIAMOND_DOWN_BOX; break;
+            case 14: RETVAL =         fltk::SHADOW_BOX; break;
+            case 15: RETVAL =        fltk::ROUNDED_BOX; break;
+            case 16: RETVAL =        fltk::RSHADOW_BOX; break;
+            case 17: RETVAL =          fltk::RFLAT_BOX; break;
+            case 18: RETVAL =           fltk::OVAL_BOX; break;
+            case 19: RETVAL =        fltk::OSHADOW_BOX; break;
+            case 20: RETVAL =          fltk::OFLAT_BOX; break;
+            case 21: RETVAL =       fltk::BORDER_FRAME; break;
+            case 22: RETVAL =     fltk::PLASTIC_UP_BOX; break;
+            case 23: RETVAL =   fltk::PLASTIC_DOWN_BOX; break;
         }
     OUTPUT:
         RETVAL
@@ -350,25 +343,25 @@ MODULE = FLTK               PACKAGE = FLTK::Style
 
 MODULE = FLTK               PACKAGE = FLTK
 
-Font *
-HELVETICA ()
+fltk::Font *
+HELVETICA ( )
     CODE:
         switch ( ix ) {
-            case  0: RETVAL = HELVETICA_BOLD;        break;
-            case  1: RETVAL = HELVETICA_ITALIC;      break;
-            case  2: RETVAL = HELVETICA_BOLD_ITALIC; break;
-            case  3: RETVAL = COURIER;               break;
-            case  4: RETVAL = COURIER_BOLD;          break;
-            case  5: RETVAL = COURIER_ITALIC;        break;
-            case  6: RETVAL = COURIER_BOLD_ITALIC;   break;
-            case  7: RETVAL = TIMES;                 break;
-            case  8: RETVAL = TIMES_BOLD;            break;
-            case  9: RETVAL = TIMES_ITALIC;          break;
-            case 10: RETVAL = TIMES_BOLD_ITALIC;     break;
-            case 11: RETVAL = SYMBOL_FONT;           break;
-            case 12: RETVAL = SCREEN_FONT;           break;
-            case 13: RETVAL = SCREEN_BOLD_FONT;      break;
-            case 14: RETVAL = ZAPF_DINGBATS;         break;
+            case  0: RETVAL = fltk::HELVETICA_BOLD;        break;
+            case  1: RETVAL = fltk::HELVETICA_ITALIC;      break;
+            case  2: RETVAL = fltk::HELVETICA_BOLD_ITALIC; break;
+            case  3: RETVAL = fltk::COURIER;               break;
+            case  4: RETVAL = fltk::COURIER_BOLD;          break;
+            case  5: RETVAL = fltk::COURIER_ITALIC;        break;
+            case  6: RETVAL = fltk::COURIER_BOLD_ITALIC;   break;
+            case  7: RETVAL = fltk::TIMES;                 break;
+            case  8: RETVAL = fltk::TIMES_BOLD;            break;
+            case  9: RETVAL = fltk::TIMES_ITALIC;          break;
+            case 10: RETVAL = fltk::TIMES_BOLD_ITALIC;     break;
+            case 11: RETVAL = fltk::SYMBOL_FONT;           break;
+            case 12: RETVAL = fltk::SCREEN_FONT;           break;
+            case 13: RETVAL = fltk::SCREEN_BOLD_FONT;      break;
+            case 14: RETVAL = fltk::ZAPF_DINGBATS;         break;
         }
     OUTPUT:
         RETVAL
@@ -424,32 +417,44 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
-=for apidoc et[label]||LabelType|NO_LABEL|
+=for apidoc et[label,style]||FLTK::LabelType|NO_LABEL|
 
-=for apidoc et[label]||LabelType|NORMAL_LABEL|
 
-=for apidoc et[label]||LabelType|SYMBOL_LABEL|
 
-=for apidoc et[label]||LabelType|SHADOW_LABEL|
+=for apidoc et[label,style]||FLTK::LabelType|NORMAL_LABEL|
 
-=for apidoc et[label]||LabelType|ENGRAVED_LABEL|
 
-=for apidoc et[label]||LabelType|EMBOSSED_LABEL|
+
+=for apidoc et[label,style]||FLTK::LabelType|SYMBOL_LABEL|
+
+
+
+=for apidoc et[label,style]||FLTK::LabelType|SHADOW_LABEL|
+
+
+
+=for apidoc et[label,style]||FLTK::LabelType|ENGRAVED_LABEL|
+
+
+
+=for apidoc et[label,style]||FLTK::LabelType|EMBOSSED_LABEL|
+
+
 
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK
 
-LabelType *
-NO_LABEL ()
+fltk::LabelType *
+NO_LABEL ( )
     CODE:
         switch ( ix ) {
-            case 0: RETVAL = NO_LABEL;       break;
-            case 1: RETVAL = NORMAL_LABEL;   break;
-            case 2: RETVAL = SYMBOL_LABEL;   break; // same as NORMAL_LABEL
-            case 3: RETVAL = SHADOW_LABEL;   break;
-            case 4: RETVAL = ENGRAVED_LABEL; break;
-            case 5: RETVAL = EMBOSSED_LABEL; break;
+            case 0: RETVAL = fltk::NO_LABEL;       break;
+            case 1: RETVAL = fltk::NORMAL_LABEL;   break;
+            case 2: RETVAL = fltk::SYMBOL_LABEL;   break; // same as NORMAL_LABEL
+            case 3: RETVAL = fltk::SHADOW_LABEL;   break;
+            case 4: RETVAL = fltk::ENGRAVED_LABEL; break;
+            case 5: RETVAL = fltk::EMBOSSED_LABEL; break;
         }
     OUTPUT:
         RETVAL
@@ -459,6 +464,22 @@ NO_LABEL ()
           SHADOW_LABEL = 3
         ENGRAVED_LABEL = 4
         EMBOSSED_LABEL = 5
+
+BOOT:
+    export_tag( "NO_LABEL", "label" );
+    export_tag( "NO_LABEL", "style" );
+    export_tag( "NORMAL_LABEL", "label" );
+    export_tag( "NORMAL_LABEL", "style" );
+    export_tag( "SYMBOL_LABEL", "label" );
+    export_tag( "SYMBOL_LABEL", "style" );
+    export_tag( "SHADOW_LABEL", "label" );
+    export_tag( "SHADOW_LABEL", "style" );
+    export_tag( "ENGRAVED_LABEL", "label" );
+    export_tag( "ENGRAVED_LABEL", "style" );
+    export_tag( "EMBOSSED_LABEL", "label" );
+    export_tag( "EMBOSSED_LABEL", "style" );
+
+
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
@@ -470,15 +491,15 @@ with other Widgets.
 =cut
 
 bool
-Style::dynamic()
+fltk::Style::dynamic( )
 
 =for apidoc ||Style|find|name
 
 
 =cut
 
-Style *
-Style::find ( char * name )
+fltk::Style *
+fltk::Style::find ( char * name )
 
 =for apidoc ||Box|box|
 
@@ -510,13 +531,13 @@ Returns the type of box to draw buttions internal the widget.
 
 =cut
 
-Box *
-Style::box( Box * box = NO_INIT )
+fltk::Box *
+fltk::Style::box( fltk::Box * box = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL =       THIS->box(); break;
-                case 1: RETVAL = THIS->buttonbox(); break;
+                case 0: RETVAL =       THIS->box( ); break;
+                case 1: RETVAL = THIS->buttonbox( ); break;
             }
         OUTPUT:
             RETVAL
@@ -529,20 +550,20 @@ Style::box( Box * box = NO_INIT )
     ALIAS:
         buttonbox = 1
 
-=for apidoc ||Symbol|glyph|
+=for apidoc ||FLTK::Symbol|glyph|||
 
 A small image that some Widgets use to draw part of themselves. For instance
 the L<FLTK::CheckButton|FLTK::CheckButton> class has this set to a Symbol that
 draws the white box and the checkmark if C<VALUE> is true.
 
-Im most cases the L<C<FLTK::drawflags()>|FLTK/"drawflags"> are examined to
+Im most cases the L<C<FLTK::drawflags( )>|FLTK/"drawflags"> are examined to
 decide between differnt symbols. The default value draws empty squares and
 arrow buttons if C<ALIGN> flags are on, see
 L<Widget::default_glpyh|FLTK::Widget/"default_glyph">.
 
 =for hackers Found in F<src/Style.cxx>
 
-=for apidoc |||glyph|Symbol
+=for apidoc |||glyph|FLTK::Symbol
 
 Sets a small image that some Widgets use to draw part of themselves.
 
@@ -550,18 +571,18 @@ Sets a small image that some Widgets use to draw part of themselves.
 
 =cut
 
-Symbol *
-Style::glyph( Symbol * symbol = NO_INIT )
+fltk::Symbol *
+fltk::Style::glyph( fltk::Symbol * symbol = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->glyph();
+            RETVAL = THIS->glyph( );
         OUTPUT:
             RETVAL
     CASE:
         CODE:
             THIS->glyph( symbol );
 
-=for apidoc ||Font|labelfont|
+=for apidoc ||FLTK::Font|labelfont|
 
 The font used to draw the label. Default is C<FLTK::HELVETICA>.
 
@@ -571,26 +592,26 @@ The font used to draw the label. Default is C<FLTK::HELVETICA>.
 
 =for hackers Found in F<src/Style.cxx>
 
-=for apidoc ||Font|textfont|
+=for apidoc ||FLTK::Font|textfont|
 
 Font to use to draw information inside the widget, such as the text in a text
 editor or menu or browser. Default is C<FLTK::HELVETICA>.
 
 =for hackers Found in F<src/Style.cxx>
 
-=for apidoc |||textfont|Font
+=for apidoc |||textfont|FLTK::Font
 
 =for hackers Found in F<src/Style.cxx>
 
 =cut
 
-Font *
-Style::labelfont ( Font * font = NO_INIT )
+fltk::Font *
+fltk::Style::labelfont ( fltk::Font * font = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->labelfont(); break;
-                case 1: RETVAL =  THIS->textfont(); break;
+                case 0: RETVAL = THIS->labelfont( ); break;
+                case 1: RETVAL =  THIS->textfont( ); break;
             }
         OUTPUT:
             RETVAL
@@ -612,11 +633,11 @@ symbols. C<FLTK::NORMAL_LABEL>.
 
 =cut
 
-LabelType *
-Style::labeltype( LabelType * type = NO_INIT )
+fltk::LabelType *
+fltk::Style::labeltype( fltk::LabelType * type = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->labeltype();
+            RETVAL = THIS->labeltype( );
         OUTPUT:
             RETVAL
     CASE:
@@ -629,7 +650,7 @@ Color of the widgets. The default is C<FLTK::WHITE. You may think most widgets
 are gray, but this is because L<Group|FLTK::Group> and L<Window|FLTK::Window>
 have their own L<Style|FLTK::Style> with this set to C<FLTK::GRAY75>, and also
 because many parts of widgets are drawn with the
-L<C<buttoncolor()>|/"buttoncolor">.
+L<C<buttoncolor( )>|/"buttoncolor">.
 
 If you want to change the overall color of all the gray parts of the interface
 you want to call L<C<FLTK::set_background(color)>|FLTK/"set_background">
@@ -646,7 +667,7 @@ ramp" so that the edges of buttons are the same color.
 =for apidoc ||Color|textcolor|
 
 Color to draw text inside the widget. Default is black. This is also used by
-many widgets to control the color when they draw the L<C<glyph()>|/"glyph">,
+many widgets to control the color when they draw the L<C<glyph( )>|/"glyph">,
 thus it can control the color of checkmarks in
 L<FLTK::CheckButton|FLTK::CheckButton>.
 
@@ -701,8 +722,8 @@ Color used to draw labels. Default is C<FLTK::BLACK>.
 The color to draw the widget when the mouse is over it (for scrollbars and
 sliders this is used to color the buttons). Depending on the widget this will
 either recolor the buttons that are normally colored with
-L<C<buttoncolor()>|/"buttoncolor">, or will recolor the main area that is
-normally colored with L<C<color()>|/"color">.
+L<C<buttoncolor( )>|/"buttoncolor">, or will recolor the main area that is
+normally colored with L<C<color( )>|/"color">.
 
 The default value is zero, which indicates that highlighting is disabled.
 
@@ -725,8 +746,8 @@ white or black). I recommend you use the default if possible.
 
 =cut
 
-Color
-Style::color ( Color color = NO_INIT )
+fltk::Color
+fltk::Style::color ( fltk::Color color = NO_INIT )
     CASE: items == 1
         CODE:
             switch( ix ) {
@@ -764,14 +785,14 @@ Style::color ( Color color = NO_INIT )
 
 =for apidoc ||float|labelsize|
 
-Size of L<C<labelfont()>|/"labelfont">. Default is 12.
+Size of L<C<labelfont( )>|/"labelfont">. Default is 12.
 
 =for hackers Found in F<src/Style.cxx>
 
 =for apidoc ||float|textsize|
 
-Size of L<C<textfont()>|/"textfont">. This is also used by many Widgets to
-control the size they draw the L<C<glyph()>|/"glyph">. Default is 12.
+Size of L<C<textfont( )>|/"textfont">. This is also used by many Widgets to
+control the size they draw the L<C<glyph( )>|/"glyph">. Default is 12.
 
 =for hackers Found in F<src/Style.cxx>
 
@@ -779,7 +800,7 @@ control the size they draw the L<C<glyph()>|/"glyph">. Default is 12.
 
 Extra spacing added between text lines or other things that are stacked
 vertically. The default is 2. The function
-L<C<FLTK::drawtext()>|FLTK/"drawtext"> will use the value from
+L<C<FLTK::drawtext( )>|FLTK/"drawtext"> will use the value from
 L<C<Widget::default_style>|FLTK::Widget/"default_style">, but text editors and
 browsers and menus and similar widgets will use the local value.
 
@@ -800,13 +821,13 @@ browsers and menus and similar widgets will use the local value.
 =cut
 
 float
-Style::labelsize( float size = NO_INIT )
+fltk::Style::labelsize( float size = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->labelsize(); break;
-                case 1:  RETVAL = THIS->textsize(); break;
-                case 2:   RETVAL = THIS->leading(); break;
+                case 0: RETVAL = THIS->labelsize( ); break;
+                case 1:  RETVAL = THIS->textsize( ); break;
+                case 2:   RETVAL = THIS->leading( ); break;
             }
         OUTPUT:
             RETVAL
@@ -838,12 +859,12 @@ default is 15.
 =cut
 
 unsigned char
-Style::scrollbar_align ( unsigned char value = NO_INIT )
+fltk::Style::scrollbar_align ( unsigned char value = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->scrollbar_align(); break;
-                case 1: RETVAL = THIS->scrollbar_width(); break;
+                case 0: RETVAL = THIS->scrollbar_align( ); break;
+                case 1: RETVAL = THIS->scrollbar_width( ); break;
             }
         OUTPUT:
             RETVAL
@@ -876,12 +897,12 @@ true (the default) then the boxes themselves gray out.
 =cut
 
 bool
-Style::hide_underscore ( bool value = NO_INIT )
+fltk::Style::hide_underscore ( bool value = NO_INIT )
     CASE: items == 1
         CODE:
             switch ( ix ) {
-                case 0: RETVAL = THIS->hide_underscore(); break;
-                case 1: RETVAL = THIS->draw_boxes_inactive(); break;
+                case 0: RETVAL = THIS->hide_underscore( ); break;
+                case 1: RETVAL = THIS->draw_boxes_inactive( ); break;
             }
         OUTPUT:
             RETVAL
@@ -903,10 +924,10 @@ How many lines to move for one click of a mouse wheel. The default is 3.
 =cut
 
 int
-Style::wheel_scroll_lines ( int value = NO_INIT )
+fltk::Style::wheel_scroll_lines ( int value = NO_INIT )
     CASE: items == 1
         CODE:
-            RETVAL = THIS->wheel_scroll_lines();
+            RETVAL = THIS->wheel_scroll_lines( );
         OUTPUT:
             RETVAL
     CASE:

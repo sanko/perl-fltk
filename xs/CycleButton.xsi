@@ -37,6 +37,10 @@ drawing "artistic" user interfaces where all the entire button is an image.
 
 =cut
 
+=begin apidoc
+
+=cut
+
 #include <fltk/CycleButton.h>
 
 =for apidoc ||FLTK::CycleButton|new|x|y|w|h|label = ""
@@ -45,36 +49,18 @@ Creates a new C<FLTK::CycleButton> object. Obviously.
 
 =cut
 
-CycleButton *
-CycleButton::new(int x, int y, int w, int h, char * label = 0)
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-CycleButton::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, CycleButton (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
-
-=for apidoc ||FLTK::NamedStyle|default_style|
-
-NFI
-
-=cut
-
-NamedStyle *
-CycleButton::default_style ( )
-    CODE:
-        RETVAL = THIS->default_style;
-    OUTPUT:
-        RETVAL
+void
+fltk::CycleButton::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::CycleButton>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal( );
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 BOOT:
     isa("FLTK::CycleButton", "FLTK::Menu");

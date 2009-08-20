@@ -52,7 +52,7 @@ and L<C<FLTK::ShapedWindow>|FLTK::ShapedWindow>.
   $window->show();
   FLTK::run();
 
-=cut
+=begin apidoc
 
 =for apidoc ||FLTK::Window|new|X|Y|Width|Height|Label = ''
 
@@ -71,8 +71,8 @@ Same but window is placed by OS.
 #include <fltk/x.h>
 #endif // ifdef WIN32
 
-Window *
-Window::new( ... )
+fltk::Window *
+fltk::Window::new( ... )
     CASE: items == 3 || items == 4
         int    Width   = (int)SvIV(ST(1));
         int    Height  = (int)SvIV(ST(2));
@@ -81,7 +81,7 @@ Window::new( ... )
         CODE:
             if (items == 4)
                 Label = (char *)SvPV_nolen(ST(3));
-            RETVAL = new WidgetSubclass<Window>(CLASS, Width, Height, Label);
+            RETVAL = new WidgetSubclass<fltk::Window>(CLASS,Width,Height,Label);
 #ifdef WIN32
             if ( RETVAL )
                 RETVAL->icon((char *)LoadIcon (dllInstance, "FLTK" ));
@@ -98,7 +98,7 @@ Window::new( ... )
         CODE:
             if (items == 6)
                 Label = (char *)SvPV_nolen(ST(5));
-            RETVAL = new WidgetSubclass<Window>(CLASS, XPos, YPos, Width, Height, Label);
+            RETVAL = new WidgetSubclass<fltk::Window>(CLASS, XPos, YPos, Width, Height, Label);
 #ifdef WIN32
             if ( RETVAL )
                 RETVAL->icon((char *)LoadIcon (dllInstance, "FLTK" ));
@@ -116,7 +116,7 @@ window will have neither border nor caption.
 =cut
 
 bool
-Window::border( bool set = NO_INIT )
+fltk::Window::border( bool set = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->border( );
@@ -138,7 +138,7 @@ rectangle around your window, add these values to the window's size.
 =cut
 
 void
-Window::borders(fltk::Rectangle * rect)
+fltk::Window::borders( fltk::Rectangle * rect )
 
 =for apidoc |||child_of|parent
 
@@ -179,13 +179,13 @@ overlapping window that will remain above the frame window.
 =cut
 
 void
-Window::child_of(const Window * parent)
+fltk::Window::child_of( const fltk::Window * parent )
     ALIAS:
-        show_inside     = 1
+        show_inside = 1
     CODE:
         switch ( ix )  {
-            case 0: THIS->child_of(parent);     break;
-            case 1: THIS->show_inside(parent);  break;
+            case 0: THIS->child_of( parent );    break;
+            case 1: THIS->show_inside( parent ); break;
         }
 
 =for apidoc |||clear_double_border|
@@ -255,7 +255,7 @@ won't work.
 =cut
 
 void
-Window::clear_double_buffer( )
+fltk::Window::clear_double_buffer( )
     ALIAS:
         erase_overlay       = 1
         free_backbuffer     = 2
@@ -263,25 +263,21 @@ Window::clear_double_buffer( )
         redraw_overlay      = 4
         set_double_buffer   = 5
         system_layout       = 6
-
         hide                = 30
         draw_overlay        = 50
     CODE:
         switch (ix) {
-            case 0: THIS->clear_double_buffer();    break;
-            case 1: THIS->erase_overlay();          break;
-            case 2: THIS->free_backbuffer();        break;
-            case 3: THIS->iconize();                break;
-            case 4: THIS->redraw_overlay();         break;
-            case 5: THIS->set_double_buffer();      break;
-            case 6: THIS->system_layout();      break;
-
-
-            case 30: THIS->hide();                   break;
-            case 50: THIS->draw_overlay();           break;
+            case  0: THIS->clear_double_buffer(); break;
+            case  1: THIS->erase_overlay();       break;
+            case  2: THIS->free_backbuffer();     break;
+            case  3: THIS->iconize();             break;
+            case  4: THIS->redraw_overlay();      break;
+            case  5: THIS->set_double_buffer();   break;
+            case  6: THIS->system_layout();       break;
+            case 30: THIS->hide();                break;
+            case 50: THIS->draw_overlay();        break;
             default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
         }
-
 
 =for apidoc |bool|FLTK::Window|double_buffer|
 
@@ -294,7 +290,7 @@ buffering is efficient turn it on by default).
 =cut
 
 bool
-Window::double_buffer( )
+fltk::Window::double_buffer( )
 
 =for apidoc |FLTK::Window|FLTK::Window|drawing_window|
 
@@ -304,8 +300,8 @@ C<draw()> is called.
 
 =cut
 
-const Window *
-Window::drawing_window( )
+const fltk::Window *
+fltk::Window::drawing_window( )
 
 =for apidoc |bool|FLTK::Window|exec|FLTK::Window parent = 0|bool grab = 0
 
@@ -335,7 +331,7 @@ popup menus.
 =cut
 
 bool
-Window::exec( const Window * parent = 0, bool grab = 0 )
+fltk::Window::exec( const fltk::Window * parent = 0, bool grab = 0 )
 
 =for apidoc |||fullscreen|FLTK::Monitor monitor
 
@@ -388,13 +384,13 @@ the one to resize to.
 #include <fltk/Monitor.h>
 
 void
-Window::fullscreen( monitor = 0 )
+fltk::Window::fullscreen( monitor = 0 )
     CASE: items == 1
         int monitor;
         CODE:
             THIS->fullscreen( );
     CASE: items == 2
-        const Monitor * monitor;
+        const fltk::Monitor * monitor;
         CODE:
            THIS->fullscreen( *monitor );
 
@@ -420,15 +416,14 @@ before L<C<show()>|/"show"> is called.
 =cut
 
 void
-Window::fullscreen_off ( int X, int Y, int Width, int Height )
+fltk::Window::fullscreen_off ( int X, int Y, int Width, int Height )
     ALIAS:
         resize = 1
     CODE:
         switch( ix ) {
             case 0: THIS->fullscreen_off( X, Y, Width, Height ); break;
-            case 1: THIS->resize(        X, Y, Width, Height ); break;
+            case 1:         THIS->resize( X, Y, Width, Height ); break;
         }
-
 
 =for apidoc |||hotspot|widget|offscreen = 0
 
@@ -449,9 +444,9 @@ this.
 =cut
 
 void
-Window::hotspot ( A, B = false, C = false )
+fltk::Window::hotspot ( A, B = false, C = false )
     CASE: items <= 2 && sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Widget")
-        Widget * A
+        fltk::Widget * A
         bool B;
         C_ARGS: (const Widget *) A, B
     CASE:
@@ -484,7 +479,7 @@ called or if the user has iconized the window.
 =cut
 
 bool
-Window::iconic( )
+fltk::Window::iconic( )
     ALIAS:
         shown = 1
     CODE:
@@ -506,7 +501,7 @@ filename, it defaults to the last portion after the last C</> character.
 =cut
 
 const char *
-Window::iconlabel( char * iname = NO_INIT )
+fltk::Window::iconlabel( char * iname = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->iconlabel();
@@ -529,7 +524,7 @@ Sets the window title, which is drawn in the titlebar by the system.
 =cut
 
 const char *
-Window::label( char * name = NO_INIT, char * iname = 0 )
+fltk::Window::label( char * name = NO_INIT, char * iname = 0 )
     CASE: items == 1
         CODE:
             RETVAL = THIS->label();
@@ -556,8 +551,7 @@ false.
 =cut
 
 void
-Window::make_exec_return ( return_value )
-    bool return_value
+fltk::Window::make_exec_return ( bool return_value )
 
 =for apidoc |||show|parent
 
@@ -615,7 +609,7 @@ server as long as they don't actually show a window.
 =cut
 
 void
-Window::show( arga = NO_INIT, argb = NO_INIT )
+fltk::Window::show( arga = NO_INIT, argb = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->show( );
@@ -628,7 +622,7 @@ Window::show( arga = NO_INIT, argb = NO_INIT )
                 REAL_INDEXES[i] = (char *)(av_fetch(argb, i, 0));
             THIS->show( arga, (char ** ) REAL_INDEXES );
     CASE: items == 2
-        Window * arga
+        fltk::Window * arga
         CODE:
             THIS->show((const Window *) arga);
 
@@ -675,15 +669,9 @@ that is also the maximum size (so the window cannot resize in that direction).
 =cut
 
 void
-Window::size_range ( minW, minH, maxW = 0, maxH = 0, dw = 0, dh = 0)
-    int minW
-    int minH
-    int maxW
-    int maxH
-    int dw
-    int dh
+fltk::Window::size_range ( int minW, int minH, int maxW = 0, int maxH = 0, int dw = 0, int dh = 0 )
 
-=for apidoc |FLTK::NamedStyle|FLTK::Window|default_style|
+=for apidoc ||FLTK::NamedStyle|FLTK::Window|default_style|
 
 By default a window has box() set to C<FLAT_BOX>, and the color() set to
 C<GRAY75>, which is a special color cell that is altered by
@@ -698,12 +686,12 @@ part.
 
 =cut
 
-NamedStyle *
-Window::default_style( )
+fltk::NamedStyle *
+fltk::Window::default_style( )
     CODE:
         RETVAL = THIS->default_style;
 
-=for apidoc ||FLTK::Window|first|
+=for apidoc ||FLTK::Window|first|||
 
 Returns the id of some L<C<visible()>|/"visible"> window. If there is more
 than one, the last one to receive an event is returned. This is useful as a
@@ -712,7 +700,7 @@ L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> uses it for this if no other
 parent is specified. This is also used by L<C<FLTK::run()>|FLTK/"run"> to see
 if any windows still exist.
 
-=for apidoc ||FLTK::Window|first|window
+=for apidoc ||FLTK::Window|first|window|||
 
 If this C<window> is visible, this removes it from wherever it is in the list
 and inserts it at the top, as though it received an event. This can be used to
@@ -722,8 +710,8 @@ L<C<FLTK::ask()>|FLTK/"ask">.
 
 =cut
 
-Window *
-Window::first( Window * window = NO_INIT )
+fltk::Window *
+fltk::Window::first( fltk::Window * window = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->first( );
@@ -741,10 +729,8 @@ iterate through all the visible windows.
 
 =cut
 
-Window *
-Window::next( )
-    OUTPUT:
-        RETVAL
+fltk::Window *
+fltk::Window::next( )
 
 =for apidoc x|W||icon|path
 
@@ -753,7 +739,7 @@ This loads an icon (F<.ico>) in the window.
 =cut
 
 void
-Window::icon( char * path )
+fltk::Window::icon( char * path )
     CODE:
 #ifdef WIN32
         CreatedWindow* x = CreatedWindow::find((Window *) THIS);
@@ -768,7 +754,7 @@ Window::icon( char * path )
         if ( s_icon )
             SendMessage( x->xid, WM_SETICON, ICON_SMALL, (LPARAM)s_icon);
 #else
-        warn("Loading icons on no-Win32 systems is on my TODO list");
+        warn("Loading icons on non-Win32 systems is on my TODO list");
 #endif // #ifdef WIN32
 
 =for apidoc xH|W||_icon_resource_example|iconID
@@ -779,7 +765,7 @@ supports (w)perl.exe itself.)
 =cut
 
 void
-Window::_icon_resource_example( char * iconID )
+fltk::Window::_icon_resource_example( char * iconID )
     CODE:
 #ifdef WIN32
         HICON b_icon = (HICON)LoadImage(xdisplay, iconID, IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR|LR_SHARED );

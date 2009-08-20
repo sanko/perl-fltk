@@ -23,6 +23,8 @@ buttons move in the opposite way.
 B<Note: This is a depreciated widget. Please see
 L<FLTK::Notes|FLTK::Notes/"NotesDepPol">.>
 
+=begin apidoc
+
 =cut
 
 #include <fltk/Adjuster.h>
@@ -36,10 +38,10 @@ Creates a new C<FLTK::Adjuster> object.
 #include "include/WidgetSubclass.h"
 
 void
-Adjuster::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Adjuster::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<Adjuster>(CLASS,x,y,w,h,label);
+        RETVAL = (void *) new WidgetSubclass<fltk::Adjuster>(CLASS,x,y,w,h,label);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -52,8 +54,8 @@ TODO
 
 =cut
 
-static NamedStyle *
-Adjuster::default_style ( )
+static fltk::NamedStyle *
+fltk::Adjuster::default_style ( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:
@@ -68,7 +70,7 @@ TODO
 =cut
 
 int
-Adjuster::soft ( int x = NO_INIT )
+fltk::Adjuster::soft ( int x = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->soft( );
@@ -87,7 +89,7 @@ See L<C<handle()>|FLTK::Valuator/handle> in L<FLTK::Valuator|FLTK::Valuator>.
 =cut
 
 int
-Adjuster::handle ( int event )
+fltk::Adjuster::handle ( int event )
 
 #endif // #ifndef DISABLE_HANDLE
 

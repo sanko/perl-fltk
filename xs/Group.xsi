@@ -24,9 +24,9 @@ By default L<FLTK::Group|FLTK::Group> preserves the positions and sizes of all
 it's children, they do not move no matter what sizes or other children are
 added or removed.
 
-Setting L<C<resizable()>|/"resizable"> will change the layout behavior so that
-it responds to resizing by moving or resizing the children to fit. See below
-for details.
+Setting L<C<resizable()>|FLTK::Group/"resizable"> will change the layout
+behavior so that it responds to resizing by moving or resizing the children to
+fit. See below for details.
 
 You may want to use an L<FLTK::Pack|FLTK::Pack> or a
 L<FLTK::Scroll|FLTK::Scroll> to get other common layout behavior that can
@@ -34,13 +34,15 @@ respond to changes in the sizes of child widgets.
 
 The most-used subclass of L<FLTK::Group|FLTK::Group> is
 L<FLTK::Window|FLTK::Window>, all the rules about resizing apply to windows.
-Setting L<C<resizable()>|/"resizable"> on a window will allow the user to
-resize it. If you want different behavior (such as from
+Setting L<C<resizable()>|FLTK::Group/"resizable"> on a window will allow the
+user to resize it. If you want different behavior (such as from
 L<FLTK::Pack|FLTK::Pack>) for your window you should make the window have that
 as a single resizable child that fills it.
 
 L<FLTK::Menu|FLTK::Menu> is a subclass and thus all menus and browsers are
 groups and the items in them are widgets.
+
+=begin apidoc
 
 =cut
 
@@ -56,10 +58,10 @@ string. The default boxtype is C<NO_BOX>.
 #include "include/WidgetSubclass.h"
 
 void
-Group::new( int x, int y, int w, int h, char * label = 0, bool begin = false )
+fltk::Group::new( int x, int y, int w, int h, char * label = 0, bool begin = false )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<Group>(CLASS,x,y,w,h,label,begin);
+        RETVAL = (void *) new WidgetSubclass<fltk::Group>(CLASS,x,y,w,h,label,begin);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -73,7 +75,7 @@ Returns how many child widgets the group has.
 =cut
 
 int
-Group::children( )
+fltk::Group::children( )
 
 =for apidoc ||FLTK::Widget|child|index|
 
@@ -82,8 +84,8 @@ checking is done!>
 
 =cut
 
-Widget *
-Group::child( int index )
+fltk::Widget *
+fltk::Group::child( int index )
 
 =for apidoc |||begin|||
 
@@ -101,10 +103,10 @@ new widgets added to the widget tree will be added to the parent of the group.
 =cut
 
 void
-Group::begin( )
+fltk::Group::begin( )
 
 void
-Group::end( )
+fltk::Group::end( )
 
 =for apidoc ||FLTK::Group|current|||
 
@@ -119,8 +121,8 @@ Sets the group being currently built.
 
 =cut
 
-Group *
-Group::current( Group * group = NO_INIT )
+fltk::Group *
+fltk::Group::current( fltk::Group * group = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -141,10 +143,10 @@ end of this group.
 =cut
 
 int
-Group::find ( Widget * widget )
+fltk::Group::find ( fltk::Widget * widget )
 
 void
-Group::add( Widget * widget )
+fltk::Group::add( fltk::Widget * widget )
 
 =for apidoc |||insert|widget|index
 
@@ -158,12 +160,12 @@ This will append the widget if C<$beforethis> is not in the group.
 =cut
 
 void
-Group::insert( Widget * widget, before )
+fltk::Group::insert( fltk::Widget * widget, before )
     CASE: SvIOK( ST(2) )
         int before
         C_ARGS: * widget, before
     CASE:
-        Widget * before
+        fltk::Widget * before
         C_ARGS: * widget, before
 
 =for apidoc |||remove|index|
@@ -178,11 +180,11 @@ currently a child of this group.
 =cut
 
 void
-Group::remove( widget )
+fltk::Group::remove( widget )
     CASE: SvIOK( ST(1) )
         int widget
     CASE:
-        Widget * widget
+        fltk::Widget * widget
 
 =for apidoc |||remove_all||
 
@@ -194,7 +196,7 @@ See L<C<clear())>|/"clear">
 =cut
 
 void
-Group::remove_all( )
+fltk::Group::remove_all( )
 
 =for apidoc |||replace|index|widget_b
 
@@ -207,12 +209,12 @@ Remove the C<widget> and inserts C<widget_b> in its place.
 =cut
 
 void
-Group::replace( widget, Widget * widget_b )
+fltk::Group::replace( widget, fltk::Widget * widget_b )
     CASE: SvIOK( ST(1) )
         int widget
-        C_ARGS: widget, * widget_b
+        C_ARGS:   widget, * widget_b
     CASE:
-        Widget * widget
+        fltk::Widget * widget
         C_ARGS: * widget, * widget_b
 
 =for apidoc |||swap|indexA|indexB|
@@ -222,7 +224,7 @@ Swaps the C<indexA>th widget with the C<indexB>th widget.
 =cut
 
 void
-Group::swap( int indexA, int indexB )
+fltk::Group::swap( int indexA, int indexB )
 
 =for apidoc |||clear|||
 
@@ -234,7 +236,7 @@ See L<C<remove_all()>|/"remove_all">
 =cut
 
 void
-Group::clear( )
+fltk::Group::clear( )
 
 =for apidoc |||resizable|widget||
 
@@ -257,8 +259,8 @@ hierarchy of child L<Group|FLTK::Group>'s.
 
 =cut
 
-Widget *
-Group::resizable( Widget * widget = NO_INIT )
+fltk::Widget *
+fltk::Group::resizable( fltk::Widget * widget = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -273,7 +275,7 @@ fell swoop.
 =cut
 
 void
-Group::add_resizable( Widget * widget )
+fltk::Group::add_resizable( fltk::Widget * widget )
     C_ARGS: * widget
 
 =for apidoc |||init_sizes|||
@@ -294,7 +296,7 @@ This is automatically done when any child is added or removed.
 =cut
 
 void
-Group::init_sizes( )
+fltk::Group::init_sizes( )
 
 =for apidoc |||focus_index|index
 
@@ -316,7 +318,7 @@ Returns the index of the widget currently having focus.
 =cut
 
 int
-Group::focus_index( int index = NO_INIT )
+fltk::Group::focus_index( int index = NO_INIT )
     CASE: items ==  1
         C_ARGS:
     CASE:
@@ -330,7 +332,7 @@ Same as L<C<focus_index( $index )>|/"focus_index_index">.
 =cut
 
 void
-Group::set_focus( Widget * widget )
+fltk::Group::set_focus( fltk::Widget * widget )
 
 =for apidoc ||key|navigation_key|||
 
@@ -339,7 +341,7 @@ Turn Tab into Right or Left for keyboard navigation.
 =cut
 
 int
-Group::navigation_key( )
+fltk::Group::navigation_key( )
 
 =for apidoc d|||fix_old_positions|||
 
@@ -351,7 +353,7 @@ are inside a group.
 =cut
 
 void
-Group::fix_old_positions(  )
+fltk::Group::fix_old_positions(  )
 
 =for apidoc ||FLTK::Flags|resize_align|||
 
@@ -363,8 +365,8 @@ Group::fix_old_positions(  )
 
 =cut
 
-Flags
-Group::resize_align( Flags flags = NO_INIT )
+fltk::Flags
+fltk::Group::resize_align( fltk::Flags flags = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:

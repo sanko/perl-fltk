@@ -16,6 +16,8 @@ MODULE = FLTK               PACKAGE = FLTK::ComboBox
 
 
 
+=begin apidoc
+
 =cut
 
 #include <fltk/ComboBox.h>
@@ -26,36 +28,18 @@ MODULE = FLTK               PACKAGE = FLTK::ComboBox
 
 =cut
 
-ComboBox *
-ComboBox::new( int x , int y, int w, int h, char * label = 0 );
+#include "include/WidgetSubclass.h"
 
-#ifdef ENABLE_DESTROY
-
-bool
-ComboBox::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, ComboBox" );
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
-
-=for apidoc ||FLTK::NamedStyle|default_style|
-
-
-
-=cut
-
-NamedStyle *
-ComboBox::default_style( )
-    CODE:
-        RETVAL = THIS->default_style;
-    OUTPUT:
-        RETVAL
+void
+fltk::ComboBox::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::ComboBox>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||layout|
 
@@ -64,7 +48,7 @@ ComboBox::default_style( )
 =cut
 
 void
-ComboBox::layout( )
+fltk::ComboBox::layout( )
 
 #ifndef DISABLE_HANDLE
 
@@ -75,7 +59,7 @@ ComboBox::layout( )
 =cut
 
 int
-ComboBox::handle( int event )
+fltk::ComboBox::handle( int event )
 
 #endif // #ifndef DISABLE_HANDLE
 
@@ -86,7 +70,7 @@ ComboBox::handle( int event )
 =cut
 
 int
-ComboBox::popup( fltk::Rectangle * rect, char * title = 0, bool menubar = false )
+fltk::ComboBox::popup( fltk::Rectangle * rect, char * title = 0, bool menubar = false )
     C_ARGS: * rect, title, menubar
 
 =for apidoc ||int|choice|value|
@@ -100,7 +84,7 @@ ComboBox::popup( fltk::Rectangle * rect, char * title = 0, bool menubar = false 
 =cut
 
 int
-ComboBox::choice( int value = NO_INIT )
+fltk::ComboBox::choice( int value = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
@@ -113,7 +97,7 @@ ComboBox::choice( int value = NO_INIT )
 =cut
 
 int
-ComboBox::find_choice( )
+fltk::ComboBox::find_choice( )
 
 =for apidoc ||bool|text|txt
 
@@ -126,7 +110,7 @@ ComboBox::find_choice( )
 =cut
 
 int
-ComboBox::text( char * txt = NO_INIT, int n = NO_INIT )
+fltk::ComboBox::text( char * txt = NO_INIT, int n = NO_INIT )
     PPCODE:
         if ( items == 1 ) {
             const char * RETVAL = THIS->text( );
@@ -155,7 +139,7 @@ ComboBox::text( char * txt = NO_INIT, int n = NO_INIT )
 =cut
 
 bool
-ComboBox::static_text( const char * txt, int n = NO_INIT )
+fltk::ComboBox::static_text( const char * txt, int n = NO_INIT )
     CASE: items == 2
         C_ARGS: txt
     CASE: items == 3
@@ -168,7 +152,7 @@ ComboBox::static_text( const char * txt, int n = NO_INIT )
 =cut
 
 char
-ComboBox::at( int index )
+fltk::ComboBox::at( int index )
 
 =for apidoc ||int|size|ofText
 
@@ -177,7 +161,7 @@ ComboBox::at( int index )
 =cut
 
 int
-ComboBox::size( bool ofText )
+fltk::ComboBox::size( bool ofText )
 
 =for apidoc ||int|position||
 
@@ -194,7 +178,7 @@ ComboBox::size( bool ofText )
 =cut
 
 int
-ComboBox::position( int p = NO_INIT, int m = NO_INIT )
+fltk::ComboBox::position( int p = NO_INIT, int m = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -215,7 +199,7 @@ ComboBox::position( int p = NO_INIT, int m = NO_INIT )
 =cut
 
 int
-ComboBox::mark( int m = NO_INIT )
+fltk::ComboBox::mark( int m = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -229,7 +213,7 @@ ComboBox::mark( int m = NO_INIT )
 =cut
 
 void
-ComboBox::up_down_position( int p, bool b )
+fltk::ComboBox::up_down_position( int p, bool b )
 
 =for apidoc ||bool|replace|a|b|c|d
 
@@ -242,7 +226,7 @@ ComboBox::up_down_position( int p, bool b )
 =cut
 
 bool
-ComboBox::replace ( int a, int b, c, int d = NO_INIT )
+fltk::ComboBox::replace ( int a, int b, c, int d = NO_INIT )
     CASE: items == 4
         char c;
         C_ARGS: a, b, c
@@ -270,7 +254,7 @@ ComboBox::replace ( int a, int b, c, int d = NO_INIT )
 =cut
 
 bool
-ComboBox::cut( int n = NO_INIT, int b = NO_INIT )
+fltk::ComboBox::cut( int n = NO_INIT, int b = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE: items == 2
@@ -285,7 +269,7 @@ ComboBox::cut( int n = NO_INIT, int b = NO_INIT )
 =cut
 
 bool
-ComboBox::insert( const char * text, int l = 0 )
+fltk::ComboBox::insert( const char * text, int l = 0 )
 
 =for apidoc ||bool|copy|clipboard = true
 
@@ -294,7 +278,7 @@ ComboBox::insert( const char * text, int l = 0 )
 =cut
 
 bool
-ComboBox::copy( bool clipboard = true )
+fltk::ComboBox::copy( bool clipboard = true )
 
 =for apidoc ||bool|undo||
 
@@ -303,7 +287,7 @@ ComboBox::copy( bool clipboard = true )
 =cut
 
 bool
-ComboBox::undo( )
+fltk::ComboBox::undo( )
 
 =for apidoc ||int|word_start|index
 
@@ -324,7 +308,7 @@ ComboBox::undo( )
 =cut
 
 int
-ComboBox::word_start( int index )
+fltk::ComboBox::word_start( int index )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->word_start( index ); break;
@@ -346,7 +330,7 @@ ComboBox::word_start( int index )
 =cut
 
 int
-ComboBox::mouse_position( fltk::Rectangle * rectangle )
+fltk::ComboBox::mouse_position( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
 
 =for apidoc ||int|xscroll||
@@ -360,7 +344,7 @@ ComboBox::mouse_position( fltk::Rectangle * rectangle )
 =cut
 
 int
-ComboBox::xscroll( )
+fltk::ComboBox::xscroll( )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->xscroll();
@@ -380,7 +364,7 @@ ComboBox::xscroll( )
 =cut
 
 void
-ComboBox::input_callback_(Widget * widget, ComboBox * d )
+fltk::ComboBox::input_callback_( fltk::Widget * widget, fltk::ComboBox * d )
     C_ARGS: widget, (void *) d
 
 #endif // #ifdef WIN32

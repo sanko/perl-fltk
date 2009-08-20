@@ -19,6 +19,8 @@ edges of a L<Pack|FLTK::Pack>, usually it contains toolbars or buttons.
 
 Based on Frametab V2 contributed by Curtis Edwards (curt1@trilec.com)
 
+=begin apidoc
+
 =cut
 
 #include <fltk/BarGroup.h>
@@ -32,10 +34,10 @@ Creates a new C<FLTK::BarGroup> object.
 #include "include/WidgetSubclass.h"
 
 void
-BarGroup::new ( int x, int y, int w, int h, char * label = 0, bool begin = false )
+fltk::BarGroup::new ( int x, int y, int w, int h, char * label = 0, bool begin = false )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<BarGroup>(CLASS,x,y,w,h,label,begin);
+        RETVAL = (void *) new WidgetSubclass<fltk::BarGroup>(CLASS,x,y,w,h,label,begin);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
@@ -48,8 +50,8 @@ BarGroup::new ( int x, int y, int w, int h, char * label = 0, bool begin = false
 
 =cut
 
-NamedStyle *
-BarGroup::default_style( )
+fltk::NamedStyle *
+fltk::BarGroup::default_style( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:
@@ -62,20 +64,7 @@ BarGroup::default_style( )
 =cut
 
 void
-BarGroup::layout( )
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=cut
-
-int
-BarGroup::handle ( int event )
-
-#endif // #ifndef DISABLE_HANDLE
+fltk::BarGroup::layout( )
 
 =for apidoc ||bool|opened|
 
@@ -88,7 +77,7 @@ BarGroup::handle ( int event )
 =cut
 
 bool
-BarGroup::opened( bool value = NO_INIT )
+fltk::BarGroup::opened( bool value = NO_INIT )
     CASE: !items
         C_ARGS:
      CASE:
@@ -105,7 +94,7 @@ BarGroup::opened( bool value = NO_INIT )
 =cut
 
 bool
-BarGroup::open( )
+fltk::BarGroup::open( )
     CODE:
         switch ( ix ) {
             case 0: RETVAL = THIS->open( );  break;
@@ -127,7 +116,7 @@ BarGroup::open( )
 =cut
 
 int
-BarGroup::glyph_size( int value = NO_INIT )
+fltk::BarGroup::glyph_size( int value = NO_INIT )
     CASE: !items
         CODE:
             RETVAL = THIS->glyph_size( );
