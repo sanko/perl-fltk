@@ -2323,6 +2323,29 @@ fltk::Widget::copy_style( fltk::Style * s )
 
 
 
+
+
+
+
+
+
+
+
+
+fltk::NamedStyle *
+fltk::Widget::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+
+
+
+
+
+
+
 #if  0
 
 
