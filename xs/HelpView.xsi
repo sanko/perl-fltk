@@ -39,7 +39,7 @@ Creates a new L<HelpView|FLTK::HelpView>.
 
 =cut
 
-void
+fltk::HelpView *
 fltk::HelpView::new( int x, int y, int w, int h, char * label = 0 )
 
 =for apidoc |||dir|directory||
