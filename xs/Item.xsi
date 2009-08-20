@@ -138,7 +138,7 @@ L<C<set_style()>|FLTK::Item/"set_style"> before drawing any items.
 =cut
 
 fltk::NamedStyle *
-fltk::Item::default_style_( )
+fltk::Item::default_style( )
     CODE:
         RETVAL = THIS->default_style;
     OUTPUT:
