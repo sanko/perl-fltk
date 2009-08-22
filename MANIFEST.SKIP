@@ -126,4 +126,9 @@ examples/timer.pl
 examples/fltk.ico
 examples/~cpp.pl
 
+# Don't include these developer only files
+inc/MBX/FLTK/Developer.pm
+
 # $ID$
+
+

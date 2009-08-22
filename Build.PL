@@ -1,3 +1,4 @@
+
 =pod
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
@@ -9,11 +10,9 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use lib 'inc';
-use MBX::FLTK;
 use Config qw[%Config];
 use File::Find qw[find];
 my $automated_testing = $ENV{AUTOMATED_TESTING} || $ENV{PERL_MM_USE_DEFAULT};
@@ -24,7 +23,12 @@ find \&find_cb, qw[t/00000_basic t/20000_functions
 @tests = sort @tests;
 
 #
-my $mb = MBX::FLTK->new(
+my $class = $is_developer ? 'MBX::FLTK::Developer' : 'MBX::FLTK';
+if (!eval "require $class") {
+printf 'Failed to load %s: %s This ain\'t good, so... bye!', $class, $@;
+exit 0;
+}
+my $mb = $class->new(
     module_name       => 'FLTK',
     license           => 'artistic_2',
     dist_author       => 'Sanko Robinson <sanko@cpan.org>',
@@ -62,13 +66,7 @@ my $mb = MBX::FLTK->new(
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
                        )
     ],
-    no_index => {
-
-        #directory => [qw[examples]],
-        #file => [qw[scripts/hello_world.pl]]
-    },
-
-    #script_files => qw[scripts/fltk.pl],
+    no_index => {directory => [qw[examples inc]]},
     test_files => \@tests,
     meta_merge => {
         generated_by => 'Conversion, software version 7.0',
@@ -92,15 +90,16 @@ my $mb = MBX::FLTK->new(
 print sub { my ($x) = @_; chomp $x if !$mb->args('messy'); $x; }
     ->(<<'#END');
  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    Buliding FLTK requires a functioning C++ compiler.  Hold on a sec
-    while I locate one...
+  Buliding FLTK requires a functioning C++ compiler.  Hold on a sec while I
+  locate one...
 #END
 if (!( ($mb->cbuilder && ($mb->cbuilder->{'quiet'} = !$mb->args('messy')))
        || $mb->cbuilder->have_compiler)
     )
 {   print <<'#END'; exit 0; }
- Oops!  ExtUtils::CBuilder failed to find working
-    compier so I this is where you and I part ways.  It's been real.
+
+ Oops!  ExtUtils::CBuilder failed to find working compier so
+  I this is where you and I part ways.  It's been real.
  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 #END
 print <<'#END';
