@@ -119,7 +119,7 @@ fltk::Item::set_style( style, bool menubar )
     CASE:
         fltk::Widget * style
 
-=for apidoc ||
+=for apidoc |||clear_style|
 
 Reset the style set by calling L<C<set_style( )>|FLTK::Item/"set_style">.
 
