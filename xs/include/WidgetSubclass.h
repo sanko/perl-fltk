@@ -68,10 +68,19 @@ public:
             : X( x, y, w, h ) { // ccCellBox, ccValueBox, ccHueBox
         _class = cls;
     };
+    WidgetSubclass ( char * cls, char * label, fltk::Symbol * symbol,
+                     bool begin )
+            : X( label, symbol, begin ) { // ItemGroup
+        _class = cls;
+    }
     WidgetSubclass( char * cls, char * name, fltk::Box * down )
             : X( name, down ) { // HighlightBox
         _class = cls;
     };
+    WidgetSubclass ( char * cls, char * label, bool begin )
+            : X( label, begin ) { // ItemGroup
+        _class = cls;
+    }
     WidgetSubclass ( char * cls, char * name )
             : X( name ) { // FlatBox
         _class = cls;
