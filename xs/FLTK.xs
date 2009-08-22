@@ -200,6 +200,8 @@ INCLUDE: Flags.xsi
 
 INCLUDE: gl.xsi
 
+INCLUDE: layout.xsi
+
 INCLUDE: run.xsi
 
 INCLUDE: Version.xsi

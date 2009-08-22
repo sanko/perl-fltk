@@ -1,0 +1,112 @@
+#ifndef DISABLE_LAYOUT
+
+MODULE = FLTK               PACKAGE = FLTK::Layout
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Values of the bits stored in FLTK::Widget::layout_damage( ).
+
+=for git $Id$
+
+=head1 Description
+
+When a widget resized or moved (or when it is initially created), flags are
+set in L<C<Widget::layout_damage()>|FLTK::Widget/"layout_damage"> to indicate
+the layout is damaged. This will cause the
+L<C<Widget::layout()>|FLTK::Widget/"layout"> function to be called just before
+fltk attempts to draw the windows on the screen. This is useful because often
+calculating the new layout is quite expensive, this expense is now deferred
+until the user will actually see the new size.
+
+Some L<Group|FLTK::Group> widgets such as L<PackedGroup|FLTK::PackedGroup>
+will also use the L<C<Widget::layout()>|FLTK::Widget/"layout"> function to
+find out how big a widget should be. A L<Widget|FLTK::Widget> is allowed to
+change it's own dimensions in L<C<layout()>|FLTK::Widget/"layout"> (except it
+is not allowed to change it if called a second time with no changes other than
+it's x/y position). This allows widgets to resize to fit their contents.
+
+The layout bits are turned on by calling
+L<C<Widget::relayout()>|FLTK::Widget/"relayout">.
+
+Values are imported with the C<layout> tag and include the following:
+
+=over
+
+=item C<LAYOUT_X>
+
+L<C<Widget::x()>|FLTK::Widget/"x"> changed by
+L<C<resize()>|FLTK::Widget/"resize">.
+
+=item C<LAYOUT_Y>
+
+L<C<Widget::y()>|FLTK::Widget/"y"> changed by
+L<C<resize()>|FLTK::Widget/"resize">.
+
+=item C<LAYOUT_XY>
+
+Same as C<LAYOUT_X|LAYOUT_Y>.
+
+=item CLAYOUT_W>
+
+L<C<Widget::w()>|FLTK::Widget/"w"> changed by
+L<C<resize()>|FLTK::Widget/"resize">.
+
+=item C<LAYOUT_H>
+
+L<C<Widget::h()>|FLTK::Widget/"h"> changed by
+L<C<resize()>|FLTK::Widget/"resize">.
+
+=item C<LAYOUT_WH>
+
+Same as C<LAYOUT_W|LAYOUT_H>.
+
+=item C<LAYOUT_XYWH>
+
+Same as C<LAYOUT_XY|LAYOUT_WH>.
+
+=item C<LAYOUT_CHILD>
+
+L<C<Widget::layout()>|FLTK::Widget/"layout"> needs to be called on a child of
+this group widget.
+
+=item C<LAYOUT_USER>
+
+The moving/resizing is being caused by the user and not internal code.
+
+=item C<LAYOUT_DAMAGE>
+
+L<C<Widget::relayout()>|FLTK::Widget/"relayout"> was called.
+
+=back
+
+=cut
+
+#include <fltk/layout.h>
+
+BOOT:
+    newCONSTSUB(FLTK_stash, "LAYOUT_X", newSViv( LAYOUT_X ));
+    export_tag( "LAYOUT_X", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_Y", newSViv( LAYOUT_Y ));
+    export_tag( "LAYOUT_Y", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_XY", newSViv( LAYOUT_XY ));
+    export_tag( "LAYOUT_XY", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_W", newSViv( LAYOUT_W ));
+    export_tag( "LAYOUT_W", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_H", newSViv( LAYOUT_H ));
+    export_tag( "LAYOUT_H", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_WH", newSViv( LAYOUT_WH ));
+    export_tag( "LAYOUT_WH", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_XYWH", newSViv( LAYOUT_XYWH ));
+    export_tag( "LAYOUT_XYWH", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_CHILD", newSViv( LAYOUT_CHILD ));
+    export_tag( "LAYOUT_CHILD", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_USER", newSViv( LAYOUT_USER ));
+    export_tag( "LAYOUT_USER", "layout" );
+    newCONSTSUB(FLTK_stash, "LAYOUT_DAMAGE", newSViv( LAYOUT_DAMAGE ));
+    export_tag( "LAYOUT_DAMAGE", "layout" );
+
+#endif // ifndef DISABLE_LAYOUT
