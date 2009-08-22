@@ -85,14 +85,11 @@ with the values of C<r,g,b>.
 
 =back
 
-=head1 Production Ready Perl 6 (read 'One of these days')
+=head1 Production Ready Perl 6 (read: 'One of these days')
 
 =over
 
-=item * Somehow control order of object destruction...
-
-...to kill child elements first. This way, I can clean up perl objects as they
-go out of scope.
+=item * None yet
 
 =back
 
