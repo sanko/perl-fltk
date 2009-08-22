@@ -9,9 +9,8 @@ package MBX::FLTK::Developer;
     use File::Spec::Functions qw[catdir rel2abs abs2rel canonpath];
     use File::Find qw[find];
     use File::Path 2.07 qw[make_path];
-    use base 'Module::Build';
+    use base 'MBX::FLTK';
     use Alien::FLTK;
-    use MBX::FLTK;
 
     sub make_tarball {
         my ($self, $dir, $file, $quiet) = @_;
