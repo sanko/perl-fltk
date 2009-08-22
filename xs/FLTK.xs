@@ -198,13 +198,13 @@ INCLUDE: draw.xsi
 
 INCLUDE: Flags.xsi
 
-INCLUDE: Version.xsi
-
 INCLUDE: gl.xsi
 
 INCLUDE: run.xsi
 
-    # Objects (Widgets, etc.)
+INCLUDE: Version.xsi
+
+    # Objects (Widgets, Types, etc.)
 
 INCLUDE: Adjuster.xsi
 
@@ -277,6 +277,8 @@ INCLUDE: InvisibleBox.xsi
 INCLUDE: Item.xsi
 
 INCLUDE: ItemGroup.xsi
+
+INCLUDE: LabelType.xsi
 
 INCLUDE: MultiBrowser.xsi
 

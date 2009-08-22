@@ -44,6 +44,7 @@ fltk::ComboBox        *   O_FLTK
 fltk::Cursor          *   O_FLTK
 fltk::CycleButton     *   O_FLTK
 fltk::Dial            *   O_FLTK
+fltk::EngravedLabel   *   O_FLTK
 fltk::FileBrowser     *   O_FLTK
 fltk::FileChooser     *   O_FLTK
 fltk::FileIcon        *   O_FLTK

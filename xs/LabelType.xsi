@@ -1,0 +1,125 @@
+#ifndef DISABLE_LABELTYPE
+
+MODULE = FLTK               PACKAGE = FLTK::LabelType
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Determines how to draw a label's text
+
+=for git $Id$
+
+=head1 Description
+
+A L<LabelType|FLTK::LabelType> determines how to draw the text of the label.
+This is not used very much, it can be used to draw engraved or shadowed
+labels. You could also put in code that interprets the text of the label and
+draws anything you want with it.
+
+=cut
+
+#include <fltk/LabelType.h>
+
+=begin apidoc
+
+=for apidoc ||FLTK::LabelType|new|name|
+
+
+
+=cut
+
+fltk::LabelType *
+fltk::LabelType::new( char * name )
+
+=for apidoc ||string|name||||
+
+
+
+=cut
+
+const char *
+fltk::LabelType::name( )
+    CODE:
+        RETVAL = THIS->name;
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||FLTK::LabelType|next||
+
+
+
+=for apidoc ||FLTK::LabelType|first||
+
+
+
+=cut
+
+fltk::LabelType *
+fltk::LabelType::next( )
+    CODE:
+        RETVAL = THIS->next;
+    OUTPUT:
+        RETVAL
+
+fltk::LabelType *
+fltk::LabelType::first( )
+    CODE:
+        RETVAL = THIS->first;
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||FLTK::LabelType|find|name||
+
+
+
+=cut
+
+fltk::LabelType *
+fltk::LabelType::find( char * name )
+
+#endif // ifndef DISABLE_LABELTYPE
+
+#ifndef DISABLE_ENGRAVEDLABEL
+
+MODULE = FLTK               PACKAGE = FLTK::EngravedLabel
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for abstract Determines how to draw a label's text with an engraved look
+
+=for git $Id$
+
+=head1 Description
+
+This is a subclass of L<LabelType|FLTK::LabelType>. You can use this to draw
+overlapping patterns.
+
+=cut
+
+#include <fltk/LabelType.h>
+
+=begin apidoc
+
+=for apidoc xH||FLTK::EngravedLabel|new|name|
+
+This is on my TODO list...
+
+=cut
+
+fltk::EngravedLabel *
+fltk::EngravedLabel::new( char * name, AV * p, ... )
+    CODE:
+        croak("FLTK::EngravedLabel is incomplete; Feel free to contribute.");
+        //RETVAL = new EngravedLabel(const char * n, const int p[][3]);
+
+BOOT:
+    isa( "FLTK::EngravedLabel", "FLTK::LabelType" );
+
+#endif // ifndef DISABLE_ENGRAVEDLABEL

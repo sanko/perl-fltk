@@ -76,6 +76,7 @@ xs/IntInput.xsi
 xs/InvisibleBox.xsi
 xs/Item.xsi
 xs/ItemGroup.xsi
+xs/LabelType.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
