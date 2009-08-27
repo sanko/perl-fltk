@@ -21,6 +21,7 @@ Please see the notes on L<joining the team|FLTK::Notes/"Join the Team">.>
 
 =cut
 
+#define PERL_NO_GET_CONTEXT 1
 #include <EXTERN.h>
 #include <perl.h>
 #define NO_XSLOCKS // XSUB.h will otherwise override various things we need
@@ -61,10 +62,8 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 static HV * Mapping = (HV*)NULL;
 #endif // #ifdef ENABLE_HASH_CALLBACKS
 
-// For inserting stuff directly into FLTK's namespace
-HV * FLTK_stash  = gv_stashpv( "FLTK", TRUE );
-// For inserting stuff directly into FLTK's exports
-HV * FLTK_export = get_hv( "FLTK::EXPORT_TAGS", TRUE );
+HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
+   * FLTK_export; // For inserting stuff directly into FLTK's exports
 
 =begin apidoc
 
@@ -84,6 +83,7 @@ the C<CODE> should be an AV* containing data that looks a little like this...
 void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #ifdef ENABLE_CALLBACKS
 #ifndef ENABLE_HASH_CALLBACKS
+    dTHX;
     if (CODE == NULL) return;
     AV *cbargs = (AV *) CODE;
     if (cbargs == NULL) return;
@@ -121,6 +121,7 @@ little like this...
 
 void _cb (void * CODE) { // Callbacks for timers, etc.
 #ifdef ENABLE_CALLBACKS
+    dTHX;
 #ifdef ENABLE_HASH_CALLBACKS
     warn("Hash based callbacks are not ready.");
 #else // #ifdef ENABLE_HASH_CALLBACKS
@@ -149,12 +150,14 @@ This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance.
 =cut
 
 void isa ( const char * package, const char * parent ) {
+    dTHX;
     av_push( get_av( form( "%s::ISA", package ), TRUE ),
              newSVpv( parent, 0 ) );
     // TODO: make this spider up the list and make deeper connections?
 }
 
 void export_tag (const char * what, const char * _tag ) {
+    dTHX;
     SV ** tag = hv_fetch( FLTK_export, _tag, strlen(_tag), TRUE );
     if (tag && SvOK(* tag) && SvROK(* tag ) && (SvTYPE(SvRV(*tag))) == SVt_PVAV)
         av_push((AV*)SvRV(*tag), newSVpv(what, 0));
@@ -185,6 +188,10 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
 // Alright, let's get things started, shall we?
 
 MODULE = FLTK               PACKAGE = FLTK
+
+BOOT:
+    FLTK_stash  = Perl_gv_stashpv(aTHX_ "FLTK", TRUE );
+    FLTK_export = Perl_get_hv(aTHX_ "FLTK::EXPORT_TAGS", TRUE );
 
     # Functions (Exported)
 

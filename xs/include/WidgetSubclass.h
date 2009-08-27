@@ -96,6 +96,7 @@ public:
     }
     int handle( int event ) {
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         av_push( args, sv_2mortal( newSViv( event ) ) );
         handled = _call_method( "handle", args );
@@ -105,6 +106,7 @@ public:
     };
     int handle( int event, fltk::Rectangle rect ) { // fltk::Input
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         av_push( args, sv_2mortal( newSViv( event ) ) );
         SV * sv_rect = sv_newmortal();
@@ -117,6 +119,7 @@ public:
     };
     void draw ( ) { // Just about everything supports this one
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         handled = _call_method( "draw", args );
         if ( handled != 1 )
@@ -124,6 +127,7 @@ public:
     };
     void draw ( int glyph_width ) {  // For fltk::Button
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         av_push( args, sv_2mortal( newSViv( glyph_width ) ) );
         handled = _call_method( "draw", args );
@@ -132,6 +136,7 @@ public:
     };
     void draw( fltk::Rectangle * sr ) { // fltk::Input
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         SV * sv_rect = sv_newmortal();
         sv_setref_pv( sv_rect, "FLTK::Rectangle", ( void * ) sr );
@@ -142,6 +147,7 @@ public:
     };
     void draw( fltk::Rectangle * sr, fltk::Flags flags, bool slot ) { // fltk::Slider
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         SV * sv_rect = sv_newmortal();
         sv_setref_pv( sv_rect, "FLTK::Rectangle", ( void * ) sr );
@@ -154,6 +160,7 @@ public:
     };
     void draw_overlay( ) { // fltk::GlWindow
         int handled = 1; /* safe to assume for now */
+        dTHX;
         AV * args = newAV();
         handled = _call_method( "draw_overlay", args );
         if ( handled != 1 )
@@ -165,6 +172,7 @@ private:
 protected:
     int _call_method ( const char * method, AV * args ) {
         int retval = 0;
+        dTHX;
         HV * pkg = gv_stashpv( _class, 0 );
         GV * gv  = gv_fetchmethod_autoload( pkg, method, FALSE );
         if ( !( gv && isGV( gv ) ) )
