@@ -55,8 +55,6 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 #undef  ENABLE_CALLBACKS    // TODO: Explain this better :)
 #endif // #ifndef SvWEAKREF
 
-#include <fltk/Widget.h>
-
 // #define ENABLE_HASH_CALLBACKS // TODO - based on perlcall
 #ifdef ENABLE_HASH_CALLBACKS
 static HV * Mapping = (HV*)NULL;
