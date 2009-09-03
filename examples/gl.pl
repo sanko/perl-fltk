@@ -10,6 +10,7 @@ my $range     = 12;
 
     package MyGlWindow;
     our @ISA = 'FLTK::GlWindow';
+    use FLTK qw[:gl];
     use OpenGL;
 
     sub draw {
@@ -33,10 +34,9 @@ my $range     = 12;
         glEnd();
         glPopMatrix();
         $theta += $speed;
-
-        #glsetcolor(FLTK::WHITE());
-        #glsetfont($self->labelfont(), $self->labelsize() * 3);
-        #gldrawtext("Hello, World!", -.4, 0);
+        glsetcolor(FLTK::WHITE());
+        glsetfont($self->labelfont(), $self->labelsize() * 3);
+        gldrawtext("Hello, World!", -.4, 0);
     }
 }
 my $gl = MyGlWindow->new(100, 100, 500, 500, 'FLTK OpenGL Window');

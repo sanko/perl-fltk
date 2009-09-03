@@ -66,7 +66,7 @@ xs/FloatInput.xsi
 xs/FLTK.xs
 xs/Font.xsi
 xs/FrameBox.xsi
-xs/gl.xsi
+xs/GL.xsi
 xs/GlWindow.xsi
 xs/Group.xsi
 xs/HelpDialog.xsi

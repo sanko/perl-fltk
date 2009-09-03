@@ -1,6 +1,6 @@
 #ifndef DISABLE_GL
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =pod
 
@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::gl
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Portable OpenGL
+=for version 0.0530_001
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::GL - Portable OpenGL
 
 =head1 Description
 
@@ -40,7 +44,11 @@ glstart( )
 void
 glfinish( )
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glstart",  "gl");
+    export_tag("glfinish", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||glsetcolor|color
 
@@ -53,7 +61,10 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 glsetcolor( fltk::Color color )
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glsetcolor", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||glstrokerect|x|y|w|h|
 
@@ -73,7 +84,11 @@ glstrokerect( int x, int y, int w, int h )
 void
 glfillrect ( int x, int y, int w, int h )
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glstrokerect", "gl");
+    export_tag("glfillrect",   "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||glsetfont|font|size||
 
@@ -86,7 +101,10 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 glsetfont( fltk::Font * f, float size )
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glsetfont", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||glgetascent||||
 
@@ -106,7 +124,11 @@ glgetascent( )
 float
 glgetdescent( )
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glgetascent",  "gl");
+    export_tag("glgetdescent", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]||width|glgetwidth|string|||
 
@@ -127,7 +149,10 @@ glgetwidth( char * string, int length = NO_INIT )
     CASE:
         C_ARGS: string, length
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("glgetwidth", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||gldrawtext||||
 
@@ -144,7 +169,10 @@ gldrawtext ( char * string, float x = NO_INIT, float y = NO_INIT, float z = 0 )
     CASE: items >= 3
         C_ARGS: string, /* NOTE: n (length) is not supported */ x, y, z
 
-MODULE = FLTK               PACKAGE = FLTK::gl
+BOOT:
+    export_tag("gldrawtext", "gl");
+
+MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for apidoc t[gl]|||gldrawimage|data|x|y|w|h|d = 3|ld = 0
 
@@ -156,5 +184,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 gldrawimage( uchar * data, int x, int y, int w,int h, int d = 3, int ld = 0 )
+
+BOOT:
+    export_tag("gldrawimage", "gl");
 
 #endif // ifndef DISABLE_GL
