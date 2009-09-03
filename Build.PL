@@ -25,8 +25,8 @@ find \&find_cb, qw[t/00000_basic t/20000_functions
 #
 my $class = $is_developer ? 'MBX::FLTK::Developer' : 'MBX::FLTK';
 if (!eval "require $class") {
-printf 'Failed to load %s: %s This ain\'t good, so... bye!', $class, $@;
-exit 0;
+    printf 'Failed to load %s: %s This ain\'t good, so... bye!', $class, $@;
+    exit 0;
 }
 my $mb = $class->new(
     module_name       => 'FLTK',
@@ -59,14 +59,14 @@ my $mb = $class->new(
                        'File::Path'         => 2.04,
                        'Module::Build'      => 0,
                        'Devel::PPPort'      => 0,
-                       'Alien::FLTK'        => 0.06786
+                       'Alien::FLTK'        => 0.06844
     },
     add_to_cleanup => [qw[FLTK-*],
                        map {"*$_"} (
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
                        )
     ],
-    no_index => {directory => [qw[examples inc]]},
+    no_index   => {directory => [qw[examples inc]]},
     test_files => \@tests,
     meta_merge => {
         generated_by => 'Conversion, software version 7.0',
