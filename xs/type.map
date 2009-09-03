@@ -71,6 +71,7 @@ fltk::Item            *   O_FLTK
 fltk::ItemGroup       *   O_FLTK
 fltk::LabelType       *   O_FLTK
 fltk::LightButton     *   O_FLTK
+fltk::LineDial        *   O_FLTK
       fltk::Monitor   *   O_FLTK
 const fltk::Monitor   *   O_FLTK
 fltk::MultiBrowser    *   O_FLTK
