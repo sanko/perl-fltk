@@ -2689,4 +2689,9 @@ fltk::Widget::baseline_y ( )
 
 #endif
 
+
+
+
+INCLUDE: ClockOutput.xsi
+
 #endif // ifndef DISABLE_WIDGET

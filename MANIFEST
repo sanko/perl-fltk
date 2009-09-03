@@ -43,6 +43,7 @@ xs/Button.xsi
 xs/CheckButton.xsi
 xs/Choice.xsi
 xs/Clock.xsi
+xs/ClockOutput.xsi
 xs/Color.xsi
 xs/ColorChooser.xsi
 xs/ComboBox.xsi

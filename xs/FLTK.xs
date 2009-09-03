@@ -231,8 +231,6 @@ INCLUDE: CheckButton.xsi
 
 INCLUDE: Choice.xsi
 
-INCLUDE: Clock.xsi
-
 INCLUDE: Color.xsi
 
 INCLUDE: ColorChooser.xsi
