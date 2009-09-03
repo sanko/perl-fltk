@@ -1,6 +1,7 @@
 Build.PL
 Changes
 examples/cursor.pl
+examples/gl.pl
 examples/hello.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
