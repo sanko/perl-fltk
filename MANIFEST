@@ -39,6 +39,7 @@ xs/ask.xsi
 xs/BarGroup.xsi
 xs/Box.xsi
 xs/Browser.xsi
+xs/Browser/Mark.xsi
 xs/Button.xsi
 xs/CheckButton.xsi
 xs/Choice.xsi
