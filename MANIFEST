@@ -78,6 +78,8 @@ xs/Item.xsi
 xs/ItemGroup.xsi
 xs/LabelType.xsi
 xs/layout.xsi
+xs/LightButton.xsi
+xs/LineDial.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/ppport.pl
