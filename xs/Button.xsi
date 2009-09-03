@@ -58,7 +58,7 @@ Creates a new C<FLTK::Button> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::FLTK::Button::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Button::new( int x, int y, int w, int h, const char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Button>(CLASS,x,y,w,h,label);
