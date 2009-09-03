@@ -70,12 +70,14 @@ fltk::InvisibleBox    *   O_FLTK
 fltk::Item            *   O_FLTK
 fltk::ItemGroup       *   O_FLTK
 fltk::LabelType       *   O_FLTK
+fltk::LightButton     *   O_FLTK
       fltk::Monitor   *   O_FLTK
 const fltk::Monitor   *   O_FLTK
 fltk::MultiBrowser    *   O_FLTK
 fltk::NamedStyle      *   O_FLTK
 fltk::Menu            *   O_FLTK
 fltk::MenuSection     *   O_FLTK
+fltk::NamedStyle      *   O_FLTK
 fltk::List            *   O_FLTK
 fltk::Scrollbar       *   O_FLTK
 fltk::Slider          *   O_FLTK

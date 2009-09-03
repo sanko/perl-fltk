@@ -289,6 +289,8 @@ INCLUDE: ItemGroup.xsi
 
 INCLUDE: LabelType.xsi
 
+INCLUDE: LightButton.xsi
+
 INCLUDE: MultiBrowser.xsi
 
 #INCLUDE: Rectangle.xsi
