@@ -59,14 +59,17 @@ xs/FileInput.xsi
 xs/FillDial.xsi
 xs/FillSlider.xsi
 xs/Flags.xsi
+xs/FlatBox.xsi
 xs/FloatInput.xsi
 xs/FLTK.xs
 xs/Font.xsi
+xs/FrameBox.xsi
 xs/gl.xsi
 xs/GlWindow.xsi
 xs/Group.xsi
 xs/HelpDialog.xsi
 xs/HelpView.xsi
+xs/HighlightBox.xsi
 xs/HighlightButton.xsi
 xs/Image.xsi
 xs/include/GlWindowSubclass.h
