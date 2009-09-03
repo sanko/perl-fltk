@@ -41,6 +41,9 @@ xs/Box.xsi
 xs/Browser.xsi
 xs/Browser/Mark.xsi
 xs/Button.xsi
+xs/ccCellBox.xsi
+xs/ccHueBox.xsi
+xs/ccValueBox.xsi
 xs/CheckButton.xsi
 xs/Choice.xsi
 xs/Clock.xsi

@@ -2689,6 +2689,12 @@ fltk::Widget::baseline_y ( )
 
 #endif
 
+INCLUDE: ccCellBox.xsi
+
+INCLUDE: ccHueBox.xsi
+
+INCLUDE: ccValueBox.xsi
+
 
 
 

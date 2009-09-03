@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::ColorChooser
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Color chooser for the Fast Light Tool Kit (FLTK).
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::ColorChooser - Color chooser for the Fast Light Tool Kit
 
 =head1 Description
 
@@ -307,141 +311,3 @@ BOOT:
     isa("FLTK::ColorChooser", "FLTK::Group");
 
 #endif // #ifndef DISABLE_COLORCHOOSER
-
-#ifndef DISABLE_CCHUEBOX
-
-MODULE = FLTK               PACKAGE = FLTK::ccHueBox
-
-=pod
-
-=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
-
-=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-=for abstract
-
-=for git $Id$
-
-=head1 Description
-
-
-
-=cut
-
-#include <fltk/ColorChooser.h>
-
-=for apidoc ||FLTK::ccHueBox|new|x|y|w|h
-
-
-
-=cut
-
-#include "include/WidgetSubclass.h"
-
-void
-fltk::ccHueBox::new( int x, int y, int w, int h )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ccHueBox>(CLASS,x,y,w,h);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
-
-BOOT:
-    isa("FLTK::ccHueBox", "FLTK::Widget");
-
-#endif // #ifndef DISABLE_CCHUEBOX
-
-#ifndef DISABLE_CCVALUEBOX
-
-MODULE = FLTK               PACKAGE = FLTK::ccValueBox
-
-=pod
-
-=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
-
-=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-=for abstract
-
-=for git $Id$
-
-=head1 Description
-
-
-
-=cut
-
-#include <fltk/ColorChooser.h>
-
-=for apidoc ||FLTK::ccValueBox|new|x|y|w|h
-
-
-
-=cut
-
-#include "include/WidgetSubclass.h"
-
-void
-fltk::ccValueBox::new( int x, int y, int w, int h )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ccValueBox>(CLASS,x,y,w,h);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
-
-BOOT:
-    isa("FLTK::ccValueBox", "FLTK::Widget");
-
-#endif // #ifndef DISABLE_CCVALUEBOX
-
-#ifndef DISABLE_CCCELLBOX
-
-MODULE = FLTK               PACKAGE = FLTK::ccCellBox
-
-=pod
-
-=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
-
-=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
-
-=for abstract
-
-=for git $Id$
-
-=head1 Description
-
-
-
-=cut
-
-#include <fltk/ColorChooser.h>
-
-=for apidoc ||FLTK::ccCellBox|new|x|y|w|h
-
-
-
-=cut
-
-#include "include/WidgetSubclass.h"
-
-void
-fltk::ccCellBox::new( int x, int y, int w, int h )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ccCellBox>(CLASS,x,y,w,h);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
-
-BOOT:
-    isa("FLTK::ccCellBox", "FLTK::Widget");
-
-#endif // #ifndef DISABLE_CCCELLBOX
