@@ -1,7 +1,5 @@
 # Avoid version control files.
-\B\.git\b
-\B\.gitnore$
-.gitignore$
+\B\.git.*$
 
 # Avoid self
 ^MANIFEST\.SKIP$
