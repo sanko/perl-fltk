@@ -223,6 +223,14 @@ INCLUDE: AlignGroup.xsi
 
 INCLUDE: AnsiWidget.xsi
 
+#ifndef DISABLE_WIDGETASSOCIATION
+
+INCLUDE: AssociationFunctor.xsi
+
+INCLUDE: AssociationType.xsi
+
+#endif // #ifndef DISABLE_WIDGETASSOCIATION
+
 INCLUDE: BarGroup.xsi
 
 INCLUDE: Box.xsi
