@@ -201,9 +201,9 @@ INCLUDE: ask.xsi
 
 INCLUDE: damage.xsi
 
-INCLUDE: events.xsi
-
 INCLUDE: draw.xsi
+
+INCLUDE: events.xsi
 
 INCLUDE: Flags.xsi
 
