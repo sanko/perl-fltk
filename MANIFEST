@@ -57,6 +57,7 @@ xs/damage.xsi
 xs/Dial.xsi
 xs/Divider.xsi
 xs/draw.xsi
+xs/EngravedLabel.xsi
 xs/events.xsi
 xs/FileBrowser.xsi
 xs/FileIcon.xsi
