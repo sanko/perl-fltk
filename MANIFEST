@@ -36,6 +36,8 @@ xs/Adjuster.xsi
 xs/AlignGroup.xsi
 xs/AnsiWidget.xsi
 xs/ask.xsi
+xs/AssociationFunctor.xsi
+xs/AssociationType.xsi
 xs/BarGroup.xsi
 xs/Box.xsi
 xs/Browser.xsi
