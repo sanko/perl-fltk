@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Flags
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Unified flags set for FLTK
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Flags - Unified flags set for FLTK
 
 =head1 Description
 

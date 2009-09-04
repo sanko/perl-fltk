@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::GlWindow
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract ...exactly what you think it is
+=for version 0.530_001
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::GlWindow - ...exactly what you think it is
 
 =head1 Description
 

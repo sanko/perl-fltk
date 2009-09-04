@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::AnsiWidget
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Displays ANSI escape codes
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::AnsiWidget - Displays ANSI escape codes
 
 =head1 Description
 

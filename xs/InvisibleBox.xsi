@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::InvisibleBox
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Mimes gotta run free, man.
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::InvisibleBox - Standard mime trap
 
 =head1 Description
 

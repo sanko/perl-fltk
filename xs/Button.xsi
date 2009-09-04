@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Button
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Push button widget
+=for version 0.530
 
 =for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::Button - Push button widget
 
 =head1 Description
 

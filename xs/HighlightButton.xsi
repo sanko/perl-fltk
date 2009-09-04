@@ -8,15 +8,21 @@ MODULE = FLTK               PACKAGE = FLTK::HighlightButton
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract This button highlights even if the default style does not do so
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::HighlightButton - This button highlights even if the default style does not do so
 
 =head1 Description
 
 Same as a normal button but the L<C<box()>|/"box"> defaults to a style that
 draws as a flat rectangle until the mouse points at it, then it draws as a
 raised highlighted rectangle.
+
+=begin apidoc
 
 =cut
 

@@ -12,7 +12,7 @@ MODULE = FLTK               PACKAGE = FLTK::Box
 
 =for git $Id$
 
-=for NAME
+=head1 NAME
 
 FLTK::Box - Define your own values for L<C<box()>|FLTK::Widget/"box"> on a
 widget by making one of these

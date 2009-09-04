@@ -8,11 +8,20 @@ MODULE = FLTK               PACKAGE = FLTK::run
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for version 0.530
+
 =for git $Id$ for got=
 
-=cut
+=head1 NAME
 
-#include <fltk/run.h>
+FLTK::run
+
+=head1 Description
+
+
+
+
+=begin apidoc
 
 =for apidoc t[run]F|X||display|d
 
@@ -32,6 +41,8 @@ on some versions of Windows so I commented it all out there, sigh.
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK
+
+#include <fltk/run.h>
 
 void
 display ( char * d )

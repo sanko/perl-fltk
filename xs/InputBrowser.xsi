@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::InputBrowser
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Input Browser (Combo Box) widget
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::InputBrowser - Input Browser (Combo Box) widget
 
 =head1 Description
 

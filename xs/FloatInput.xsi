@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::FloatInput
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Subclass of FLTK::Slider
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::FloatInput - Subclass of FLTK::NumericInput
 
 =head1 Description
 

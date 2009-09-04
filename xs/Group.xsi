@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Group
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Base class for all container widgets
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Group - Base class for all container widgets
 
 =head1 Description
 

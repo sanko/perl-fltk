@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::MultiBrowser
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Browser that lets the user select more than one item at a time
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::MultiBrowser - Browser that lets the user select more than one item at a time
 
 =head1 Description
 

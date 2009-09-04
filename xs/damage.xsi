@@ -8,13 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::damage
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Values of the bits stored in Widget::damage()
+=for version 0.530
 
 =for git $Id$
 
-=cut
+=head1 NAME
 
-#include <fltk/damage.h>
+FLTK::damage - Values of the bits stored in C<FLTK::Widget::damage( )>
 
 =pod
 
@@ -76,6 +76,8 @@ The folowing default may be imported using the C<damage> tag:
 =back
 
 =cut
+
+#include <fltk/damage.h>
 
 BOOT:
     newCONSTSUB(FLTK_stash, "DAMAGE_VALUE", newSViv(DAMAGE_VALUE));

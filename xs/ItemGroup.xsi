@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::ItemGroup
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Widget designed to be a nested list in a menu or browser
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::ItemGroup - Widget designed to be a nested list in a menu or browser
 
 =head1 Description
 

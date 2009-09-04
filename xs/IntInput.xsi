@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::IntInput
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Input box which accepts only numeric input
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::IntInput - Input box which accepts only numeric input
 
 =head1 Description
 

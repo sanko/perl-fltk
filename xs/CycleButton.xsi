@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::CycleButton
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Popup list of items that the user can choose one of
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::CycleButton - Popup list of items that the user can choose one of
 
 =head1 Description
 

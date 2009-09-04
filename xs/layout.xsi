@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Layout
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Values of the bits stored in FLTK::Widget::layout_damage( ).
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Layout - Values of the bits stored in C<FLTK::Widget::layout_damage( )>
 
 =head1 Description
 

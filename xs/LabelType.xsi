@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::LabelType
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Determines how to draw a label's text
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::LabelType - Determines how to draw a label's text
 
 =head1 Description
 

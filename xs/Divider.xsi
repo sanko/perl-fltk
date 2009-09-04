@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Divider
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Widget to draw a divider line in a menu
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Divider - Widget to draw a divider line in a menu
 
 =head1 Description
 

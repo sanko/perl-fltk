@@ -2,11 +2,15 @@
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
 
-=for abstract Perl Interface to the Fast Light Toolkit
-
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for version 0.530
+
 =for git $Id$
+
+=head1 NAME
+
+FLTK - Perl Interface to the Fast Light Toolkit
 
 =head1 Description
 

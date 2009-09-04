@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::LightButton
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Forms/XForms/Flame style button with indicator light on left
+=for version 0.530
 
 =for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::LightButton - Forms/XForms/Flame style button with indicator light on left
 
 =head1 Description
 

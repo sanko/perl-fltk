@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Image
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Basic image handling
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Image - Basic image handling
 
 =head1 Description
 

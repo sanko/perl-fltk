@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::AlignGroup
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Align layout manager
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::AlignGroup - Align layout manager
 
 =head1 Description
 

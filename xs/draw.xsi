@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::draw
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract The FLTK drawing library, used by all widgets to draw themselves
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::draw - The FLTK drawing library, used by all widgets to draw themselves
 
 =head1 Description
 
@@ -39,8 +43,6 @@ including crashing.
 =cut
 
 #include <fltk/draw.h>
-
-=begin apidoc
 
 =for apidoc t[gsave,draw]|||push_matrix|
 
@@ -1308,7 +1310,8 @@ C<RAW_LABEL> set.
 C<RAW_LABEL> flag is set.
 
 =item Splits it at every C<\t> tab character and uses
-L<C<column_widths()>|/"column_widths"> to set each section into a column.
+L<C<column_widths()>|FLTK::Widget/"column_widths"> to set each section into a
+column.
 
 =back
 

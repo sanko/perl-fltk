@@ -8,13 +8,18 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Event types and data. A Widget::handle() method needs this.
+=for version 0.530
 
 =for git $Id$
 
+=head1 NAME
+
+FLTK::events - Event types and data
+
 =head1 Description
 
-TODO
+Event types and data. A L<C<Widget::handle()>|FLTK::Widget/"handle"> method
+needs this.
 
 =cut
 
@@ -671,6 +676,8 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 =pod
 
+=end apidoc
+
 =head1 Devices
 
 Device identifiers are returned by C<event_device()>. This is useful to get
@@ -722,6 +729,8 @@ BOOT:
     export_tag("DEVICE_AIRBRUSH", "events");
     newCONSTSUB(FLTK_stash, "DEVICE_TOUCH", newSViv( fltk::DEVICE_TOUCH ));
     export_tag("DEVICE_TOUCH", "events");
+
+=begin apidoc
 
 =for apidoc t[events]||int|event||
 

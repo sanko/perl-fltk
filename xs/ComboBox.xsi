@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::ComboBox
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Single line input field with predefined choices via popup menu
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::ComboBox - Single line input field with predefined choices via popup menu
 
 =head1 Description
 

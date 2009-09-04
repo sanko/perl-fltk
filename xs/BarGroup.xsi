@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::BarGroup
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract A closable strip typically used as a container for toolbars
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::BarGroup - A closable strip typically used as a container for toolbars
 
 =head1 Description
 

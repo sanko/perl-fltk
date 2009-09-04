@@ -8,7 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::NamedStyle
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for version 0.530
+
 =for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::NamedStyle -
 
 =head1 Description
 

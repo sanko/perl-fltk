@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::HelpView
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Basic HTML viewer
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::HelpView - Basic HTML viewer
 
 =head1 Description
 

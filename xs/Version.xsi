@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Version
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Version info for FLTK
+=for version 0.0530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Version - Version info for FLTK
 
 =head1 Description
 

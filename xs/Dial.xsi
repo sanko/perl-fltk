@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Dial
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Rotating value control
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::Dial - Rotating value control
 
 =head1 Description
 

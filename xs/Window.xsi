@@ -8,7 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Window
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
+=for version 0.530
+
 =for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::Window - Where you put stuff
 
 =head1 Description
 

@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::Widget
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract The base class for all widgets in FLTK
+=for version 0.530
 
 =for git $Id$ for got=
+
+=head1 NAME
+
+FLTK::Widget - Base class for all widgets in the Fast Light Toolkit
 
 =head1 Description
 

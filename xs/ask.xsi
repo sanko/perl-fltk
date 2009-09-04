@@ -8,9 +8,13 @@ MODULE = FLTK               PACKAGE = FLTK::ask
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Implementation of message, ask, choice, and input functions
+=for version 0.530
 
 =for git $Id$
+
+=head1 NAME
+
+FLTK::ask - Implementation of message, ask, choice, and input functions
 
 =head1 Description
 
