@@ -125,4 +125,6 @@ BOOT:
     newCONSTSUB(FLTK_stash, "FILL", newSViv(fltk::Dial::FILL));
     export_tag( "FILL", "dial" );
 
+INCLUDE: LineDial.xsi
+
 #endif // ifndef DISABLE_DIAL
