@@ -44,21 +44,21 @@ my $image_d = new_ok('FLTK::Image',
 # Testing new( FLTK::PixelType, int w, int h, char * name = 0 )
 my $image_e = new_ok('FLTK::Image',
                      [$image_a->pixeltype(), $w, $h],
-                     "'FLTK::Image->new( PixelType, $w, $h )");
+                     "FLTK::Image->new( PixelType, $w, $h )");
 my $image_f = new_ok('FLTK::Image',
                      [$image_a->pixeltype(), $w, $h, $name],
-                     "'FLTK::Image->new( PixelType, $w, $h, '$name' )");
+                     "FLTK::Image->new( PixelType, $w, $h, '$name' )");
 
 # Testing new(data, FLTK::PixelType, int w, int h)
 my $image_g = new_ok('FLTK::Image',
                      [$data, $image_a->pixeltype(), $w, $h],
-                     "'FLTK::Image->new( '$data', PixelType, $w, $h )");
+                     "FLTK::Image->new( '$data', PixelType, $w, $h )");
 
 # Testing new(data, FLTK::PixelType, int w, int h, int linedelta)
 my $image_h = new_ok(
                  'FLTK::Image',
                  [$data, $image_a->pixeltype(), $w, $h, $linedelta],
-                 "'FLTK::Image->new( '$data', PixelType, $w, $h, $linedelta )"
+                 "FLTK::Image->new( '$data', PixelType, $w, $h, $linedelta )"
 );
 
 #
