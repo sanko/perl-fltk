@@ -239,8 +239,6 @@ INCLUDE: Browser.xsi
 
 INCLUDE: Button.xsi
 
-INCLUDE: CheckButton.xsi
-
 INCLUDE: Choice.xsi
 
 INCLUDE: Color.xsi
@@ -299,7 +297,7 @@ INCLUDE: LabelType.xsi
 
 INCLUDE: LightButton.xsi
 
-INCLUDE: LineDial.xsi
+INCLUDE: MenuSection.xsi
 
 INCLUDE: MultiBrowser.xsi
 
@@ -313,8 +311,6 @@ INCLUDE: Style.xsi
 #INCLUDE: ValueOutput.xsi
 
 INCLUDE: Widget.xsi
-
-INCLUDE: WidgetAssociation.xsi
 
 INCLUDE: Window.xsi
 
