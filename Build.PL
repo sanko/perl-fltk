@@ -87,25 +87,20 @@ my $mb = $class->new(
                     'messy!'       => {}
     }
 );
-print sub { my ($x) = @_; chomp $x if !$mb->args('messy'); $x; }
-    ->(<<'#END');
- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-  Buliding FLTK requires a functioning C++ compiler.  Hold on a sec while I
-  locate one...
-#END
-if (!( ($mb->cbuilder && ($mb->cbuilder->{'quiet'} = !$mb->args('messy')))
-       || $mb->cbuilder->have_compiler)
-    )
-{   print <<'#END'; exit 0; }
 
- Oops!  ExtUtils::CBuilder failed to find working compier so
-  I this is where you and I part ways.  It's been real.
+#
+print
+    <<''; if (!$mb->cbuilder->have_compiler()) { print <<''; exit 0 } print <<'';
  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-#END
-print <<'#END';
- and everything looks okay.  Moving on.
+  FLTK requires a functioning C++ compiler.  Hold on a sec while I look for
+  one...
+
+  Aw, man... Looks like you're missing something important so this is where
+  you and I part ways.
  --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-#END
+
+  Everything's okay here. Moving on.
+ --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 #
 $mb->notes(
