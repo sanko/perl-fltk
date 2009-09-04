@@ -168,4 +168,6 @@ pushed state.
 BOOT:
     isa("FLTK::Button", "FLTK::Widget");
 
+INCLUDE: CheckButton.xsi
+
 #endif // ifndef DISABLE_BUTTON
