@@ -123,6 +123,7 @@ t/~.+
 examples/timer.pl
 examples/fltk.ico
 examples/~cpp.pl
+examples/~.+
 
 # Don't include these developer only files
 inc/MBX/FLTK/Developer.pm
