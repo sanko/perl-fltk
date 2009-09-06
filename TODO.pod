@@ -73,6 +73,8 @@ with the values of C<r,g,b>.
 
 =item * L<FLTK::FileIcon|FLTK::FileIcon>
 
+=item * L<FLTK::List|FLTK::List>
+
 =item * GL stuff
 
 =over
