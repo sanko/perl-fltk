@@ -6,11 +6,11 @@ examples/hello.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod
+lib/FLTK/Notes.pod
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
 META.yml
-Notes.pod
 README
 t/00000_basic/00001_use_ok.t
 t/20000_functions/20010_ask.t
