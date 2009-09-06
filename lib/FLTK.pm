@@ -21,12 +21,12 @@ use Exporter qw[import];
 
 #
 our $NOXS ||= $0 eq __FILE__;    # for testing
-XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;
+XSLoader::load 'FLTK', $VERSION if !$FLTK::NOXS;  # Fills %EXPORT_TAGS on BOOT
 
 #
 @EXPORT_OK = sort map { @$_ = sort @$_; @$_ } values %EXPORT_TAGS;
-$EXPORT_TAGS{'all'} = \@EXPORT_OK;
-@{$EXPORT_TAGS{'style'}}
+$EXPORT_TAGS{'all'} = \@EXPORT_OK;    # When you want to import everything
+@{$EXPORT_TAGS{'style'}}              # Merge these under a single tag
     = sort map { defined $EXPORT_TAGS{$_} ? @{$EXPORT_TAGS{$_}} : () }
     qw[box font label]
     if 1 < scalar keys %EXPORT_TAGS;
