@@ -59,17 +59,19 @@ fltk::Browser::Mark::destroy( )
 
 =for apidoc ||int|compare|mark2
 
+Returns...
+
 =over
 
-=item Returns C<-2> or less if this is before C<mark2>
+=item ...C<-2> or less if this is before C<mark2>
 
-=item Returns C<-1> if this is a parent of C<mark2>
+=item ...C<-1> if this is a parent of C<mark2>
 
-=item Returns C<0> if this is equal to C<mark2>
+=item ...C<0> if this is equal to C<mark2>
 
-=item Returns C<1> if this is a child of C<mark2>
+=item ...C<1> if this is a child of C<mark2>
 
-=item Returns C<2> or greater if this is after C<mark2>
+=item ...C<2> or greater if this is after C<mark2>
 
 =back
 

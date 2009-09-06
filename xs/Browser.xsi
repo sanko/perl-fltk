@@ -49,37 +49,39 @@ browsers with hundreds of thousands of items, or when the set of items changes
 rapidly.
 
 If you give the browser a callback you can find out what item was selected
-with L<C<value()>|/"value">, the first item is zero (this is different from
-older versions of fltk that started at C<1>!), and will be negative if no item
-is selected. You can change the selected item with
-L<C<value(new_value)>|/"value">.
+with L<C<value()>|FLTK::Browser/"value">, the first item is zero (this is
+different from older versions of fltk that started at C<1>!), and will be
+negative if no item is selected. You can change the selected item with
+L<C<value(new_value)>|FLTK::Browser/"value">.
 
 The subclass L<FLTK::MultiBrowser|FLTK::MultiBrowser> lets the user select
 more than one item at the same time.
 
-The L<C<callback()>|/"callback"> is done when the user changes the selected
-items or when they open/close parents. In addition, if the user double-clicks
-a non-parent item, then it is "executed" which usually means that the
-L<C<callback()>|/"callback"> on the item itself is run. However, if no
-callback has been set on the item, the L<C<callback()>|/"callback"> of this
-widget is called with the L<C<user_data()>|/"user_data"> of the item.
+The L<C<callback()>|FLTK::Widget/"callback"> is done when the user changes the
+selected items or when they open/close parents. In addition, if the user
+double-clicks a non-parent item, then it is "executed" which usually means
+that the L<C<callback()>|FLTK::Widget/"callback"> on the item itself is run.
+However, if no callback has been set on the item, the
+L<C<callback()>|FLTK::Widget/"callback"> of this widget is called with the
+L<C<user_data()>|FLTK::Widget/"user_data"> of the item.
 
-You can control when callbacks are done with the L<C<when()>|/"when"> method.
-The following values are useful, the default value is C<FLTK::WHEN_CHANGED>.
+You can control when callbacks are done with the
+L<C<when()>|FLTK::Widget/"when"> method. The following values are useful, the
+default value is C<FLTK::WHEN_CHANGED>.
 
 =over 8
 
 =item C<FLTK::WHEN_NEVER>
 
-Callback is never done. L<C<changed()>|/"changed"> can be used to see if the
-user has modified the browser.
+Callback is never done. L<C<changed()>|FLTK::Widget/"changed"> can be used to
+see if the user has modified the browser.
 
 =item C<FLTK::WHEN_CHANGED>
 
 Callback is called on every change to each item as it happens. The method
-L<C<item()>|/"item">) will return the one that is being changed. Notice that
-selecting large numbers in a mulit browser will produce large numbers of
-callbacks.
+L<C<item()>|GLFK::Group/"item">) will return the one that is being changed.
+Notice that selecting large numbers in a mulit browser will produce large
+numbers of callbacks.
 
 =item C<FLTK::WHEN_RELEASE>
 
@@ -318,11 +320,11 @@ fltk::Browser::xposition( int x = NO_INIT )
     ALIAS:
         yposition = 1
 
-=for apidoc ||bool|indented|
+=for apidoc ||bool|indented|||
 
 
 
-=for apidoc |||indented|value
+=for apidoc |||indented|value|||
 
 Turn this on to for space to be reserved for open/close boxes drawn to the
 left of top-level items. You usually want this for a hierarchial browser. This
@@ -954,14 +956,14 @@ C<column>'th column is invalid, C<undef> is returned.
 fltk::Widget *
 fltk::Browser::header( int col )
 
-=for apidoc |||value|val
+=for apidoc |||value|val|||
 
 Same as C<goto_index(val);set_focus();>, to change the current item in a
 non-hierarchial browser.
 
 =for apidoc ||val|value|
 
-Returns C<focus_index(val)[0], to get the current item in a non-hierarchial
+Returns C<focus_index(val)[0]>, to get the current item in a non-hierarchial
 browser.
 
 =cut

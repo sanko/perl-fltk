@@ -1583,10 +1583,10 @@ fltk::Widget::labeltype( fltk::LabelType * type = NO_INIT )
 
 =for apidoc ||Color|color|
 
-Color of the widgets. The default is C<FLTK::WHITE. You may think most widgets
-are gray, but this is because L<Group|FLTK::Group> and L<Window|FLTK::Window>
-have their own L<Style|FLTK::Style> with this set to C<FLTK::GRAY75>, and also
-because many parts of widgets are drawn with the
+Color of the widgets. The default is C<FLTK::WHITE>. You may think most
+widgets are gray, but this is because L<Group|FLTK::Group> and
+L<Window|FLTK::Window> have their own L<Style|FLTK::Style> with this set to
+C<FLTK::GRAY75>, and also because many parts of widgets are drawn with the
 L<C<buttoncolor()>|/"buttoncolor">.
 
 If you want to change the overall color of all the gray parts of the interface

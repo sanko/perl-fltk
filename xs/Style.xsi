@@ -34,11 +34,11 @@ Notice that by setting a zero value you will indicate that it should return
 the parent value.
 
 The method L<C<Widget::box(BOX)>|FLTK::Widget/"box"> will create a
-L<C<dynamic( )>|/"dynamic"> style for that widget, which is a child of the
-original style, and set the box in that style. This "unique" style is reused
-for any other changes to that widget and it is deleted when the widget is
-deleted. Thus changes to a single widget do not affect other widgets, but the
-majority of widgets all share a Style structure.
+L<C<dynamic( )>|FLTK::Style/"dynamic"> style for that widget, which is a child
+of the original style, and set the box in that style. This "unique" style is
+reused for any other changes to that widget and it is deleted when the widget
+is deleted. Thus changes to a single widget do not affect other widgets, but
+the majority of widgets all share a Style structure.
 
 Occasionally it is useful to see if a field has been set. To do this you can
 directly access the local member variables using names like C<box_>.
@@ -489,7 +489,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
-=for apidoc ||bool|dynamic|
+=for apidoc ||bool|dynamic||||
 
 True if this Style is unique to the Widget that owns it, and is not shared
 with other Widgets.
@@ -652,10 +652,10 @@ fltk::Style::labeltype( fltk::LabelType * type = NO_INIT )
 
 =for apidoc ||Color|color|
 
-Color of the widgets. The default is C<FLTK::WHITE. You may think most widgets
-are gray, but this is because L<Group|FLTK::Group> and L<Window|FLTK::Window>
-have their own L<Style|FLTK::Style> with this set to C<FLTK::GRAY75>, and also
-because many parts of widgets are drawn with the
+Color of the widgets. The default is C<FLTK::WHITE>. You may think most
+widgets are gray, but this is because L<Group|FLTK::Group> and
+L<Window|FLTK::Window> have their own L<Style|FLTK::Style> with this set to
+C<FLTK::GRAY75>, and also because many parts of widgets are drawn with the
 L<C<buttoncolor( )>|/"buttoncolor">.
 
 If you want to change the overall color of all the gray parts of the interface

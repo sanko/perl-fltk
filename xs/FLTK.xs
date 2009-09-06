@@ -145,7 +145,7 @@ void _cb (void * CODE) { // Callbacks for timers, etc.
 #endif // ifdef ENABLE_CALLBACKS
 }
 
-=for apidoc |||isa|package|parent|
+=for apidoc H|||isa|package|parent|
 
 This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance.
 
