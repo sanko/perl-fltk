@@ -4,7 +4,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for git $Id$ for got=
+=for git $Id$
 
 =head1 NAME
 
@@ -44,9 +44,9 @@ The basic way to C<use FLTK> is simply:
 Each widget in FLTK is represented by it's own class. This sample program
 uses a L<Window|FLTK::Window> and L<Widgets|FLTK::Widget>.
 
-In addition several non-class functions and symbols can also be imported, they
-are grouped into tags with lower-case names. You should only include the ones
-you need. In this case C<run> is included automatically as it is in the
+In addition, several non-class functions and symbols can also be imported,
+they are grouped into tags with lower-case names. You should only include the
+ones you need. In this case C<run> is included automatically as it is in the
 C<:default> tag. The C<:default> tag contans most functions needed by the main
 part of a program to get FLTK to run.
 
@@ -77,9 +77,12 @@ from the upper-left corner of the parent window.
 
 C<width> and C<height> are the size of the widget.
 
-C<label> is a pointer to a character string to label the widget with or
-C<undef>. If not given it defaults to C<undef>. The string is C<not> copied,
-FLTK assummes it is static. For example, this:
+C<label> is a string to label the widget with or C<undef>. If not given it
+defaults to C<undef> for new L<widgets|FLTK::Widget>. The label defaults to
+your program's name for L<windows|FLTK::Window>. The string is C<not> copied,
+FLTK assummes it is static.
+
+For example, this:
 
     my $label = 'Testing';
     FLTK::Button->new( $x, $y, $w, $h, $label );
@@ -106,13 +109,14 @@ use C<FLTK::UP_BOX>, which means that a raised button border will be drawn
 around the widget.
 
 You can examine the boxtype in by doing C<$box->box()>. FLTK uses method name
-overloading to make short names for get/set methods. The underlying libraries
-use mutators so I brought them along for the ride.
+overloading to make short names for get/set methods. I really dislike mutators
+in Perl, but the underlying libraries use them so I brought them along for the
+ride.
 
-Almost all of these set/get pairs are very fast and short inline functions and
-thus very efficient.  However, I<the "set" methods do not call
-L<C<redraw()>|FLTK::Widget/"redraw">>, you have to call it yourself.  This
-greatly reduces code size and execution time.  The only common exception is
+Almost all of these set/get pairs are very fast, short, inline functions and
+thus very efficient. However, I<the "set" methods do not call
+L<C<redraw()>|FLTK::Widget/"redraw">>, you have to call it yourself. This
+greatly reduces code size and execution time. The only common exception is
 L<C<value()>|FLTK::Widget/"value">, this does
 L<C<redraw()>|FLTK::Widget/"redraw"> if necessary.
 
@@ -123,8 +127,8 @@ Then we indicate we are done adding widgets to the window:
     $window->end();
 
 The method L<C<Group::end()>|FLTK::Group/"end"> restores the "current group"
-to the parent of itself, in this case it is set to null because the window has
-no parent.  You may also find it useful to call
+to the parent of itself, in this case it is set to C<null> because the window
+has no parent. You may also find it useful to call
 L<C<FLTK::Group::current(0)>|FLTK::Group/"current"> to turn this off
 completely.
 
