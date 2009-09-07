@@ -61,6 +61,10 @@ my $mb = $class->new(
                        'Devel::PPPort'      => 0,
                        'Alien::FLTK'        => 0.06844
     },
+    recommends => {
+            OpenGL => 0.58,
+
+    },
     add_to_cleanup => [qw[FLTK-*],
                        map {"*$_"} (
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
