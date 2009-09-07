@@ -231,53 +231,29 @@ UP_BOX ( )
 
 BOOT:
     export_tag("PLASTIC_DOWN_BOX","box" );
-    export_tag("PLASTIC_DOWN_BOX","style" );
     export_tag("PLASTIC_UP_BOX","box" );
-    export_tag("PLASTIC_UP_BOX","style" );
     export_tag("BORDER_FRAME","box" );
-    export_tag("BORDER_FRAME","style" );
     export_tag("OFLAT_BOX","box" );
-    export_tag("OFLAT_BOX","style" );
     export_tag("OSHADOW_BOX","box" );
-    export_tag("OSHADOW_BOX","style" );
     export_tag("OVAL_BOX","box" );
-    export_tag("OVAL_BOX","style" );
     export_tag("RFLAT_BOX","box" );
-    export_tag("RFLAT_BOX","style" );
     export_tag("RSHADOW_BOX","box" );
-    export_tag("RSHADOW_BOX","style" );
     export_tag("ROUNDED_BOX","box" );
-    export_tag("ROUNDED_BOX","style" );
     export_tag("SHADOW_BOX","box" );
-    export_tag("SHADOW_BOX","style" );
     export_tag("DIAMOND_DOWN_BOX","box" );
-    export_tag("DIAMOND_DOWN_BOX","style" );
     export_tag("DIAMOND_UP_BOX","box" );
-    export_tag("DIAMOND_UP_BOX","style" );
     export_tag("ROUND_DOWN_BOX","box" );
-    export_tag("ROUND_DOWN_BOX","style" );
     export_tag("ROUND_UP_BOX","box" );
-    export_tag("ROUND_UP_BOX","style" );
     export_tag("HIGHLIGHT_DOWN_BOX","box" );
-    export_tag("HIGHLIGHT_DOWN_BOX","style" );
     export_tag("HIGHLIGHT_UP_BOX","box" );
-    export_tag("HIGHLIGHT_UP_BOX","style" );
     export_tag("FLAT_BOX","box" );
-    export_tag("FLAT_BOX","style" );
     export_tag("BORDER_BOX","box" );
-    export_tag("BORDER_BOX","style" );
     export_tag("EMBOSSED_BOX","box" );
-    export_tag("EMBOSSED_BOX","style" );
     export_tag("ENGRAVED_BOX","box" );
-    export_tag("ENGRAVED_BOX","style" );
     export_tag("THIN_DOWN_BOX","box" );
-    export_tag("THIN_DOWN_BOX","style" );
     export_tag("THIN_UP_BOX","box" );
-    export_tag("THIN_UP_BOX","style" );
     export_tag("DOWN_BOX","box" );
-    export_tag("DOWN_BOX","style" );
     export_tag("BOX_UP","box" );
-    export_tag("BOX_UP","style" );
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
@@ -389,37 +365,21 @@ HELVETICA ( )
 
 BOOT:
     export_tag( "HELVETICA", "font" );
-    export_tag( "HELVETICA", "style" );
     export_tag( "HELVETICA_BOLD", "font" );
-    export_tag( "HELVETICA_BOLD", "style" );
     export_tag( "HELVETICA_ITALIC", "font" );
-    export_tag( "HELVETICA_ITALIC", "style" );
     export_tag( "HELVETICA_BOLD_ITALIC", "font" );
-    export_tag( "HELVETICA_BOLD_ITALIC", "style" );
     export_tag( "COURIER", "font" );
-    export_tag( "COURIER", "style" );
     export_tag( "COURIER_BOLD", "font" );
-    export_tag( "COURIER_BOLD", "style" );
     export_tag( "COURIER_ITALIC", "font" );
-    export_tag( "COURIER_ITALIC", "style" );
     export_tag( "COURIER_BOLD_ITALIC", "font" );
-    export_tag( "COURIER_BOLD_ITALIC", "style" );
     export_tag( "TIMES", "font" );
-    export_tag( "TIMES", "style" );
     export_tag( "TIMES_BOLD", "font" );
-    export_tag( "TIMES_BOLD", "style" );
     export_tag( "TIMES_ITALIC", "font" );
-    export_tag( "TIMES_ITALIC", "style" );
     export_tag( "TIMES_BOLD_ITALIC", "font" );
-    export_tag( "TIMES_BOLD_ITALIC", "style" );
     export_tag( "SYMBOL_FONT", "font" );
-    export_tag( "SYMBOL_FONT", "style" );
     export_tag( "SCREEN_FONT", "font" );
-    export_tag( "SCREEN_FONT", "style" );
     export_tag( "SCREEN_BOLD_FONT", "font" );
-    export_tag( "SCREEN_BOLD_FONT", "style" );
     export_tag( "ZAPF_DINGBATS", "font" );
-    export_tag( "ZAPF_DINGBATS", "style" );
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 
@@ -473,19 +433,11 @@ NO_LABEL ( )
 
 BOOT:
     export_tag( "NO_LABEL", "label" );
-    export_tag( "NO_LABEL", "style" );
     export_tag( "NORMAL_LABEL", "label" );
-    export_tag( "NORMAL_LABEL", "style" );
     export_tag( "SYMBOL_LABEL", "label" );
-    export_tag( "SYMBOL_LABEL", "style" );
     export_tag( "SHADOW_LABEL", "label" );
-    export_tag( "SHADOW_LABEL", "style" );
     export_tag( "ENGRAVED_LABEL", "label" );
-    export_tag( "ENGRAVED_LABEL", "style" );
     export_tag( "EMBOSSED_LABEL", "label" );
-    export_tag( "EMBOSSED_LABEL", "style" );
-
-
 
 MODULE = FLTK               PACKAGE = FLTK::Style
 

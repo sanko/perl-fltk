@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::Box
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.530_001
 
 =for git $Id$
 
@@ -157,6 +157,19 @@ DOWN_BOX( )
           HIGHLIGHT_UP_BOX =  9
         HIGHLIGHT_DOWN_BOX = 10
 
+BOOT:
+    export_tag( "DOWN_BOX",           "box" );
+    export_tag( "FLAT_BOX",           "box" );
+    export_tag( "NO_BOX",             "box" );
+    export_tag( "UP_BOX",             "box" );
+    export_tag( "THIN_DOWN_BOX",      "box" );
+    export_tag( "THIN_UP_BOX",        "box" );
+    export_tag( "ENGRAVED_BOX",       "box" );
+    export_tag( "EMBOSSED_BOX",       "box" );
+    export_tag( "BORDER_BOX",         "box" );
+    export_tag( "HIGHLIGHT_UP_BOX",   "box" );
+    export_tag( "HIGHLIGHT_DOWN_BOX", "box" );
+
 MODULE = FLTK               PACKAGE = FLTK::Box
 
 BOOT:
@@ -167,4 +180,3 @@ INCLUDE: FrameBox.xsi
 INCLUDE: FlatBox.xsi
 
 #endif // ifndef DISABLE_BOX
-
