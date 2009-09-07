@@ -1,4 +1,3 @@
-#!perl
 package FLTK;
 
 =pod
