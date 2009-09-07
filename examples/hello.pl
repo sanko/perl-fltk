@@ -1,8 +1,5 @@
-#!perl -w -I../blib/arch/ -I../blib/lib
 
 =pod
-
-=for name hello.pl
 
 =for abstract Basic 'Hello, World' script described in
 L<FLTK::Basics|FLTK::Basics>
@@ -14,7 +11,6 @@ L<FLTK::Basics|FLTK::Basics>
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use FLTK;
