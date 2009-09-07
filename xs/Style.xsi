@@ -329,39 +329,41 @@ fltk::Font *
 HELVETICA ( )
     CODE:
         switch ( ix ) {
-            case  0: RETVAL = fltk::HELVETICA_BOLD;        break;
-            case  1: RETVAL = fltk::HELVETICA_ITALIC;      break;
-            case  2: RETVAL = fltk::HELVETICA_BOLD_ITALIC; break;
-            case  3: RETVAL = fltk::COURIER;               break;
-            case  4: RETVAL = fltk::COURIER_BOLD;          break;
-            case  5: RETVAL = fltk::COURIER_ITALIC;        break;
-            case  6: RETVAL = fltk::COURIER_BOLD_ITALIC;   break;
-            case  7: RETVAL = fltk::TIMES;                 break;
-            case  8: RETVAL = fltk::TIMES_BOLD;            break;
-            case  9: RETVAL = fltk::TIMES_ITALIC;          break;
-            case 10: RETVAL = fltk::TIMES_BOLD_ITALIC;     break;
-            case 11: RETVAL = fltk::SYMBOL_FONT;           break;
-            case 12: RETVAL = fltk::SCREEN_FONT;           break;
-            case 13: RETVAL = fltk::SCREEN_BOLD_FONT;      break;
-            case 14: RETVAL = fltk::ZAPF_DINGBATS;         break;
+            case  0: RETVAL = fltk::HELVETICA;             break;
+            case  1: RETVAL = fltk::HELVETICA_BOLD;        break;
+            case  2: RETVAL = fltk::HELVETICA_ITALIC;      break;
+            case  3: RETVAL = fltk::HELVETICA_BOLD_ITALIC; break;
+            case  4: RETVAL = fltk::COURIER;               break;
+            case  5: RETVAL = fltk::COURIER_BOLD;          break;
+            case  6: RETVAL = fltk::COURIER_ITALIC;        break;
+            case  7: RETVAL = fltk::COURIER_BOLD_ITALIC;   break;
+            case  8: RETVAL = fltk::TIMES;                 break;
+            case  9: RETVAL = fltk::TIMES_BOLD;            break;
+            case 10: RETVAL = fltk::TIMES_ITALIC;          break;
+            case 11: RETVAL = fltk::TIMES_BOLD_ITALIC;     break;
+            case 12: RETVAL = fltk::SYMBOL_FONT;           break;
+            case 13: RETVAL = fltk::SCREEN_FONT;           break;
+            case 14: RETVAL = fltk::SCREEN_BOLD_FONT;      break;
+            case 15: RETVAL = fltk::ZAPF_DINGBATS;         break;
         }
     OUTPUT:
         RETVAL
     ALIAS:
-             HELVETICA_ITALIC = 1
-        HELVETICA_BOLD_ITALIC = 2
-                      COURIER = 3
-                 COURIER_BOLD = 4
-               COURIER_ITALIC = 5
-          COURIER_BOLD_ITALIC = 6
-                        TIMES = 7
-                   TIMES_BOLD = 8
-                 TIMES_ITALIC = 9
-            TIMES_BOLD_ITALIC = 10
-                  SYMBOL_FONT = 11
-                  SCREEN_FONT = 12
-             SCREEN_BOLD_FONT = 13
-                ZAPF_DINGBATS = 14
+               HELVETICA_BOLD = 1
+             HELVETICA_ITALIC = 2
+        HELVETICA_BOLD_ITALIC = 3
+                      COURIER = 4
+                 COURIER_BOLD = 5
+               COURIER_ITALIC = 6
+          COURIER_BOLD_ITALIC = 7
+                        TIMES = 8
+                   TIMES_BOLD = 9
+                 TIMES_ITALIC = 10
+            TIMES_BOLD_ITALIC = 11
+                  SYMBOL_FONT = 12
+                  SCREEN_FONT = 13
+             SCREEN_BOLD_FONT = 14
+                ZAPF_DINGBATS = 15
 
 BOOT:
     export_tag( "HELVETICA", "font" );
