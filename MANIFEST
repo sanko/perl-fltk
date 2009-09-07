@@ -92,6 +92,7 @@ xs/LabelType.xsi
 xs/layout.xsi
 xs/LightButton.xsi
 xs/LineDial.xsi
+xs/MenuBar.xsi
 xs/MenuSection.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi

@@ -34,8 +34,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::Menu
 
-=item FLTK::MenuBar
-
 =item FLTK::MenuSection
 
 =item FLTK::MenuWindow

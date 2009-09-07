@@ -77,6 +77,7 @@ const fltk::Monitor   *   O_FLTK
 fltk::MultiBrowser    *   O_FLTK
 fltk::NamedStyle      *   O_FLTK
 fltk::Menu            *   O_FLTK
+fltk::MenuBar         *   O_FLTK
 fltk::MenuSection     *   O_FLTK
 fltk::NamedStyle      *   O_FLTK
 fltk::List            *   O_FLTK
