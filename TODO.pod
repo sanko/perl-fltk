@@ -16,9 +16,139 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item * Flag all GL-related stuff in apidoc
 
-=item * Creating new callbacks leaks memory
+=item * Fix known memory leaks
 
-=item * Finish all widgets, etc.
+=over
+
+=item * Creating new callbacks
+
+=item * Timeouts
+
+=back
+
+=item * Finish the following widgets/classes
+
+=over
+
+=item FLTK::List
+
+=item FLTK::Menu
+
+=item FLTK::MenuBar
+
+=item FLTK::MenuSection
+
+=item FLTK::MenuWindow
+
+=item FLTK::Monitor
+
+=item FLTK::MultiBrowser
+
+=item FLTK::MultiImage
+
+=item FLTK::MultiLineOutput
+
+=item FLTK::Mutex
+
+=item FLTK::NamedStyle
+
+=item FLTK::NumericInput
+
+=item FLTK::Output
+
+=item FLTK::PackedGroup
+
+=item FLTK::PopupMenu
+
+=item FLTK::Preferences
+
+=item FLTK::ProgressBar
+
+=item FLTK::RadioButton
+
+=item FLTK::RadioItem
+
+=item FLTK::Rectangle
+
+=item FLTK::RecursiveMutex
+
+=item FLTK::RepeatButton
+
+=item FLTK::ReturnButton
+
+=item FLTK::Scrollbar
+
+=item FLTK::ScrollGroup
+
+=item FLTK::ShapedWindow
+
+=item FLTK::SharedImage
+
+=item FLTK::ShortcutAssignment
+
+=item FLTK::SignalMutex
+
+=item FLTK::Slider
+
+=item FLTK::StatusBarGroup
+
+=item FLTK::StringArray
+
+=item FLTK::StringHierarchy
+
+=item FLTK::StringList
+
+=item FLTK::Style (partially complete)
+
+=item FLTK::StyleSet
+
+=item FLTK::Symbol
+
+=item FLTK::TabGroup
+
+=item FLTK::TabGroupPager
+
+=item FLTK::TextBuffer
+
+=item FLTK::TextDisplay
+
+=item FLTK::TextEditor
+
+=item FLTK::ThumbWheel
+
+=item FLTK::TiledImage
+
+=item FLTK::ToggleButton
+
+=item FLTK::ToggleItem
+
+=item FLTK::Tooltip
+
+=item FLTK::Valuator
+
+=item FLTK::ValueInput
+
+=item FLTK::ValueOutput
+
+=item FLTK::ValueSlider
+
+=item FLTK::Widget (partially complete)
+
+=item FLTK::Window (partially complete)
+
+=item FLTK::WizardGroup
+
+=item FLTK::WordwrapOutput
+
+=item FLTK::xbmImage
+
+=item FLTK::xpmFileImage
+
+=item FLTK::xpmImage
+
+=back
+
+=item * Thread safety
 
 =back
 
@@ -26,12 +156,10 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item F<xs/run.xsi>
-
-=over
+=item * Remove all anti-Perl-isms
 
 =item * C<has_timeout()>, C<remove_timeout(...)>, C<repeat_timeout(...)> do
-not work because the SV* I shove into the callback are not equal from the
+not work because the SV* I shove into the callback is not equal from the
 perspective of C++.
 
 =item * C<remove_check(...)>, et. al do not work for the reasons stated above
@@ -43,27 +171,9 @@ perspective of C++.
 =item * C<lock()>, C<unlock()>, C<awake([...])>, C<thread_message()>,
 C<in_main_thread()>
 
-=back
-
-=item F<fltk/events.h>
-
-=over
-
 =item * C<add_event_handler>
 
-=back
-
-=item Anti-perl-isms
-
-=over
-
-=item * L<C<Color::split_color( color, r, g, b )>|FLTK::Color/"split_color">
-sets the values of C<r,g,b> which is very un-perl. I'd rather return an AV*
-with the values of C<r,g,b>.
-
-=back
-
-=item Subclass-able L<Image|FLTK::Image> and child classes
+=item * Subclass-able L<Image|FLTK::Image>
 
 =back
 
@@ -79,7 +189,7 @@ with the values of C<r,g,b>.
 
 =over
 
-=item GLUT emulation
+=item Test GLUT
 
 =item OpenGL Optimizer stuff in GlWindow subclass
 
@@ -87,7 +197,7 @@ with the values of C<r,g,b>.
 
 =back
 
-=head1 Production Ready Perl 6 (read: 'One of these days')
+=head1 Eventually...
 
 =over
 
