@@ -84,7 +84,8 @@ my $mb = $class->new(
     },
     get_options => {'interactive!' => {},
                     'messy!'       => {}
-    }
+    },
+    quiet => 1
 );
 print
     <<''; if (!$mb->cbuilder->have_compiler()) { print <<''; exit 0 } print <<'';

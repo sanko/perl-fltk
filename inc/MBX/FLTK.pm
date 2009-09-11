@@ -205,7 +205,7 @@ package MBX::FLTK;
         sub ACTION_docs {
             my $self = shift;
             $self->depends_on('apidoc');
-            return $self->SUPER::ACTION_docs( @_ );
+            return $self->SUPER::ACTION_docs(@_);
         }
         use File::Spec::Functions
             qw[abs2rel rel2abs splitpath canonpath catpath];
@@ -232,19 +232,18 @@ package MBX::FLTK;
 
         sub ACTION_apidoc {
             my ($self) = @_;
-
-            $self->depends_on('code'); # So we can load @ISA
-
-            use lib './blib/lib';
-            require FLTK;
+            $self->depends_on('code');     # So we can load @ISA
+            unshift @INC,
+                qw[./blib/lib ./blib/arch];    # Attempt to use the newer version
+            require FLTK;                      # Attempt to load it
             read DATA, $defaults{'License and Legal'}, -s DATA;
-            @files
-                = sort map { canonpath(rel2abs($_)) }
-                grep       {m[.+\.xsi?]gm}
+            @files = sort map { canonpath(rel2abs($_)) }
+                grep {m[.+\.xsi?]gm}
                 keys %{$self->_read_manifest('MANIFEST')};
             for my $file (grep {m[\.xs$]} @files) {
-                autodoc($file);
+                $self->autodoc($file);
             }
+            no FLTK;                       # Attempt to unload it
             for my $mod_key (sort { uc($a) cmp uc($b) || $a cmp $b }
                              keys %moddocs)
             {   my $mod      = $moddocs{$mod_key};
@@ -255,7 +254,8 @@ package MBX::FLTK;
                 die "Cannot open $filename: $!"
                     if !open(my $DOC, '>', $filename);
                 warn "Cannot lock $filename: $!" if !flock($DOC, LOCK_EX);
-                printf "++ Tossing together '%s'...\n", rel2abs $filename;
+                printf "++ Tossing together '%s'...\n", rel2abs $filename
+                    if !$self->quiet();
                 Write $DOC, '=pod';
                 Write $DOC, '=head1 NAME';
                 Write $DOC, delete $mod->{'NAME'};
@@ -318,13 +318,15 @@ package MBX::FLTK;
         }
 
         sub autodoc {
-            my ($inc) = @_;
+            my ($self, $inc) = @_;
             my ($abs) = canonpath rel2abs($inc);
             my ($dir) = canonpath dirname($abs);
             my ($rel) = canonpath abs2rel($abs);
-            return !warn "We've already parsed '$abs'!" if $seen{$abs}++;
+            return !warn "We've already parsed '$abs'! for autodoc"
+                if $seen{$abs}++;
             printf "%s Parsing apidoc for '%s'...\n", ('-' x ($DEPTH * 2)),
-                $abs;
+                $abs
+                if !$self->quiet();
             my ($LI, $cut_mode, $PACKAGE, $sec, $current)
                 = qw[0 1 FLTK ~functions];
             return !warn "Cannot open $rel: $!" if !open(my $FH, '<', $abs);
@@ -346,7 +348,7 @@ package MBX::FLTK;
                         die "$1 is not in MANIFEST"
                             if !grep { $_ eq rel2abs($1) } @files;
                         $DEPTH++;
-                        autodoc(canonpath rel2abs $1);
+                        $self->autodoc(canonpath rel2abs $1);
                     }
                     elsif ($para
                          =~ m[^\s*MODULE\s*=\s*\S+\s+PACKAGE\s*=\s*(\S+)\s*$])
@@ -522,8 +524,6 @@ package MBX::FLTK;
 =for $ID$
 
 =cut
-
-
 __DATA__
 Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
