@@ -223,9 +223,13 @@ package MBX::FLTK;
         my $home  = cwd;
         my $DEPTH = 0;
 
-        sub Write {
-            my ($fh, $form) = (shift, shift);
-            my $line = scalar @_ ? (sprintf $form, grep defined, @_) : $form;
+        sub write_doc {
+            my ($self, $fh, $form, @args) = @_;
+            my $line = scalar @args ? (sprintf $form, grep defined, @args) : $form;
+            use Carp;
+            if (!$line) {
+                Carp::cluck 'Missing $line';
+            }
             $line =~ s'(^[\r\n]*|[\r\n]*$)''g;
             return syswrite $fh, $line . "\n\n";
         }
@@ -243,7 +247,7 @@ package MBX::FLTK;
             for my $file (grep {m[\.xs$]} @files) {
                 $self->autodoc($file);
             }
-            no FLTK;                       # Attempt to unload it
+            eval 'no FLTK;';                   # Attempt to unload it
             for my $mod_key (sort { uc($a) cmp uc($b) || $a cmp $b }
                              keys %moddocs)
             {   my $mod      = $moddocs{$mod_key};
@@ -255,17 +259,17 @@ package MBX::FLTK;
                     if !open(my $DOC, '>', $filename);
                 warn "Cannot lock $filename: $!" if !flock($DOC, LOCK_EX);
                 printf "++ Tossing together '%s'...\n", rel2abs $filename
-                    if !$self->quiet();
-                Write $DOC, '=pod';
-                Write $DOC, '=head1 NAME';
-                Write $DOC, delete $mod->{'NAME'};
+                    if !$self->quiet()                    ;
+                $self->write_doc( $DOC, '=pod' );
+                $self->write_doc( $DOC, '=head1 NAME' );
+                $self->write_doc( $DOC, delete $mod->{'NAME'} );
 
                 if ($mod->{'Synopsis'}) {
-                    Write $DOC, '=head1 Synopsis';
-                    Write $DOC, delete $mod->{'Synopsis'};
+                    $self->write_doc( $DOC, '=head1 Synopsis');
+                    $self->write_doc( $DOC, delete $mod->{'Synopsis'} );
                 }
-                Write $DOC, "=head1 Description";
-                Write $DOC, delete $mod->{'Description'} || 'TODO';
+                $self->write_doc( $DOC, "=head1 Description" );
+                $self->write_doc( $DOC, delete $mod->{'Description'} || 'TODO' );
                 if (keys %{$mod->{'~functions'}}) {
                     my $functions;
                     $functions .= delete $mod->{'Functions'}
@@ -286,8 +290,8 @@ package MBX::FLTK;
                             if $docs;
                     }
                     if ($functions) {
-                        Write $DOC, "=head1 Functions/Methods";
-                        Write $DOC, $functions;
+                        $self->write_doc( $DOC, "=head1 Functions/Methods" );
+                        $self->write_doc( $DOC, $functions );
                     }
                 }
                 my $_dump_section = sub {
@@ -296,8 +300,8 @@ package MBX::FLTK;
                     return if !$mod->{$sec};
                     $mod->{$sec} =~ s[(?:\s$|^\s)*][]g;
                     return if !$mod->{$sec};
-                    Write $DOC, '=head1 %s', $sec;
-                    Write $DOC, delete $mod->{$sec};
+                    $self->write_doc( $DOC, '=head1 %s', $sec );
+                    $self->write_doc( $DOC, delete $mod->{$sec} );
                 };
                 map { $_dump_section->($_) }
                     sort
@@ -309,7 +313,9 @@ package MBX::FLTK;
                     = join "\n\n", @{$mod->{'.author'}};
                 $_dump_section->($_)
                     for ('Author', 'Authors', 'License and Legal');
-                Write $DOC, '=for git %s', $_ for @{delete $mod->{'.git'}};
+                for my $line ( @{delete $mod->{'.git'}}    ) {
+                    $self->write_doc( $DOC, '=for git %s', $line );
+                }
                 syswrite $DOC, '=cut';
                 warn "Cannot unlock $filename: $!" if !flock($DOC, LOCK_UN);
                 close $DOC;
@@ -341,6 +347,7 @@ package MBX::FLTK;
                 return $line;
             };
         PARA: while (my $para = <$FH>) {
+                $para =~ s|\s+$||;
                 $LI++;
                 chdir $dir;
                 if ($cut_mode) {
