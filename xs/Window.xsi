@@ -796,4 +796,6 @@ fltk::Window::_icon_resource_example( char * iconID )
 BOOT:
     isa("FLTK::Window", "FLTK::Group");
 
+INCLUDE: GlWindow.xsi
+
 #endif // ifndef DISABLE_WINDOW

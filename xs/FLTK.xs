@@ -47,7 +47,7 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
                          // installed to /fltk/include/ by Alien::FLTK
 
 #if HAVE_GL == 0
-#define DISABLE_GL 1
+#define DISABLE_GL       1
 #define DISABLE_GLWINDOW 1
 #endif
 
@@ -268,8 +268,6 @@ INCLUDE: FillSlider.xsi
 INCLUDE: FloatInput.xsi
 
 INCLUDE: Font.xsi
-
-INCLUDE: GlWindow.xsi
 
 INCLUDE: Group.xsi
 
