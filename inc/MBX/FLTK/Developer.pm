@@ -107,14 +107,14 @@ package MBX::FLTK::Developer;
 
         # gather various info
         my @bits = split ',', qx[git log --pretty=format:"%at,%H,%h" -n 1];
-        my $Date = POSIX::strftime('%Y-%m-%d %H:%M:%SZ (%a, %d %b %Y)',
-                                   gmtime($bits[0]));
-        my $Commit = $bits[1];
+        my $_Date = POSIX::strftime('%Y-%m-%d %H:%M:%SZ (%a, %d %b %Y)',
+                                    gmtime($bits[0]));
+        my $_Commit = $bits[1];
         my $dist = sprintf(
             'Version %s | %s | %s',
             ($self->dist_version() =~ m[_]   # $self->dist_version()->is_alpha
              ? ('0.XXXXX', 'Next Sunday AD')
-             : ($self->dist_version(), $Date$self->dist_version()->numify
+             : ($self->dist_version(), $_Date) # $self->dist_version()->numify
             ),
             $bits[2]
         );
@@ -123,16 +123,16 @@ package MBX::FLTK::Developer;
         $CHANGES_D =~ s[.+(\r?\n)][$dist$1];
         $CHANGES_D
             =~ s[(_ -.-. .... .- -. --. . ... _+).*][$1 . sprintf <<'END',
-        $self->{'properties'}{'meta_merge'}{'resources'}{'ChangeLog'}||'',
-        $self->dist_version , qw[$ $ $]
+        $self->{'properties'}{'meta_merge'}{'resources'}{'ChangeLog'}||'', '$',
+        $self->dist_version , qw[$ $ $ $ $ $ $]
     ]se;
 
 For more information, see the commit log:
     %s
 
-$Ver$ from git $Rev%s
-$Date%s
-$Url%s
+%sVer: %s %s from git %sRev%s
+%sDate%s
+%sUrl%s
 END
 
      # Keep a backup (just in case) and move the file so we can create it next
@@ -186,29 +186,28 @@ END
             my (@bits) = split q[,],
                 qx[git log --pretty=format:"%at,%H,%x25%x73 %h %x25%x2E%x32%x30%x73 %ce" -n 1 $file];
             next FILE if !@bits;
-            my $Mod  = qx[git log --pretty=format:"%cr" -n 1 $file];
-            my $Date = POSIX::strftime('%Y-%m-%d %H:%M:%SZ (%a, %d %b %Y)',
-                                       gmtime($bits[0]));
-            my $Commit = $bits[1];
-            my $Commit_short = substr($bits[1], 0, 7);
-            my $Id$bits[2], (File::Spec->splitpath($file))[2],
-                $Date;
-            my $Repo
+            my $_Mod  = qx[git log --pretty=format:"%cr" -n 1 $file];
+            my $_Date = POSIX::strftime('%Y-%m-%d %H:%M:%SZ (%a, %d %b %Y)',
+                                        gmtime($bits[0]));
+            my $_Commit = $bits[1];
+            my $_Commit_short = substr($bits[1], 0, 7);
+            my $_Id = sprintf $bits[2], (File::Spec->splitpath($file))[2],
+                $_Date;
+            my $_Repo
                 = $self->{'properties'}{'meta_merge'}{'resources'}
                 {'repository'}
                 || '';
 
             # start changing the data around
             my $CHANGES_O = $CHANGES_D;
-            $CHANGES_D =~ s[\$(Id)(:[^\$]*)?\$][\$$1: $Id$]ig;
-            $CHANGES_D =~ s[\$(Date)(:[^\$]*)?\$][\$$1: $Date$]ig;
-            $CHANGES_D =~ s[\$(Mod(ified)?)(:[^\$]*)?\$][\$$1: $Mod \$]ig;
+            $CHANGES_D =~ s[\$(Id)(:[^\$]*)?\$][\$$1: $_Id \$]ig;
+            $CHANGES_D =~ s[\$(Date)(:[^\$]*)?\$][\$$1: $_Date \$]ig;
+            $CHANGES_D =~ s[\$(Mod(ified)?)(:[^\$]*)?\$][\$$1: $_Mod \$]ig;
             $CHANGES_D
-                =~ s[\$(Url)(:[^\$]*)?\$][\$$1: $Repo/raw/$Commit/$file \$]ig
-                if $Repo;
-            $CHANGES_D =~ s|/raw|/raw|g;    # cleanup
+                =~ s[\$(Url)(:[^\$]*)?\$][\$$1: $_Repo/raw/$_Commit/$file \$]ig
+                if $_Repo;
             $CHANGES_D
-                =~ s[\$(Rev(ision)?)(?::[^\$]*)?\$]["\$$1: ". ($2?$Commit:$Commit_short)." \$"]ige;
+                =~ s[\$(Rev(ision)?)(?::[^\$]*)?\$]["\$$1: ". ($2?$_Commit:$_Commit_short)." \$"]ige;
 
             # Skip to the next file if this one wasn't updated
             next FILE if $CHANGES_D eq $CHANGES_O;
@@ -301,3 +300,29 @@ END
     }
 }
 1;
+
+=pod
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+CPAN ID: SANKO
+
+=head1 License and Legal
+
+Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of The Artistic License 2.0. See the F<LICENSE> file included with
+this distribution or http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all POD documentation is covered by the
+Creative Commons Attribution-Share Alike 3.0 License. See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
