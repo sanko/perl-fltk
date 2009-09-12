@@ -1291,7 +1291,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc t[events]||bool|handle|event|window
+=for apidoc ||bool|handle|event|window
 
 This is the function called from the system-specific code for all events that
 can be passed to L<C<Widget::handle()>|FLTK::Subclass/"handle">.
@@ -1316,9 +1316,6 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 handle( int event, fltk::Window * window )
-
-BOOT:
-    export_tag("handle", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
