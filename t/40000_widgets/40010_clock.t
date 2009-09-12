@@ -11,6 +11,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More 0.82 tests => 21;
@@ -74,7 +75,6 @@ note 'value(h, m, s) does not change actual value()';
 #
 is($C1->value(), time, 'Default value for Clock is the current time');
 is($C2->value(), 0,    'Orphan Clock objects do not keep track of time');
-
 my $_value = $C1->value();
 for my $countdown (reverse 1 .. 3) {
     sleep 1;
@@ -83,7 +83,7 @@ for my $countdown (reverse 1 .. 3) {
 }
 FLTK::wait();
 ok(    # XXX - ...timestamps may be off due to processing time; close enough?
-    ( $C1->value() >= $_value + 3),
+    ($C1->value() >= $_value + 3),
     'After 3 seconds of sleep, the value for Clock is still the current time'
 );
 is($C2->value(), 0,

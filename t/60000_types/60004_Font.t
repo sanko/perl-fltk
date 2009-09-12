@@ -11,6 +11,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More tests => 39;
@@ -67,30 +68,29 @@ SKIP: {
     #
     note 'Testing with ' . $FONT;
     isa_ok($Reg, 'FLTK::Font', sprintf 'font("%s")', $FONT);
-    like($Reg->name($type), qr[$FONT]i, sprintf '$Reg->name( $type ) returns %s',
-        $FONT);
+    like($Reg->name($type), qr[$FONT]i,
+         sprintf '$Reg->name( $type ) returns %s', $FONT);
     is($type, 0, '...and $type == 0');
     my $Bold = font($FONT . ' Bold');
     isa_ok($Bold, 'FLTK::Font', sprintf 'font("%s Bold")', $FONT);
-    like($Bold->name($type), qr[$FONT]i, sprintf '$Bold->name( $type ) returns %s',
-        $FONT);
+    like($Bold->name($type), qr[$FONT]i,
+         sprintf '$Bold->name( $type ) returns %s', $FONT);
     is($type, BOLD(), '...and $type == BOLD');
     my $Italic = font($FONT . ' Italic');
     isa_ok($Italic, 'FLTK::Font', sprintf 'font("%s Italic")', $FONT);
     like($Italic->name($type), qr[$FONT]i,
-        sprintf '$Italic->name( $type ) returns %s', $FONT);
+         sprintf '$Italic->name( $type ) returns %s', $FONT);
     is($type, ITALIC(), '...and $type == ITALIC');
     my $BoldItalic = font($FONT . ' Bold Italic');
     isa_ok($BoldItalic, 'FLTK::Font', sprintf 'font("%s Bold Italic")',
            $FONT);
     like($BoldItalic->name($type),
-        qr[$FONT]i, sprintf '$BoldItalic->name( $type ) returns %s', $FONT);
+         qr[$FONT]i, sprintf '$BoldItalic->name( $type ) returns %s', $FONT);
     is($type, BOLD_ITALIC(), '...and $type == BOLD_ITALIC');
 
     #
-    isa_ok($Reg->sizes(), 'ARRAY', 'sizes( ) returns a list');
-    isa_ok($Reg->encodings(), 'ARRAY', 'encodings() returns a list'              );
+    isa_ok($Reg->sizes(),     'ARRAY', 'sizes( ) returns a list');
+    isa_ok($Reg->encodings(), 'ARRAY', 'encodings() returns a list');
     ok($Reg->system_name(), sprintf 'The system_name( ) for %s is "%s"',
         $FONT, $Reg->system_name() || 'undef');
 }
-

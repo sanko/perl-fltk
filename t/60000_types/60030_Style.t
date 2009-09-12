@@ -11,6 +11,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More tests => 46;

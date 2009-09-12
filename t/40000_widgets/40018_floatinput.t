@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More 0.82 tests => 4;
@@ -39,7 +38,7 @@ my $FI = new_ok('FLTK::FloatInput' => [0, 0, 100, 100],
                 'new FLTK::FloatInput( 0, 0, 100, 100 )');
 $W->end();
 $W->show();
-
 note 'TODO: ...everything';
+
 #
 #is($FI->value(), 0, 'value() is 1.2345678901234567890123456789012345678901');

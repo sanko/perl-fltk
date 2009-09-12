@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More tests => 13;
@@ -56,29 +55,23 @@ my $image_g = new_ok('FLTK::Image',
 
 # Testing new(data, FLTK::PixelType, int w, int h, int linedelta)
 my $image_h = new_ok(
-                 'FLTK::Image',
-                 [$data, $image_a->pixeltype(), $w, $h, $linedelta],
-                 "FLTK::Image->new( '$data', PixelType, $w, $h, $linedelta )"
+                  'FLTK::Image',
+                  [$data, $image_a->pixeltype(), $w, $h, $linedelta],
+                  "FLTK::Image->new( '$data', PixelType, $w, $h, $linedelta )"
 );
 
 #
-is($image_c->width(), 100, '$image_c->width( ) == 100');
+is($image_c->width(),  100, '$image_c->width( ) == 100');
 is($image_c->height(), 150, '$image_c->height( ) == 150');
-
 note '$image_c->setsize( 200, 300 )';
 $image_c->setsize(200, 300);
-
-is($image_c->width(), 200, '$image_c->width( ) == 200');
+is($image_c->width(),  200, '$image_c->width( ) == 200');
 is($image_c->height(), 300, '$image_c->height( ) == 300');
-
 
 #use Data::Dump qw[dd pp];
 #note pp $image_c->linebuffer( 1 );
 #note pp $image_c->buffer( );
-
 #
 #note $image_a->pixeltype;
 #note $image_b->pixeltype;
-
-
 note 'TODO: Everything';

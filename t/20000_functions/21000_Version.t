@@ -13,7 +13,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More tests => 8;
@@ -32,10 +31,8 @@ use_ok('FLTK', qw[:version]);
 
 # Imported with version tag
 for my $sub (qw[FL_MAJOR_VERSION FL_MINOR_VERSION FL_PATCH_VERSION
-            FL_VERSION version]
-    )
+             FL_VERSION version])
 {   can_ok(__PACKAGE__, $sub);
 }
-
 is(FL_MAJOR_VERSION(), 2, 'This was build with the experimental fltk2 libs');
 is(FL_VERSION(), version(), 'FL_VERSION and version() match');

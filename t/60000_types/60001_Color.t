@@ -11,6 +11,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More tests => 154;
@@ -191,8 +192,10 @@ is(contrast(color(BLACK()), color(BLACK())),
 is_deeply([split_color(WHITE())],
           [255, 255, 255],
           'split_color(WHITE) ~ [255, 255, 255]');
-is_deeply([split_color(BLACK())], [0, 0, 0], 'split_color(BLACK) ~ [0, 0, 0]');
-is_deeply([split_color(RED())], [255, 0, 0], 'split_color(RED) ~ [255, 0, 0]');
+is_deeply([split_color(BLACK())], [0, 0, 0],
+          'split_color(BLACK) ~ [0, 0, 0]');
+is_deeply([split_color(RED())], [255, 0, 0],
+          'split_color(RED) ~ [255, 0, 0]');
 
 #
 is(get_color_index(WHITE()), -256, 'get_color_index(WHITE) == -256');

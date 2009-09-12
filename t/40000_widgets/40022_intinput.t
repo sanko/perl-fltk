@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More 0.82 tests => 2;
@@ -36,6 +35,5 @@ my $I = new_ok('FLTK::IntInput' => [0, 0, 100, 100],
                'new FLTK::IntInput( 0, 0, 100, 100 )');
 $W->end();
 $W->show();
-
 note 'TODO: test type()';
 note '  FLTK::NumericInput is the missing link in the inheritance chain';

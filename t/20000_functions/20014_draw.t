@@ -13,7 +13,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More tests => 63;
@@ -45,7 +44,6 @@ for my $sub (qw[ push_matrix pop_matrix scale translate rotate concat
     )
 {   can_ok(__PACKAGE__, $sub);
 }
-
 TODO: {
     local $TODO = 'scrollrect(...) is incomplete...';
     can_ok(__PACKAGE__, 'scrollrect');

@@ -215,8 +215,8 @@ END
      #warn qq[Updated $file];
      #die $CHANGES_D;
      # Keep a backup (just in case) and move the file so we can create it next
-            rename($file, $file . '.bak')
-                || die sprintf 'Failed to rename %s (%s)', $file, $^E;
+            #rename($file, $file . '.bak')
+            #    || die sprintf 'Failed to rename %s (%s)', $file, $^E;
 
             # open and lock the file
             sysopen(my ($CHANGES_W),

@@ -11,6 +11,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More tests => 168;
@@ -29,7 +30,7 @@ use_ok('FLTK', qw[:events]);
 
 # Event types and Event Keys imported with :event tag
 for my $sub (
-            qw[ ACCELERATOR ACTIVATE ALT ANY_BUTTON AddKey BUTTON1 BUTTON2 BUTTON3
+        qw[ ACCELERATOR ACTIVATE ALT ANY_BUTTON AddKey BUTTON1 BUTTON2 BUTTON3
         BackSpaceKey CAPSLOCK COMMAND CTRL CapsLockKey ClearKey DEACTIVATE
         DEVICE_AIRBRUSH DEVICE_CURSOR DEVICE_ERASER DEVICE_MOUSE DEVICE_STYLUS
         DEVICE_TOUCH DND_DRAG DND_ENTER DND_LEAVE DND_RELEASE DRAG DecimalKey

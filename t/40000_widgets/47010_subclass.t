@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More 0.82;
@@ -27,8 +26,8 @@ my $interactive     = $build->notes('interactive');
 
 #
 my @classes = sort qw[
-                       Button
-                       CheckButton
+    Button
+    CheckButton
 ];
 plan tests => 1 + 6 * scalar @classes;    # Order of operations ftw!
 use_ok('FLTK', ':events');
