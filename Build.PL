@@ -59,7 +59,7 @@ my $mb = $class->new(
                        'File::Path'         => 2.04,
                        'Module::Build'      => 0,
                        'Devel::PPPort'      => 0,
-                       'Alien::FLTK'        => 0.06844
+                       'Alien::FLTK'        => 0.06858
     },
     recommends     => {OpenGL => 0.58},
     add_to_cleanup => [qw[FLTK-*],
