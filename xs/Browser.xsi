@@ -155,19 +155,19 @@ fltk::Browser::default_style( )
     OUTPUT:
         RETVAL
 
-=for apidoc e||int|IS_MULTI|
+=for apidoc E||int|IS_MULTI|
 
 Means multiple selection can be achieved by user.
 
-=for apidoc e||int|NORMAL|
+=for apidoc E||int|NORMAL|
 
 Means a single selection can be achieved by user.
 
-=for apidoc e||int|MULTI|
+=for apidoc E||int|MULTI|
 
 Means multiple selection can be achieved by user.
 
-=for apidoc e||int|NO_COLUMN_SELECTED|
+=for apidoc E||int|NO_COLUMN_SELECTED|
 
 Means that no column has been selected by user.
 
@@ -194,21 +194,21 @@ IS_MULTI ( )
     OUTPUT:
         RETVAL
 
-=for apidoc e||linepos|NOSCROLL|
+=for apidoc E||linepos|NOSCROLL|
 
 Argument to L<C<make_item_visible()>|/"make_item_visible">.
 
 Moves as little as possible so item is visible.
 
-=for apidoc e||linepos|TOP|
+=for apidoc E||linepos|TOP|
 
 Position current item to top
 
-=for apidoc e||linepos|MIDDLE|
+=for apidoc E||linepos|MIDDLE|
 
 Position current item to middle
 
-=for apidoc e||linepos|BOTTOM|
+=for apidoc E||linepos|BOTTOM|
 
 Position current item to bottom
 

@@ -16,8 +16,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item * Make sure all examples in POD (c+p from the fltk2 docs) actually work
 
-=item * Flag all GL-related stuff in apidoc
-
 =item * Fix known memory leaks
 
 =over

@@ -92,13 +92,13 @@ cards with lots of memory.
 
 =begin apidoc
 
-=for apidoc ||FLTK::GlWindow|new|x|y|w|h|label = ""
+=for apidoc |G|FLTK::GlWindow|new|x|y|w|h|label = ""
 
 The constructor sets the L<C<mode()>|/"mode"> to
 C<RGB_COLOR | DEPTH_BUFFER | DOUBLE_BUFFER> which is probably all that is
 needed for most 3D OpenGL graphics.
 
-=for apidoc ||FLTK::GlWindow|new|w|h|label = ""
+=for apidoc |G|FLTK::GlWindow|new|w|h|label = ""
 
 Same but placed by the OS.
 
@@ -150,15 +150,15 @@ fltk::GlWindow::new(package, ...)
         OUTPUT:
             RETVAL
 
-=for apidoc |||create|
+=for apidoc |G||create|
 
 
 
-=for apidoc |||flush|
+=for apidoc |G||flush|
 
 
 
-=for apidoc |||destroy|
+=for apidoc |G||destroy|
 
 Besides getting rid of the window, this will destroy the L<context|/"context">
 if it belongs to the window.
@@ -171,10 +171,7 @@ fltk::GlWindow::create( )
 void
 fltk::GlWindow::flush( )
 
-void
-fltk::GlWindow::destroy( )
-
-=for apidoc t[gl]||eh|valid||
+=for apidoc |G|eh|valid||
 
 This flag is turned off on a new window or if the window is ever resized or
 the context is changed. It is turned on after L<C<draw()>|/"draw"> is called.
@@ -194,7 +191,7 @@ or other pieces of the context.
     #... draw your geometry here ...
   }
 
-=for apidoc t[gl]|||valid|is_it||
+=for apidoc |G||valid|is_it||
 
 
 
@@ -210,7 +207,7 @@ fltk::GlWindow::valid( char is_it = NO_INIT )
         CODE:
             THIS->valid( is_it );
 
-=for apidoc t[gl]|||invalidate||||
+=for apidoc |G||invalidate||||
 
 Turn off L<C<valid()>|/"valid">.
 
@@ -219,11 +216,11 @@ Turn off L<C<valid()>|/"valid">.
 void
 fltk::GlWindow::invalidate( )
 
-=for apidoc t[gl]||int|mode||||||
+=for apidoc |G|int|mode||||||
 
 
 
-=for apidoc t[gl]||bool|mode|newmode|||||
+=for apidoc |G|bool|mode|newmode|||||
 
 Set or change the OpenGL capabilites of the window. The value can be any of
 the symbols from\L<FLTK::visual|FLTK::visual> OR'd together:
@@ -286,13 +283,13 @@ fltk::GlWindow::mode( int newmode = NO_INIT )
     CASE:
         C_ARGS: newmode
 
-=for apidoc ||bool|can_do||
+=for apidoc |G|bool|can_do||
 
 Returns true if the hardware supports the current value of
 L<C<mode()>|/"mode">. If false, attempts to show or draw this window will
 cause an L<C<error()>|FLTK/"error">.
 
-=for apidoc ||bool|can_do|mode|
+=for apidoc |G|bool|can_do|mode|
 
 Returns true if the hardware supports C<mode>, see L<C<mode()>|/"mode"> for
 the meaning of the bits.
@@ -306,12 +303,12 @@ fltk::GlWindow::can_do( int mode = NO_INIT )
     CASE: items == 2
         C_ARGS: mode
 
-=for apidoc ||FLTK::GLContext|context|
+=for apidoc |G|FLTK::GLContext|context|
 
 Return the current OpenGL context object being used by this window, or 0 if
 there is none.
 
-=for apidoc |||context|data|destroy_flag = false
+=for apidoc |G||context|data|destroy_flag = false
 
 Set the OpenGL context object to use to draw this window.
 
@@ -340,14 +337,14 @@ fltk::GlWindow::context( fltk::GLContext v = NO_INIT, bool destroy_flag = false 
             THIS->context( v, destroy_flag );
             XSRETURN_UNDEF;
 
-=for apidoc |||make_current||
+=for apidoc |G||make_current||
 
 Selects the OpenGL context for the widget, creating it if necessary. It is
 called automatically prior to the L<C<draw()>|/"draw"> method being called.
 You can call it in L<C<handle()>|/"handle"> to set things up to do OpenGL hit
 detection, or call it other times to do incremental update of the window.
 
-=for apidoc |||swap_buffers||
+=for apidoc |G||swap_buffers||
 
 Swap the front and back buffers of this window (or copy the back buffer to the
 front, possibly clearing or garbaging the back one, depending on your OpenGL
@@ -356,7 +353,7 @@ implementation.
 This is called automatically after L<C<draw()>|/"draw"> unless the
 C<NO_AUTO_SWAP> flag is set in the L<C<mode()>|/"mode">.
 
-=for apidoc |||ortho||
+=for apidoc |G||ortho||
 
 Set the projection so C<0, 0> is in the lower left of the window and each
 pixel is 1 unit wide/tall. If you are drawing 2D images, your
@@ -374,7 +371,7 @@ fltk::GlWindow::swap_buffers( )
 void
 fltk::GlWindow::ortho( )
 
-=for apidoc ||bool|can_do_overlay||
+=for apidoc |G|bool|can_do_overlay||
 
 Return true if the hardware supports OpenGL overlay planes, and FLTK has been
 compiled to use them. If true, L<C<draw_overlay()>|/"draw_overlay"> will be
@@ -387,18 +384,18 @@ L<C<draw()>|/"draw"> to be called.
 bool
 fltk::GlWindow::can_do_overlay( )
 
-=for apidoc |||redraw_overlay||
+=for apidoc |G||redraw_overlay||
 
 Causes L<C<draw_overlay()>|/"draw_overlay"> to be called at a later time.
 Initially the overlay is clear, if you want the window to display something in
 the overlay when it first appears, you must call this immediately after you
 L<C<show()>|/"show"> your window.
 
-=for apidoc |||hide_overlay||
+=for apidoc |G||hide_overlay||
 
 
 
-=for apidoc |||make_overlay_current||
+=for apidoc |G||make_overlay_current||
 
 Selects the OpenGL context for the widget's overlay. This can be used to do
 incremental OpenGL drawing into the overlay. If hardware overlay is not

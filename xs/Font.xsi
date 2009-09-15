@@ -36,7 +36,7 @@ BOOT:
     newCONSTSUB(FLTK_stash, "BOLD_ITALIC", newSViv(fltk::BOLD_ITALIC));
     export_tag( "BOLD_ITALIC", "font" );
 
-=for apidoc t[font]||FLTK::Font|font|name|attributes = 0
+=for apidoc T[font]||FLTK::Font|font|name|attributes = 0
 
 Find a font with the given "nice" name. You can get bold and italic by adding
 a space and "bold" or "italic" (or both) to the name, or by passing them as
@@ -49,7 +49,7 @@ slow, especially on X. Directly calling the system has a problem in that we
 want the same structure returned for any call that names the same font. This
 is sufficiently painful that I have not done this yet.
 
-=for apidoc t[font]||FLTK::Font|font|id|
+=for apidoc T[font]||FLTK::Font|font|id|
 
 Find a L<Font|FLTK::Font> from an fltk1 integer font id.
 
@@ -71,7 +71,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::Font
 
-=for apidoc t[font]||fonts|list_fonts||
+=for apidoc T[font]||fonts|list_fonts||
 
 Returns an array containing every font on the server. Each element is a "base"
 font, there may be bold, italic, and bold+italic version of each font pointed

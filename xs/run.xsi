@@ -23,7 +23,7 @@ FLTK::run
 
 =begin apidoc
 
-=for apidoc t[run]F|X||display|d
+=for apidoc T[run]F|X||display|d
 
 Startup method to set what C<X> display to use. This uses C<setenv()> to
 change the C<DISPLAY> environment variable, so it will affect programs that
@@ -52,7 +52,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run]F||bool|enable_tablet_events|
+=for apidoc T[run]F||bool|enable_tablet_events|
 
 Call this to indicate that you are interested in getting more information from
 a pen tablet device. It does some necessary overhead to enable tablets on C<X>
@@ -76,13 +76,13 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run]||int|wait|
+=for apidoc T[run]||int|wait|
 
 Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
 program. You can also check what happened each time after this returns, which
 is quite useful for managing program state.
 
-=for apidoc t[run]F||int|wait|time_to_wait
+=for apidoc T[run]F||int|wait|time_to_wait
 
 Waits until "something happens", or the given time interval passes. It can
 return much sooner than the time if something happens.
@@ -116,7 +116,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run,default]F||int|run|
+=for apidoc T[run,default]F||int|run|
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
 all the windows are hidden or destroyed (checked by seeing if
@@ -125,7 +125,7 @@ zero. A program can also exit by having a callback call C<exit>.
 
 Most FLTK programs will end with C<exit FLTK::run();>.
 
-=for apidoc t[run]F||int|check|
+=for apidoc T[run]F||int|check|
 
 Same as  L<C<FLTK::wait(0)>|/"wait">. Calling this during a big calculation
 will keep the screen up to date and the interface responsive:
@@ -136,7 +136,7 @@ will keep the screen up to date and the interface responsive:
         last if user_hit_abort_button();
     }
 
-=for apidoc t[run]F||int|ready|
+=for apidoc T[run]F||int|ready|
 
 Test to see if any events or callbacks are pending. This will return true if
 L<C<FLTK::check()>|/"check"> would do anything other than update the screen.
@@ -254,7 +254,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run]||time|get_time_secs|
+=for apidoc T[run]||time|get_time_secs|
 
 Return portable time that increases by C<1.0> each second.
 
@@ -280,13 +280,13 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::run
 
-=for apidoc t[run]|||add_timeout|time|callback|args
+=for apidoc T[run]|||add_timeout|time|callback|args
 
 Add a one-shot timeout callback. The function will be called by
 L<C<fltk::wait()>|FLTK/"wait"> at C<time> seconds after this function is
 called. The optional C<args> are passed to the callback.
 
-=for apidoc t[run]|||repeat_timeout|time|callback|args
+=for apidoc T[run]|||repeat_timeout|time|callback|args
 
 Similar to L<C<add_timeout()>|/"add_timeout">, but rather than the time being
 measured from "now", it is measured from when the system call elapsed that
@@ -389,7 +389,7 @@ nothing if there are no matching ones that have not been called yet.
 
 Like L<C<has_timeout>|/"has_timeout">, this doesn't work yet.
 
-=for apidoc t[run]|||add_check|coderef|args
+=for apidoc T[run]|||add_check|coderef|args
 
 Fltk will call this callback just before it flushes the display and waits for
 events. This is different than L<C<add_idle()>|/"add_idle"> because it is only
@@ -419,7 +419,7 @@ events:
 Remove all matching check callback, if any exists. You can call this from
 inside the check callback if you want.
 
-=for apidoc t[run]|||add_idle|coderef|args
+=for apidoc T[run]|||add_idle|coderef|args
 
 Adds a callback function that is called every time by
 L<C<FLTK::wait()>|FLTK/"wait"> and also makes it act as though the timeout is
@@ -438,7 +438,7 @@ L<C<FLTK::wait()>|FLTK/"wait">, L<C<FLTK::check()>|FLTK/"check">, and
 L<C<FLTK::ready()>|FLTK/"ready">. In this case fltk will not recursively call
 the idle callback.
 
-=for apidoc t[run]|||remove_idle|coderef|args
+=for apidoc T[run]|||remove_idle|coderef|args
 
 Removes the specified idle callback, if it is installed.
 

@@ -35,7 +35,7 @@ C<FL_PATCH_VERSION> constants with the C<version> tag.
 
 =begin apidoc
 
-=for apidoc t[version]||ver|version||
+=for apidoc T[version]||ver|version||
 
 Returns the value of C<FL_VERSION> that FLTK was compiled with. This can be
 compared to the C<FL_VERSION> function to see if the shared library of fltk

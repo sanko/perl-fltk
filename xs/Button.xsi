@@ -72,7 +72,7 @@ fltk::Button::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc e||int|HIDDEN|
+=for apidoc E||int|HIDDEN|
 
 Back-comptability value to hide the button
 

@@ -131,19 +131,19 @@ fltk::Widget::window ( )
 
 
 
-=for apidoc e||int|TOGGLE|
+=for apidoc E||int|TOGGLE|
 
 
 
-=for apidoc e||int|RADIO|
+=for apidoc E||int|RADIO|
 
 
 
-=for apidoc e||int|GROUP_TYPE|
+=for apidoc E||int|GROUP_TYPE|
 
 
 
-=for apidoc e||int|WINDOW_TYPE|
+=for apidoc E||int|WINDOW_TYPE|
 
 
 

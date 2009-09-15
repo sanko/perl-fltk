@@ -246,17 +246,17 @@ the documentation, lines are of the form:
     flags|prereq|return_type|function_name|arg1|arg2|...|argN
 
  flags are single letters with following meanings:
-    d       depreciated code/widget
-    e       enum/flag
+    D       depreciated code/widget
+    E       enum/flag
     F       function rather than an OO method*
     x       experimental and may be removed or changed in a future version
-    t[:X:Y] exported by tags :X and :Y*
-    m       basic functionality has changed since the last major release*
+    T[:X:Y] exported by tags :X and :Y*
+    N       basic functionality has changed since the last major release*
     U       suppress usage example in auto-generated documentation
     H       this is a hidden, internal (hacker only) function
 
  prereq are single letters with the following meanings:
-    g       requires GL*
+    G       requires GL*
     X       requires the X Window system*
     t       requires pthreads (or Windows)*
     W       requires Windows*

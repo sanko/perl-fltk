@@ -44,7 +44,7 @@ including crashing.
 
 #include <fltk/draw.h>
 
-=for apidoc t[gsave,draw]|||push_matrix|
+=for apidoc T[gsave,draw]|||push_matrix|
 
 Save the current transformation on a stack, so you can restore it with
 L<C<pop_matrix()>|/"pop_matrix">.
@@ -57,7 +57,7 @@ Due to limited graphics capabilities of some systems, not all drawing
 functions will be correctly transformed, except by the integer portion of the
 translation. Don't rely on this as we may be fixing this without notice.
 
-=for apidoc t[gsave,draw]|||pop_matrix|
+=for apidoc T[gsave,draw]|||pop_matrix|
 
 Put the transformation back to the way it was before the last
 L<C<push_matrix()>|/"push_matrix">. Calling this without a matching
@@ -85,7 +85,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||scale|x
+=for apidoc T[draw]F|||scale|x
 
 Scale the current transformation by multiplying it by
 
@@ -93,7 +93,7 @@ Scale the current transformation by multiplying it by
   0 x 0
   0 0 1
 
-=for apidoc t[draw]F|||scale|x|y
+=for apidoc T[draw]F|||scale|x|y
 
 Scale the current transformation by multiplying it by
 
@@ -117,7 +117,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||translate|x|y
+=for apidoc T[draw]F|||translate|x|y
 
 Translate the current transformation by multiplying it by
 
@@ -152,7 +152,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||rotate|d
+=for apidoc T[draw]F|||rotate|d
 
 Rotate the current transformation counter-clockwise by C<d> degrees (not
 radians!!). This is done by multiplying the matrix by:
@@ -173,7 +173,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||concat|a|b|c|d|x|y|
+=for apidoc T[draw]F|||concat|a|b|c|d|x|y|
 
 Multiply the current transformation by
 
@@ -193,7 +193,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||load_identity||
+=for apidoc T[draw]F|||load_identity||
 
 Replace the current transform with the identity transform, which puts 0,0 in
 the top-left corner of the window and each unit is 1 pixel in size.
@@ -210,19 +210,19 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||transform|float_x|float_y|
+=for apidoc T[draw]F|||transform|float_x|float_y|
 
 Replace C<float_x> and C<float_y> transformed into device coordinates.
 Device-specific code can use this to draw things using the fltk transformation
 matrix. If the backend is Cairo or another API that does transformations, this
 may return C<x> and C<y> unchagned.
 
-=for apidoc t[draw]F|||transform|int_x|int_y|
+=for apidoc T[draw]F|||transform|int_x|int_y|
 
 Replace C<int_x> and C<int_y> with the transformed coordinates, rounded to the
 nearest integer.
 
-=for apidoc t[draw]F|||transform|rect_from|rect_to|
+=for apidoc T[draw]F|||transform|rect_from|rect_to|
 
 Transform the rectangle C<rect_from> into device coordinates and put it into
 C<rect_to>. This only works correctly for 90 degree rotations, for other
@@ -230,7 +230,7 @@ transforms this will produce an axis-aligned rectangle with the same area
 (this is useful for inscribing circles, and is about the best that can be done
 for device functions that don't handle rotation.
 
-=for apidoc t[draw]F|||transform|x|y|w|h|
+=for apidoc T[draw]F|||transform|x|y|w|h|
 
 Same as C<transform(FLTK::Rectangle-E<gt>new($x,$y,$w,$h), $rect_to)> but
 replaces C<x, y, w, h> with the transformed rectangle. This may be faster as
@@ -277,7 +277,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||transform_distance|x|y
+=for apidoc T[draw]F|||transform_distance|x|y
 
 Replace C<x> and C<y> with the tranformed coordinates, ignoring
 translation. This transforms a vector which is measuring a distance
@@ -296,12 +296,12 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||push_clip|x
+=for apidoc T[draw]F|||push_clip|x
 
 Pushes the I<intersection> of the current region and
 L<Rectangle|FLTK::Rectangle> C<x> onto the clip stack.
 
-=for apidoc t[draw]F|||push_clip|x|y|w|h
+=for apidoc T[draw]F|||push_clip|x|y|w|h
 
 Same as L<C<push_clip(FLTK::Rectangl-E<gt>new($x,$y,$r,$h))>|/"push_clip">
 except faster as it avoids the construction of an intermediate rectangle
@@ -327,7 +327,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||clipout|rectangle
+=for apidoc T[draw]F|||clipout|rectangle
 
 Remove C<rectangle> from the current clip region, thus making it a more
 complex shape. This does not push the stack, it just replaces the top of it.
@@ -348,13 +348,13 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||pop_clip|
+=for apidoc T[draw]F|||pop_clip|
 
 Restore the previous clip region. You must call L<C<pop_clip()>|/"pop_clip">
 exactly once for every time you call L<C<push_clip()>|/"push_clip">. If you
 return to FLTK with the clip stack not empty unpredictable results occur.
 
-=for apidoc t[draw]F|||push_no_clip|
+=for apidoc T[draw]F|||push_no_clip|
 
 Pushes an empty clip region on the stack so nothing will be clipped. This lets
 you draw outside the current clip region. This should only be used to
@@ -380,7 +380,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||bool|not_clipped|rectangle
+=for apidoc T[draw]F||bool|not_clipped|rectangle
 
 Returns true if any or all of \a rectangle is inside the clip region.
 
@@ -397,7 +397,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||int|intersect_with_clip|rectangle
+=for apidoc T[draw]F||int|intersect_with_clip|rectangle
 
 Intersect a L<C<transform()>|/"transform">'d rectangle with the current clip
 region and change it to the smaller rectangle that surrounds (and probably
@@ -433,13 +433,13 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||setcolor|color
+=for apidoc T[draw]F|||setcolor|color
 
 Set the color for all subsequent drawing operations.
 
 See L<C<setcolor_alpha()>|/"setcolor_alpha">.
 
-=for apidoc t[draw]F|||setbgcolor|color
+=for apidoc T[draw]F|||setbgcolor|color
 
 Set the "background" color. This is not used by the drawing functions, but
 many box and image types will refer to it by calling
@@ -465,7 +465,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||setcolor_alpha|color|alpha
+=for apidoc T[draw]F|||setcolor_alpha|color|alpha
 
 Sets the current rgb and alpha to draw in, on rendering systems that allow it.
 If alpha is not supported this is the same as L<C<setcolor()>|/"setcolor">.
@@ -484,11 +484,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||FLTK::Color|getcolor||
+=for apidoc T[draw]F||FLTK::Color|getcolor||
 
 Returns the last Color passed to L<C<setcolor()>|/"setcolor">.
 
-=for apidoc t[draw]F||FLTK::Color|getbgcolor||
+=for apidoc T[draw]F||FLTK::Color|getbgcolor||
 
 Returns the last Color passed to L<C<setbgcolor()>|/"setbgcolor">. To actually
 draw in the bg color, do this:
@@ -520,14 +520,14 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||FLTK::Style|drawstyle||
+=for apidoc T[draw]F||FLTK::Style|drawstyle||
 
 Return the last style sent to
 L<C<drawstyle($style,$flags)>|/"drawstyle_style_flags_">. Some drawing
 functions (such as glyphs) look in this for box types. If this has not been
 called it is L<C<Widget::default_style>|FLTK::Widget/"default_style">.
 
-=for apidoc t[draw]F|||drawstyle|style|flags|
+=for apidoc T[draw]F|||drawstyle|style|flags|
 
 Draw using this style.  Set L<C<drawstyle()>|/"drawstyle"> to this,
 L<C<drawflags()>|/"drawflags"> to C<flags>, calls L<C<setcolor()>|/"setcolor">
@@ -585,7 +585,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||setdrawflags|flags|
+=for apidoc T[draw]F|||setdrawflags|flags|
 
 
 
@@ -601,11 +601,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawflags|flags|
+=for apidoc T[draw]F|||drawflags|flags|
 
 
 
-=for apidoc t[draw]F||Flags|drawflags||
+=for apidoc T[draw]F||Flags|drawflags||
 
 
 
@@ -625,7 +625,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||line_style|style|width = 0|dashes = ''
+=for apidoc T[draw]F|||line_style|style|width = 0|dashes = ''
 
 Set how to draw lines (the "pen"). If you change this it is your
 responsibility to set it back to the default with
@@ -689,7 +689,7 @@ terminated with a zero-length entry. A null pointer or a zero-length array
 results in a solid line. Odd array sizes are not supported and result in
 undefined behavior. I<The dashes array is ignored on Windows 95/98.>
 
-=for apidoc t[draw]F||int|line_style||
+=for apidoc T[draw]F||int|line_style||
 
 Return the last value sent to
 L<C<line_style($style,$width,$dashes)>|/"line_style">, indicating the cap and
@@ -738,7 +738,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||float|line_width||
+=for apidoc T[draw]F||float|line_width||
 
 Return the last value for C<$width> sent to
 L<C<line_style($style,$width, $dashes)>|/"line_style">.
@@ -755,7 +755,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||AV|line_dashes||
+=for apidoc T[draw]F||AV|line_dashes||
 
 Return the last value for C<$dashes> sent to
 L<C<line_style($style,$width, $dashes)>|/"line_style">. Note this is only
@@ -783,7 +783,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||newpath||
+=for apidoc T[draw]F|||newpath||
 
 Clear the current "path". This is normally done by
 L<C<fillpath()>|/"fillpath"> or any other drawing command.
@@ -800,7 +800,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||addvertex|x|y|
+=for apidoc T[draw]F|||addvertex|x|y|
 
 Add a single vertex to the current path. (if the path is empty or a
 L<C<closepath()>|/"closepath"> was done, this is equivalent to a "moveto" in
@@ -837,12 +837,12 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||addvertices|[x1, y1]|[x2, y2]|...
+=for apidoc T[draw]F|||addvertices|[x1, y1]|[x2, y2]|...
 
 Add a whole set of vertices to the current path. This is much faster than
 calling L<C<addvertex>|/"addvertex"> once for each point.
 
-=for apidoc t[draw]F|||addvertices_transformed|[x1, y1]|[x2, y2]|...
+=for apidoc T[draw]F|||addvertices_transformed|[x1, y1]|[x2, y2]|...
 
 Adds a whole set of vertcies that have been produced from values
 returned by L<C<transform()>|/"transform">. This is how L<C<curve()>|/"curve">
@@ -887,7 +887,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||addcurve|x0|y0|x1|y1|x2|y2|x3|y3|
+=for apidoc T[draw]F|||addcurve|x0|y0|x1|y1|x2|y2|x3|y3|
 
 Add a series of points on a Bezier spline to the path. The curve ends (and two
 of the points) are at C<x0,y0> and C<x3,y3>. The "handles" are at C<x1,y1> and
@@ -905,7 +905,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||addarc|l|t|w|h|start|end
+=for apidoc T[draw]F|||addarc|l|t|w|h|start|end
 
 Add a series of points to the current path on the arc of an ellipse. The
 ellipse in inscribed in the C<l,t,w,h> rectangle, and the C<start> and C<end>
@@ -925,7 +925,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||addpie|rect|start|end|
+=for apidoc T[draw]F|||addpie|rect|start|end|
 
 Add a pie-shaped closed piece to the path, inscribed in the rectangle so if it
 is stroked with the default line width it exactly fills the rectangle (this is
@@ -939,7 +939,7 @@ L<C<fillpath()>|/"fillpath"> will produce unpredictable results.
 
 See also L<C<addchord()>|/"addchord">.
 
-=for apidoc t[draw]F|||addchord|rect|start|end|
+=for apidoc T[draw]F|||addchord|rect|start|end|
 
 Add an isolated circular arc to the path. It is inscribed in the rectangle so
 if it is stroked with the default line width it exactly fills the rectangle
@@ -970,7 +970,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||closepath||
+=for apidoc T[draw]F|||closepath||
 
 Similar to drawing another vertex back at the starting point, but fltk knows
 the path is closed. The next L<C<addvertex()>|/"addvertex"> will start a new
@@ -980,13 +980,13 @@ It is harmless to call L<C<closepath()>|/"closepath"> several times in a row,
 or to call it before the first point. Sections with less than 3 points in them
 will not draw anything when filled.
 
-=for apidoc t[draw]F|||strokepath||
+=for apidoc T[draw]F|||strokepath||
 
 Draw a line between all the points in the path (see
 L<C<line_style()>|/"line_style"> for ways to set the thicknesss and dot
 pattern ofthe line), then clear the path.
 
-=for apidoc t[draw]F|||fillpath||
+=for apidoc T[draw]F|||fillpath||
 
 Does L<C<closepath()>|/"closepath"> and then fill with the current color, and
 then clear the path.
@@ -1023,7 +1023,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||fillstrokepath|color|
+=for apidoc T[draw]F|||fillstrokepath|color|
 
 Does L<C<fill()>|/"fill">, then sets the current color to linecolor and does
 L<C<stroke>|/"stroke"> with the same closed path, and then clears the path.
@@ -1043,20 +1043,20 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||fillrect|x|y|w|h|
+=for apidoc T[draw]F|||fillrect|x|y|w|h|
 
 Fill the rectangle with the current color.
 
-=for apidoc t[draw]F|||fillrect|rectangle|
+=for apidoc T[draw]F|||fillrect|rectangle|
 
 Fill the L<C<rectangle>|FLTK::Rectangle> with the current color.
 
-=for apidoc t[draw]F|||strokerect|x|y|w|h|
+=for apidoc T[draw]F|||strokerect|x|y|w|h|
 
 Draw a line I<inside> this bounding box (currently correct only for
 0-thickness lines).
 
-=for apidoc t[draw]F|||strokerect|rectangle|
+=for apidoc T[draw]F|||strokerect|rectangle|
 
 Draw a line i<inside> this L<bounding box|FLTK::Rectangle> (currently correct
 only for 0-thickness lines).
@@ -1090,7 +1090,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawline|x0|y0|x1|y1
+=for apidoc T[draw]F|||drawline|x0|y0|x1|y1
 
 Draw a straight line between the two points.
 
@@ -1121,7 +1121,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawpoint|x|y|
+=for apidoc T[draw]F|||drawpoint|x|y|
 
 Draw a dot at the given point. If L<C<line_width()>|/"line_width"> is zero
 this is the single pixel containing C<$x,$y>, or the one to the lower-right if
@@ -1146,7 +1146,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||setfont|FLTK::Font|size|
+=for apidoc T[draw]F|||setfont|FLTK::Font|size|
 
 Set the current font and font scaling so the size is size pixels. The size is
 unaffected by the current transformation matrix (you may be able to use
@@ -1164,11 +1164,11 @@ See the L<FLTK::Font|FLTK::Font> class for a description of what can be passed
 as a font. For most uses one of the built-in constant fonts like C<HELVETICA>
 can be used.
 
-=for apidoc t[draw]F|||setfont|FLTK::Font|size|
+=for apidoc T[draw]F|||setfont|FLTK::Font|size|
 
 
 
-=for apidoc t[draw]F|||setfont|FLTK::Font|size|attributes
+=for apidoc T[draw]F|||setfont|FLTK::Font|size|attributes
 
 
 
@@ -1184,7 +1184,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||FLTK::Font|getfont||
+=for apidoc T[draw]F||FLTK::Font|getfont||
 
 Returns the L<font|FLTK::Font> sent to the last L<C<setfont()>|/"setfont">.
 
@@ -1200,7 +1200,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||size|getsize||
+=for apidoc T[draw]F||size|getsize||
 
 Return the size sent to the last L<C<setfont()>|/"setfont">. You should use
 this as a minimum line spacing (using
@@ -1219,12 +1219,12 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||width|getwidth|text|
+=for apidoc T[draw]F||width|getwidth|text|
 
 Return the width of a UTF-8 string drawn in the font set by the most recent
 L<C<setfont()>|/"setfont">.
 
-=for apidoc t[draw]F||width|getwidth|text|n
+=for apidoc T[draw]F||width|getwidth|text|n
 
 Return the width of the first C<n> bytes of this UTF-8 string drawn in the
 font set by the most recent L<C<setfont()>|/"setfont">.
@@ -1241,12 +1241,12 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||distance|getascent||
+=for apidoc T[draw]F||distance|getascent||
 
 Return the distance from the baseline to the top of letters in the current
 font.
 
-=for apidoc t[draw]F||distance|getdescent||
+=for apidoc T[draw]F||distance|getdescent||
 
 Return the distance from the baseline to the bottom of letters in the current
 font.
@@ -1273,7 +1273,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawtext_transformed|text|n|x|y|
+=for apidoc T[draw]F|||drawtext_transformed|text|n|x|y|
 
 Draw text starting at a point returned by L<C<transform()>|/"transform">. This
 is needed for complex text layout when the current transform may not match the
@@ -1291,7 +1291,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||drawtext|text|rect|flags|
+=for apidoc T[draw]F|||drawtext|text|rect|flags|
 
 This is the fancy string-drawing function that is used to draw all labels in
 fltk. The string is formatted and aligned inside the passed rectangle. This
@@ -1315,11 +1315,11 @@ column.
 
 =back
 
-=for apidoc t[draw]F|||drawtext|text|x|y
+=for apidoc T[draw]F|||drawtext|text|x|y
 
 Draw a string.
 
-=for apidoc t[draw]F|||drawtext|text|x|y|length
+=for apidoc T[draw]F|||drawtext|text|x|y|length
 
 Draw the first C<length> I<bytes> (not characters if utf8 is used) starting at
 the given position.
@@ -1348,7 +1348,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F||[w,h]|measure|string|flags = 0|
+=for apidoc T[draw]F||[w,h]|measure|string|flags = 0|
 
 Measure the size of box necessary for L<C<drawtext()>|/"drawtext"> to draw the
 given string inside of it. The C<flags> are used to set the alignment, though
@@ -1370,11 +1370,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||column_widths|x1|x2|...
+=for apidoc T[draw]F|||column_widths|x1|x2|...
 
 Set where C<\t> characters go in label text formatter.
 
-=for apidoc t[draw]F||pos|column_widths||
+=for apidoc T[draw]F||pos|column_widths||
 
 Get where C<\t> characters go in label text formatter.
 
@@ -1411,7 +1411,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw,image]F|||drawimage|pointer|type|rect|line_delta|
+=for apidoc T[draw,image]F|||drawimage|pointer|type|rect|line_delta|
 
 Draw a image (a rectangle of pixels) stored in your program's memory. The
 current transformation (scale, rotate) is applied.
@@ -1447,7 +1447,7 @@ The X version of FLTK will L<C<abort()>|/"abort"> if the default visual is one
 it cannot use for images. To avoid this call L<C<visual(fltk::RGB)>|/"visual">
 at the start of your program.
 
-=for apidoc t[draw,image]F|||drawimage|pointer|type|rect|
+=for apidoc T[draw,image]F|||drawimage|pointer|type|rect|
 
 Same except C<$line_delta> is set to C<$rect->w() * depth($type)>, indicating
 the rows are packed together one after another with no gap.
@@ -1468,7 +1468,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]F|||readimage|pointer|type|rect|line_delta|
+=for apidoc T[draw]F|||readimage|pointer|type|rect|line_delta|
 
 Reads a 2-D image off the current drawing destination. The resulting data can
 be passed to L<C<drawimage()>|/"drawimage"> or the 8-bit pixels examined or
@@ -1501,7 +1501,7 @@ points to the top-left pixel.
 
 =back
 
-=for apidoc t[draw]F|||readimage|pointer|type|rect|
+=for apidoc T[draw]F|||readimage|pointer|type|rect|
 
 Same except C<line_delta> is set to C<$rect->w() * depth($type)>.
 
@@ -1527,7 +1527,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::draw
 
-=for apidoc t[draw]FHx|||scrollrect|rect|dx|dy|code|data
+=for apidoc T[draw]FHx|||scrollrect|rect|dx|dy|code|data
 
 Move the contents of a rectangle by C<dx> and C<dy>. The area that was
 previously outside the rectangle or obscured by other windows is then redrawn
