@@ -1,0 +1,4 @@
+---
+layout: page
+---
+<div>{%for post in site.posts%}{%if post.categories contains page.index%}{%include post.html%}{%endif%}{%endfor%}</div>

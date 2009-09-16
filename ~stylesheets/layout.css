@@ -1,0 +1,220 @@
+html,html body {
+height:100%;
+min-height:100%;
+min-width:100%;
+position:absolute;
+width:100%
+}
+
+html body div#container {
+margin-left:auto;
+margin-right:auto;
+width:48em
+}
+
+html body div#container div#head div#head-contents {
+margin-bottom:3em;
+padding-bottom:2em;
+padding-top:8em
+}
+
+html body div#container .clear,html body div#container pre,html body div#container code,html body div#container form,html body div#container textarea,html body div#container blockquote {
+clear:both
+}
+
+html body div#container div#head div#head-contents:after,html body div#container div#hips div#hips-load div.post div.post-content img.left:after,html body div#container div#hips div#hips-load div.post div.post-content img.center:after,html body div#container div#hips div#hips-load div.post div.post-content img.right:after {
+clear:both;
+content:" ";
+display:block;
+height:0;
+visibility:hidden
+}
+
+html body div#container div#head div#head-contents div#head-right {
+float:right;
+margin-top:1em
+}
+
+html body div#container div#hips {
+margin-bottom:2em
+}
+
+html body div#container div#feet {
+padding:1em 0;
+width:100%
+}
+
+html body div#container div#extra-a {
+position:absolute;
+right:0;
+top:0
+}
+
+html body div#container div#hips div#back-to-top {
+clear:both;
+margin-top:2em
+}
+
+html body div#container div#hips div#back-to-top span {
+padding:.7em .7em .3em
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu {
+margin-top:.5em
+}
+
+html body div#container div#hips div#hips-load dl#archives dt:first-child {
+margin:0!important
+}
+
+html body div#container div#hips div#hips-load dl#archives dt.archives-year {
+margin-top:2.2em
+}
+
+html body div#container div#hips div#hips-load dl#archives dt span {
+position:absolute;
+right:0
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li {
+display:inline;
+float:left;
+height:1.85em
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li a {
+float:left;
+padding:.3em .6em .8em
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li {
+display:inline;
+float:left;
+height:2em;
+margin-right:1.5em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-more ul li {
+display:inline;
+margin-right:.5em;
+padding:.5em 0 .5em 1.5em
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li.rss,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li.twitter {
+padding-left:1.25em
+}
+
+html body div#container div#hips div#hips-load div.post + div.post {
+margin-top:3em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-head {
+padding-right:8em;
+position:relative
+}
+
+html body div#container div#hips div#hips-load div.post small.post-time {
+padding-left:.8em;
+position:absolute;
+right:0;
+top:.5em;
+width:8em
+}
+
+html body div#container div#hips div#hips-load div.post small.post-time strong.day {
+padding-right:7px
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content p {
+margin:.5em 0;
+padding:.5em 0
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content ol li {
+padding:.2em 0
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content ul li {
+padding:0 0 0 1.25em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content ol,html body div#container div#hips div#hips-load div.post div.post-content ul {
+padding:1em 0 1em 2.5em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content blockquote ul li {
+padding:.25em 0 0 1.25em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content h1,html body div#container div#hips div#hips-load div.post div.post-content h2,html body div#container div#hips div#hips-load div.post div.post-content h3 {
+padding-left:.5em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-more {
+padding-top:1em;
+text-align:right
+}
+
+html body div#container div#hips div#hips-load div.post div.post-details {
+margin:.5em 0;
+text-align:left
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content blockquote {
+margin:1em 0;
+padding:1em 1.25em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-details ul li a,html body div#container div#hips div#hips-load div.post div.post-details ul li a:visited,html body div#container div#hips div#hips-load div.post div.post-details ul li a:hover {
+margin-right:.1em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-details ul li {
+display:inline;
+margin-right:.5em;
+padding:.4em 0 .6em 1.2em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-more ul li a,html body div#container div#hips div#hips-load div.post div.post-more ul li a:visited {
+margin-right:.3em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content img {
+max-width:100%;
+padding:0
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content img.center {
+display:block;
+margin:1em auto;
+padding:.1em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content img.right {
+display:inline;
+margin:1em 0 1em 1.8em;
+padding:.1em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content img.left {
+display:inline;
+margin:1em 1.8em 1em 0;
+padding:.1em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content .right {
+float:right
+}
+
+html body div#container div#head div#head-contents div#head-left,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul,html body div#container div#hips div#hips-load div.post small.post-time strong,html body div#container div#hips div#hips-load div.post div.post-content .left {
+float:left
+}
+
+html body div#container div#hips div#hips-load dl#archives dt {
+margin:.5em 0 0;
+position:relative
+}
+
+html body div#container div#hips div#hips-load dl#archives dd {
+margin:0 0 0 1em
+}

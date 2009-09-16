@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{%assign post = page%}
+{%include post.html%}
+{%if page.nocomments%}
+    <!-- Without comments -->
+{%elsif page.categories contains 'page'%}
+	<!-- No comments on static/index pages -->
+{%else%}
+    <!-- With comments -->
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+		var disqus_developer = (/localhost|github|dev/i).test(location.host);
+	</script>
+	<script type="text/javascript" src="http://disqus.com/forums/{{site.disqus.id}}/embed.js"></script>
+	<noscript>
+		<a href="http://{{site.disqus.id}}.disqus.com/?url=ref">View the discussion thread.</a>
+	</noscript>
+    <!-- /With comments -->
+{%endif%}
+<!--
+<div id="pagination">
+	{%if page.previous%}
+		<a class="prev" href="{{page.previous.url}}">&laquo; {{page.previous.title | truncatewords:5}}</a>
+	{%endif%}
+	{%if page.next%}
+		<a class="next" href="{{page.next.url}}">{{page.next.title | truncatewords:5}} &raquo;</a>
+	{%endif%}
+</div>
+-->

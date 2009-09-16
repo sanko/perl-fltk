@@ -1,0 +1,7 @@
+---
+layout: archive
+title: Archives
+categories: [page, index, archive]
+tags: [dates, posts]
+permalink: /archive
+---

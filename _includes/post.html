@@ -1,0 +1,76 @@
+<!-- Post -->
+<div id="post{{post.id|replace:"/","-"}}" class="post{%for cat in post.categories%} category-{{cat}}{%endfor%}{%for tag in post.topics%} tag-{{topic}}{%endfor%}">
+  <div class="post-head">
+	<h1>
+{%if page.url == post.url%}
+	{{post.title}}
+{%else%}
+	  <a href="{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
+{%endif%}
+	</h1>
+	<small class="post-time">
+	  <strong class="day">{{post.date|date:"%d"}}</strong>
+	  <strong class="month-year">{{post.date|date:"%b<br />%Y"|uppercase}}</strong>
+	</small>
+  </div>
+  <div class="post-content">
+{%if post.categories contains 'tutorial' and post.header%}
+	<img alt="{{post.title}} Preview" class="center" src="{{post.header}}" />
+{%  if page.url == post.url%}
+	{{content|replace:"<br />", "<p>"}}
+{%  else%}
+	{{post.content | truncatewords:30}}
+	<a href="{{post.url}}" title="Read More">Continue Reading.</a>
+{%	endif%}
+{%else%}
+{%  if page.url == post.url%}
+	{{content}}
+{%  else%}
+	{{post.content}}
+{%	endif%}
+{%endif%}
+  </div>
+  <div class="post-details">
+    <ul>
+{%if post.categories == empty%}
+	  <li class="post-details-category">
+		In: Uncategorized
+	  </li>
+{%else%}
+	  <li class="post-details-category">In:
+{%for category in post.categories%}
+		<a href="http://www.google.com/search?q=site:{{site.url | escape}}+{{category | escape}}"
+		   title="View all posts in &quot;{{category}}&quot;">{{category}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
+	  </li>
+{%endif%}
+{%if post.topics%}
+	  <li class="post-details-tag">Tags:
+{%for topic in post.topics%}
+		<a href="http://www.google.com/search?q=site:{{site.url | escape}}+{{topic | escape}}"
+		   title="View posts tagged with &quot;{{topic}}&quot;">{{topic}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
+	  </li>
+{%endif%}
+    </ul>
+  </div>
+  <div class="post-more">
+	<ul>
+{%if page.url != post.url%}
+	  <li class="post-more-read">
+		<a href="{{post.url}}" title="Read More {{post.title}}">Read More</a>
+	  </li>
+{%endif%}
+	  <li class="post-more-comment">
+{%if post.nocomments%}
+		Comments Disabled
+{%elsif post.categories contains 'page'%}
+		<!-- No comments on static/index pages -->
+{%else%}
+		<a href="{{post.url}}#disqus_thread" title="Comment on {{post.title}}">
+	      &nbsp;&nbsp; Comments
+        </a>
+{%endif%}
+	  </li>
+	</ul>
+  </div>
+</div>
+<!-- /Post -->

@@ -1,0 +1,144 @@
+html html,body {
+font-family:"Trebuchet MS", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+font-size:.82em
+}
+
+html body div#container div#head div#head-contents div#head-left div#head-left-title span.title-fltk {
+font-size:5.25em;
+font-weight:bolder;
+line-height:.8em!important
+}
+
+html body div#container div#head div#head-contents div#head-left div#head-left-title span.title-dotpm {
+font-family:'Arial Black';
+font-size:2.75em;
+font-weight:400
+}
+
+html body div#container div#head div#head-contents div#head-left div#head-left-title p.desc {
+text-transform:uppercase
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li {
+font-size:inherit!important
+}
+
+html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li,html body div#container div#head div#head-contents div#head-left div#head-left-title p.desc,html body div#container div#hips div#back-to-top span,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li {
+font-family:Arial;
+font-size:1.1em;
+font-weight:700;
+letter-spacing:-1px
+}
+
+html body div#container div#hips div#hips-load div.post div.post-head h1 {
+font-family:Arial;
+font-size:3em;
+font-weight:bolder;
+letter-spacing:-1px;
+line-height:1em
+}
+
+html body div#container div#hips div#hips-load div.post small.post-time strong {
+letter-spacing:-1px
+}
+
+html body div#container div#hips div#hips-load div.post small.post-time strong.day {
+font-family:Helvetica;
+font-size:3em;
+font-weight:400;
+line-height:1em
+}
+
+html body div#container div#hips div#hips-load div.post small.post-time strong.month-year {
+font-family:Arial;
+font-size:1.463em;
+font-weight:700;
+line-height:1em;
+text-transform:lowercase
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content p {
+font-family:Verdana;
+font-size:1em;
+font-weight:400;
+line-height:1.5em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content ol li {
+list-style:decimal inside
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content ul li {
+list-style-type:none
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content blockquote ul li {
+font-size:1em;
+list-style-type:none
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content h3 {
+font-size:1.25em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-details ul li a,html body div#container div#hips div#hips-load div.post div.post-details ul li a:visited,html body div#container div#hips div#hips-load div.post div.post-details ul li a:hover {
+text-decoration:underline
+}
+
+html body div#container div#hips div#hips-load div.post div.post-more ul li a,html body div#container div#hips div#hips-load div.post div.post-more ul li a:visited {
+font-family:Arial;
+font-size:1.1em;
+font-weight:700;
+letter-spacing:-1px;
+line-height:1.25em
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content blockquote,html body div#container div#hips div#hips-load div.post div.post-content blockquote p {
+font-family:Georgia, "Times New Roman", Times, serif;
+font-size:1em;
+font-style:italic;
+line-height:1.6em
+}
+
+html body div#container div#hips div#hips-load dl#archives dt span {
+font-size:2.2em;
+font-weight:400;
+line-height:1em
+}
+
+html body div#container div#hips div#hips-load dl#archives dd {
+font-size:1em
+}
+
+html body div#container div#hips div#hips-load dl#archives dt span.archives-year {
+font-size:2.5em;
+font-weight:bolder
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content h2,html body div#container div#hips div#hips-load dl#archives dt.archives-month {
+font-size:1.5em
+}
+
+html body div#container div#feet {
+text-align:center
+}
+
+html body div#container div#feet p#dowhat a {
+font-size:3.76em
+}
+
+html body div#container div#feet p#menu > span + span:before {
+content:" · "
+}
+
+html body div#container div#hips div#hips-load div.post div.post-content h1,html body div#container div#feet p#menu {
+font-size:1.75em
+}
+
+html body div#container div#hips div#back-to-top span a,html body div#container div#hips div#back-to-top span a:visited,html body div#container div#hips div#back-to-top span a:hover,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li a:hover,html body div#container div#hips div#hips-load div.post div.post-head h1 a:hover,html body div#container div#feet p#menu :link,:visited {
+text-decoration:none
+}
+
+html body div#container div#hips div#hips-load dl#archives dt,html body div#container div#hips div#hips-load div.post div.post-content h1,html body div#container div#hips div#hips-load div.post div.post-content h2,html body div#container div#hips div#hips-load div.post div.post-content h3,html body div#container div#hips div#hips-load dl#archives dt,html body div#container div#hips div#hips-load dl#archives dd span.archives-date {
+font-weight:700
+}

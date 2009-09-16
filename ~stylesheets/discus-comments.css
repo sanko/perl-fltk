@@ -1,0 +1,45 @@
+div#disqus_thread div#dsq-content {
+padding-top:2em!important
+}
+
+div#disqus_thread div#dsq-content div#dsq-comments-title {
+display:none!important
+}
+
+div#disqus_thread div#dsq-content div.dsq-options {
+text-align:right!important
+}
+
+div#disqus_thread div#dsq-content ul#dsq-comments div li.dsq-comment {
+background:#2a3033!important;
+border:1px solid #353c3f!important;
+margin-bottom:25px!important;
+padding:25px!important
+}
+
+div#disqus_thread div#dsq-content ul#dsq-comments div li.dsq-comment.dsq-odd {
+background:#1b2023!important;
+border:1px solid #353c3f!important
+}
+
+div#disqus_thread div#dsq-content div#dsq-new-post.dsq-post-area {
+background:#1b2023!important;
+border:1px solid #353c3f!important;
+color:#a4a7a7!important;
+padding:20px!important
+}
+
+div#disqus_thread div#dsq-content div.dsq-item-trackback input.dsq-trackback-url {
+background:#2A3033!important;
+border:0!important;
+color:#CCC!important;
+width:30em!important
+}
+
+div#disqus_thread div#dsq-content div.dsq-options span.dsq-subscribe-email span#dsq-subscribe a,div#disqus_thread div#dsq-content div.dsq-options span.dsq-subscribe-rss a,div#disqus_thread div#dsq-content div#dsq-new-post.dsq-post-area div.dsq-request-user-info a {
+color:#CCC!important
+}
+
+div#disqus_thread div#dsq-content div.dsq-options span.dsq-subscribe-email span#dsq-subscribe a:hover,div#disqus_thread div#dsq-content div.dsq-options span.dsq-subscribe-rss a:hover,div#disqus_thread div#dsq-content div#dsq-new-post.dsq-post-area div.dsq-request-user-info a:hover {
+color:#ead58c!important
+}
