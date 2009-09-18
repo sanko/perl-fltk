@@ -7,7 +7,7 @@ title:          FLTK.pm
 feed:           atom.xml
 sitemap:        sitemap.xml
 description:    "Perl interface to the Fast Light Toolkit"
-baseurl:        http://sanko.github.com/fltk-perl/
+url:            sanko.github.com/fltk-perl/
 
 author:
     name:       Sanko Robinson
