@@ -5,7 +5,7 @@
 {%if page.url == post.url%}
 	{{post.title}}
 {%else%}
-	  <a href="{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
+	  <a href=".{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
 {%endif%}
 	</h1>
 	<small class="post-time">
@@ -20,7 +20,7 @@
 	{{content|replace:"<br />", "<p>"}}
 {%  else%}
 	{{post.content | truncatewords:30}}
-	<a href="{{post.url}}" title="Read More">Continue Reading.</a>
+	<a href=".{{post.url}}" title="Read More">Continue Reading.</a>
 {%	endif%}
 {%else%}
 {%  if page.url == post.url%}
@@ -56,7 +56,7 @@
 	<ul>
 {%if page.url != post.url%}
 	  <li class="post-more-read">
-		<a href="{{post.url}}" title="Read More {{post.title}}">Read More</a>
+		<a href=".{{post.url}}" title="Read More {{post.title}}">Read More</a>
 	  </li>
 {%endif%}
 	  <li class="post-more-comment">
@@ -65,7 +65,7 @@
 {%elsif post.categories contains 'page'%}
 		<!-- No comments on static/index pages -->
 {%else%}
-		<a href="{{post.url}}#disqus_thread" title="Comment on {{post.title}}">
+		<a href=".{{post.url}}#disqus_thread" title="Comment on {{post.title}}">
 	      &nbsp;&nbsp; Comments
         </a>
 {%endif%}
