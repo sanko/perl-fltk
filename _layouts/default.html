@@ -50,7 +50,7 @@
                 <ul>
                 <li{%if page.url == ''%} class="current-page-item"{%endif%}>
                   <a href=
-                  "/" title="Home"><span>Home</span></a>
+                  "http://{{site.url}}" title="Home"><span>Home</span></a>
                 </li>
 {%for p in site.categories.page%}
                 <li class="page-item page-item{{p.id|replace:"/","-"}}{%if page.url == p.url%} current-page-item{%endif%}">
