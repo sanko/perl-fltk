@@ -10,7 +10,8 @@
     <meta name="generator" content="Jekyll" />
     <meta name="author" content="{{site.author.name}}" />
     <meta name="description" content="{{site.description}}" />
-    <base href="{%if site.destination != './_site'%}http://sanko.github.com/fltk-perl/{%else%}/{%endif%}" />
+{%if site.destination != './_site'%}{%assign baseurl ='http://sanko.github.com/fltk-perl/'%}{%else%}{%assign baseurl ='/'%}{%endif%}
+    <base href="{{baseurl}}" />
     <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="{{site.feed}}" />
 {%for css in site.css%}
     <link rel="stylesheet" href="{{css}}" type="text/css" />{%endfor%}
@@ -54,7 +55,7 @@
                 </li>
 {%for p in site.categories.page%}
                 <li class="page-item page-item{{p.id|replace:"/","-"}}{%if page.url == p.url%} current-page-item{%endif%}">
-                  <a href="{{p.url}}" title="{{p.title}}"><span>{{p.title}}</span></a>
+                  <a href=".{{p.url}}" title="{{p.title}}"><span>{{p.title}}</span></a>
                 </li>
 {%endfor%}
               </ul>
