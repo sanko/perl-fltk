@@ -39,14 +39,14 @@
 {%else%}
 	  <li class="post-details-category">In:
 {%for category in post.categories%}
-		<a href="http://www.google.com/search?q=site:{{site.url | escape}}+{{category | escape}}"
+		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{category | escape}}"
 		   title="View all posts in &quot;{{category}}&quot;">{{category}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
 	  </li>
 {%endif%}
 {%if post.topics%}
 	  <li class="post-details-tag">Tags:
 {%for topic in post.topics%}
-		<a href="http://www.google.com/search?q=site:{{site.url | escape}}+{{topic | escape}}"
+		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{topic | escape}}"
 		   title="View posts tagged with &quot;{{topic}}&quot;">{{topic}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
 	  </li>
 {%endif%}
