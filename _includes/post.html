@@ -5,7 +5,7 @@
 {%if page.url == post.url%}
 	{{post.title}}
 {%else%}
-	  <a href="{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
+	  <a href=".{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
 {%endif%}
 	</h1>
 	<small class="post-time">

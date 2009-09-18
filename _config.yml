@@ -4,8 +4,8 @@ permalink:      pretty
 paginate:       5
 
 title:          FLTK.pm
-feed:           /atom.xml
-sitemap:        /sitemap.xml
+feed:           atom.xml
+sitemap:        sitemap.xml
 description:    "Perl interface to the Fast Light Toolkit"
 
 author:
@@ -16,13 +16,13 @@ disqus:
     id:         sanko
 
 css:
-    - /~stylesheets/reset.css
-    - /~stylesheets/layout.css
-    - /~stylesheets/typography.css
-    - /~stylesheets/paint.css
-    - /~stylesheets/discus-comments.css
-    - /~stylesheets/testing.css
-    - /~stylesheets/syntax.css
+    - ~stylesheets/reset.css
+    - ~stylesheets/layout.css
+    - ~stylesheets/typography.css
+    - ~stylesheets/paint.css
+    - ~stylesheets/discus-comments.css
+    - ~stylesheets/testing.css
+    - ~stylesheets/syntax.css
 
 js: []
 
