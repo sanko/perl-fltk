@@ -25,9 +25,9 @@ exit run();
 best blog ever. This will be the best blog ever. This will be the best blog
 ever. This will be the best blog ever. This will be the best blog ever. This
 will be the best blog ever. This will be the best blog ever. This
-<img alt="[image]" class="center" src="/~images/posts/1680018_attach.jpg" />
-<img alt="[image]" class="left"   src="/~images/posts/1680018_attach.jpg" />
-<img alt="[image]" class="right"  src="/~images/posts/1680018_attach.jpg" />
+<img alt="[image]" class="center" src="~images/posts/1680018_attach.jpg" />
+<img alt="[image]" class="left"   src="~images/posts/1680018_attach.jpg" />
+<img alt="[image]" class="right"  src="~images/posts/1680018_attach.jpg" />
 
 # Chapter (h1)
 

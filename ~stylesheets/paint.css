@@ -1,10 +1,10 @@
 html body div#container div#feet {
-background:#2A3033 url(~images/ui/border-bkg.png) repeat-x;
+background:#2A3033 url(../~images/ui/border-bkg.png) repeat-x;
 color:#A4A7A7
 }
 
 html body div#container div#head div#head-contents {
-background:url(~images/ui/border-bkg.png) left bottom repeat-x;
+background:url(../~images/ui/border-bkg.png) left bottom repeat-x;
 color:#FF0
 }
 
@@ -21,11 +21,11 @@ color:#474b4e
 }
 
 html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li.rss {
-background:url(~images/ui/feed-rss.png) left 0 no-repeat
+background:url(../~images/ui/feed-rss.png) left 0 no-repeat
 }
 
 html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li.twitter {
-background:url(~images/ui/feed-twitter.png) left 0 no-repeat;
+background:url(../~images/ui/feed-twitter.png) left 0 no-repeat;
 color:#8A8D8D
 }
 
@@ -38,7 +38,7 @@ border-right:solid 2px #474b4e
 }
 
 html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li a:hover,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li.current-page-item a,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li.current-page-item a:visited,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li.current-page-item a:hover,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li.current-page-item .page-item a:hover {
-background:#0994c1 url(~images/ui/pages-bot.png) bottom center no-repeat;
+background:#0994c1 url(../~images/ui/pages-bot.png) bottom center no-repeat;
 color:#fff
 }
 
@@ -48,7 +48,7 @@ color:#50b5d6
 }
 
 html body div#container div#hips div#back-to-top span {
-background:#eceede url(~images/ui/top-bkg.png) top center no-repeat;
+background:#eceede url(../~images/ui/top-bkg.png) top center no-repeat;
 color:#fff
 }
 
@@ -70,7 +70,7 @@ color:#5c656a
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-content ul li {
-background: url(~images/ui/post-content-li.png) left no-repeat!important
+background: url(../~images/ui/post-content-li.png) left no-repeat!important
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-more ul li {
@@ -78,11 +78,11 @@ color:#7f7f7f
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-more ul li.post-more-read {
-background:url(~images/ui/post-more-read-ico.png) left center no-repeat
+background:url(../~images/ui/post-more-read-ico.png) left center no-repeat
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-more ul li.post-more-comment {
-background:url(~images/ui/post-more-comment-ico.png) left center no-repeat
+background:url(../~images/ui/post-more-comment-ico.png) left center no-repeat
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-content a:hover,html body div#container  div#hips div#hips-load div.post div.post-more ul li a:hover {
@@ -98,11 +98,11 @@ background:#1b2023
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-details ul li.post-details-category {
-background:url(~images/ui/post-details-category-ico.png) left center no-repeat
+background:url(../~images/ui/post-details-category-ico.png) left center no-repeat
 }
 
 html body div#container  div#hips div#hips-load div.post div.post-details ul li.post-details-tag {
-background:url(~images/ui/post-details-tag-ico.png) left center no-repeat
+background:url(../~images/ui/post-details-tag-ico.png) left center no-repeat
 }
 
 html body div#container div#head div#head-contents div#head-right div#head-right-menu div.pages ul li a,html body div#container div#head div#head-contents div#head-right div#head-right-menu div.feed ul li a,html body div#container  div#hips div#hips-load div.post div.post-content a,html body div#container  div#hips div#hips-load div.post div.post-content a:visited,html body div#container  div#hips div#hips-load div.post div.post-more ul li a,html body div#container  div#hips div#hips-load div.post div.post-more ul li a:visited {
