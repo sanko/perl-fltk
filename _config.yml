@@ -16,13 +16,13 @@ disqus:
     id:         sanko
 
 css:
-    - /~stylesheets/reset.css
-    - /~stylesheets/layout.css
-    - /~stylesheets/typography.css
-    - /~stylesheets/paint.css
-    - /~stylesheets/discus-comments.css
-    - /~stylesheets/testing.css
-    - /~stylesheets/syntax.css
+    - ~stylesheets/reset.css
+    - ~stylesheets/layout.css
+    - ~stylesheets/typography.css
+    - ~stylesheets/paint.css
+    - ~stylesheets/discus-comments.css
+    - ~stylesheets/testing.css
+    - ~stylesheets/syntax.css
 
 js: []
 

@@ -3,23 +3,19 @@
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-	<title>{%if page.title%}{{page.title}} | {%endif%}{{site.title}}</title>
+    <title>{%if page.title%}{{page.title}} | {%endif%}{{site.title}}</title>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<meta name="generator" content="Jekyll" />
-	<meta name="author" content="{{site.author.name}}" />
-	<meta name="description" content="{{site.description}}" />
-
-	<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="{{site.url}}{{site.feed}}" />
-
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="{{site.author.name}}" />
+    <meta name="description" content="{{site.description}}" />
+    <base href="/{{site.source}}" /> <!-- {{site.destination}} -->
+    <link rel="alternate" type="application/atom+xml" title="Recent Entries" href="{{site.url}}{{site.feed}}" />
 {%for css in site.css%}
-	<link rel="stylesheet" href="{{css}}" type="text/css" />
-{%endfor%}
+    <link rel="stylesheet" href="{{css}}" type="text/css" />{%endfor%}
 {%for css in page.css%}
-	<link rel="stylesheet" href="{{css}}" type="text/css" />
-{%endfor%}
-
+    <link rel="stylesheet" href="{{css}}" type="text/css" />{%endfor%}
   </head>
   <body>
     <div id="container">
@@ -57,7 +53,7 @@
                   "/" title="Home"><span>Home</span></a>
                 </li>
 {%for p in site.categories.page%}
-                <li class="page-item page-item{{p.id|replace:"/","-"}}{%if page.url == p.url%} current-page_item{%endif%}">
+                <li class="page-item page-item{{p.id|replace:"/","-"}}{%if page.url == p.url%} current-page-item{%endif%}">
                   <a href="{{p.url}}" title="{{p.title}}"><span>{{p.title}}</span></a>
                 </li>
 {%endfor%}
@@ -123,25 +119,25 @@
       <div id="extra-c"></div>
     </div>
 {%for js in site.js%}
-	<script src="{{js}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{js}}" type="text/javascript" charset="utf-8"></script>
 {%endfor %}
 {%for js in page.js%}
-	<script src="{{js}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{js}}" type="text/javascript" charset="utf-8"></script>
 {%endfor%}
-	<script type="text/javascript">
+    <script type="text/javascript">
 //<![CDATA[
-		(function(){
-			var links = document.getElementsByTagName('a');
-			var query = '?';
-			for (var i = 0; i < links.length; i++){
-				if (links[i].href.indexOf('#disqus_thread') >= 0){
-					query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-				}
-			}
-			document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/{{site.disqus.id}}/get_num_replies.js' + query + '"></' + 'script>');
-		})();
+        (function(){
+            var links = document.getElementsByTagName('a');
+            var query = '?';
+            for (var i = 0; i < links.length; i++){
+                if (links[i].href.indexOf('#disqus_thread') >= 0){
+                    query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+                }
+            }
+            document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/{{site.disqus.id}}/get_num_replies.js' + query + '"></' + 'script>');
+        })();
     //]]>
-	</script>
+    </script>
     <script type="text/javascript">
 //<![CDATA[
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
