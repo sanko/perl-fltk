@@ -43,7 +43,7 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 #define DISABLE_HANDLE // Disables creation of [Widget]::handle( int event ) methods
 
-#include <fltk/config.h> // created in / during fltk2's configure stage and
+#include <config.h> // created in / during fltk2's configure stage and
                          // installed to /fltk/include/ by Alien::FLTK
 
 #if HAVE_GL == 0
