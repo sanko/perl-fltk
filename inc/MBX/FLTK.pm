@@ -204,6 +204,7 @@ package MBX::FLTK;
 
         sub ACTION_docs {
             my $self = shift;
+            return;
             $self->depends_on('apidoc');
             return $self->SUPER::ACTION_docs(@_);
         }
