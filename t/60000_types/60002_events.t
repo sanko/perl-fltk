@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 168;
+use Test::More tests => 167;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -57,8 +57,7 @@ for my $sub (
         event_length event_name event_pressure event_state event_text
         event_x event_x_root event_x_tilt event_y event_y_root event_y_tilt
         exit_modal exit_modal_flag focus foreachShortcut get_key_state
-        get_mouse grab handle key key_name modal paste pushed try_shortcut
-        warp_mouse
+        get_mouse grab key key_name modal paste pushed try_shortcut warp_mouse
         ]
     )
 {   can_ok(__PACKAGE__, $sub);
