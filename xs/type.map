@@ -102,7 +102,7 @@ AnsiWidget      *   O_FLTK
 
 OUTPUT
 O_FLTK
-    sv_setref_pv( $arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\", ( void * ) $var ); /* ${ntype} */
+    sv_setref_pv( $arg, \"FLTK::${(my $ntt=$ntype)=~s'(Ptr$?|^.*\W)''g;\$ntt}\", ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${ntype} */
 
 INPUT
 O_FLTK
