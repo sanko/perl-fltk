@@ -295,8 +295,6 @@ INCLUDE: LabelType.xsi
 
 INCLUDE: LightButton.xsi
 
-INCLUDE: MenuBar.xsi
-
 INCLUDE: MenuSection.xsi
 
 INCLUDE: MultiBrowser.xsi

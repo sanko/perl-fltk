@@ -380,4 +380,6 @@ fltk::Group::resize_align( fltk::Flags flags = NO_INIT )
 BOOT:
     isa("FLTK::Group", "FLTK::Widget");
 
+INCLUDE: Menu.xsi
+
 #endif // ifndef DISABLE_GROUP

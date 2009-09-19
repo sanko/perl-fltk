@@ -1,0 +1,224 @@
+#ifndef DISABLE_MENU
+
+MODULE = FLTK               PACKAGE = FLTK::Menu
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for version 0.530
+
+=for git $Id$
+
+=head1 NAME
+
+FLTK::Menu -
+
+=head1 Description
+
+The L<Menu|FLTK::Menu> base class is used by L<Browser|FLTK::Browser>,
+L<Choice|FLTK::Choice>, L<MenuBar|FLTK::MenuBar>,
+L<PopupMenu|FLTK::PopupMenu>, L<ComboBox|FLTK::ComboBox>, and other widgets.
+It is simply a L<Group|FLTK::Group> and each item is a child
+L<Widget|FLTK::Widget>, but it provides functions to select and identify one
+of the widgets in the hierarchy below it and do that widget's callback
+directly, and functions to create and add L<Item|FLTK::Item> and
+L<ItemGroup|FLTK::ItemGroup> widgets to a hierarchy.
+
+A L<Menu|FLTK::Menu> can take a pointer to a L<List|FLTK::List> object, which
+allows the user program to dynamically provide the items as they are needed.
+This is much easier than trying to maintain an array of
+L<Widgets|FLTK::Widget> in parallel with your own data structures.
+
+It also provides several convienence functions for creating, rearranging, and
+deleting child L<Item|FLTK::Item> and L<ItemGroup|ItemGroup> widgets.
+
+=cut
+
+#include <fltk/Menu.h>
+
+=begin apidoc
+
+=for apidoc ||FLTK::Menu|new|x|y|w|h|label = ''|begin = 0
+
+
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+fltk::Menu::new( int x, int y, int w, int h, char * label = 0, bool begin = false )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::Menu>(CLASS,x,y,w,h,label,begin);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=for apidoc ||FLTK::NamedStyle|default_style||||
+
+
+
+=cut
+
+fltk::NamedStyle *
+fltk::Menu::default_style( )
+    CODE:
+        RETVAL = THIS->default_style;
+    OUTPUT:
+        RETVAL
+
+=for apidoc ||FLTK::List|list||
+
+Returns the L<List|FLTK::List> that generates widgets for the menu.
+
+=for apidoc |||list|list||
+
+Set the L<List|FLTK::List> that generates widgets for the menu. By default
+this is a dummy L<List|FLTK::List> that returns the child widgets of the
+L<Menu|FLTK::Menu>.
+
+=cut
+
+fltk::List *
+fltk::Menu::list( fltk::List * list = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->list();
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->list( list );
+
+=for apidoc ||int|children|indexes|level|
+
+Calls
+L<$self-E<gt>list()-E<gt>child($self, $indexes, $level)>|FLTK::Menu/"list">.
+If an L<FLTK::List|FLTK::List> is used, the returned widget may be a temporary
+data structure and may be overwritten by another call to
+L<C<child( )>|FLTK::List/"child"> in this I<or any other L<Menu|FLTK::Menu>!>
+
+=for apidoc ||int|children|index|||
+
+Returns the number of children of some child. Same as
+L<C<children([$i], 1)>|FLTK::Menu/"children_indexes_level_">.
+
+=for apidoc ||int|children|||
+
+Returns the number of children at the top level. Same as C<children(0,0)>.
+
+I<This overrides the method of the same name on L<FLTK::Group|FLTK::Group>>.
+This is so that an L<FLTK::List|FLTK::List> can be used. However if no
+L<FLTK::List|FLTK::List> is specified the action is identical to
+L<C<FLTK::Group::children( )>|FLTK::Group/"children">.
+
+=cut
+
+int
+fltk::Menu::children( index = NO_INIT, int level  = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->children( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        int index
+        CODE:
+            RETVAL = THIS->children( index );
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        AV * index
+        CODE:
+            int * indexes;
+            for ( int i = 0; i < av_len( index ); i++ )
+                indexes[ i ] = SvIV( * av_fetch(index, i, 0));
+            RETVAL = THIS->children( indexes, level );
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||FLTK::Widget|child|indexes|level
+
+! Calls list()->child(this, indexes, level).
+If an fltk::List is used, the returned widget may be a temporary data
+structure and may be overwritten by another call to child() in this
+<i>or any other Menu</i>!
+
+=for apidoc ||FLTK::Widget|child|index|||
+
+Returns the given top-level child. Same as
+L<C<child($index, 0)>|FLTK::Menu/"child_indexes_level_">.
+
+I<This overrides the method of the same name on L<FLTK::Group|FLTK::Group>>.
+This is so that an L<FLTK::List|FLTK::List> can be used. However if no
+L<FLTK::List|FLTK::List> is specified the action is identical to
+L<C<FLTK::Group::child( $index )>|FLTK::Group/"child_index_">.
+
+=cut
+
+fltk::Widget *
+fltk::Menu::child( index = NO_INIT, int level  = NO_INIT )
+    CASE: items == 2
+        int index
+        CODE:
+            RETVAL = THIS->child( index );
+        OUTPUT:
+            RETVAL
+    CASE: items == 3
+        AV * index
+        CODE:
+            int * indexes;
+            for ( int i = 0; i < av_len( index ); i++ )
+                indexes[ i ] = SvIV( * av_fetch(index, i, 0));
+            RETVAL = THIS->child( indexes, level );
+        OUTPUT:
+            RETVAL
+
+=for apidoc ||FLTK::Widget * current|item|||
+
+The "current item". In callbacks, this is the item the user clicked on.
+Otherwise you probably can't make any assumptions about it's value.
+
+L<C<Browser::goto_index()>|FLTK::Browser/"goto_index"> sets this to the
+current item.
+
+Since this may be the result of calling L<C<child()>|FLTK::Menu/"child"> the
+returned structure may be short-lived if an L<FLTK::List|FLTK::List> is used.
+
+
+=for apidoc ||FLTK::Widget * item|item|FLTK::Widget * value||
+
+You can set L<C<item()>|FLTK::Menu/"item_"> with the second call, useful for
+outwitting the callback. This does not produce any visible change for the
+user.
+
+=cut
+
+fltk::Widget *
+fltk::Menu::item( fltk::Widget * value = NO_INIT )
+    CASE: items == 1
+        C_ARGS:
+    CASE: items == 2
+        C_ARGS: value
+
+
+
+
+
+
+
+
+
+
+BOOT:
+    isa("FLTK::Menu", "FLTK::Group");
+
+INCLUDE: MenuBar.xsi
+
+#endif // ifndef DISABLE_MENU
