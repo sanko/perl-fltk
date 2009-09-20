@@ -53,7 +53,7 @@ control which item has the keyboard focus in a multi-browser. You must use the
 
 #include <fltk/MultiBrowser.h>
 
-=for apidoc ||MultiBrowser|new|x|y|w|h|label = 0
+=for apidoc ||FLTK::MultiBrowser * self|new|int x|int y|int w|int h|char * label = ''|
 
 
 
@@ -62,7 +62,7 @@ control which item has the keyboard focus in a multi-browser. You must use the
 #include "include/WidgetSubclass.h"
 
 void
-fltk::MultiBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::MultiBrowser::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::MultiBrowser>(CLASS,x,y,w,h,label);

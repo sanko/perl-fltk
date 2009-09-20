@@ -334,8 +334,6 @@ INCLUDE: LightButton.xsi
 
 INCLUDE: MenuSection.xsi
 
-INCLUDE: MultiBrowser.xsi
-
 INCLUDE: Plugin.xsi
 
 INCLUDE: Rectangle.xsi
