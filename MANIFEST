@@ -97,6 +97,7 @@ xs/Menu.xsi
 xs/MenuBar.xsi
 xs/MenuSection.xsi
 xs/MenuWindow.xsi
+xs/Monitor.xsi
 xs/MultiBrowser.xsi
 xs/NamedStyle.xsi
 xs/Plugin.xsi

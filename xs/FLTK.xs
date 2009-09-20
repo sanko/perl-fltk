@@ -338,7 +338,8 @@ INCLUDE: MultiBrowser.xsi
 
 INCLUDE: Plugin.xsi
 
-#INCLUDE: Rectangle.xsi
+INCLUDE: Rectangle.xsi
+
 #INCLUDE: Slider.xsi
 
 INCLUDE: Style.xsi

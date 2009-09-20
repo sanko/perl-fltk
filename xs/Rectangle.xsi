@@ -1,3 +1,7 @@
+#ifndef DISABLE_RECTANGLE
+
+MODULE = FLTK               PACKAGE = FLTK::Rectangle
+
 =pod
 
 =for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
@@ -6,13 +10,7 @@
 
 =for git $Id$ for got=
 
-=cut
-
-#ifndef DISABLE_RECTANGLE
-
-MODULE = FLTK               PACKAGE = FLTK::Rectangle
-
-=for apidoc ||FLTK::Rectangle|new|x|y|w|h|
+=for apidoc ||FLTK::Rectangle self|new|int x|int y|int w|int h|
 
 The default constructor does not put anything into the fields! You can either
 call L<C<set()>|FLTK::Rectangle/"set"> or just modify the C<x>, C<y>, C<w>,
@@ -23,13 +21,8 @@ and C<h> variables directly.
 =cut
 
 fltk::Rectangle *
-Rectangle::new( int x = NO_INIT, int y = NO_INIT, int w = NO_INIT, int h = NO_INIT )
-    CODE:
-        RETVAL = new Widget( x, y, w, h );
-#if VERBOSE >= 2
-        warn ("New Rectangle");
-#endif
-    OUTPUT:
-        RETVAL
+fltk::Rectangle::new( int x, int y, int w, int h )
+
+INCLUDE: Monitor.xsi
 
 #endif // ifndef DISABLE_RECTANGLE
