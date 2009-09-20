@@ -108,6 +108,43 @@ void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
 #endif // ifdef ENABLE_CALLBACKS
 }
 
+=for apidoc Hx|||_cb_w_h|WIDGET|(void*)CODE
+
+This is the callback for all widgets. It expects an C<fltk::Widget> object and
+the C<CODE> should be an HV* containing data that looks a little like this...
+This will eventually replace the AV* based callback system in L<C<_cb_w>>.
+
+  {
+    coderef => CV *, # coderef to call
+    class   => SV *, # string to (re-)bless WIDGET
+    args    => SV *  # optional arguments sent after blessed WIDGET
+  }
+
+=cut
+
+void _cb_w_h ( fltk::Widget * WIDGET, void * CODE ) { // hash-based callbacks for widgets
+    dTHX;
+    if ( CODE == NULL )     return;
+    HV * cb       = ( HV * ) CODE;
+    if ( cb       == NULL ) return;
+    SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
+    if ( cb_code  == ( SV ** ) NULL ) return;
+    SV ** cb_args  = hv_fetch( cb, "args",    4, FALSE );
+    SV ** cb_class = hv_fetch( cb, "class",   5, FALSE );
+    dSP;
+    ENTER;
+        SAVETMPS;
+            PUSHMARK( sp );
+    SV * widget = sv_newmortal( );
+    sv_setref_pv( widget, SvPV_nolen( * cb_class ), ( void * ) WIDGET );
+    XPUSHs( widget );
+    if ( cb_args != NULL ) XPUSHs( * cb_args );
+            PUTBACK;
+    call_sv( * cb_code, G_DISCARD );
+        FREETMPS;
+    LEAVE;
+}
+
 =for apidoc H|||_cb|(void*)CODE
 
 This is the generic callback for just about everything. It expects a single
