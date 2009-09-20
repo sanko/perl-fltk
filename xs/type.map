@@ -74,6 +74,7 @@ fltk::LineDial        *   O_FLTK
 fltk::List            *   O_FLTK
 fltk::Menu            *   O_FLTK
 fltk::MenuBar         *   O_FLTK
+fltk::MenuWindow      *   O_FLTK
 fltk::MenuSection     *   O_FLTK
       fltk::Monitor   *   O_FLTK
 const fltk::Monitor   *   O_FLTK

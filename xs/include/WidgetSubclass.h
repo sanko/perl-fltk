@@ -167,6 +167,24 @@ public:
             this->X::draw_overlay( );
         return;
     };
+    void create( ) { // fltk::MenuWindow
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = _call_method( "create", args );
+        if ( handled != 1 )
+            this->X::create( );
+        return;
+    };
+    void flush( ) { // fltk::MenuWindow
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = _call_method( "flush", args );
+        if ( handled != 1 )
+            this->X::flush( );
+        return;
+    };
 private:
     char * _class;
 protected:
