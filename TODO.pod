@@ -14,17 +14,19 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * Prove that FLTK and L<Alien::FLTK|Alien::FLTK> to build on non-Win32
+systems!
+
+They both build just fine on my Xubuntu box but I get nothing but failures and
+false positives from CPAN Testers.
+
+=item * Document internals and write regression tests
+
 =item * Make sure all examples in POD (c+p from the fltk2 docs) actually work
 
-=item * Fix known memory leaks
+=item * Creating new callbacks/timeouts leaks memory
 
-=over
-
-=item * Creating new callbacks
-
-=item * Timeouts
-
-=back
+=item * Thread safety
 
 =item * Finish the following widgets/classes
 
@@ -32,15 +34,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::List
 
-=item FLTK::Menu
-
 =item FLTK::MenuSection
-
-=item FLTK::MenuWindow
-
-=item FLTK::Monitor
-
-=item FLTK::MultiBrowser
 
 =item FLTK::MultiImage
 
@@ -146,8 +140,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =back
 
-=item * Thread safety
-
 =back
 
 =head1 Short term goals
@@ -179,19 +171,7 @@ C<in_main_thread()>
 
 =over
 
-=item * L<FLTK::FileIcon|FLTK::FileIcon>
-
-=item * L<FLTK::List|FLTK::List>
-
-=item * GL stuff
-
-=over
-
-=item Test GLUT
-
-=item OpenGL Optimizer stuff in GlWindow subclass
-
-=back
+=item * None yet
 
 =back
 

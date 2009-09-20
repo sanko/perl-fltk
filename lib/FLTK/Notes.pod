@@ -25,7 +25,7 @@ in this document.
 
 =item Website and Blog
 
-Eventually, the official website will be http://github.com/sanko/fltk-perl/.
+Eventually, the official website will be http://sanko.github.com/fltk-perl/.
 There you'll find html versions off all the documentation, examples, the
 development blog, and links to other resources.
 
