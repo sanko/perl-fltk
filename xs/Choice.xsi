@@ -18,15 +18,14 @@ FLTK::Choice - Popup list of items that the user can choose one of
 
 =head1 Description
 
-Subclass of fltk::Menu that provides a button that pops up the menu, and also
-displays the text of the most-recently selected menu item.
+Subclass of L<FLTK::Menu> that provides a button that pops up the menu, and
+also displays the text of the most-recently selected menu item.
 
-The appearance is designed to look like an "uneditable ComboBox" in
-Windows, but it is somewhat different in that it does not contain a
-text editor, also the menu pops up with the current item under the
-cursor, which is immensely easier to use once you get used to it. This
-is the same UI as the Macintosh and Motif, which called this an
-OptionButton.
+The appearance is designed to look like an "uneditable ComboBox" in Windows,
+but it is somewhat different in that it does not contain a text editor, also
+the menu pops up with the current item under the cursor, which is immensely
+easier to use once you get used to it. This is the same UI as the Macintosh
+and Motif, which called this an OptionButton.
 
 The user can change the value by popping up the menu by clicking anywhere in
 the widget and moving the cursor to a different item, or by typing up and down
@@ -55,7 +54,7 @@ possible replacements and completions. Not yet implemented, unfortunately.
 
 #include <fltk/Choice.h>
 
-=for apidoc ||FLTK::Choice|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::Choice * self|new|int x|int y|int w|int h|char * label = ''
 
 The constructor makes the menu empty. See L<Menu|FLTK::Menu> and
 L<StringList|FLTK::StringList> for information on how to set the menu to a
@@ -63,11 +62,10 @@ list of items.
 
 =cut
 
-
 #include "include/WidgetSubclass.h"
 
 void
-fltk::Choice::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Choice::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Choice>(CLASS,x,y,w,h,label);
@@ -77,7 +75,7 @@ fltk::Choice::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc ||FLTK::NamedStyle|default_style|
+=for apidoc ||FLTK::NamedStyle * style|default_style|
 
 NFI
 
