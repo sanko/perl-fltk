@@ -54,19 +54,6 @@ fltk::ComboBox::new( int x, int y, int w, int h, const char * label = 0 )
 void
 fltk::ComboBox::layout( )
 
-#ifndef DISABLE_HANDLE
-
-=for apidoc ||int|handle|event
-
-
-
-=cut
-
-int
-fltk::ComboBox::handle( int event )
-
-#endif // #ifndef DISABLE_HANDLE
-
 =for apidoc ||int|popup|rect|title = ""|menubar = false
 
 

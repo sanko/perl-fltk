@@ -47,7 +47,6 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
-#define DISABLE_HANDLE // Disables creation of [Widget]::handle( int event ) methods
 
 #include <config.h> // created in / during fltk2's configure stage and
                          // installed to /fltk/include/ by Alien::FLTK
