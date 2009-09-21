@@ -66,19 +66,14 @@ fltk::Item::new( char * label = 0, arg2 = NO_INIT, CV * callback = NO_INIT, SV *
 	        RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label,symbol);
         }
         else {
-#ifdef ENABLE_CALLBACKS
             int shortcut = (int) SvIV( ST( 2 ) );
-            HV * cb      = newHV( );
-            hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
-            /* Try to get the B<real> class (try _class if subclassed) */
-            hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
+            HV   * cb    = newHV( );
+            hv_store( cb, "coderef",  7, newSVsv( ST(3) ),                  0 );
+            hv_store( cb, "class",    5, newSVpv( CLASS, strlen( CLASS ) ), 0 );
             if ( items >= 5 )
-                hv_store( cb , "args", 4, newSVsv( user_data ),        0 );
+                hv_store( cb, "args", 4, newSVsv( user_data ),              0 );
             RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label,
-                                            shortcut,_cb_w_h,(void *)cb,flags);
-#else  // ifdef ENABLE_CALLBACKS
-            warn("Callbacks have been disabled."); // TODO: Expain why in POD
-#endif // ifdef ENABLE_CALLBACKS
+                                            shortcut,_cb_w,(void *)cb,flags);
         }
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();

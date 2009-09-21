@@ -43,7 +43,6 @@ its built-in GLUT emulation.
 
 using namespace fltk; // TODO: Remove this and use fully qualified names
 
-#define ENABLE_CALLBACKS  // Depends on weak refs... see FLTK::_cb_w
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
@@ -60,19 +59,10 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 #define DISABLE_ADJUSTER
 #endif // #ifndef ENABLE_DEPRECATED
 
-#ifndef SvWEAKREF           // Callbacks use weak references to the widget
-#undef  ENABLE_CALLBACKS    // TODO: Explain this better :)
-#endif // #ifndef SvWEAKREF
-
-// #define ENABLE_HASH_CALLBACKS // TODO - based on perlcall
-#ifdef ENABLE_HASH_CALLBACKS
-static HV * Mapping = (HV*)NULL;
-#endif // #ifdef ENABLE_HASH_CALLBACKS
-
 HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
    * FLTK_export; // For inserting stuff directly into FLTK's exports
 
-=for apidoc Hx|||_cb_w_h|WIDGET|(void*)CODE
+=for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
 
 This is the callback for all widgets. It expects an C<fltk::Widget> object and
 the C<CODE> should be an HV* containing data that looks a little like this...
@@ -86,7 +76,7 @@ This will eventually replace the AV* based callback system in L<C<_cb_w>>.
 
 =cut
 
-void _cb_w_h ( fltk::Widget * WIDGET, void * CODE ) { // hash-based callbacks for widgets
+void _cb_w ( fltk::Widget * WIDGET, void * CODE ) {
     dTHX;
     if ( CODE == NULL )     return;
     HV * cb       = ( HV * ) CODE;
@@ -109,7 +99,7 @@ void _cb_w_h ( fltk::Widget * WIDGET, void * CODE ) { // hash-based callbacks fo
     LEAVE;
 }
 
-=for apidoc H|||_cb|(void*)CODE
+=for apidoc H|||_cb_t|(void*)CODE
 
 This is the generic callback for just about everything. It expects a single
 C<(void*) CODE> parameter which should be an AV* holding data that looks a
@@ -117,33 +107,28 @@ little like this...
 
   [
     SV * coderef,
-    SV* args  # optional arguments sent along to coderef
+    SV * args  # optional arguments sent along to coderef
   ]
 
 =cut
 
-void _cb (void * CODE) { // Callbacks for timers, etc.
-#ifdef ENABLE_CALLBACKS
+void _cb_t (void * CODE) { // Callbacks for timers, etc.
     dTHX;
-#ifdef ENABLE_HASH_CALLBACKS
-    warn("Hash based callbacks are not ready.");
-#else // #ifdef ENABLE_HASH_CALLBACKS
-    AV *cbargs = (AV *) CODE;
-    I32 alen = av_len(cbargs);
-    SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
+    if ( CODE == NULL )     return;
+    HV * cb       = ( HV * ) CODE;
+    if ( cb       == NULL ) return;
+    SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
+    if ( cb_code  == ( SV ** ) NULL ) return;
+    SV ** cb_args  = hv_fetch( cb, "args",    4, FALSE );
     dSP;
     ENTER;
         SAVETMPS;
-            PUSHMARK(sp);
-    for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
+            PUSHMARK( sp );
+    if ( cb_args != NULL ) XPUSHs( * cb_args );
             PUTBACK;
-    call_sv(thecb, G_DISCARD);
+    call_sv( * cb_code, G_DISCARD );
         FREETMPS;
     LEAVE;
-#endif // ifdef ENABLE_HASH_CALLBACKS
-#else  // ifdef ENABLE_CALLBACKS
-    warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
-#endif // ifdef ENABLE_CALLBACKS
 }
 
 =for apidoc H|||isa|package|parent|
@@ -437,9 +422,3 @@ INCLUDE: Window.xsi
     #INCLUDE: ~old/MultiImage.xsi
 
 MODULE = FLTK               PACKAGE = FLTK
-
-BOOT:
-#ifndef ENABLE_CALLBACKS
-    warn( "FLTK's callback system was disabled during build.\n" );
-    // This warning should show up during compilation
-#endif

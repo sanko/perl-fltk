@@ -585,7 +585,7 @@ fltk::Menu::add( label, shortcut, CV * callback, SV * data = NO_INIT, int flags 
             hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
             if ( items > 4 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
-        C_ARGS: ( const char * ) label, shortcut, _cb_w_h, ( void * ) cb, flags
+        C_ARGS: ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
 
 =for apidoc ||FLTK::Widget * widget|replace|char * label|unsigned shortcut|CV * callback|SV * data|int flags|
 
@@ -644,7 +644,7 @@ fltk::Menu::replace( label, shortcut = 0, CV * callback, SV * data = NO_INIT, in
             hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
             if ( items > 4 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
-        C_ARGS: ( const char * ) label, shortcut, _cb_w_h, ( void * ) cb, flags
+        C_ARGS: ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
 
 =for apidoc ||FLTK::Widget * item|insert|int index|char * label|unsigned shortcut|CV * callback|SV * args = NO_INIT|int flags = 0
 
@@ -689,7 +689,7 @@ fltk::Menu::insert( index, label, shortcut = 0, CV * callback, SV * data = NO_IN
             hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
             if ( items > 5 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
-        C_ARGS: index, ( const char * ) label, shortcut, _cb_w_h, ( void * ) cb, flags
+        C_ARGS: index, ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
 
 =for apidoc ||FLTK::Group * newgroup|add_group|char * label|FLTK::Group * parent = NO_INIT|SV * data = NO_INIT|
 

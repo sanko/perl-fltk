@@ -315,13 +315,13 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 add_timeout( double time, CV * callback, SV * args = NO_INIT )
     CODE:
-        AV *arr = newAV();
-        av_push(arr, newSVsv((SV*)ST(1))); // coderef
-        if (items == 3) // Callbacks can be called without arguments
-            av_push(arr, newSVsv(args));
+        HV   * cb    = newHV( );
+        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
+        if ( items == 3 ) /* Callbacks can be called without arguments */
+            hv_store( cb, "args", 4, newSVsv( args ),    0 );
         switch( ix ) {
-            case 0:    add_timeout( time, _cb, (void *) arr ); break;
-            case 1: repeat_timeout( time, _cb, (void *) arr ); break;
+            case 0:    add_timeout( time, _cb_t, ( void * ) cb ); break;
+            case 1: repeat_timeout( time, _cb_t, ( void * ) cb ); break;
         }
     ALIAS:
         repeat_timeout = 1
@@ -355,19 +355,19 @@ MODULE = FLTK               PACKAGE = FLTK
 bool
 has_timeout( CV * callback, SV * args = NO_INIT )
     CODE:
-        AV *arr = newAV();
-        av_push(arr, newSVsv((SV*)ST(0))); // coderef
-        if (items == 2) // Callbacks can be called without arguments
-            av_push(arr, newSVsv(args));
+        HV   * cb    = newHV( );
+        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
+        if ( items == 2 ) /* Timeout callbacks can be called without arguments */
+            hv_store( cb, "args", 4, newSVsv( args ),    0 );
         /* for (Timeout* t = first_timeout; t; t = t->next)
             if (t->cb == _cb &&
                 av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
             ) {RETVAL = true; break; }
         }*/
         switch( ix ) {
-            case 0: RETVAL = has_timeout(_cb, (void *) arr); break; // XXX
-            case 1: RETVAL =   has_check(_cb, (void *) arr); break; // XXX
-            case 2: RETVAL =    has_idle(_cb, (void *) arr); break; // XXX
+            case 0: RETVAL = has_timeout( _cb_t, ( void * ) cb ); break; // XXX
+            case 1: RETVAL =   has_check( _cb_t, ( void * ) cb ); break; // XXX
+            case 2: RETVAL =    has_idle( _cb_t, ( void * ) cb ); break; // XXX
         }
     OUTPUT:
         RETVAL
@@ -449,16 +449,16 @@ MODULE = FLTK               PACKAGE = FLTK
 void
 remove_timeout( CV * callback, SV * args = NO_INIT )
     CODE:
-        AV *arr = newAV();
-        av_push(arr, newSVsv((SV*)ST(0))); // coderef
-        if (items == 2) // Callbacks can be called without arguments
-            av_push(arr, newSVsv(args));
+        HV   * cb    = newHV( );
+        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
+        if ( items == 2 ) /* Callbacks can be called without arguments */
+            hv_store( cb, "args", 4, newSVsv( args ),    0 );
         switch( ix ) {
-            case 0 : remove_timeout(_cb, (void *) arr); break; // XXX - meh
-            case 1 :      add_check(_cb, (void *) arr); break;
-            case 2 :   remove_check(_cb, (void *) arr); break; // XXX - meh
-            case 3 :       add_idle(_cb, (void *) arr); break;
-            case 4 :    remove_idle(_cb, (void *) arr); break; // XXX - meh
+            case 0 : remove_timeout( _cb_t, ( void * ) cb ); break; // XXX - meh
+            case 1 :      add_check( _cb_t, ( void * ) cb ); break;
+            case 2 :   remove_check( _cb_t, ( void * ) cb ); break; // XXX - meh
+            case 3 :       add_idle( _cb_t, ( void * ) cb ); break;
+            case 4 :    remove_idle( _cb_t, ( void * ) cb ); break; // XXX - meh
         }
     ALIAS:
            add_check = 1

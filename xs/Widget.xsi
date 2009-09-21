@@ -568,26 +568,18 @@ fltk::Widget::callback( callback = NO_INIT, SV * args = NO_INIT )
     CASE: (SvROK( ST( 1 ) ) ) && ( SvTYPE(SvRV(ST(1))) == SVt_PVCV )
         CV * callback
         CODE:
-#ifdef ENABLE_CALLBACKS
-            HV * cb      = newHV( );
-            hv_store( cb , "coderef",  7, newSVsv( ST( 1 ) ),            0 );
-            /* Try to get the B<real> class (try _class if subclassed) */
-            hv_store( cb , "class",    5, newSVpv( "FLTK::Widget", 12 ), 0 );
+            HV   * stash = SvSTASH( SvRV( ST( 0 ) ) );
+            char * CLASS = HvNAME( stash );
+            HV   * cb    = newHV( );
+            hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ),                0 );
+            hv_store( cb, "class",    5, newSVpv( CLASS, strlen( CLASS ) ), 0 );
             if ( items == 3 )
-                hv_store( cb , "args", 4, newSVsv( args ),               0 );
-            THIS->callback(_cb_w_h, (void *) cb);
-#else  // ifdef ENABLE_CALLBACKS
-            warn("Callbacks have been disabled."); // TODO: Expain why in POD
-#endif // ifdef ENABLE_CALLBACKS
+                hv_store( cb, "args", 4, newSVsv( args ),                   0 );
+            THIS->callback(_cb_w, (void *) cb);
     CASE:
         fltk::Callback * callback
         CODE:
-#ifdef ENABLE_CALLBACKS
             THIS->callback( callback );
-#else  // ifdef ENABLE_CALLBACKS
-            warn("Callbacks have been disabled."); // TODO: Expain why in POD
-#endif // ifdef ENABLE_CALLBACKS
-
 
 =for apidoc |||user_data|args
 
