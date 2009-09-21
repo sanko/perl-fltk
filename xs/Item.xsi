@@ -55,11 +55,11 @@ fltk::Item::new( char * label = 0, arg2 = NO_INIT, CV * callback = NO_INIT, SV *
     PPCODE:
         void * RETVAL = NULL;
         if ( items <= 2 )
-            RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label);
+            RETVAL = ( void * ) new WidgetSubclass<fltk::Item>(CLASS,label);
         else if ( items == 3 ) {
             fltk::Symbol * symbol;
-            if (sv_isobject(ST(2)) && sv_derived_from(ST(2), "FLTK::Symbol"))
-                symbol = INT2PTR( fltk::Symbol *, SvIV( ( SV * ) SvRV( ST(2) ) ) );
+            if (sv_isobject(ST(2)) && sv_derived_from( ST( 2 ), "FLTK::Symbol" ) )
+                symbol = INT2PTR( fltk::Symbol *, SvIV( ( SV * ) SvRV( ST( 2 ) ) ) );
             else
                 Perl_croak( aTHX_ "%s: %s is not of type %s",
                     GvNAME(CvGV(cv)), "symbol", "FLTK::Symbol" );
@@ -67,22 +67,15 @@ fltk::Item::new( char * label = 0, arg2 = NO_INIT, CV * callback = NO_INIT, SV *
         }
         else {
 #ifdef ENABLE_CALLBACKS
-            int shortcut = SvIV( ST(2) );
-            AV *arr = newAV( );
-            av_push(arr, newSVsv((SV*)ST(3))); // coderef
-            // We add the rest of the arguments B<after> we create the widget
+            int shortcut = (int) SvIV( ST( 2 ) );
+            HV * cb      = newHV( );
+            hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
+            /* Try to get the B<real> class (try _class if subclassed) */
+            hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
+            if ( items >= 5 )
+                hv_store( cb , "args", 4, newSVsv( user_data ),        0 );
             RETVAL = (void *) new WidgetSubclass<fltk::Item>(CLASS,label,
-                                            shortcut,_cb_w,(void *)arr,flags);
-            if (RETVAL != NULL) {
-                ST(0) = sv_newmortal();
-                sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-                // Now that we have the widget, we can add it to the list of
-                // arguments and C<user_data>.
-                av_push(arr, newSVsv(ST(0)));
-                if ( items >= 5 )
-                    av_push(arr, newSVsv(user_data));
-                XSRETURN(1);
-            }
+                                            shortcut,_cb_w_h,(void *)cb,flags);
 #else  // ifdef ENABLE_CALLBACKS
             warn("Callbacks have been disabled."); // TODO: Expain why in POD
 #endif // ifdef ENABLE_CALLBACKS
