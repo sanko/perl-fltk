@@ -31,17 +31,17 @@ L<C<color()>|FLTK::Color/"color">.
 
 =begin apidoc
 
-=for apidoc ||FLTK::Item|new|label = ""|||
+=for apidoc ||FLTK::Item self|new|char * label = ""|
 
 Unlike other widgets the constructor does not take any dimensions, since it is
 assummed the container widget will size this correctly.
 
-=for apidoc ||FLTK::Item|new|label|FLTK::Symbol||
+=for apidoc ||FLTK::Item self|new|char * label|FLTK::Symbol image|
 
 This constructor also sets the L<C<image()>|FLTK::Widget/"image">, useful for
 a browser item.
 
-=for apidoc ||FLTK::Item|new|label|shortcut|callback = 0|user_data = 0|flags = 0
+=for apidoc ||FLTK::Item self|new|char * label|int shortcut|CV * callback = 0|SV * user_data = 0|FLTK::Flags flags = 0|
 
 This constructor is provided to match the L<C<Menu::add()>|FLTK::Menu/"add">
 function arguments. See L<C<Menu::add()>|FLTK::Menu/"add"> for more details.
@@ -86,7 +86,7 @@ fltk::Item::new( char * label = 0, arg2 = NO_INIT, CV * callback = NO_INIT, SV *
             XSRETURN(1);
         }
 
-=for apidoc |||set_style|style|menubar|||
+=for apidoc |||set_style|FLTK::Style style|bool menubar|
 
 Modify the parent of the L<C<Item::default_style>|FLTK::Item/"default_style">
 to this style. If no style settings have been done to an Item, it will use the
@@ -103,7 +103,7 @@ Use L<C<Item::clear_style()>|FLTK::Item/"clear_style"> to put this back so
 that C<style> can be deleted. This is the same as setting it to
 L<C<Widget::default_style>|FLTK::Widget/"default_style">.
 
-=for apidoc |||set_style|widget|menubar|||
+=for apidoc |||set_style|FLTK::Widget * widget|bool menubar|
 
 Use the style of this C<widget>.
 
@@ -116,7 +116,7 @@ fltk::Item::set_style( style, bool menubar )
     CASE:
         fltk::Widget * style
 
-=for apidoc |||clear_style|
+=for apidoc |||clear_style||
 
 Reset the style set by calling L<C<set_style( )>|FLTK::Item/"set_style">.
 
@@ -125,7 +125,7 @@ Reset the style set by calling L<C<set_style( )>|FLTK::Item/"set_style">.
 void
 fltk::Item::clear_style( )
 
-=for apidoc ||FLTK::NamedStyle|default_style|||
+=for apidoc ||FLTK::NamedStyle style|default_style||
 
 The default style sets C<FLAT_BOX>. Changing this will mess up the appearance
 of both menus and browsers. All the rest of the style is blank, and normally
