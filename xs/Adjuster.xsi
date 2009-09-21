@@ -35,7 +35,7 @@ L<FLTK::Notes|FLTK::Notes/"NotesDepPol">.>
 
 #include <fltk/Adjuster.h>
 
-=for apidoc d||FLTK::Adjuster|new|x|y|width|height|label = ''
+=for apidoc d||FLTK::Adjuster self|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::Adjuster> object.
 
@@ -44,7 +44,7 @@ Creates a new C<FLTK::Adjuster> object.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::Adjuster::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Adjuster::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Adjuster>(CLASS,x,y,w,h,label);
@@ -54,7 +54,7 @@ fltk::Adjuster::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc d||FLTK::NamedStyle|default_style|
+=for apidoc d||FLTK::NamedStyle style|default_style|
 
 TODO
 
@@ -67,11 +67,11 @@ fltk::Adjuster::default_style ( )
     OUTPUT:
         RETVAL
 
-=for apidoc d|||soft|int
+=for apidoc d|||soft|int x|
 
 TODO
 
-=for apidoc d||int|soft|
+=for apidoc d||int x|soft||
 
 =cut
 
@@ -85,19 +85,6 @@ fltk::Adjuster::soft ( int x = NO_INIT )
     CASE:
         CODE:
             THIS->soft( X );
-
-#ifndef DISABLE_HANDLE
-
-=for apidoc d||int|handle|event
-
-See L<C<handle()>|FLTK::Valuator/handle> in L<FLTK::Valuator|FLTK::Valuator>.
-
-=cut
-
-int
-fltk::Adjuster::handle ( int event )
-
-#endif // #ifndef DISABLE_HANDLE
 
 BOOT:
     isa("FLTK::Adjuster", "FLTK::Valuator");
