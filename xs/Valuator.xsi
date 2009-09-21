@@ -320,13 +320,4 @@ L<Style::wheel_scroll_lines|FLTK::Style/"wheel_scroll_lines">.
 
 =cut
 
-#ifndef DISABLE_HANDLE
-
-int
-Valuator::handle(int event)
-    OUTPUT:
-        RETVAL
-
-#endif // #ifndef DISABLE_HANDLE
-
 #endif // ifndef DISABLE_VALUATOR
