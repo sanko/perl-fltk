@@ -72,47 +72,6 @@ static HV * Mapping = (HV*)NULL;
 HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
    * FLTK_export; // For inserting stuff directly into FLTK's exports
 
-=begin apidoc
-
-=for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
-
-This is the callback for all widgets. It expects an C<fltk::Widget> object and
-the C<CODE> should be an AV* containing data that looks a little like this...
-
-  [
-    SV * coderef,
-    FLTK::Widget widget,
-    SV* args             # optional arguments sent along to coderef
-  ]
-
-=cut
-
-void _cb_w (fltk::Widget * WIDGET, void * CODE) { // Callbacks for widgets
-#ifdef ENABLE_CALLBACKS
-#ifndef ENABLE_HASH_CALLBACKS
-    dTHX;
-    if (CODE == NULL) return;
-    AV *cbargs = (AV *) CODE;
-    if (cbargs == NULL) return;
-    I32 alen = av_len(cbargs);
-    SV *thecb = SvRV(*av_fetch(cbargs, 0, 0));
-    dSP;
-    ENTER;
-        SAVETMPS;
-            PUSHMARK(sp);
-    for(int i = 1; i <= alen; i++) { XPUSHs(*av_fetch(cbargs, i, 0)); }
-            PUTBACK;
-    call_sv(thecb, G_DISCARD);
-        FREETMPS;
-    LEAVE;
-#else  // ifndef ENABLE_HASH_CALLBACKS
-    warn("It's not ready!");
-#endif // ifndef ENABLE_HASH_CALLBACKS
-#else // ifdef ENABLE_CALLBACKS
-    warn( "Callbacks have been disabled. ...how'd you get here? ¬.¬ " );
-#endif // ifdef ENABLE_CALLBACKS
-}
-
 =for apidoc Hx|||_cb_w_h|WIDGET|(void*)CODE
 
 This is the callback for all widgets. It expects an C<fltk::Widget> object and
