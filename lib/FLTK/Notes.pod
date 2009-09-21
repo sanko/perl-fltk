@@ -54,7 +54,7 @@ the list in the L<Bug Tracking|/"Bug Tracking"> section below.
 =item Twitter
 
 I announce stable builds and occasionally complain on Twitter:
-http://twitter.com/fltk_perl
+http://twitter.com/FLTKpm
 
 =back
 
