@@ -69,40 +69,33 @@ Same but window is placed by OS.
 #include <fltk/x.h>
 #endif // ifdef WIN32
 
-fltk::Window *
+void
 fltk::Window::new( ... )
-    CASE: items == 3 || items == 4
-        int    Width   = (int)SvIV(ST(1));
-        int    Height  = (int)SvIV(ST(2));
-        PREINIT:
-            char * Label =  PL_origfilename;
-        CODE:
-            if (items == 4)
-                Label = (char *)SvPV_nolen(ST(3));
-            RETVAL = new WidgetSubclass<fltk::Window>(CLASS,Width,Height,Label);
+    PPCODE:
+        void * RETVAL = NULL;
+        char * label  = PL_origfilename;
+        if ( items == 3 || items == 4 ) {
+            int w = (int)SvIV(ST(1));
+            int h = (int)SvIV(ST(2));
+            if (items == 4) label = (char *)SvPV_nolen(ST(3));
+            RETVAL = (void *) new WidgetSubclass<fltk::Window>(CLASS,w,h,label);
+        }
+        else if (items == 5 || items == 6) {
+            int x = (int)SvIV(ST(1));
+            int y = (int)SvIV(ST(2));
+            int w = (int)SvIV(ST(3));
+            int h = (int)SvIV(ST(4));
+            if (items == 6) label = (char *)SvPV_nolen(ST(5));
+            RETVAL = (void *) new WidgetSubclass<fltk::Window>(CLASS,x,y,w,h,label);
+        }
+        if (RETVAL != NULL) {
 #ifdef WIN32
-            if ( RETVAL )
-                RETVAL->icon((char *)LoadIcon (dllInstance, "FLTK" ));
+            ((fltk::Window *)RETVAL)->icon((char *)LoadIcon (dllInstance, "FLTK" ));
 #endif // ifdef WIN32
-        OUTPUT:
-            RETVAL
-    CASE: items == 5 || items == 6
-        int    XPos    = (int)SvIV(ST(1));
-        int    YPos    = (int)SvIV(ST(2));
-        int    Width   = (int)SvIV(ST(3));
-        int    Height  = (int)SvIV(ST(4));
-        PREINIT:
-            char * Label = PL_origfilename;
-        CODE:
-            if (items == 6)
-                Label = (char *)SvPV_nolen(ST(5));
-            RETVAL = new WidgetSubclass<fltk::Window>(CLASS, XPos, YPos, Width, Height, Label);
-#ifdef WIN32
-            if ( RETVAL )
-                RETVAL->icon((char *)LoadIcon (dllInstance, "FLTK" ));
-#endif // ifdef WIN32
-        OUTPUT:
-            RETVAL
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
 =for apidoc |||border|bool set|
 
@@ -616,7 +609,7 @@ fltk::Window::show( arga = NO_INIT, argb = NO_INIT )
             THIS->show( );
     CASE: items == 2 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2))) == SVt_PVAV
         int arga
-        AV* argb
+        AV * argb
         CODE:
             char ** REAL_INDEXES;
             for ( int i = 0; i < av_len(argb); i++ )
