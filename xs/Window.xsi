@@ -43,28 +43,20 @@ You can set the L<C<shortcut()>|FLTK::Widget/"shortcut"> and then that key
 will call the callback. If you don't change it then that key will close the
 window.
 
-=head2 Inheritance
-
-Inherits methods from L<C<FLTK::Group>|FLTK::Group>.
-
-Methods are in turn inherited by
-L<C<FLTK::DoubleBufferWindow>|FLTK::DoubleBufferWindow>,
-L<C<FLTK::GlWindow>|FLTK::GlWindow>, L<C<FLTK::MenuWindow>|FLTK::MenuWindow>,
-and L<C<FLTK::ShapedWindow>|FLTK::ShapedWindow>.
-
 =head1 Synopsis
 
-  my $window = FLTK::Window->new(100, 100, 500, 800);
-  $window->show();
+  use FLTK;
+  my $win = FLTK::Window->new(100, 100, 500, 800);
+  $win->show();
   FLTK::run();
 
 =begin apidoc
 
-=for apidoc ||FLTK::Window|new|X|Y|Width|Height|Label = ''
+=for apidoc ||FLTK::Window win|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::Window> object.
 
-=for apidoc ||FLTK::Window|new|Width|Height|Label = ''
+=for apidoc ||FLTK::Window|new|int w|int h|char * label = ''|
 
 Same but window is placed by OS.
 
@@ -112,12 +104,14 @@ fltk::Window::new( ... )
         OUTPUT:
             RETVAL
 
-=for apidoc |||border|set
+=for apidoc |||border|bool set|
 
 If C<set> is a true value, then a window border will be set, otherwise the
 window will have neither border nor caption.
 
-=for apidoc ||bool|border|
+=for apidoc ||bool set|border||
+
+
 
 =cut
 
@@ -132,9 +126,9 @@ fltk::Window::border( bool set = NO_INIT )
         CODE:
             THIS->border( set );
 
-=for apidoc |||borders|rect
+=for apidoc |||borders|FLTK::Rectangle rect|
 
-C<r> is set to the the size of the borders that will be added around this
+C<$rect> is set to the the size of the borders that will be added around this
 window. This is done by querying the window system. Because it is more
 convienent for most code the result is actually the rectangle that would be
 around the border if this window was zero in size and placed at C<0,0>. C<x,y>
@@ -146,7 +140,7 @@ rectangle around your window, add these values to the window's size.
 void
 fltk::Window::borders( fltk::Rectangle * rect )
 
-=for apidoc |||child_of|parent
+=for apidoc |||child_of|FLTK::Window parent|
 
 Tell the system that this window will not have an icon, it will dissappear and
 reappear when C<parent> is iconized or shown, and it is forced to always be
@@ -167,7 +161,7 @@ L<C<exec()>|/"exec"> (or possibly L<C<FLTK::modal()>|FLTK/"modal">).
 
 =cut
 
-=for apidoc |||show_inside|parent
+=for apidoc |||show_inside|FLTK::Window parent|
 
 Make the window with a normal system border and behavior, but place it inside
 the C<parent> as though that was the desktop. This is what Windows calls
@@ -194,7 +188,7 @@ fltk::Window::child_of( const fltk::Window * parent )
             case 1: THIS->show_inside( parent ); break;
         }
 
-=for apidoc |||clear_double_border|
+=for apidoc |||clear_double_border||
 
 Turn off double buffering, so that drawing directly goes to the visible image
 on the screen. Not all systems can do this, they will remain double buffered
@@ -202,7 +196,10 @@ even if this is off.
 
 =cut
 
-=for apidoc |||erase_overlay|
+void
+fltk::Window::clear_double_buffer( )
+
+=for apidoc |||erase_overlay||
 
 Indicate that the overlay drawn with L<C<draw_overlay()>|/"draw_overlay"> is
 blank. L<C<draw_overlay()>|/"draw_overlay"> will not be called until
@@ -210,14 +207,20 @@ L<C<redraw_overlay()>|/"redraw_overlay"> is called again.
 
 =cut
 
-=for apidoc |||free_backbuffer|
+void
+fltk::Window::erase_overlay( )
+
+=for apidoc |||free_backbuffer||
 
 Get rid of extra storage created by drawing when
 L<C<double_buffer()>|/"double_buffer"> was turned on.
 
 =cut
 
-=for apidoc |||iconize|
+void
+fltk::Window::free_backbuffer( )
+
+=for apidoc |||iconize||
 
 Iconifies the window. If you call this when L<C<shown()>|/"shown"> is false it
 will L<C<show()>|/"show"> it as an icon. If the window is already iconified
@@ -231,7 +234,10 @@ icons.
 
 =cut
 
-=for apidoc |||redraw_overlay|
+void
+fltk::Window::iconize( )
+
+=for apidoc |||redraw_overlay||
 
 Indicate that the image made by L<C<draw_overlay()>|/"draw_overlay"> has
 changed and must be drawn or redrawn. If the image is blank you should call
@@ -242,7 +248,10 @@ that overlays are only drawn in response to user input.
 
 =cut
 
-=for apidoc |||set_double_buffer|
+void
+fltk::Window::redraw_overlay( )
+
+=for apidoc |||set_double_buffer||
 
 If the window is double-buffered, all drawing is done first to some offscreen
 image, and then copied to the screen as a single block. This eliminates
@@ -251,7 +260,10 @@ even if it actually is slower.
 
 =cut
 
-=for apidoc |||system_layout|
+void
+fltk::Window::set_double_buffer( )
+
+=for apidoc |||system_layout||
 
 Resizes the actual system window to match the current size of the fltk widget.
 You should call this in your C<layout()> method if xywh have changed. The
@@ -261,31 +273,10 @@ won't work.
 =cut
 
 void
-fltk::Window::clear_double_buffer( )
-    ALIAS:
-        erase_overlay       = 1
-        free_backbuffer     = 2
-        iconize             = 3
-        redraw_overlay      = 4
-        set_double_buffer   = 5
-        system_layout       = 6
-        hide                = 30
-        draw_overlay        = 50
-    CODE:
-        switch (ix) {
-            case  0: THIS->clear_double_buffer(); break;
-            case  1: THIS->erase_overlay();       break;
-            case  2: THIS->free_backbuffer();     break;
-            case  3: THIS->iconize();             break;
-            case  4: THIS->redraw_overlay();      break;
-            case  5: THIS->set_double_buffer();   break;
-            case  6: THIS->system_layout();       break;
-            case 30: THIS->hide();                break;
-            case 50: THIS->draw_overlay();        break;
-            default: warn("...I don't know what to do for %s", GvNAME(CvGV(cv)));
-        }
+fltk::Window::system_layout( )
 
-=for apidoc |bool|FLTK::Window|double_buffer|
+
+=for apidoc |bool db_set|FLTK::Window|double_buffer||
 
 Returns a true value if L<C<set_double_buffer()>|/"set_double_buffer"> was
 called, returns a false value if
@@ -298,7 +289,7 @@ buffering is efficient turn it on by default).
 bool
 fltk::Window::double_buffer( )
 
-=for apidoc |FLTK::Window|FLTK::Window|drawing_window|
+=for apidoc ||FLTK::Window window|drawing_window||
 
 Returns the L<Window|FLTK::Window> currently being drawn into. To set this use
 L<C<make_current()>|FLTK::Widget/"make_current">. It will already be set when
@@ -309,7 +300,7 @@ C<draw()> is called.
 const fltk::Window *
 fltk::Window::drawing_window( )
 
-=for apidoc |bool|FLTK::Window|exec|FLTK::Window parent = 0|bool grab = 0
+=for apidoc ||bool return|exec|FLTK::Window parent = 0|bool grab = 0|
 
 The window is popped up and this function does not return until
 L<C<make_exec_return()>|/"make_exec_return"> is called, or the window is
@@ -379,7 +370,7 @@ and should be avoided.
 
 =cut
 
-=for apidoc |||fullscreen|
+=for apidoc |||fullscreen||
 
 Chooses the L<Monitor|FLTK::Monitor> that the center of the window is on to be
 the one to resize to.
@@ -400,14 +391,14 @@ fltk::Window::fullscreen( monitor = 0 )
         CODE:
            THIS->fullscreen( *monitor );
 
-=for apidoc |||fullscreen_off|X|Y|W|H
+=for apidoc |||fullscreen_off|int x|int y|int w|int h|
 
 Turns off any side effects of L<C<fullscreen()>|/"fullscreen">, then does
-C<resize(x,y,w,h)>.
+C<resize($x,$y,$w,$h)>.
 
 =cut
 
-=for apidoc |||resize|X|Y|W|H
+=for apidoc |||resize|int x|int y|int w|int h|
 
 Change the size and position of the window. If L<C<shown()>|/"shown"> is true,
 these changes are communicated to the window server (which may refuse that
@@ -431,7 +422,7 @@ fltk::Window::fullscreen_off ( int X, int Y, int Width, int Height )
             case 1:         THIS->resize( X, Y, Width, Height ); break;
         }
 
-=for apidoc |||hotspot|widget|offscreen = 0
+=for apidoc |||hotspot|FLTK::Widget widget|bool offscreen = 0
 
 L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
 pointing at the center of the widget, which may be the window itself. If
@@ -440,12 +431,12 @@ L<Monitor|FLTK::Monitor> (some X window managers do not allow this).
 
 =cut
 
-=for apidoc |||hotspot|CX|CY|offscreen = 0
+=for apidoc |||hotspot|int CX|int CY|bool offscreen = 0
 
 L<C<position()>|FLTK::Widget/"position"> the window so that the mouse is
 pointing at the C<cx,cy> position. If C<offscreen> is a true value, the window
-is allowed to extend off the Monitor (some X window managers do not allow
-this.
+is allowed to extend off the L<Monitor|FLTK::Monitor> (some X window managers
+do not allow this.
 
 =cut
 
@@ -461,7 +452,7 @@ fltk::Window::hotspot ( A, B = false, C = false )
         bool C;
         C_ARGS: A, B, C
 
-=for apidoc |bool|FLTK::Window|iconic|
+=for apidoc ||bool is_it|iconic||
 
 Returns a true value if the window is currently displayed as an icon. Returns
 a false value if the window is not L<C<shown()>|/"shown"> or
@@ -476,7 +467,7 @@ L<C<iconized>|/"iconize">.
 
 =cut
 
-=for apidoc |bool|FLTK::Window|shown|
+=for apidoc ||bool was_it|shown||
 
 Returns non-zero if L<C<show()>|/"show"> has been called, but C<DESTROY()> has
 not been called. Note that this returns true if L<C<hide()>|/"hide"> was
@@ -496,13 +487,13 @@ fltk::Window::iconic( )
     OUTPUT:
         RETVAL
 
-=for apidoc |||iconlabel|iname
+=for apidoc |||iconlabel|char * iname|
 
 Sets the text displayed below the icon (or in the taskbar). If you don't set
 this it defaults to the L<C<label()>|/"label"> but if that appears to be a
 filename, it defaults to the last portion after the last C</> character.
 
-=for apidoc ||label|iconlable|
+=for apidoc ||char * label|iconlable||
 
 =cut
 
@@ -517,15 +508,19 @@ fltk::Window::iconlabel( char * iname = NO_INIT )
         CODE:
             THIS->iconlabel( iname );
 
-=for apidoc |||label|name|iname
+=for apidoc |||label|char * name|char * iname|
 
 Sets both the L<C<label()>|/"label"> and the L<C<iconlabel()>|/"iconlabel">.
 
 =cut
 
-=for apidoc |||label|name
+=for apidoc |||label|char * name|
 
 Sets the window title, which is drawn in the titlebar by the system.
+
+=for apidoc ||char * title|label||
+
+Returns the window title.
 
 =cut
 
@@ -543,7 +538,7 @@ fltk::Window::label( char * name = NO_INIT, char * iname = 0 )
         CODE:
             THIS->label( name, iname );
 
-=for apidoc |||make_exec_return|return_value
+=for apidoc |||make_exec_return|bool return_value|
 
 If L<C<exec()>|/"exec"> is currently being called, make it hide this window
 and return C<return_value>.
@@ -559,23 +554,23 @@ false.
 void
 fltk::Window::make_exec_return ( bool return_value )
 
-=for apidoc |||show|parent
+=for apidoc |||show|FLTK::Window parent|
 
 Same as C<child_of(parent); show()>.
 
 =cut
 
-=for apidoc |||show|argc|argv
+=for apidoc |||show|int argc|AV * argv|
 
-This must be called after L<C<FLTK::args(argc,argv)>|FLTK/"args"> to show the
-"main" window, this indicates which window should be affected by any
+This must be called after L<C<FLTK::args($argc,@argv)>|FLTK/"args"> to show
+the "main" window, this indicates which window should be affected by any
 C<-geometry> switches. In addition if L<C<FLTK::args()>|FLTK/"args"> has not
 been called yet this does so, this is a useful shortcut for the main window in
 a small program.
 
 =cut
 
-=for apidoc |||show|
+=for apidoc |||show||
 
 Cause the window to become visible. It is harmless to call this multiple
 times.
@@ -632,23 +627,23 @@ fltk::Window::show( arga = NO_INIT, argb = NO_INIT )
         CODE:
             THIS->show((const Window *) arga);
 
-=for apidoc |||size_range|minW|minH|maxW = 0|maxH = 0|dw = 0|dh = 0
+=for apidoc |||size_range|int minW|int minH|int maxW = 0|int maxH = 0|int dw = 0|int dh = 0
 
 Set the allowable range the user can resize this window to. This only works
 for top-level windows.
 
 =over
 
-=item C<minW> and C<minH> are the smallest the window can be.
+=item C<$minW> and C<$minH> are the smallest the window can be.
 
-=item C<maxW> and C<maxH> are the largest the window can be. If either is
+=item C<$maxW> and C<$maxH> are the largest the window can be. If either is
 equal to the minimum then you cannot resize in that direction. If either is
 zero then FLTK picks a maximum size in that direction such that the window
 will fill the screen.
 
-=item C<dw> and C<dh> are size increments. The window will be constrained to
-widths of C<minW+N*dw>, where C<N> is any non-negative integer. If these are
-less or equal to 1 they are ignored. (this is ignored on WIN32)
+=item C<$dw> and C<$dh> are size increments. The window will be constrained to
+widths of C<$minW + N * $dw>, where C<N> is any non-negative integer. If these
+are less or equal to 1 they are ignored. (this is ignored on WIN32)
 
 =back
 
@@ -677,7 +672,7 @@ that is also the maximum size (so the window cannot resize in that direction).
 void
 fltk::Window::size_range ( int minW, int minH, int maxW = 0, int maxH = 0, int dw = 0, int dh = 0 )
 
-=for apidoc ||FLTK::NamedStyle|FLTK::Window|default_style|
+=for apidoc ||FLTK::NamedStyle style|default_style|
 
 By default a window has box() set to C<FLAT_BOX>, and the color() set to
 C<GRAY75>, which is a special color cell that is altered by
@@ -697,7 +692,7 @@ fltk::Window::default_style( )
     CODE:
         RETVAL = THIS->default_style;
 
-=for apidoc ||FLTK::Window|first|||
+=for apidoc ||FLTK::Window win|first||
 
 Returns the id of some L<C<visible()>|/"visible"> window. If there is more
 than one, the last one to receive an event is returned. This is useful as a
@@ -706,7 +701,7 @@ L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> uses it for this if no other
 parent is specified. This is also used by L<C<FLTK::run()>|FLTK/"run"> to see
 if any windows still exist.
 
-=for apidoc ||FLTK::Window|first|window|||
+=for apidoc |||first|FLTK::Window window|
 
 If this C<window> is visible, this removes it from wherever it is in the list
 and inserts it at the top, as though it received an event. This can be used to
@@ -727,7 +722,7 @@ fltk::Window::first( fltk::Window * window = NO_INIT )
         CODE:
             THIS->first( window );
 
-=for apidoc ||FLTK::Window|next|
+=for apidoc ||FLTK::Window win|next||
 
 Returns the next L<C<visible()>|/"visible"> top-level window, returns C<undef>
 after the last one. You can use this and L<C<first()>|FLTK::Window/"first"> to
@@ -738,7 +733,7 @@ iterate through all the visible windows.
 fltk::Window *
 fltk::Window::next( )
 
-=for apidoc x|W||icon|path
+=for apidoc x|W||icon|char * path|
 
 This loads an icon (F<.ico>) in the window.
 
@@ -763,7 +758,7 @@ fltk::Window::icon( char * path )
         warn("Loading icons on non-Win32 systems is on my TODO list");
 #endif // #ifdef WIN32
 
-=for apidoc xH|W||_icon_resource_example|iconID
+=for apidoc xH|W||_icon_resource_example|char * iconID
 
 This loads an icon in the window by name from a resource file. (Currently only
 supports (w)perl.exe itself.)

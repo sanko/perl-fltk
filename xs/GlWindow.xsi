@@ -171,7 +171,7 @@ fltk::GlWindow::create( )
 void
 fltk::GlWindow::flush( )
 
-=for apidoc |G|eh|valid||
+=for apidoc |G|char okay|valid||
 
 This flag is turned off on a new window or if the window is ever resized or
 the context is changed. It is turned on after L<C<draw()>|/"draw"> is called.
@@ -191,7 +191,7 @@ or other pieces of the context.
     #... draw your geometry here ...
   }
 
-=for apidoc |G||valid|is_it||
+=for apidoc |G||valid|char is_it||
 
 
 
@@ -207,7 +207,7 @@ fltk::GlWindow::valid( char is_it = NO_INIT )
         CODE:
             THIS->valid( is_it );
 
-=for apidoc |G||invalidate||||
+=for apidoc |G||invalidate||
 
 Turn off L<C<valid()>|/"valid">.
 
@@ -216,11 +216,11 @@ Turn off L<C<valid()>|/"valid">.
 void
 fltk::GlWindow::invalidate( )
 
-=for apidoc |G|int|mode||||||
+=for apidoc |G|int caps|mode||
 
 
 
-=for apidoc |G|bool|mode|newmode|||||
+=for apidoc |G|bool can|mode|int newmode|
 
 Set or change the OpenGL capabilites of the window. The value can be any of
 the symbols from\L<FLTK::visual|FLTK::visual> OR'd together:
@@ -283,13 +283,13 @@ fltk::GlWindow::mode( int newmode = NO_INIT )
     CASE:
         C_ARGS: newmode
 
-=for apidoc |G|bool|can_do||
+=for apidoc |G|bool can|can_do||
 
 Returns true if the hardware supports the current value of
 L<C<mode()>|/"mode">. If false, attempts to show or draw this window will
 cause an L<C<error()>|FLTK/"error">.
 
-=for apidoc |G|bool|can_do|mode|
+=for apidoc |G|bool can|can_do|int mode|
 
 Returns true if the hardware supports C<mode>, see L<C<mode()>|/"mode"> for
 the meaning of the bits.
@@ -303,12 +303,12 @@ fltk::GlWindow::can_do( int mode = NO_INIT )
     CASE: items == 2
         C_ARGS: mode
 
-=for apidoc |G|FLTK::GLContext|context|
+=for apidoc |G|FLTK::GLContext glc|context||
 
 Return the current OpenGL context object being used by this window, or 0 if
 there is none.
 
-=for apidoc |G||context|data|destroy_flag = false
+=for apidoc |G||context|fltk::GLContext glc|bool destroy_flag = false
 
 Set the OpenGL context object to use to draw this window.
 
@@ -371,7 +371,7 @@ fltk::GlWindow::swap_buffers( )
 void
 fltk::GlWindow::ortho( )
 
-=for apidoc |G|bool|can_do_overlay||
+=for apidoc |G|bool |can_do_overlay||
 
 Return true if the hardware supports OpenGL overlay planes, and FLTK has been
 compiled to use them. If true, L<C<draw_overlay()>|/"draw_overlay"> will be

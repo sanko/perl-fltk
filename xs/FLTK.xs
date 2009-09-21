@@ -230,6 +230,88 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
 
 
 
+=pod
+
+=end apidoc
+
+=head1 Synopsis
+
+    use strict;
+    use warnings;
+    use FLTK;
+
+    my $window = FLTK::Window->new(300, 180);
+    $window->begin();
+    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
+    $box->box(UP_BOX);
+    $box->labelfont(HELVETICA_BOLD_ITALIC);
+    $box->labelsize(36);
+    $box->labeltype(SHADOW_LABEL);
+    $window->end();
+    $window->show();
+    exit run();
+
+=head1 FLTK2 vs. FLTK vs. FLTK???
+
+To L<clarify|/"What are the Versions of FLTK?">... and by 'clarify', I mean
+'confuse further'...
+
+=over
+
+=item * The current stable release of fltk is v1.1.10rc1.
+
+=item * The 1.2.x branch was an early attempt to bring many of 2.0.x's
+features to 1.1.x. The 1.2.x branch has since been abandoned.
+
+=item * 1.3.x is the current feature branch. It's the recommended branch for
+new development and the only branch under active development. It was B<not>
+derived from the code in the 1.2.x branch but does include many of the
+features of 2.0.x including utf8 and new widgets.
+
+=item * 1.4.x is a reserved branch for future development based on 1.3.x.
+
+=item * 2.0.x branch was a rewrite to make the interfaces to each widget more
+consistent, to use C++ more correctly, including the ability (but not the
+requirement) to support functor style callbacks, exceptions, and a namespace,
+and to support theming of the GUI without having to set the color of every
+widget.
+
+2.0.x predates both the 1.2.x and 1.3.x branches but is still considered
+experimental.
+
+=item * Theoretical 3.0.x branch will soon (according to chatter) unify the
+1.3.x and 2.0.x branches. Borrowing features from both and reducing confusion
+for new users.
+
+=back
+
+=head2 FLTK.pm vs FL.pm vs FLTK3.pm vs FLTK???.pm
+
+Historically, the FLTK perl module has been based on the experimental 2.0.x
+branch and I have decided to continue working with the 2.0.x branch under the
+FLTK namespace.
+
+The 3.0.x (or whatever branch is considered current by then) based module will
+be under the FLTK3 namespace. ...unless 3.0.x takes the 1.3.x branch's API
+(which uses FL_ instead of 2.0.x's fltk:: namespace) in which case the module
+will be FL.pm.
+
+=head2 All together now
+
+Siiiiiiiiiiiiigggggggggggggghhhhhhhhhhhh.
+
+=head1 See Also
+
+=over
+
+=item What are the Versions of FLTK?
+
+http://fltk.org/articles.php?L825+I0+T+P1+Q
+
+=back
+
+=cut
+
 // Alright, let's get things started, shall we?
 
 MODULE = FLTK               PACKAGE = FLTK
@@ -403,82 +485,3 @@ BOOT:
     warn( "FLTK's callback system was disabled during build.\n" );
     // This warning should show up during compilation
 #endif
-
-=end apidoc
-
-=head1 Synopsis
-
-    use strict;
-    use warnings;
-    use FLTK;
-
-    my $window = FLTK::Window->new(300, 180);
-    $window->begin();
-    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
-    $box->box(UP_BOX);
-    $box->labelfont(HELVETICA_BOLD_ITALIC);
-    $box->labelsize(36);
-    $box->labeltype(SHADOW_LABEL);
-    $window->end();
-    $window->show();
-    exit run();
-
-=head1 FLTK2 vs. FLTK vs. FLTK???
-
-To L<clarify|/"What are the Versions of FLTK?">... and by 'clarify', I mean
-'confuse further'...
-
-=over
-
-=item * The current stable release of fltk is v1.1.10rc1.
-
-=item * The 1.2.x branch was an early attempt to bring many of 2.0.x's
-features to 1.1.x. The 1.2.x branch has since been abandoned.
-
-=item * 1.3.x is the current feature branch. It's the recommended branch for
-new development and the only branch under active development. It was B<not>
-derived from the code in the 1.2.x branch but does include many of the
-features of 2.0.x including utf8, new widgets.
-
-=item * 1.4.x is a reserved branch for future development based on 1.3.x.
-
-=item * 2.0.x branch was a rewrite to make the interfaces to each widget more
-consistent, to use C++ more correctly, including the ability (but not the
-requirement) to support functor style callbacks, exceptions, and a namespace,
-and to support theming of the GUI without having to set the color of every
-widget.
-
-2.0.x predates both the 1.2.x and 1.3.x branches but is still considered
-experimental.
-
-=item * Theoretical 3.0.x branch will soon (according to chatter) unify the
-1.3.x and 2.0.x branches to reduce confusion for new users.
-
-=back
-
-=head2 FLTK.pm vs FL.pm vs FLTK3.pm vs FLTK???.pm
-
-Historically, the FLTK perl module has been based on the experimental 2.0.x
-branch and I have decided to continue working with the 2.0.x branch under the
-FLTK namespace.
-
-The 3.0.x (or whatever branch is considered current by then) based module will
-be under the FLTK3 namespace. ...unless 3.0.x takes the 1.3.x branch's API
-(which uses FL_ instead of 2.0.x's fltk:: namespace) in which case the module
-will be FL.pm.
-
-=head2 All together now
-
-Siiiiiiiiiiiiigggggggggggggghhhhhhhhhhhh.
-
-=head1 See Also
-
-=over
-
-=item What are the Versions of FLTK?
-
-http://fltk.org/articles.php?L825+I0+T+P1+Q
-
-=back
-
-=cut

@@ -29,7 +29,7 @@ L<C<resize()>|/"resize">s the children to fit in the space not required by the
 
 #include <fltk/AlignGroup.h>
 
-=for apidoc d|||new|x|y|width|height|label = ''|n_to_break = 0|vertical = 1|align = ALIGN_LEFT|dw = 0|dh = 0
+=for apidoc d||FLTK::AlignGroup self|new|int x|int y|int width|int height|char * label = ''|uchar n_to_break = 0|bool vertical = 1|FLTK::Flags align = ALIGN_LEFT|uchar dw = 0|uchar dh = 0|
 
 Creates a new C<FLTK::AlignGroup> object.
 
@@ -58,11 +58,11 @@ fltk::AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar
 void
 fltk::AlignGroup::layout( )
 
-=for apidoc ||bool|vertical|
+=for apidoc ||bool vert|vertical||
 
 
 
-=for apidoc |||vertical|v
+=for apidoc |||vertical|bool vert|
 
 
 
@@ -79,27 +79,29 @@ fltk::AlignGroup::vertical ( bool v = NO_INIT )
         CODE:
             THIS->vertical( v );
 
-=for apidoc ||char|n_to_break|
+=for apidoc ||uchar n|n_to_break||
 
 
 
-=for apidoc |||n_to_break|value|
+=for apidoc |||n_to_break|uchar value|
 
 
 
-=for apidoc ||char|dw|
+=for apidoc ||uchar w|dw||
 
 
 
-=for apidoc |||dw|value|
+=for apidoc |||dw|uchar value|
 
 
 
-=for apidoc ||char|dh|
+=for apidoc ||uchar h|dh||
 
 
 
-=for apidoc |||dh|value|
+=for apidoc |||dh|uchar value|
+
+
 
 =cut
 
@@ -125,11 +127,11 @@ fltk::AlignGroup::n_to_break( uchar value = NO_INIT )
         dw = 1
         dh = 2
 
-=for apidoc ||flags|align|
+=for apidoc ||FLTK::Flags flags|align||
 
 
 
-=for apidoc |||align|flags
+=for apidoc |||align|FLTK::Flags flags|
 
 
 

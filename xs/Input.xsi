@@ -19,9 +19,9 @@ FLTK::Input - One-line text input field
 =head1 Description
 
 This is the FLTK text input widget. It displays a single line of text and lets
-the user edit it. The text may contain any bytes (even C<\0>). The bytes 0..31
-are displayed in ^X notation, the rest are interpreted as UTF-8 (see
-L<C<utf8decode()>|/"utf8decode">).
+the user edit it. The text may contain any bytes (even C<\0>). The bytes
+C<0..31> are displayed in C<^X> notation, the rest are interpreted as UTF-8
+(see L<C<utf8decode()>|/"utf8decode">).
 
 The default L<C<when()>|FLTK::Widget/"when"> is C<WHEN_RELEASE>. This is fine
 for a popup control panel where nothing happens until the panel is closed. But
@@ -56,40 +56,11 @@ numbers, a particular length, etc), you should subclass this and override the
 L<C<replace()>|/"replace"> function with a version that rejects changes you
 don't want to allow.
 
-If you don't like the keybindings you can override L<C<handle()>|/"handle"> to
-change them.
+If you don't like the keybindings you can override
+L<C<handle()>|FLTK::Widget/"handle"> to change them.
 
 All arguments that are lengths or offsets into the strings are in bytes, not
 the UTF-8 characters they represent.
-
-=head1 Subclassing
-
-You may override C<handle> which accepts an C<event> and a
-L<C<rectangle>|FLTK::Rectangle>. The passed rectangle is the area the text is
-to be drawn into. This method is provided so a subclass can place the text
-into a subrectangle.
-
-The default handle...
-
-=over
-
-=item * Handles C<FOCUS>, C<UNFOCUS>
-
-=item * May do callback on C<HIDE>
-
-=item * Any keystrokes call L<C<handle_key()>|/"handle_key">
-
-=item * Handles C<PUSH>, C<DRAG>, C<RELEASE> to select regions of text, move
-the cursor, and start drag & drop. Double click selects words, triple click
-selects lines (triple click is broken on Windows).
-
-=item * Receives drag&drop and accepts.
-
-=item * Handles C<PASTE> events caused by accepting the drag&drop or by
-calling L<C<paste()>|FLTK/"paste"> (which L<C<handle_key()>|/"handle_key">
-does for C<^V>)
-
-=back
 
 =cut
 
@@ -117,44 +88,6 @@ fltk::Input::new( int x, int y, int w, int h, const char * label = 0 )
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
-
-=pod
-
-=head2 Values for L<C<type>|FLTK::Widget/"type">
-
-=over
-
-=item C<NORMAL>
-
-=item C<FLOAT_INPUT>
-
-=item C<INT_INPUT>
-
-=item C<SECRET>
-
-=item C<WORDWRAP>
-
-=back
-
-=cut
-
-int
-NORMAL( )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = fltk::Input::NORMAL;      break;
-            case 1: RETVAL = fltk::Input::FLOAT_INPUT; break;
-            case 2: RETVAL = fltk::Input::INT_INPUT;   break;
-            case 3: RETVAL = fltk::Input::SECRET;      break;
-            case 5: RETVAL = fltk::Input::WORDWRAP;    break;
-        }
-    OUTPUT:
-        RETVAL
-    ALIAS:
-        FLOAT_INPUT = 1
-          INT_INPUT = 2
-             SECRET = 3
-           WORDWRAP = 5
 
 =begin apidoc
 
@@ -285,7 +218,6 @@ fltk::Input::text( char * string = NO_INIT, int length = NO_INIT )
             ST( 0 ) = boolSV( THIS->text( string, length ) );
             sv_2mortal( ST( 0 ) );
             XSRETURN( 1 );
-
 
 =for apidoc ||bool|static_text|string|length
 
@@ -567,6 +499,167 @@ fltk::Input::xscroll( )
 
 int
 fltk::Input::yscroll( )
+
+=end apidoc
+
+=head1 Values for L<C<type>|FLTK::Widget/"type">
+
+=over
+
+=item C<NORMAL>
+
+=item C<FLOAT_INPUT>
+
+=item C<INT_INPUT>
+
+=item C<SECRET>
+
+=item C<WORDWRAP>
+
+=back
+
+=cut
+
+int
+NORMAL( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = fltk::Input::NORMAL;      break;
+            case 1: RETVAL = fltk::Input::FLOAT_INPUT; break;
+            case 2: RETVAL = fltk::Input::INT_INPUT;   break;
+            case 3: RETVAL = fltk::Input::SECRET;      break;
+            case 5: RETVAL = fltk::Input::WORDWRAP;    break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        FLOAT_INPUT = 1
+          INT_INPUT = 2
+             SECRET = 3
+           WORDWRAP = 5
+
+=head1 Subclassing FLTK::Input
+
+The following methods may be overridden in subclasses of
+L<FLTK::Input|FLTK::Input>:
+
+=head2 C<handle>
+
+You may override C<handle> which accepts an C<event> and a
+L<C<rectangle>|FLTK::Rectangle>. The passed rectangle is the area the text is
+to be drawn into. This method is provided so a subclass can place the text
+into a subrectangle.
+
+The default handle...
+
+=over
+
+=item * Handles C<FOCUS>, C<UNFOCUS>
+
+=item * May do callback on C<HIDE>
+
+=item * Any keystrokes call L<C<handle_key()>|/"handle_key">
+
+=item * Handles C<PUSH>, C<DRAG>, C<RELEASE> to select regions of text, move
+the cursor, and start drag & drop. Double click selects words, triple click
+selects lines (triple click is broken on Windows).
+
+=item * Receives drag&drop and accepts.
+
+=item * Handles C<PASTE> events caused by accepting the drag&drop or by
+calling L<C<paste()>|FLTK/"paste"> (which L<C<handle_key()>|/"handle_key">
+does for C<^V>)
+
+=back
+
+=head2 C<handle_key>
+
+Handle C<KEY> events. The default L<C<handle()>|FLTK::Widget/"handle"> method
+calls this. This provides an Emacs and Windows style of editing. Most Emacs
+commands are first run through L<C<try_shortcut()>|/"try_shortcut"> to test if
+they are menu items for the program.
+
+=over
+
+=item C<Shift>: do not move the mark when moving the point
+
+=item C<LeftKey>, C<Ctrl+B>: move left one character
+
+=item C<Ctrl+LeftKey>, C<Alt+B>: move left one word
+
+=item C<RightKey>, C<Ctrl+F>: move right one character
+
+=item C<Ctrl+RightKey>, C<Alt+F>: move right one word
+
+=item C<Ctrl+A>: go to start of line, if already there select all text
+
+=item C<HomeKey>: go to start of line
+
+=item C<EndKey>, Ctrl+E>: go to end of line
+
+=item C<Ctrl+Insert>: copy
+
+=item C<Shift+Insert>: paste
+
+=item C<Shift+Delete>: cut
+
+=item C<Delete>, C<Ctrl+D>: delete region or one character
+
+=item C<Ctrl+Delete>, C<Alt+D>: delete region or one word
+
+=item C<BackSpace>, C<Ctrl+H>: delete region or left one character
+
+=item C<Ctrl+BackSpace>, C<Alt+H>: delete region or left one word
+
+=item C<Return>, C<KeypadEnter>: if
+L<C<when() & WHEN_ENTER_KEY>|FLTK::Widget/"when">, and no shift keys held
+down, this selects all and does the callback. Otherwise key is ignored.
+
+=item C<Ctrl+K>: cuts from the position to the end of line
+
+=item C<Ctrl+C>: copy
+
+=item C<Ctrl+T>: swap the two characters around point. If point is at end swap
+the last two characters.
+
+=item C<Ctrl+U>: delete all the text
+
+=item C<Ctrl+V>: paste
+
+=item C<Ctrl+X>, C<Ctrl+W>: cut
+
+=item C<Ctrl+Y>: redo
+
+=item C<Ctrl+Z>, C<Ctrl+/>: undo
+
+=item All printing characters are run through L<C<compose()>|/"compose"> and
+the result used to insert text.
+
+=back
+
+For L<Input|FLTK::Input> widgets in C<WORDWRAP> mode, you can also do these:
+
+=over
+
+=item C<UpKey>, C<Ctrl+P>: move up one line
+
+=item C<DownKey>, C<Ctrl+N>: move down one line
+
+=item C<PageUpKey>: move up 1 line less than the vertical widget size
+
+=item C<PageDownKey>: move down 1 line less than the vertical widget size
+
+=item C<Ctrl+HomeKey>, C<Alt+A>: got to start of text
+
+=item C<Ctrl+EndKey>, C<Alt+E>: go to end of text
+
+=item C<Return>, C<KeypadEnter>: inserts a newline
+
+=item C<Ctrl+O>: insert a newline and leave the cursor before it.
+
+=back
+
+=cut
 
 BOOT:
     isa("FLTK::Input", "FLTK::Widget");
