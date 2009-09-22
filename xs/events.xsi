@@ -1393,9 +1393,9 @@ application does not have focus now, or if no widgets accepted focus.
 =for apidoc T[events]|||focus|Widget|
 
 Change L<C<focus()>|/"focus"> to the given widget, the previous widget and all
-parents (that don't contain the new widget) are sent L<UNFOCUS> events, the
-new widget is sent an L<FOCUS> event, and all parents of it get
-L<FOCUS_CHANGE> events.
+parents (that don't contain the new widget) are sent C<UNFOCUS> events, the
+new widget is sent an C<FOCUS> event, and all parents of it get
+C<FOCUS_CHANGE> events.
 
 L<C<focus()>|/"focus"> is set whether or not the applicaton has the focus or
 if the widgets accept the focus. You may want to use

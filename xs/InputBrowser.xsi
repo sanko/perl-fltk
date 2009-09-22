@@ -31,7 +31,7 @@ widget to appear in a modal pop-up window.
 
 =begin apidoc
 
-=for apidoc ||FLTK::InputBrowser|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::InputBrowser self|new|int x|int y|int w|int h|char * label = ""|
 
 Creates a new C<FLTK::InputBrowser> object. Obviously.
 
@@ -52,7 +52,7 @@ fltk::InputBrowser::new( int x, int y, int w, int h, const char * label = 0 )
 
 =end apidoc
 
-=head2 Values for L<C<type()>|FLTK::Widget/"type">
+=head1 Values for L<C<type()>|FLTK::Widget/"type">
 
 =over
 
@@ -102,11 +102,11 @@ fltk::InputBrowser::popup( )
 void
 fltk::InputBrowser::hide_popup( )
 
-=for apidoc ||FLTK::Widget|item|
+=for apidoc ||FLTK::Widget ret|item||
 
 
 
-=for apidoc ||FLTK::Widget|item|widget
+=for apidoc ||FLTK::Widget ret|item|FLTK::Widget * widget|
 
 
 
@@ -119,19 +119,19 @@ fltk::InputBrowser::item( fltk::Widget * widget = NO_INIT )
     CASE: items == 2
         C_ARGS: widget
 
-=for apidoc |||minw|width
+=for apidoc |||minw|int width|
 
 
 
-=for apidoc ||w|minw|
+=for apidoc ||int w|minw||
 
 
 
-=for apidoc |||minh|height
+=for apidoc |||minh|int height|
 
 
 
-=for apidoc ||h|minh|
+=for apidoc ||int h|minh||
 
 
 
@@ -153,19 +153,19 @@ fltk::InputBrowser::minh( int height = NO_INIT )
         CODE:
             THIS->minh( height );
 
-=for apidoc |||maxw|width
+=for apidoc |||maxw|int width|
 
 
 
-=for apidoc ||w|maxw|
+=for apidoc ||int w|maxw||
 
 
 
-=for apidoc |||maxh|height
+=for apidoc |||maxh|int height|
 
 
 
-=for apidoc ||h|maxh|
+=for apidoc ||int h|maxh||
 
 
 
@@ -187,11 +187,11 @@ fltk::InputBrowser::maxh( int height = NO_INIT )
         CODE:
             THIS->maxh( height );
 
-=for apidoc |||text|string||
+=for apidoc |||text|char * string|
 
 
 
-=for apidoc ||string|text|||
+=for apidoc ||char * string|text||
 
 
 
