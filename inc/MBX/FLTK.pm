@@ -257,8 +257,9 @@ package MBX::FLTK;
                         return;
                     }
                 }
-                elsif ($command eq 'begin' && $paragraph =~ m[^apidoc]) {
-                    return;
+                elsif ($paragraph =~ m[^apidoc]
+                       && (($command eq 'begin') || ($command eq 'end')))
+                {   return;
                 }
                 my $expansion = $self->interpolate($paragraph, $lineno);
                 $$current->{'text'} .= "=$command $expansion";
