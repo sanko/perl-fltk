@@ -190,17 +190,23 @@ package MBX::FLTK;
         $self->add_to_cleanup($cpp);
         return $cpp
             if $self->up_to_date([@xsi, $xs, catdir('xs', $typemap)], $cpp);
-        printf "%s -> %s (%s)\r\n", $xs, $cpp, $typemap;
-        ExtUtils::ParseXS->process_file(filename   => $xs,
-                                        output     => $cpp,
-                                        'C++'      => 1,
-                                        hiertype   => 1,
-                                        typemap    => $typemap,
-                                        prototypes => 1
-        ) or return;
-        return $cpp;
+        printf "%s -> %s (%s)...", $xs, $cpp, $typemap;
+
+        if (ExtUtils::ParseXS->process_file(filename   => $xs,
+                                            output     => $cpp,
+                                            'C++'      => 1,
+                                            hiertype   => 1,
+                                            typemap    => $typemap,
+                                            prototypes => 1
+            )
+            )
+        {   print "okay\n";
+            return $cpp;
+        }
+        print "FAIL!\n";
+        return;
     }
-    {
+    {    # Includes apidoc
 
         sub ACTION_docs {
             my $self = shift;
