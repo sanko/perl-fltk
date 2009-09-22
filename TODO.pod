@@ -26,6 +26,8 @@ false positives from CPAN Testers.
 
 =item * Creating new callbacks/timeouts leaks memory
 
+=item * remove_timeout(...) doesn't...
+
 =item * Thread safety
 
 =item * Finish the following widgets/classes
