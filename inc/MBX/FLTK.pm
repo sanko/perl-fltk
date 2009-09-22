@@ -262,7 +262,8 @@ package MBX::FLTK;
                 {   return;
                 }
                 my $expansion = $self->interpolate($paragraph, $lineno);
-                $$current->{'text'} .= "=$command $expansion";
+                $expansion =~ s|\s+$||;
+                $$current->{'text'} .= "=$command $expansion\n\n";
             }
 
             sub verbatim {
