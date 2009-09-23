@@ -11,7 +11,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More 0.82 tests => 21;
@@ -46,9 +45,11 @@ $W->show();
 
 #
 is($CO->value(), 0, 'Default value for ClockOutput is 0');
-note 'Changing ClockOutput value to ' . time;
-$CO->value(time);
-is($CO->value(), time, 'New value for ClockOutput is current time');
+note sprintf 'Changing ClockOutput value to 987654321 (%s)',
+    scalar gmtime 987654321;
+$CO->value(987654321);
+is($CO->value(), 987654321,
+    'New value for ClockOutput is ' . scalar gmtime 987654321);
 note 'Changing ClockOutput value back to 0';
 $CO->value(0);
 
@@ -73,8 +74,9 @@ is($CO->value(), 0, 'Calue for ClockOutput is still 0');
 note 'value(h, m, s) does not change actual value()';
 
 #
-is($C1->value(), time, 'Default value for Clock is the current time');
-is($C2->value(), 0,    'Orphan Clock objects do not keep track of time');
+ok(($C1->value() >= (time - 3)) && ($C1->value() <= (time + 3)),
+    'Default value for Clock is the current time');
+is($C2->value(), 0, 'Orphan Clock objects do not keep track of time');
 my $_value = $C1->value();
 for my $countdown (reverse 1 .. 3) {
     sleep 1;
