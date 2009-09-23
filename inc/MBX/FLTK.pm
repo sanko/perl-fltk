@@ -234,6 +234,7 @@ package MBX::FLTK;
                     $$current = {line => $lineno,
                                  file => $self->input_file
                     };
+                    push @{$modules{$package}{'@section'}}, $paragraph;
                     return;
                 }
                 elsif ($command eq 'for') {
