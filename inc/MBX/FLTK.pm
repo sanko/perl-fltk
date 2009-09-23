@@ -135,9 +135,10 @@ package MBX::FLTK;
                 my $dot_o = $dot_rc =~ m[^(.*)\.] ? $1 . $Config{'_o'} : next;
                 push @obj, $dot_o;
                 next if $self->up_to_date($dot_rc, $dot_o);
-                print "Building Win32 resource: $dot_rc ...\n";
+                printf 'Building Win32 resource: %s... ', $dot_rc;
                 chdir 'xs/rc';
-                $self->do_system(sprintf "windres $dot_rc $dot_o");
+                print $self->do_system(sprintf 'windres %s %s', $dot_rc,
+                                       $dot_o) ? "okay\n" : "fail!\n";
                 chdir $self->base_dir;
             }
             map { abs2rel($_) } @obj;
@@ -190,7 +191,7 @@ package MBX::FLTK;
         $self->add_to_cleanup($cpp);
         return $cpp
             if $self->up_to_date([@xsi, $xs, catdir('xs', $typemap)], $cpp);
-        printf "%s -> %s (%s)...", $xs, $cpp, $typemap;
+        printf '%s -> %s (%s)... ', $xs, $cpp, $typemap;
 
         if (ExtUtils::ParseXS->process_file(filename   => $xs,
                                             output     => $cpp,
