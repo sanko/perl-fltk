@@ -26,7 +26,7 @@ in this document.
 =item Website and Blog
 
 Eventually, the official website will be http://sanko.github.com/fltk-perl/.
-There you'll find html versions off all the documentation, examples, the
+There you'll find html versions of all the documentation, examples, the
 development blog, and links to other resources.
 
 ...eventually.
@@ -36,6 +36,8 @@ development blog, and links to other resources.
 Eventually, the official means of support for L<FLTK|FLTK> may be through
 C<#fltk-perl> on... some IRC network. Probably Freenode. If anyone aside from
 me decides to show up on a regular basis.
+
+Yeah, ...eventually.
 
 =item Receive Commit and Issue Tracker Updates
 
@@ -47,9 +49,9 @@ I'd need someone to host it. :\
 
 =item Issue Tracker
 
-Use http://github.com/sanko/fltk-perl/issues/list for bug
-tracking. Please include as much information as possible and review
-the list in the L<Bug Tracking|/"Bug Tracking"> section below.
+Use http://github.com/sanko/fltk-perl/issues/list for bug tracking. Please
+include as much information as possible and review the list in the
+L<Bug Tracking|/"Bug Tracking"> section below.
 
 =item Twitter
 
@@ -60,7 +62,7 @@ http://twitter.com/FLTKpm
 
 =head1 API
 
-
+[TODO]
 
 =head2 API Maturity
 
@@ -69,8 +71,7 @@ L<Backward Compatibility|/"Backward Compatibility">.
 
 =head2 Documentation Resources
 
-
-
+[TODO]
 
 =head3 See Also
 
@@ -95,7 +96,7 @@ the issue tracker.
 
 =over
 
-=item Support for C<args(...), arg(...), and show(...)>
+=item * Support for C<args(...), arg(...), and show(...)>
 
 The latter two are used extensively in the tests that come with fltk but I
 don't think they're powerful enough to use in Perl. I would suggest using
@@ -105,15 +106,15 @@ the values in FLTK manually.
 I'm still thinking about this choice, so don't get too angry if your life is
 incomplete without C<arg(0, '-geometry blah', 0)> support.
 
-=item L<FLTK::ask|FLTK::ask> functions do not do sprintf-like stuff.
+=item * L<FLTK::ask|FLTK::ask> functions do not do sprintf-like stuff.
 
 Working around XSUB's inability to take true variable argument lists isn't
 worth the time nor effort.
 
-=item L<C<choice(...)>|FLTK::ask/choice>'s choices (<_<) are shown in the
+=item * L<C<choice(...)>|FLTK::ask/choice>'s choices (<_<) are shown in the
 correct order; from left to right.
 
-=item Anti-perl-isms
+=item * Anti-perl-isms
 
 The Fast Light Toolkit's API is so C++ oriented that it makes me itch. Here,
 I'll list the places where things moved too far from what one might expect in
@@ -121,7 +122,7 @@ a Perl module and I made a decision which strayes from the underlying C++ API.
 
 =over
 
-=item L<C<FLTK::parsecolor ( COLOR, [ LENGTH ] )>|FLTK::Color/parsecolor>
+=item * L<C<FLTK::parsecolor ( COLOR, [ LENGTH ] )>|FLTK::Color/parsecolor>
 
 The C++ function takes two parameters:
 L<C<parsecolor( char * name, unsigned length )>|FLTK::Color/"parsecolor">
@@ -129,21 +130,21 @@ L<C<parsecolor( char * name, unsigned length )>|FLTK::Color/"parsecolor">
 L<C<parsecolor( $mycolor, length($mycolor) )>|FLTK::Color/"parsecolor"> is
 silly.
 
-=item L<C<FLTK::Browser::column_widths()>|FLTK::Browser/"column_widths">,
+=item * L<C<FLTK::Browser::column_widths()>|FLTK::Browser/"column_widths">,
 L<C<FLTK::Browser::current_index>|FLTK::Browser/"current_index">
 L<C<FLTK::Browser::focus_index>|FLTK::Browser/"focus_index">
 L<C<FLTK::Browser::column_labels>|FLTK::Browser/"column_labels"> do not
 require a trailing zero (C<0>) and do not add one to return values.
 
-=item L<C<FLTK::addvertices>|FLTK::draw/"addvertices"> and
+=item * L<C<FLTK::addvertices>|FLTK::draw/"addvertices"> and
 L<C<FLTK::addvertices_transformed>|FLTK::draw/"addvertices_transformed"> don't
 require an initial total.
 
-=item L<C<rgb2hsv($r, $g, $b)>|FLTK::ColorChooser/"rgb2hsv"> returns
+=item * L<C<rgb2hsv($r, $g, $b)>|FLTK::ColorChooser/"rgb2hsv"> returns
 C<$h, $s, $v> as opposed the C function which is defined as
 C<void rgb2hsv(r,b,g,h,s,v)> and changes C<h, s, v> in place.
 
-=item L<C<hsv2rgb($h, $s, $v)>|FLTK::ColorChooser/"hsv2rbg"> returns
+=item * L<C<hsv2rgb($h, $s, $v)>|FLTK::ColorChooser/"hsv2rbg"> returns
 C<$r, $b, $g> as opposed the C function which is defined as
 C<void hsv2rbg(h, s, v, r, b, g)> and changes C<r, b, g> in place.
 
@@ -151,25 +152,12 @@ C<void hsv2rbg(h, s, v, r, b, g)> and changes C<r, b, g> in place.
 
 =back
 
-=head1 Features
-
-[TODO]
-
-=head2 Types
-
-[TODO]
-
-=head2 Widgets
-
-[TODO]
-
 =head1 System Requirements
 
 If you work with any other setups (VC++, CygFail, etc.) and would like to lend
 a hand with development please L<join the team|/"Join the Team">. If you just
 want to L<report a bug|/"Bug Tracking"> or L<help test|/"Testing">, that's
 cool too.
-
 
 =head2 Prerequisites
 
@@ -205,11 +193,36 @@ development and/or testing, please L<join the team|/"Join the Team">.
 
 [TODO]
 
-=head2 Prerequisites
+=head1 Installation
 
-C<FLTK> requires L<Alien::FLTK|Alien::FLTK> which is listed as prerequisite in
-Build.PL so, unless you answer 'no' when prompted, the CPAN shell should
-automatically install it for you.
+This distribution uses C<Module::Build> for installation, so use the following
+procedure:
+
+  perl Build.PL
+  ./Build
+  ./Build test
+  ./Build install
+
+See also: L<Distribution Testing|/"Distribution Testing">
+
+=head2 Installing the fltk2 Libraries
+
+Please refer to L<Alien::FLTK|Alien::FLTK>.
+
+=head2 Backward Compatibility
+
+This section lists recent major changes in API or behavior between stable
+releases. For older news see the F<Changes> file included with this
+distribution. For detail see the commit logs.
+
+=over
+
+=item ...nothin' has changed yet.
+
+=back
+
+...and yeah, I know this isn't fluff but it may grow too large to put near the
+top with L<API|/"API">.
 
 =head1 The Source
 
@@ -221,11 +234,17 @@ automatically install it for you.
 
 [TODO]
 
-=head2 CPAN
+=head3 CPAN
 
 [TODO]
 
-=head2 Layout
+=head2 Navigating the Source...
+
+=head3 ...as a Developer
+
+[TODO]
+
+=head3 ...as a User
 
 [TODO]
 
@@ -370,45 +389,68 @@ For more on becoming a CPAN Tester and why this is useful, see the
 L<CPAN::Reporter|CPAN::Reporter/"DESCRIPTION"> documentation and
 http://cpantesters.org/.
 
-=head1 Other Stuff
+=head1 Versioning
 
-...aka "Other Fluff."
+Sigh. Todo.
 
-=head2 Installation
+=head2 FLTK2 vs. FLTK vs. FLTK???
 
-This distribution uses C<Module::Build> for installation, so use the following
-procedure:
-
-  perl Build.PL
-  ./Build
-  ./Build test
-  ./Build install
-
-See also: L<Distribution Testing|/"Distribution Testing">
-
-=head3 Installing the fltk2 Libraries
-
-Please refer to L<Alien::FLTK|Alien::FLTK>.
-
-=head3 Customizing the Build Process
-
-=for notes This is where I'll describe stuff like how to turn on/off various
-flags during compilation
-
-=head2 Backward Compatibility
-
-This section lists recent major changes in API or behavior between stable
-releases. For older news see the F<Changes> file included with this
-distribution. For detail see the commit logs.
+To L<clarify|/"What are the Versions of FLTK?">... and by 'clarify', I mean
+'confuse further'...
 
 =over
 
-=item ...nothin' yet.
+=item * The current stable release of fltk is v1.1.10rc1.
+
+=item * The 1.2.x branch was an early attempt to bring many of 2.0.x's
+features to 1.1.x. The 1.2.x branch has since been abandoned.
+
+=item * 1.3.x is the current feature branch. It's the recommended branch for
+new development and the only branch under active development. It was B<not>
+derived from the code in the 1.2.x branch but does include many of the
+features of 2.0.x including utf8 and new widgets.
+
+=item * 1.4.x is a reserved branch for future development based on 1.3.x.
+
+=item * 2.0.x branch was a rewrite to make the interfaces to each widget more
+consistent, to use C++ more correctly, including the ability (but not the
+requirement) to support function style callbacks, exceptions, and a namespace,
+and to support theming of the GUI without having to set the color of every
+widget.
+
+2.0.x predates both the 1.2.x and 1.3.x branches but is still considered
+experimental.
+
+=item * Theoretical 3.0.x branch will soon (according to chatter) unify the
+1.3.x and 2.0.x branches, borrowing features from both, and reducing confusion
+for new users.
 
 =back
 
-...and yeah, I know this isn't fluff but it may grow too large to put near the
-top with L<API|/"API">.
+=head2 FLTK.pm vs FL.pm vs FLTK3.pm vs FLTK???.pm
+
+Historically, the FLTK perl module has been based on the experimental 2.0.x
+branch and I have decided to continue working with the 2.0.x branch under the
+FLTK namespace.
+
+The 3.0.x (or whatever branch is considered current by then) based module will
+be under the FLTK3 namespace. ...unless 3.0.x takes the 1.3.x branch's API
+(which uses FL_ instead of 2.0.x's fltk:: namespace) in which case the module
+will be FL.pm.
+
+=head2 All Together Now
+
+Siiiiiiiiiiiiigggggggggggggghhhhhhhhhhhh.
+
+=head1 See Also
+
+=over
+
+=item What are the Versions of FLTK?
+
+http://fltk.org/articles.php?L825+I0+T+P1+Q
+
+=back
 
 =head1 Author
 

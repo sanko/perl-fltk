@@ -11,9 +11,10 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
-use Test::More 0.82 tests => 4;
+use Test::More 0.82 tests => 2;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,12 +27,7 @@ my $interactive     = $build->notes('interactive');
 
 #
 use_ok('FLTK', qw[:run]);
-
-#
-
-{ # add_timeout tests
-    sub t_one {pass 'add_timeout called'}
-    add_timeout(1, \&t_one);
-    ok( FLTK::wait(10), 'wait( 10 ) returns true value there is an event to handle');
-    ok(!FLTK::wait(10), 'wait( 10 ) returns false value when there are no events');
+{
+    add_timeout(5, sub { pass 'add_timeout called' });
+    FLTK::wait(10);
 }

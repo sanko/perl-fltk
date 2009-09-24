@@ -36,6 +36,6 @@ void WidgetSubclass<fltk::GlWindow>::draw ( ) {
     AV * args = newAV();
     handled = _call_method( "draw", args );
     /* GlWindow::draw( ) is a pure virtual function */
-};
+}
 
 #endif // #ifndef fltk_GlWindowSubclass_h

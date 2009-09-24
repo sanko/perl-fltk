@@ -14,6 +14,7 @@ package MBX::FLTK::Developer;
     use Alien::FLTK;
     use Data::Dump qw[pp];
     use Cwd qw[cwd];
+    sub cxxflags { return; qw[-W -Wall] }
     {
         my ($cwd, %seen, %packages, @xsi_files);
 
@@ -215,10 +216,9 @@ END
      #warn qq[Updated $file];
      #die $CHANGES_D;
      # Keep a backup (just in case) and move the file so we can create it next
-            #rename($file, $file . '.bak')
-            #    || die sprintf 'Failed to rename %s (%s)', $file, $^E;
-
-            # open and lock the file
+     #rename($file, $file . '.bak')
+     #    || die sprintf 'Failed to rename %s (%s)', $file, $^E;
+     # open and lock the file
             sysopen(my ($CHANGES_W),
                     $file, Fcntl::O_WRONLY() | Fcntl::O_CREAT())
                 || warn(sprintf q[Failed to open %s for reading: %s], $file,
