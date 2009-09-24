@@ -26,7 +26,7 @@ Uses L<HelpView|FLTK::HelpView> to display basic HTML in a standard dialog.
 
 #include <fltk/HelpDialog.h>
 
-=for apidoc ||FLTK::HelpDialog|new||||
+=for apidoc ||FLTK::HelpDialog hd|new||
 
 Creates a new L<HelpDialog|FLTK::HelpDialog>.
 
@@ -35,7 +35,7 @@ Creates a new L<HelpDialog|FLTK::HelpDialog>.
 fltk::HelpDialog *
 fltk::HelpDialog::new( )
 
-=for apidoc |||destroy|
+=for apidoc |||destroy||
 
 Destroy the L<HelpDialog|FLTK::HelpDialog>.
 
@@ -47,19 +47,19 @@ fltk::HelpDialog::destroy( )
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
 
-=for apidoc ||int|h||
+=for apidoc ||int h|h||
 
 Returns the vertical size of the help dialog.
 
-=for apidoc ||int|w|||
+=for apidoc ||int w|w||
 
 Returns the horizontal size of the help dialog.
 
-=for apidoc ||int|x|||
+=for apidoc ||int x|x||
 
 Returns the position of the help dialog.
 
-=for apidoc ||int|y|||
+=for apidoc ||int y|y||
 
 Returns the position of the help dialog.
 
@@ -93,7 +93,7 @@ fltk::HelpDialog::hide( )
 void
 fltk::HelpDialog::show( )
 
-=for apidoc |||load|filename|
+=for apidoc |||load|char * filename|
 
 Load the specified HTML file into the L<HelpView|FLTK::HelpView>.
 
@@ -102,7 +102,7 @@ Load the specified HTML file into the L<HelpView|FLTK::HelpView>.
 void
 fltk::HelpDialog::load( char * filename )
 
-=for apidoc |||position|x|y
+=for apidoc |||position|int x|int y|
 
 Move the L<HelpDialog|FLTK::HelpDialog> to a new position.
 
@@ -111,7 +111,7 @@ Move the L<HelpDialog|FLTK::HelpDialog> to a new position.
 void
 fltk::HelpDialog::position( int x, int y )
 
-=for apidoc |||resize|x|y|w|h|
+=for apidoc |||resize|int x|int y|int w|int h|
 
 Set the screen position and size of the L<HelpDialog|FLTK::HelpDialog> of the
 dialog.
@@ -121,11 +121,11 @@ dialog.
 void
 fltk::HelpDialog::resize( int x, int y, int w, int h )
 
-=for apidoc |||textsize|size|
+=for apidoc |||textsize|int size|
 
 Sets the default text size for the help view.
 
-=for apidoc ||size|textsize||
+=for apidoc ||int size|textsize||
 
 Gets the default text size for the help view.
 
@@ -139,11 +139,11 @@ fltk::HelpDialog::textsize( uchar size = NO_INIT )
         CODE:
             THIS->textsize( size );
 
-=for apidoc |||topline|string|
+=for apidoc |||topline|char * string|
 
 Sets the top line in the L<HelpView|FLTK::HelpView> widget to the named line.
 
-=for apidoc |||topline|index||
+=for apidoc |||topline|int index||
 
 Sets the top line in the L<HelpView|FLTK::HelpView> widget to the I<index>th line.
 
@@ -156,11 +156,11 @@ fltk::HelpDialog::topline( line )
     CASE:
         char * line
 
-=for apidoc |||value|string|
+=for apidoc |||value|char * string|
 
 Sets the current buffer to the string provided and reformats the text.
 
-=for apidoc ||string|value|||
+=for apidoc ||char * string|value||
 
 Returns the current buffer.
 
@@ -174,7 +174,7 @@ fltk::HelpDialog::value( char * string = NO_INIT )
         CODE:
             THIS->value( string );
 
-=for apidoc ||int|visible|||
+=for apidoc ||int visible|visible||
 
 Returns C<1> if the L<HelpDialog|FLTK::HelpDialog> window is visible.
 

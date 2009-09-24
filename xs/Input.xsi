@@ -68,7 +68,7 @@ the UTF-8 characters they represent.
 
 =begin apidoc
 
-=for apidoc ||FLTK::Input|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::Input input|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::Input> object. Obviously.
 
@@ -79,7 +79,7 @@ Creates a new C<FLTK::Input> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::Input::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Input::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Input>(CLASS,x,y,w,h,label);
@@ -91,7 +91,7 @@ fltk::Input::new( int x, int y, int w, int h, const char * label = 0 )
 
 =begin apidoc
 
-=for apidoc ||bool|handle_key||
+=for apidoc ||bool handled|handle_key||
 
 Handle C<KEY> events. The default L<C<handle()>|FLTK::Widget/"handle"> method
 calls this. This provides an Emacs and Windows style of editing. Most Emacs
@@ -180,7 +180,7 @@ For L<Input|FLTK::Input> widgets in C<WORDWRAP> mode, you can also do these:
 
 This method may be overridden for subclassing.
 
-=for apidoc ||bool|text|string|length
+=for apidoc ||bool different|text|char * string|int length|
 
 Change the L<C<text()>|/"text"> to return the first C<length> bytes of
 C<string> and L<C<size()>|/"size"> to return C<length>, and set the
@@ -189,12 +189,12 @@ L<C<position()>|/"position"> to C<length> and the L<C<mark()>|/"mark"> to zero
 
 Returns true if the bytes in the new string are different than the old string.
 
-=for apidoc ||bool|text|string|||
+=for apidoc ||bool different|text|char * string|
 
 Same as
 L<C<$input-E<gt>text($string, $string ? length($string) : 0)>|/"text">.
 
-=for apidoc ||string|text||||
+=for apidoc ||char * string|text||
 
 The current string, as edited by the user. L<C<size()>|/"size"> returns how
 many bytes are in the string.
@@ -219,7 +219,7 @@ fltk::Input::text( char * string = NO_INIT, int length = NO_INIT )
             sv_2mortal( ST( 0 ) );
             XSRETURN( 1 );
 
-=for apidoc ||bool|static_text|string|length
+=for apidoc ||bool ret|static_text|char * string|int length|
 
 Same as L<C<text($string, $length)>|/"text_string_length_">, except it does
 not copy the string, instead it makes L<C<text()>|/"text"> return a pointer to
@@ -233,7 +233,7 @@ internal buffer and the editing done there. This can save a lot of time and
 memory if your program is changing the string to various constants a lot but
 the user rarely edits it.
 
-=for apidoc ||bool|static_text|string||
+=for apidoc ||bool ret|static_text|char * string|
 
 Same as
 L<C<$input-E<gt>static_text($string, $string ? length($string) : 0)>|/"static_text">.
@@ -247,17 +247,17 @@ fltk::Input::static_text( char * string, int length = NO_INIT )
     CASE: items == 3
         C_ARGS: string, length
 
-=for apidoc ||char|at|index
+=for apidoc ||char chr|at|int index|
 
 Same as L<C<text()[$index]>|/"text">, but may be faster in plausible
 implementations. No bounds checking is done.
 
-=for apidoc ||length|size||
+=for apidoc ||int length|size||
 
 Returns the number of characters in L<C<text()>|/"text">. This may be greater
 than C<length($input->text())> if there are C<NULL> characters in it.
 
-=for apidoc |||reserve|newsize|
+=for apidoc |||reserve|int newsize|
 
 Reserve the interal private buffer of at least C<newsize> bytes, even if the
 current L<C<text()>|/"text"> is not that long. Can be used to avoid
@@ -275,16 +275,16 @@ fltk::Input::size( )
 void
 fltk::Input::reserve( int newsize )
 
-=for apidoc ||int|position|||
+=for apidoc ||int pos|position||
 
 Returns the current location of the cursor.
 
-=for apidoc |||position|new_position|
+=for apidoc |||position|int new_position|
 
 Same as
 L<C<position($new_position, $new_position)>|/"position_new_position_new_mark_">.
 
-=for apidoc |||position|new_position|new_mark
+=for apidoc |||position|int new_position|int new_mark|
 
 The input widget maintains two pointers into the string. The "position" is
 where the cursor is. The "mark" is the other end of the selected text. If they
@@ -312,11 +312,11 @@ fltk::Input::position( int new_position = NO_INIT, int new_mark = NO_INIT )
             THIS->position( new_position, new_mark );
             XSRETURN_EMPTY;
 
-=for apidoc ||int|mark||||||||
+=for apidoc ||int mark|mark||
 
 
 
-=for apidoc |||mark|new_mark|||||||
+=for apidoc |||mark|int new_mark|
 
 Same as L<C<$inputE<gt>position($input-E<gt>position(),$index)>|/"position">.
 
@@ -331,7 +331,7 @@ fltk::Input::mark( int new_mark = NO_INIT )
             THIS->mark( new_mark );
             XSRETURN_EMPTY;
 
-=for apidoc |||up_down_position|position|keepmark|
+=for apidoc |||up_down_position|int position|int keepmark|
 
 Does the correct thing for arrow keys. C<position> must be the location of the
 start of a line. Sets the L<position|/"position"> (and L<mark|/"mark"> if
@@ -343,7 +343,7 @@ arrows repeatedly will cause the point to move up and down.
 void
 fltk::Input::up_down_position( int position, bool keepmark )
 
-=for apidoc ||bool|replace|begin|end|text|length
+=for apidoc ||bool return|replace|int begin|int end|char * text|int length|
 
 This call does all editing of the text. It deletes the region between C<begin>
 and C<end> (either one may be less or equal to the other), and then inserts
@@ -360,18 +360,18 @@ outside the length of the string.
 bool
 fltk::Input::replace( int begin, int end, char * text, int length = strlen( text ) )
 
-=for apidoc ||bool|cut|||
+=for apidoc ||bool okay|cut||
 
 Wrapper around L<C<replace()>|/"replace">, this deletes the region between the
 point and the mark. It does nothing if they are equal.
 
-=for apidoc ||bool|cut|length||
+=for apidoc ||bool okay|cut|int length|
 
 Wrapper around L<C<replace()>|/"replace"> this deletes up to C<length>
 characters after the point, or before the point if C<length> is negative.
 C<length> is bounds checked.
 
-=for apidoc ||bool|cut|begin|end|
+=for apidoc ||bool okay|cut|int begin|int end|
 
 Wrapper around L<C<replace()>|/"replace"> this deletes the characters between
 C<begin> and C<end>. The values are clamped to the ends of the string, and
@@ -388,12 +388,12 @@ fltk::Input::cut( int begin = NO_INIT, int end = NO_INIT )
     CASE: items == 3
         C_ARGS: begin, end
 
-=for apidoc ||bool|insert|text||
+=for apidoc ||bool okay|insert|char * text|
 
 Wrapper around L<C<replace()>|/"replace">. This inserts the string at the
 point and leaves the point after it.
 
-=for apidoc ||bool|insert|text|length||
+=for apidoc ||bool okay|insert|char * text|int length|
 
 Wrapper around L<C<replace()>|/"replace">. This inserts C<length> characters
 from the C<text> (including C<\0> characters!) at the point and leaves the
@@ -408,7 +408,7 @@ fltk::Input::insert( char * text, int length = strlen( text ) )
     CASE: items == 3
         C_ARGS: text, length
 
-=for apidoc ||bool|copy|to_clipboard = true|
+=for apidoc ||bool okay|copy|bool to_clipboard = true|
 
 Put the current selection between L<C<mark()>|/"mark"> and
 L<C<position()>|/"position"> into the selection or clipboard by calling
@@ -429,7 +429,7 @@ the widget a C<PASTE> event with the text, which will cause it to be inserted.
 bool
 fltk::Input::copy( bool to_clipboard = true )
 
-=for apidoc ||bool|undo|||
+=for apidoc ||bool okay|undo||
 
 If this is the most recent widget on which L<C<replace()>|/"replace"> was done
 on, this will undo that L<C<replace()>|/"replace"> and probably several others
@@ -442,19 +442,19 @@ any change was made.
 bool
 fltk::Input::undo( )
 
-=for apidoc ||index|word_start|position|
+=for apidoc ||int index|word_start|int position|
 
 Returns the location of the first word boundary at or before C<position>.
 
-=for apidoc ||index|word_end|position|
+=for apidoc ||int index|word_end|int position|
 
 Returns the location of the next word boundary at or after C<position>.
 
-=for apidoc ||index|line_start|position|
+=for apidoc ||int index|line_start|int position|
 
 Returns the location of the start of the line containing the C<position>.
 
-=for apidoc ||index|line_end|position|
+=for apidoc ||int index|line_end|int position|
 
 Returns the location of the next newline or wordwrap space at or after
 C<position>.
@@ -473,7 +473,7 @@ fltk::Input::line_start( int position )
 int
 fltk::Input::line_end( int position )
 
-=for apidoc ||int|mouse_position|rectangle
+=for apidoc ||int index|mouse_position|FLTK::Rectangle * rectangle|
 
 Figure out what character the most recent mouse event would be pointing to,
 assumming you drew the text by calling L<C<draw()>|FLTK::draw/"draw"> with the
@@ -486,10 +486,10 @@ int
 fltk::Input::mouse_position( fltk::Rectangle * rectangle )
     C_ARGS: * rectangle
 
-=for apidoc ||int|xscroll|||
+=for apidoc ||int x|xscroll||
 
 
-=for apidoc ||int|yscroll|||
+=for apidoc ||int y|yscroll||
 
 
 =cut

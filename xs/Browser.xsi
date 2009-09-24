@@ -113,7 +113,7 @@ item like double-click.
 
 #include <fltk/Browser.h>
 
-=for apidoc d||Browser|new|X|Y|Width|Height|Label = ''
+=for apidoc d||FLTK::Browser self|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::Browser> object.
 
@@ -133,7 +133,7 @@ fltk::Browser::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc |||layout|
+=for apidoc |||layout||
 
 
 
@@ -142,7 +142,7 @@ fltk::Browser::new( int x, int y, int w, int h, const char * label = 0 )
 void
 fltk::Browser::layout ( )
 
-=for apidoc ||FLTK::NamedStyle|default_style
+=for apidoc ||FLTK::NamedStyle style|default_style||
 
 
 
@@ -155,19 +155,19 @@ fltk::Browser::default_style( )
     OUTPUT:
         RETVAL
 
-=for apidoc E||int|IS_MULTI|
+=for apidoc E||int flag|IS_MULTI||
 
 Means multiple selection can be achieved by user.
 
-=for apidoc E||int|NORMAL|
+=for apidoc E||int flag|NORMAL||
 
 Means a single selection can be achieved by user.
 
-=for apidoc E||int|MULTI|
+=for apidoc E||int flag|MULTI||
 
 Means multiple selection can be achieved by user.
 
-=for apidoc E||int|NO_COLUMN_SELECTED|
+=for apidoc E||int flag|NO_COLUMN_SELECTED||
 
 Means that no column has been selected by user.
 
@@ -194,21 +194,21 @@ IS_MULTI ( )
     OUTPUT:
         RETVAL
 
-=for apidoc E||linepos|NOSCROLL|
+=for apidoc E||int linepos|NOSCROLL||
 
 Argument to L<C<make_item_visible()>|/"make_item_visible">.
 
 Moves as little as possible so item is visible.
 
-=for apidoc E||linepos|TOP|
+=for apidoc E||int linepos|TOP||
 
 Position current item to top
 
-=for apidoc E||linepos|MIDDLE|
+=for apidoc E||int linepos|MIDDLE||
 
 Position current item to middle
 
-=for apidoc E||linepos|BOTTOM|
+=for apidoc E||int linepos|BOTTOM||
 
 Position current item to bottom
 
@@ -235,19 +235,19 @@ NOSCROLL ( )
         MIDDLE = 2
         BOTTOM = 3
 
-=for apidoc ||int|width|
+=for apidoc ||int w|width||
 
 The width of the longest item in the browser, measured in pixels. If this is
 changed (by adding or deleting items or opening or closing a parent item) then
 L<C<layout()>|/"layout"> must be called before this is correct.
 
-=for apidoc ||int|height|
+=for apidoc ||int h|height||
 
 The height of all the visible items in the browser, measured in pixels. If
 this is changed (by adding or deleting items or opening or closing a parent
 item) then L<C<layout()>|/"layout"> must be called before this is correct.
 
-=for apidoc ||int|box_width|
+=for apidoc ||int w|box_width||
 
 The width of the display area of the browser in pixels, this is L<C<w()>|/"w">
 minus the edges of the L<C<box()>|/"box"> minus the width of the vertical
@@ -256,7 +256,7 @@ deleting items or opening or closing a parent item such that the scrollbar
 visibility changes) then L<C<layout()>|/"layout"> must be called before this
 is correct.
 
-=for apidoc ||int|box_height|
+=for apidoc ||int h|box_height||
 
 The height of the display area of the browser in pixels, this is
 L<C<h()>|/"h"> minus the edges of the L<C<box()>|/"box"> minus the height of
@@ -283,18 +283,18 @@ fltk::Browser::width( )
          box_width = 2
         box_height = 3
 
-=for apidoc ||x|xposition|
+=for apidoc ||int x|xposition||
 
 
-=for apidoc |||xposition|x
+=for apidoc |||xposition|int x|
 
 Set the horizontal scrolling position, measured in pixels. Zero is the normal
 position where the left edge of the child widgets is visible.
 
-=for apidoc ||y|yposition|
+=for apidoc ||int y|yposition||
 
 
-=for apidoc |||yposition|y
+=for apidoc |||yposition|int y|
 
 Set the vertical scrolling position, measured in pixels. Zero means the top of
 the first item is visible. Positive numbers scroll the display up.
@@ -320,11 +320,11 @@ fltk::Browser::xposition( int x = NO_INIT )
     ALIAS:
         yposition = 1
 
-=for apidoc ||bool|indented|||
+=for apidoc ||bool is_it|indented||
 
 
 
-=for apidoc |||indented|value|||
+=for apidoc |||indented|bool value||
 
 Turn this on to for space to be reserved for open/close boxes drawn to the
 left of top-level items. You usually want this for a hierarchial browser. This
@@ -345,11 +345,11 @@ fltk::Browser::indented( bool value = NO_INIT )
         CODE:
             THIS->indented( value );
 
-=for apidoc ||FLTK::Scrollbar|scrollbar
+=for apidoc ||FLTK::Scrollbar v_sb|scrollbar||
 
 
 
-=for apidoc ||FLTK::Scrollbar|hscrollbar
+=for apidoc ||FLTK::Scrollbar h_sb|hscrollbar||
 
 
 
@@ -367,7 +367,7 @@ fltk::Browser::scrollbar ( )
     ALIAS:
         hscrollbar = 1
 
-=for apidoc ||FLTK::Widget|goto_top|
+=for apidoc ||FLTK::Widget top|goto_top||
 
 Because of the hierarchial structure it is difficult to identify an item in
 the browser. Instead of passing an identifier to all the calls that can modify
@@ -381,13 +381,13 @@ If you have invisible items in the browser you should use
 L<C<goto_index(0)>|/"goto_index"> if you want to go to the first item even if
 it is invisible.
 
-=for apidoc ||FLTK::Widget|goto_focus|
+=for apidoc ||FLTK::Widget focus|goto_focus||
 
 Sets the L<C<item()>|/"item"> to the "focus" (the item with the dotted square
 in an L<FLTK::MultiBrowser|FLTK::MultiBrowser>, and the selected item in a
 normal L<FLTK::Browser|FLTK::Browser>.
 
-=for apidoc ||FLTK::Widget|next|
+=for apidoc ||FLTK::Widget next|next||
 
 Move the current item to the next item. If if is a parent it moves to the
 first child. If not a parent, it moves to the next child of it's parent. If it
@@ -400,12 +400,12 @@ The L<C<current_position()>|/"current_position"> is NOT set by this! It cannot
 be calculated efficiently and would slow down the use of this function for
 visiting all items.
 
-=for apidoc ||FLTK::Widget|next_visible|
+=for apidoc ||FLTK::Widget next|next_visible||
 
 Move forward to the next visible item (what down-arrow does). This does not
 move and returns C<undef> if we are at the bottom.
 
-=for apidoc ||FLTK::Widget|previous_visible|
+=for apidoc ||FLTK::Widget prev|previous_visible||
 
 Move backward to previous visible item: This does not move and returns
 C<undef> if we are at the top.
@@ -430,7 +430,7 @@ fltk::Browser::goto_top( )
             next_visible = 3
         previous_visible = 4
 
-=for apidoc ||FLTK::Widget|goto_position|Y
+=for apidoc ||FLTK::Widget current|goto_position|int y|
 
 Set the current L<C<item()>|/"item"> to the last one who's top is at or before
 C<Y> pixels from the top.
@@ -438,13 +438,13 @@ C<Y> pixels from the top.
 =cut
 
 fltk::Widget *
-fltk::Browser::goto_position( int Y )
+fltk::Browser::goto_position( int y )
     CODE:
-        THIS->goto_position( Y );
+        THIS->goto_position( y );
     OUTPUT:
         RETVAL
 
-=for apidoc ||FLTK::Widget|goto_index|index|level
+=for apidoc ||FLTK::Widget current|goto_index|int index|int level|
 
 Go to a nested item. indexes must contain C<level+1> index numbers. The first
 number indicates the top-level item number, the second indicates the child
@@ -456,12 +456,12 @@ A negative number in C<indexes[0]> will make it go into a special no-item
 state where L<C<select_only_this()>|/"select_only_this"> will do
 L<C<deselect()>|/"deselect">.
 
-=for apidoc ||FLTK::Widget|goto_index|index
+=for apidoc ||FLTK::Widget current|goto_index|int index|
 
 Go to the C<index>'th item in the top level. If C<index> is out of range,
 C<undef> is returned.
 
-=for apidoc ||FLTK::Widget|goto_index|index|level|deep|deeper|deepest
+=for apidoc ||FLTK::Widget current|goto_index|int index|int level|int deep|int deeper|int deepest|
 
 Go to an item at any level up to 5. Negative numbers indicate that no more
 levels should be looked at.
@@ -486,7 +486,7 @@ fltk::Browser::goto_index( int index, int level = NO_INIT, int deep = -1, int de
         OUTPUT:
             RETVAL
 
-=for apidoc ||FLTK::Widget|goto_mark|mark
+=for apidoc ||FLTK::Widget current|goto_mark|FLTK::Browser::Mark * mark|
 
 Set current item to a particular mark.
 
@@ -499,7 +499,9 @@ fltk::Browser::goto_mark( fltk::Browser::Mark * mark )
     OUTPUT:
         RETVAL
 
-=for apidoc ||bool|at_mark|mark
+=for apidoc ||bool position|at_mark|FLTK::Browser::Mark * mark|
+
+
 
 =cut
 
@@ -510,7 +512,9 @@ fltk::Browser::at_mark ( fltk::Browser::Mark * mark )
     OUTPUT:
         RETVAL
 
-=for apidoc ||int|compare_to_mark|mark
+=for apidoc ||int difference|compare_to_mark|FLTK::Browser::Mark * mark|
+
+
 
 =cut
 
@@ -521,23 +525,23 @@ fltk::Browser::compare_to_mark( fltk::Browser::Mark * mark )
     OUTPUT:
         RETVAL
 
-=for apidoc ||bool|item_is_visible|
+=for apidoc ||bool is_visible|item_is_visible||
 
 Return true if the item would be visible to the user if the browser was
 scrolled to the correct location. This means that the C<FLTK::INVISIBLE> flag
 is not set on it, and all parents of it are open and visible as well.
 
-=for apidoc ||bool|item_is_parent|
+=for apidoc ||bool is_parent|item_is_parent||
 
 Return true if the current item is a parent. Notice that it may have zero
 children.
 
-=for apidoc ||bool|item_is_open|
+=for apidoc ||bool is_open|item_is_open||
 
 If L<C<item_is_parent()>|/"item_is_parent"> is true, return true if this item
 is open. If this is not a parent the result is undefined.
 
-=for apidoc ||bool|set_focus|
+=for apidoc ||bool focused|set_focus||
 
 Change the focus (the selected item, or in an
 L<FLTK::MultiBrowser|FLTK::MultiBrowser> the item that has a dotted box around
@@ -562,7 +566,7 @@ fltk::Browser::item_is_visible()
           item_is_open = 2
              set_focus = 3
 
-=for apidoc ||int|item_h|
+=for apidoc ||int h|item_h||
 
 The item height.
 
@@ -578,11 +582,11 @@ fltk::Browser::item_h( )
         RETVAL
     ALIAS:
 
-=for apidoc |||set_mark|destination
+=for apidoc |||set_mark|FLTK::Browser::Mark * destination|
 
 
 
-=for apidoc |||set_mark_to_focus|destination
+=for apidoc |||set_mark_to_focus|FLTK::Browser::Mark * destination|
 
 
 
@@ -598,14 +602,14 @@ fltk::Browser::set_mark( fltk::Browser::Mark * destination )
     ALIAS:
         set_mark_to_focus = 1
 
-=for apidoc ||bool|select|widget|value|do_callback
+=for apidoc ||bool okay|select|FLTK::Widget * widget|int value|int do_callback|
 
 This is for use by the L<MultiBrowser|FLTK::MultiBrowser> subclass. Select or
 deselect an item in parameter, optionally execute a callback (calls
 L<C<set_item_selected()>|/"set_item_selected">). This method changes item
 position in the tree.
 
-=for apidoc x||bool|select|item|value = true
+=for apidoc x||bool okay|select|int item|bool value = true|
 
 Same as goto_index(item),set_item_selected(value), to change the selected
 state of an item in a non-hierarchial MultiBrowser. If C<item> is out of range
@@ -628,7 +632,7 @@ fltk::Browser::select( item, value, int do_callback = 0 )
         CODE:
             RETVAL = THIS->select( item, value );
 
-=for apidoc ||bool|set_item_selected|value|do_callback
+=for apidoc ||bool okay|set_item_selected|bool value = true|int do_callback = 0|
 
 This is for use by the L<MultiBrowser|FLTK::MultiBrowser> subclass. Turn the
 C<FLTK::SELECTED> flag on or off in the current item (use
@@ -646,7 +650,7 @@ callback is done for each item that changes selected state.
 bool
 fltk::Browser::set_item_selected( bool value = true, int do_callback = 0 )
 
-=for apidoc ||bool|select_only_this|do_callback
+=for apidoc ||bool okay|select_only_this|int do_callback = 0|
 
 Make the given item be the current one. For the
 L<MultiBrowser|FLTK::MultiBrowser> subclass this will turn off selection of
@@ -657,7 +661,7 @@ done.
 For the multibrowser, the callback is done for each item that changes, whether
 it turns on or off.
 
-=for apidoc ||bool|deselect|do_callback = 0
+=for apidoc ||bool okay|deselect|int do_callback = 0|
 
 Turn off selection of all items in the browser. For the normal (not
 L<Multi|FLTK::MultiBrowser>) L<Browser|FLTK::Browser>, this puts it in a
@@ -684,7 +688,7 @@ fltk::Browser::select_only_this( int do_callback = 0 )
     ALIAS:
         deselect = 1
 
-=for apidoc ||bool|make_item_visible|where
+=for apidoc ||bool okay|make_item_visible|FLTK::Browser::linepos where|
 
 This makes the current item visible to the user.
 
@@ -712,11 +716,11 @@ This does nothing if the current item is C<undef>.
 bool
 fltk::Browser::make_item_visible( fltk::Browser::linepos where )
 
-=for apidoc |||damage_item|mark
+=for apidoc |||damage_item|FLTK::Browser::Mark * mark|
 
 Set item referenced by this mark as being damaged.
 
-=for apidoc |||damage_item|
+=for apidoc |||damage_item||
 
 Tell the browser to redraw the current item. Do this if you know it has
 changed appearance. This is better than redrawing the entire browser because
@@ -733,14 +737,14 @@ fltk::Browser::damage_item ( fltk::Browser::Mark * mark = NO_INIT )
         CODE:
             THIS->damage_item( * mark );
 
-=for apidoc ||bool|set_item_opened|value
+=for apidoc ||bool okay|set_item_opened|bool value|
 
 If the current item is a parent, set the open state (the
 L<FLTK::STATE|FLTK/"STATE"> flags) to the given value and redraw the browser
 correctly. Returns C<true> if the state was actually changed, returns C<false>
 if it was already in that state.
 
-=for apidoc ||bool|set_item_visible|value
+=for apidoc ||bool okay|set_item_visible|bool value|
 
 Turn off or on the LC<FLTK::INVISIBLE>|FLTK/"INVISIBLE"> flag on the given
 item and redraw the browser if necessary. Returns C<true> if the state was
@@ -760,27 +764,27 @@ fltk::Browser::set_item_opened ( bool value )
     ALIAS:
         set_item_visible = 1
 
-=for apidoc ||int|current_level|
+=for apidoc ||int level|current_level||
 
 Return the nesting level of the current item (how many parents it has).
 
-=for apidoc ||int|current_position|
+=for apidoc ||int y|current_position||
 
 Return the C<y> position, in pixels, of the top edge of the current item. You
 may also want the height, which is in L<C<item_h()>|/"item_h">.
 
-=for apidoc ||int|focus_level|
+=for apidoc ||int level|focus_level||
 
 Return the nesting level of the focus (how many parents it has). The focus is
 the selected item the user sees.
 
-=for apidoc ||int|focus_position|
+=for apidoc ||int y|focus_position||
 
 Return the C<y> position, in pixels, of the top edge of the focus item. You
 may also want the height, which is in L<C<goto_focus()>|/"goto_focus">C<; >
 L<C<item_h()>|/"item_h">.
 
-=for apidoc ||int|selected_column|
+=for apidoc ||int col|selected_column||
 
 Returns the currently selected column.
 
@@ -806,12 +810,12 @@ fltk::Browser::current_level ( )
          selected_column = 4
                  nheader = 5
 
-=for apidoc ||AV|current_index||
+=for apidoc ||AV * indexes|current_index||
 
 Return an array of C<L<current_level()|/"current_level">+1> indexes saying
 which child at each level includes the current item.
 
-=for apidoc ||AV|focus_index||
+=for apidoc ||AV * indexes|focus_index||
 
 Return an array of L<C<focus_level()>|/"focus_level">C<+1> indexes saying
 which child at each level includes the focus.
@@ -836,11 +840,11 @@ fltk::Browser::current_index ( )
     ALIAS:
         focus_index = 1
 
-=for apidoc ||AV|column_widths||
+=for apidoc ||AV * widths|column_widths||
 
 
 
-=for apidoc |||column_widths|col1|[...]
+=for apidoc |||column_widths|int col1|int ...|int col\d|
 
 Sets the horizontal locations that each C<'\t'> character in an item should
 start printing text at. These are measured from the left edge of the browser,
@@ -902,11 +906,11 @@ fltk::Browser::column_widths ( int col1 = NO_INIT, ... )
             args[ items - 1 ] = 0;
             THIS->column_widths( args );
 
-=for apidoc ||AV|column_labels|
+=for apidoc ||AV * labels|column_labels||
 
 Get the list of labels at the top of browser.
 
-=for apidoc |||column_labels|col1|...
+=for apidoc |||column_labels|char * col1|char * ...|char * col\d|
 
 Set the list of labels to put at the top of the browser. The initial sizes of
 them are set with L<C<column_widths()>|/"column_widths">. Items in the browser
@@ -937,7 +941,7 @@ fltk::Browser::column_labels ( char * col1 = NO_INIT, ... )
             labels[items - 1] = 0;
             THIS->column_labels( (const char **) labels );
 
-=for apidoc ||int|set_column_start|colum|x
+=for apidoc ||int column|set_column_start|int column|int x|
 
 
 
@@ -946,7 +950,7 @@ fltk::Browser::column_labels ( char * col1 = NO_INIT, ... )
 int
 fltk::Browser::set_column_start ( int column, int x )
 
-=for apidoc ||FLTK::Widget|header|column
+=for apidoc ||FLTK::Widget * element|header|int column|
 
 Returns the L<Widget|FLTK::Widget> in C<column>, starting from index C<0>. If
 C<column>'th column is invalid, C<undef> is returned.
@@ -954,14 +958,14 @@ C<column>'th column is invalid, C<undef> is returned.
 =cut
 
 fltk::Widget *
-fltk::Browser::header( int col )
+fltk::Browser::header( int column )
 
-=for apidoc |||value|val|||
+=for apidoc |||value|int val|
 
 Same as C<goto_index(val);set_focus();>, to change the current item in a
 non-hierarchial browser.
 
-=for apidoc ||val|value|
+=for apidoc ||int val|value||
 
 Returns C<focus_index(val)[0]>, to get the current item in a non-hierarchial
 browser.
@@ -979,7 +983,7 @@ fltk::Browser::value( int val = NO_INIT )
         CODE:
             THIS->value( val );
 
-=for apidoc x||bool|selected|line
+=for apidoc x||bool selected|selected|int line|
 
 Does C<goto_index(line),item_selected()> to return the selection state of an
 item in a non-hierarchial MultiBrowser. If C<line> is out of range it returns
@@ -992,12 +996,12 @@ Note: This is an FLTK 1.0 emulation method.
 bool
 fltk::Browser::selected( int line )
 
-=for apidoc ||int|topline|
+=for apidoc ||int line|topline||
 
 Convenience function for non-hierarchial browsers. Returns the index if the
 top-level item that is at the top of the scrolling window.
 
-=for apidoc |||topline|line
+=for apidoc |||topline|int line|
 
 Convenience function for non-hierarchial browsers. Make the indexed item
 visible and scroll to put it at the top of the browser.
@@ -1015,12 +1019,12 @@ fltk::Browser::topline( int line = NO_INIT )
         CODE:
             THIS->topline( line );
 
-=for apidoc |||bottomline|line
+=for apidoc |||bottomline|int line|
 
 Convenience function for non-hierarchial browsers. Make the indexed item
 visible and scroll to put it at the bottom of the browser.
 
-=for apidoc |||middleline|line
+=for apidoc |||middleline|int line|
 
 Convenience function for non-hierarchial browsers. Make the indexed item
 visible and scroll to put it in the middle of the browser if it is not already
@@ -1039,7 +1043,7 @@ fltk::Browser::bottomline ( int line )
     ALIAS:
         middleline = 1
 
-=for apidoc ||bool|displayed|line|
+=for apidoc ||bool visible|displayed|int line|
 
 Convenience function for non-hierarchial browsers. Make the indexed item
 visible and scroll to put it at the bottom of the browser.
@@ -1049,7 +1053,7 @@ visible and scroll to put it at the bottom of the browser.
 bool
 fltk::Browser::displayed( int line )
 
-=for apidoc ||bool|display|line|value = true
+=for apidoc ||bool visible|display|int line|bool value = true|
 
 Convenience function for non-hierarchial browsers. Make the indexed item be
 L<C<visible()>|/"visible"> and scroll the browser so it can be seen by the
@@ -1060,12 +1064,12 @@ user.
 bool
 fltk::Browser::display( int line, bool value = true )
 
-=for apidoc ||bool|display_lines|
+=for apidoc ||bool display|display_lines||
 
 Accessor (get) method which returns a true value if lines should be displayed,
 or a false value otherwize.
 
-=for apidoc |||display_lines|display
+=for apidoc |||display_lines|bool display|
 
 Accessor (set) method which is used to set the value of the C<displaylines_>
 member. If you set C<display> to a false value, it will mean that you do not
@@ -1084,7 +1088,7 @@ fltk::Browser::display_lines ( bool display = NO_INIT )
         CODE:
             THIS->display_lines( display );
 
-=for apidoc ||int|load|filename
+=for apidoc ||int total|load|char * filename|
 
 
 
@@ -1093,7 +1097,7 @@ fltk::Browser::display_lines ( bool display = NO_INIT )
 int
 fltk::Browser::load( char * filename )
 
-=for apidoc ||int|multi|
+=for apidoc ||int total|multi||
 
 
 
@@ -1102,25 +1106,25 @@ fltk::Browser::load( char * filename )
 int
 fltk::Browser::multi( )
 
-=for apidoc ||FLTK::Symbol|leaf_symbol|
+=for apidoc ||FLTK::Symbol l_symbol|leaf_symbol||
 
 Returns the default value for L<C<image()>|/"image"> on each item that is not
 a parent of other items. If the item has no L<C<image()>|/"image"> then this
 one is used for it.
 
-=for apidoc |||leaf_symbol|symbol
+=for apidoc |||leaf_symbol|FLTK::Symbol * symbol|
 
 Sets a default value for L<C<image()>|/"image"> on each item that is not a
 parent of other items. If the item has no L<C<image()>|/"image"> then this one
 is used for it.
 
-=for apidoc ||FLTK::Symbol|leaf_symbol|
+=for apidoc ||FLTK::Symbol g_symbol|group_symbol||
 
 Returns the default value for L<C<image()>|/"image"> on each item that is a
 hierarchy parent. If the parent item has no L<C<image()>|/"image"> then this
 one is used for it.
 
-=for apidoc |||leaf_symbol|symbol
+=for apidoc |||group_symbol|FLTK::Symbol * symbol|
 
 Sets a default value for L<C<image()>|/"image"> on each item that is a
 hierarchy parent. If the parent item has no L<C<image()>|/"image"> then this

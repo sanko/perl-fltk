@@ -100,7 +100,7 @@ For more information about ANSI code see:
 
 #include <fltk/AnsiWidget.h>
 
-=for apidoc ||AnsiWidget|new|x|y|width|height|defsize
+=for apidoc ||FLTK::AnsiWidget self|new|int x|int y|int w|int h|int defsize|
 
 Creates a new C<FLTK::AnsiWidget> object.
 
@@ -114,12 +114,12 @@ AnsiWidget::new( int x, int y, int w, int h, int defsize )
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<AnsiWidget>(CLASS,x,y,w,h,defsize);
         if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
+            ST(0) = sv_newmortal( );
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
 
-=for apidoc |||layout|
+=for apidoc |||layout||
 
 
 
@@ -128,11 +128,11 @@ AnsiWidget::new( int x, int y, int w, int h, int defsize )
 void
 AnsiWidget::layout( )
 
-=for apidoc |||clearScreen|
+=for apidoc |||clearScreen||
 
 Clear the offscreen buffer.
 
-=for apidoc |||beep|
+=for apidoc |||beep||
 
 Create audible beep sound.
 
@@ -143,12 +143,12 @@ AnsiWidget::clearScreen ( )
     CODE:
         switch ( ix ) {
             case 0: THIS->clearScreen( );
-            case 1: THIS->beep();
+            case 1: THIS->beep( );
         }
     ALIAS:
         beep = 1
 
-=for apidoc |||print|str
+=for apidoc |||print|char * str|
 
 Prints the contents of the given string onto the backbuffer.
 
@@ -157,15 +157,15 @@ Prints the contents of the given string onto the backbuffer.
 void
 AnsiWidget::print( const char * str )
 
-=for apidoc |||drawLine|x1|y1|x2|y2
+=for apidoc |||drawLine|int x1|int y1|int x2|int y2|
 
 Draw a line onto the offscreen buffer.
 
-=for apidoc |||drawRectFilled|x1|y1|x2|y2
+=for apidoc |||drawRectFilled|int x1|int y1|int x2|int y2|
 
 Draw a filled rectangle onto the offscreen buffer.
 
-=for apidoc |||drawRect|x1|y1|x2|y2
+=for apidoc |||drawRect|int x1|int y1|int x2|int y2|
 
 Draw a rectangle onto the offscreen buffer.
 
@@ -183,17 +183,17 @@ AnsiWidget::drawLine( int x1, int y1, int x2, int y2 )
         drawRectFilled = 1
         drawRect = 2
 
-=for apidoc |||drawImage|img|x|y|sx|sy|w|h
+=for apidoc |||drawImage|FLTK::Image * img|int x|int y|int sx|int sy|int w|int h|
 
 Draws the given image onto the offscreen buffer.
 
 =cut
 
 void
-AnsiWidget::drawImage( fltk::Image* img, int x, int y, int sx, int sy, int w, int h )
+AnsiWidget::drawImage( fltk::Image * img, int x, int y, int sx, int sy, int w, int h )
 
 
-=for apidoc |||saveImage|filename|x|y|w|h
+=for apidoc |||saveImage|char * filename|int x|int y|int w|int h|
 
 Save the offscreen buffer to the given filename.
 
@@ -202,7 +202,7 @@ Save the offscreen buffer to the given filename.
 void
 AnsiWidget::saveImage( char * filename, int x, int y, int w, int h )
 
-=for apidoc |||setTextColor|fore|back
+=for apidoc |||setTextColor|long fore|long back|
 
 Sets the current text drawing color.
 
@@ -211,7 +211,7 @@ Sets the current text drawing color.
 void
 AnsiWidget::setTextColor( long fore, long back )
 
-=for apidoc |||setColor|color
+=for apidoc |||setColor|long color|
 
 Sets the current drawing color.
 
@@ -220,19 +220,19 @@ Sets the current drawing color.
 void
 AnsiWidget::setColor( long color )
 
-=for apidoc ||X|getX|
+=for apidoc ||int x|getX||
 
 
 
-=for apidoc ||Y|getY|
+=for apidoc ||int y|getY|
 
 
 
-=for apidoc ||W|getWidth|
+=for apidoc ||int w|getWidth|
 
 
 
-=for apidoc ||H|getHeight|
+=for apidoc ||int h|getHeight|
 
 
 
@@ -254,34 +254,34 @@ AnsiWidget::getX ( )
          getWidth = 2
         getHeight = 3
 
-=for apidoc |||setPixel|X|Y|Color
+=for apidoc |||setPixel|int x|int y|int color|
 
 Sets the pixel to the given color at the given C<X, Y> location.
 
 =cut
 
 void
-AnsiWidget::setPixel( int X, int Y, int Color )
+AnsiWidget::setPixel( int X, int Y, int color )
 
-=for apidoc ||color|getPixel|X|Y
+=for apidoc ||int color|getPixel|int x|int y|
 
-Returns the color of the pixel at the given C<X, Y> location.
+Returns the color of the pixel at the given C<x, y> location.
 
 =cut
 
 int
-AnsiWidget::getPixel ( int X, int Y )
+AnsiWidget::getPixel ( int x, int y )
 
-=for apidoc |||setXY|X|Y
+=for apidoc |||setXY|int x|int y|
 
 
 
 =cut
 
 void
-AnsiWidget::setXY( int X, int Y )
+AnsiWidget::setXY( int x, int y )
 
-=for apidoc ||width|textWidth|string
+=for apidoc ||int width|textWidth|char * string
 
 Returns the width in pixels using the current font setting.
 
@@ -290,7 +290,7 @@ Returns the width in pixels using the current font setting.
 int
 AnsiWidget::textWidth( char * string )
 
-=for apidoc ||height|textHeight|
+=for apidoc ||int height|textHeight|
 
 Returns the height in pixels using the current font setting.
 
@@ -299,7 +299,7 @@ Returns the height in pixels using the current font setting.
 int
 AnsiWidget::textHeight( )
 
-=for apidoc |||setFontSize|i
+=for apidoc |||setFontSize|double i|
 
 
 
@@ -308,7 +308,7 @@ AnsiWidget::textHeight( )
 void
 AnsiWidget::setFontSize( double i )
 
-=for apidoc ||size|getFontSize|
+=for apidoc ||int size|getFontSize|
 
 
 
@@ -317,7 +317,7 @@ AnsiWidget::setFontSize( double i )
 int
 AnsiWidget::getFontSize( )
 
-=for apidoc ||FLTK::Color|ansiToFltk()|color
+=for apidoc ||FLTK::Color color|ansiToFltk|long color|
 
 Converts ANSI colors to FLTK colors.
 

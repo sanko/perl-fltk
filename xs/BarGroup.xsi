@@ -29,7 +29,7 @@ Based on Frametab V2 contributed by Curtis Edwards (curt1@trilec.com)
 
 #include <fltk/BarGroup.h>
 
-=for apidoc ||FLTK::BarGroup|new|x|y|width|height|label = ""|begin = 0
+=for apidoc ||FLTK::BarGroup self|new|int x|int y|int w|int h|char * label = ''|bool begin = 0|
 
 Creates a new C<FLTK::BarGroup> object.
 
@@ -48,7 +48,7 @@ fltk::BarGroup::new ( int x, int y, int w, int h, char * label = 0, bool begin =
             XSRETURN(1);
         }
 
-=for apidoc ||FLTK::NamedStyle|default_style|
+=for apidoc ||FLTK::NamedStyle style|default_style||
 
 
 
@@ -61,7 +61,7 @@ fltk::BarGroup::default_style( )
     OUTPUT:
         RETVAL
 
-=for apidoc |||layout|
+=for apidoc |||layout||
 
 
 
@@ -70,11 +70,11 @@ fltk::BarGroup::default_style( )
 void
 fltk::BarGroup::layout( )
 
-=for apidoc ||bool|opened|
+=for apidoc ||bool is_it|opened||
 
 
 
-=for apidoc ||bool|opened|value
+=for apidoc ||bool is_it|opened|bool value|
 
 
 
@@ -88,11 +88,11 @@ fltk::BarGroup::opened( bool value = NO_INIT )
         C_ARGS: value
 
 
-=for apidoc ||bool|open|
+=for apidoc ||bool is_open|open||
 
 
 
-=for apidoc ||bool|cloase|
+=for apidoc ||bool is_closed|close||
 
 
 =cut
@@ -109,11 +109,11 @@ fltk::BarGroup::open( )
     ALIAS:
         close = 1
 
-=for apidoc ||int|glyph_size|
+=for apidoc ||int size|glyph_size||
 
 
 
-=for apidoc |||glyph_size|value
+=for apidoc |||glyph_size|int size|
 
 
 

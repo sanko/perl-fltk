@@ -30,7 +30,7 @@ C<DIGITAL> (nyi).
 
 #include <fltk/Clock.h>
 
-=for apidoc ||FLTK::ClockOutput|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::ClockOutput * self|new|int x|int y|int w|int h|char * label = ''|
 
 
 
@@ -49,19 +49,19 @@ fltk::ClockOutput::new( int x, int y, int w, int h, const char * label = 0 )
 
 =begin apidoc
 
-=for apidoc et[clock]||int|SQUARE|
+=for apidoc et[clock]||int type|SQUARE||
 
 
 
-=for apidoc et[clock]||int|ANALOG|
+=for apidoc et[clock]||int type|ANALOG||
 
 
 
-=for apidoc et[clock]||int|ROUND|
+=for apidoc et[clock]||int type|ROUND||
 
 
 
-=for apidoc et[clock]||int|DIGITAL|
+=for apidoc et[clock]||int type|DIGITAL||
 
 
 
@@ -77,13 +77,13 @@ BOOT:
     newCONSTSUB(FLTK_stash, "DIGITAL", newSViv(fltk::ClockOutput::DIGITAL));
     export_tag("DIGITAL", "clock");
 
-=for apidoc |||value|time
+=for apidoc |||value|unsigned long time|
 
 Set the clock to a Unix timestamp. The value is passed through the
 L<C<localtime()>|/"localtime"> function and used to get the hour, minute, and
 second.
 
-=for apidoc |||value|hour|minute|second
+=for apidoc |||value|int hour|int minute|int second|
 
 Set the hour, minute, and second to display. The hour is effectively taken
 modulus 12 and the minute and second modulus 60 to figure out where to place
@@ -92,7 +92,7 @@ the hands. Redraw happens only if different.
 Note that this does not set the L<C<value()>|/"value">; ...without the date,
 it really can't.
 
-=for apidoc ||time|value|
+=for apidoc ||int time|value||
 
 Return the last Unix timestamp the clock was set to.
 
@@ -114,15 +114,15 @@ fltk::ClockOutput::value( unsigned long time = NO_INIT, int minute = NO_INIT, in
             THIS->value( time, minute, second );
             XSRETURN_EMPTY;
 
-=for apidoc ||h|hour|
+=for apidoc ||int h|hour||
 
 Return the hour sent to the last call to L<C<value()>|/"value">.
 
-=for apidoc ||m|minute|
+=for apidoc ||int m|minute||
 
 Return the minute sent to the last call to L<C<value()>|/"value">.
 
-=for apidoc ||s|second|
+=for apidoc ||int s|second||
 
 Return the second sent to the last call to L<C<value()>|/"value">.
 

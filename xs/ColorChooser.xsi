@@ -28,7 +28,7 @@ current and cancelled color.
 
 #include <fltk/ColorChooser.h>
 
-=for apidoc ||FLTK::ColorChooser|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::ColorChooser self|new|int x|int y|int w|int h|char * label = ''|
 
 
 
@@ -47,27 +47,27 @@ fltk::ColorChooser::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc ||double|h|
+=for apidoc ||double hue|h||
 
 
 
-=for apidoc ||double|s|
+=for apidoc ||double saturation|s||
 
 
 
-=for apidoc ||double|v|
+=for apidoc ||double v|v||
 
 
 
-=for apidoc ||double|r|
+=for apidoc ||double red|r||
 
 
 
-=for apidoc ||double|g|
+=for apidoc ||double green|g||
 
 
 
-=for apidoc ||double|b|
+=for apidoc ||double blue|b||
 
 
 
@@ -93,11 +93,11 @@ fltk::ColorChooser::h( )
         g = 4
         b = 5
 
-=for apidoc ||bool|no_value|
+=for apidoc ||bool no_val|no_value||
 
 
 
-=for apidoc ||bool|no_value|bool
+=for apidoc ||bool no_val|no_value|bool value|
 
 
 
@@ -113,11 +113,11 @@ fltk::ColorChooser::no_value ( bool value = NO_INIT )
         OUTPUT:
             RETVAL
 
-=for apidoc ||FLTK::Color|value
+=for apidoc ||FLTK::Color color|value||
 
 
 
-=for apidoc ||bool|value|color
+=for apidoc ||bool val|value|FLTK::Color color|
 
 
 
@@ -137,7 +137,7 @@ fltk::ColorChooser::value( fltk::Color color = NO_INIT )
         }
         XSRETURN(1);
 
-=for apidoc ||bool|hsv|h|s|v
+=for apidoc ||bool set|hsv|float h|float s|float v|
 
 
 
@@ -146,7 +146,7 @@ fltk::ColorChooser::value( fltk::Color color = NO_INIT )
 bool
 fltk::ColorChooser::hsv( float h, float s, float v )
 
-=for apidoc ||bool|rgb|r|g|b
+=for apidoc ||bool set|rgb|float r|float g|float b|
 
 
 
@@ -155,28 +155,28 @@ fltk::ColorChooser::hsv( float h, float s, float v )
 bool
 fltk::ColorChooser::rgb( float r, float g, float b )
 
-=for apidoc ||double|a|
+=for apidoc ||double alpha|a||
 
 
 
-=for apidoc ||bool|a|a
+=for apidoc ||bool set|a|float alpha|
 
 
 
 =cut
 
 double
-fltk::ColorChooser::a( float a )
+fltk::ColorChooser::a( float a = NO_INIT )
     CASE: items == 1
         C_ARGS:
     CASE:
         C_ARGS: a
 
-=for apidoc |||hide_a|
+=for apidoc |||hide_a||
 
 
 
-=for apidoc |||hide_no_value|
+=for apidoc |||hide_no_value||
 
 
 
@@ -192,7 +192,7 @@ fltk::ColorChooser::hide_a( )
     ALIAS:
         hide_no_value = 1
 
-=for apidoc ||[r,g,b]|hsv2rgb|h|s|v|r|g|b
+=for apidoc ||AV * rbg|hsv2rgb|float h|float s|float v|
 
 
 
@@ -202,7 +202,7 @@ void
 fltk::ColorChooser::hsv2rgb( float h, float s, float v, OUTLIST float r, OUTLIST float g, OUTLIST float b )
     C_ARGS: h, s, v, r, g, b
 
-=for apidoc |[h,s,v]|rgb2hsv|r|g|b|
+=for apidoc ||AV * hsv|rgb2hsv|float r|float g|float b|
 
 
 
@@ -212,7 +212,7 @@ void
 fltk::ColorChooser::rgb2hsv( float r, float g, float b, OUTLIST float h, OUTLIST float s, OUTLIST float v )
     C_ARGS: r, g, b, h, s, v
 
-=for apidoc |||layout|
+=for apidoc |||layout||
 
 
 
@@ -221,7 +221,7 @@ fltk::ColorChooser::rgb2hsv( float r, float g, float b, OUTLIST float h, OUTLIST
 void
 fltk::ColorChooser::layout( )
 
-=for apidoc ||bool|color_chooser|name|r|g|b
+=for apidoc ||bool okay|color_chooser|char * name|float r|float g|float b|
 
 L<C<FLTK::color_chooser()>|/"color_chooser"> pops up a window to let the user
 pick an arbitrary RGB color. They can pick the hue and saturation in the "hue
@@ -240,12 +240,12 @@ This version takes and returns numbers in the 0-1 range.
 If you which to embed a color chooser into another control panel, use an
 L<FLTK::ColorChooser|FLTK::ColorChooser/"new"> object.
 
-=for apidoc ||bool|color_chooser|name|r|g|b|a
+=for apidoc ||bool okay|color_chooser|char * name|float r|float g|float b|float a|
 
 Same but user can also select an alpha value. Currently the color chips do not
 remember or set the alpha!
 
-=for apidoc ||bool|color_chooser|name|color
+=for apidoc ||bool okay|color_chooser|char * name|FLTK::Color color|
 
 Same but it takes and returns an L<FLTK::Color|FLTK::Color> number. No alpha.
 

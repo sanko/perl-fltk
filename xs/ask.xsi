@@ -70,14 +70,14 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[ask,default]F||void|message|char * string|
+=for apidoc T[ask,default]F|||message|char * string|
 
 Displays a message in a pop-up box with an "OK" button, waits for the user to
 hit the button. The message will wrap to fit the window, or may be many lines
 by putting C<\n> characters into it. The enter key is a shortcut for the OK
 button.
 
-=for apidoc T[ask,default]F||void|alert|char * string|
+=for apidoc T[ask,default]F|||alert|char * string|
 
 Same as L<C<FLTK::message()>|/"message"> except for the "!" symbol.
 
@@ -136,7 +136,7 @@ C<answer_1>.
 If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<-1>
 will be returned if the timeout expires.
 
-=for apidoc T[ask,default]F||int choice|choice_alert|question|char * question|char * answer_1|char * answer_2|char * answer_3
+=for apidoc T[ask,default]F||int choice|choice_alert|char * question|char * question|char * answer_1|char * answer_2|char * answer_3|
 
 Same as L<C<choice()>|/"choice"> except a "!" icon is used instead of a "?"
 
@@ -166,7 +166,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[ask,default]F||char * string|input|char * label|char * default_value = ''
+=for apidoc T[ask,default]F||char * string|input|char * label|char * default_value = ''|
 
 Pops up a window displaying a string, lets the user edit it, and return the
 new value. The cancel button returns C<undef>. The returned pointer is only
@@ -175,7 +175,7 @@ valid until the next time L<C<FLTK::input()>|FLTK::ask/"input"> is called.
 If L<C<message_window_timeout>|/"message_window_timeout"> is used, then C<0>
 will be returned if the timeout expires.
 
-=for apidoc T[ask,default]Fx||string|password|label|default_value = ''
+=for apidoc T[ask,default]Fx||char * string|password|char * label|char * default_value = ''|
 
 Same as L<C<FLTK::input()>|FLTK::ask/"input"> except an
 L<FLTK::SecretInput|FLTK::SecretInput> field is used.
@@ -204,7 +204,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[ask,default]F||void|beep|int type = FLTK::ask::BEEP_DEFAULT
+=for apidoc T[ask,default]F|||beep|int type = FLTK::ask::BEEP_DEFAULT|
 
 Generates a simple beep message.
 
@@ -221,7 +221,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[ask]F||void|beep_on_dialog|bool value
+=for apidoc T[ask]F|||beep_on_dialog|bool value
 
 You can enable beep on default message dialog (like L<C<ask>|/"ask">,
 L<C<choice>|/"choice">, L<C<input>|/"input">, ...) by using this function with
@@ -288,7 +288,7 @@ MODULE = FLTK               PACKAGE = FLTK::ask
 Get the title of L<C<message()>|/"message">, L<C<alert()>|/"alert">,
 L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc. windows.
 
-=for apidoc T[ask]F||void|message_window_label|char * label|
+=for apidoc T[ask]F|||message_window_label|char * label|
 
 Set this to change the title of L<C<message()>|/"message">,
 L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
@@ -298,7 +298,7 @@ windows.
 
 Returns the current value for this variable.
 
-=for apidoc F||void|no|char * label|
+=for apidoc F|||no|char * label|
 
 You can change this string to convert fltk to a foreign language.
 
@@ -306,7 +306,7 @@ You can change this string to convert fltk to a foreign language.
 
 Returns the current value for this variable.
 
-=for apidoc F||void|yes|char * label|
+=for apidoc F|||yes|char * label|
 
 You can change this string to convert fltk to a foreign language.
 
@@ -314,7 +314,7 @@ You can change this string to convert fltk to a foreign language.
 
 Returns the current value for this variable.
 
-=for apidoc F||void|ok|char * label|
+=for apidoc F|||ok|char * label|
 
 You can change this string to convert fltk to a foreign language.
 
@@ -322,7 +322,7 @@ You can change this string to convert fltk to a foreign language.
 
 Returns the current value for this variable.
 
-=for apidoc F||void|cancel|char * label|
+=for apidoc F|||cancel|char * label|
 
 You can change this string to convert fltk to a foreign language.
 
@@ -368,7 +368,7 @@ MODULE = FLTK               PACKAGE = FLTK::ask
 Returns the current value for
 L<C<message_window_timeout(...)>|/"message_window_timeout">.
 
-=for apidoc T[ask]F||void|message_window_timeout|double timeout|
+=for apidoc T[ask]F|||message_window_timeout|double timeout|
 
 Set this to a positive value to cause the L<C<message()>|/"message">,
 L<C<alert()>|/"alert">, L<C<ask()>|/"ask">, L<C<choice()>|/"choice">, etc.
@@ -401,7 +401,7 @@ MODULE = FLTK               PACKAGE = FLTK::ask
 Returns current value of
 L<C<message_window_scrollable(...)>|/"message_window_scrollable">.
 
-=for apidoc T[ask]F||void|message_window_scrollable|bool scroll|
+=for apidoc T[ask]F|||message_window_scrollable|bool scroll|
 
 When this is set to true, then (all) message windows will use scrollbars if
 the given message is too long.

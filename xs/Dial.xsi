@@ -48,7 +48,7 @@ the moving part is set by L<C<textcolor()>|FLTK::color/"textcolor">.
 
 =begin apidoc
 
-=for apidoc d|||new|x|y|width|height|label = ''
+=for apidoc d||FLTK::Dial dial|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::Dial> object.
 
@@ -57,7 +57,7 @@ Creates a new C<FLTK::Dial> object.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::Dial::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::Dial::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Dial>(CLASS,x,y,w,h,label);
@@ -67,11 +67,11 @@ fltk::Dial::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc ||int|angle1||
+=for apidoc ||int a1|angle1||
 
 See L<C<angles()>|/"angles">.
 
-=for apidoc ||int|angle1|int|
+=for apidoc ||int a1|angle1|int a|
 
 See L<C<angles()>|/"angles">.
 
@@ -85,11 +85,11 @@ fltk::Dial::angle1( short a = NO_INIT )
         CODE:
             THIS->angle1( a );
 
-=for apidoc ||int|angle2||
+=for apidoc ||int a2|angle2||
 
 See L<C<angles()>|/"angles">.
 
-=for apidoc ||int|angle2|b|
+=for apidoc ||int a2|angle2|int b|
 
 See L<C<angles()>|/"angles">.
 
@@ -103,7 +103,7 @@ fltk::Dial::angle2( short b = NO_INIT )
         CODE:
             THIS->angle2( b );
 
-=for apidoc |||angles|a|b
+=for apidoc |||angles|short a|short b|
 
 Sets the angles used for the minimum and maximum values. The default values
 are C<45> and C<315> (C<0> degrees is straight down and the angles progress

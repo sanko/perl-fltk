@@ -35,7 +35,7 @@ L<C<selection_textcolor()>|FLTK::Widget/"selection_textcolor"> on the widget
 
 #include <fltk/CheckButton.h>
 
-=for apidoc ||FLTK::CheckButton|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::CheckButton self|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::CheckButton> object. Obviously.
 
@@ -54,7 +54,7 @@ fltk::CheckButton::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc ||FLTK::NamedStyle|default_style|
+=for apidoc ||FLTK::NamedStyle style|default_style||
 
 NFI
 

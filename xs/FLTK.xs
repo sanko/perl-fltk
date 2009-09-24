@@ -18,9 +18,11 @@ FLTK is-
 
 =for html <span style="color:#F00;font-size:2em;">
 
-B<I am actively seeking volunteers to help test and develop this project.
+B<This project has a long way to go so I am seeking volunteers to help with
+testing and development.>
+
 Please see the L<TODO list|FLTK::Todo> and the notes on
-L<joining the team|FLTK::Notes/"Join the Team">.>
+L<getting started|FLTK::Notes/"Join the Team">.
 
 =for html </span>
 
@@ -61,6 +63,8 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 
 HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
    * FLTK_export; // For inserting stuff directly into FLTK's exports
+
+=begin apidoc
 
 =for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
 
@@ -171,10 +175,6 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
 }
 #endif // #ifdef WIN32
 
-
-
-=pod
-
 =end apidoc
 
 =head1 Synopsis
@@ -215,7 +215,7 @@ features of 2.0.x including utf8 and new widgets.
 
 =item * 2.0.x branch was a rewrite to make the interfaces to each widget more
 consistent, to use C++ more correctly, including the ability (but not the
-requirement) to support functor style callbacks, exceptions, and a namespace,
+requirement) to support function style callbacks, exceptions, and a namespace,
 and to support theming of the GUI without having to set the color of every
 widget.
 
@@ -223,7 +223,7 @@ widget.
 experimental.
 
 =item * Theoretical 3.0.x branch will soon (according to chatter) unify the
-1.3.x and 2.0.x branches. Borrowing features from both and reducing confusion
+1.3.x and 2.0.x branches, borrowing features from both, and reducing confusion
 for new users.
 
 =back

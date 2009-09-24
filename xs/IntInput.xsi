@@ -26,7 +26,7 @@ FLTK::IntInput - Input box which accepts only numeric input
 
 =begin apidoc
 
-=for apidoc ||FLTK::IntInput|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::IntInput int|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::IntInput> object. Obviously.
 

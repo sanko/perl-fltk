@@ -28,7 +28,7 @@ raised highlighted rectangle.
 
 #include <fltk/HighlightButton.h>
 
-=for apidoc ||FLTK::HighlightButton|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::HighlightButton button|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::HighlightButton> object. Obviously.
 
@@ -37,7 +37,7 @@ Creates a new C<FLTK::HighlightButton> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-HighlightButton::new( int x, int y, int w, int h, const char * label = 0 )
+HighlightButton::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<HighlightButton>(CLASS,x,y,w,h,label);

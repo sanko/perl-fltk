@@ -29,7 +29,7 @@ draws anything you want with it.
 
 =begin apidoc
 
-=for apidoc ||FLTK::LabelType|new|name|
+=for apidoc ||FLTK::LabelType type|new|char * name|
 
 
 
@@ -38,7 +38,7 @@ draws anything you want with it.
 fltk::LabelType *
 fltk::LabelType::new( char * name )
 
-=for apidoc ||string|name||||
+=for apidoc ||char * string|name||
 
 
 
@@ -51,11 +51,11 @@ fltk::LabelType::name( )
     OUTPUT:
         RETVAL
 
-=for apidoc ||FLTK::LabelType|next||
+=for apidoc ||FLTK::LabelType type|next||
 
 
 
-=for apidoc ||FLTK::LabelType|first||
+=for apidoc ||FLTK::LabelType type|first||
 
 
 
@@ -75,7 +75,7 @@ fltk::LabelType::first( )
     OUTPUT:
         RETVAL
 
-=for apidoc ||FLTK::LabelType|find|name||
+=for apidoc ||FLTK::LabelType type|find|char * name|
 
 
 
@@ -83,7 +83,6 @@ fltk::LabelType::first( )
 
 fltk::LabelType *
 fltk::LabelType::find( char * name )
-
 
 INCLUDE: EngravedLabel.xsi
 

@@ -27,7 +27,7 @@ useful base class for some box types.
 
 #include <fltk/Box.h>
 
-=for apidoc ||FLTK::FlatBox|new|name
+=for apidoc ||FLTK::FlatBox box|new|char * name|
 
 Creates a new C<FLTK::FlatBox> object.
 
@@ -47,7 +47,7 @@ fltk::FlatBox::new( char * name )
             XSRETURN(1);
         }
 
-=for apidoc |||_draw|rect
+=for apidoc |||_draw|FLTK::Rectangle * rect|
 
 
 
@@ -57,11 +57,11 @@ void
 fltk::FlatBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
-=for apidoc ||bool|fills_rectangle|
+=for apidoc ||bool eh|fills_rectangle||
 
 
 
-=for apidoc ||bool|is_frame|
+=for apidoc ||bool eh|is_frame||
 
 
 

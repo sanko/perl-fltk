@@ -29,7 +29,7 @@ or when the widget is turned on.
 
 #include <fltk/Box.h>
 
-=for apidoc ||FLTK::HighlightBox|new|name|box
+=for apidoc ||FLTK::HighlightBox * box|new|char * name|FLTK::Box * box|
 
 Creates a new C<FLTK::HighlightBox> object.
 
@@ -46,7 +46,7 @@ fltk::HighlightBox::new( char * name, fltk::Box * down )
             XSRETURN(1);
         }
 
-=for apidoc |||_draw|rect
+=for apidoc |||_draw|FLTK::Rectangle * rect|
 
 
 
@@ -56,18 +56,18 @@ void
 fltk::HighlightBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
-=for apidoc ||bool|fills_rectangle|
+=for apidoc ||bool eh|fills_rectangle|
 
 
 
-=for apidoc ||bool|is_frame|
+=for apidoc ||bool eh|is_frame|
 
 
 
 =cut
 
 bool
-fltk::HighlightBox::fills_rectangle(  )
+fltk::HighlightBox::fills_rectangle( )
     CODE:
         switch( ix ) {
             case 0: RETVAL = THIS->fills_rectangle( ); break;

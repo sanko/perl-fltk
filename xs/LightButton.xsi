@@ -33,7 +33,7 @@ L<C<selection_color()>|FLTK::Widget/"selection_color">.
 
 #include <fltk/LightButton.h>
 
-=for apidoc ||FLTK::LightButton|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::LightButton button|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::LightButton> object. Obviously.
 
@@ -51,6 +51,16 @@ fltk::LightButton::new( int x, int y, int w, int h, const char * label = 0 )
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
+
+=for apidoc ||FLTK::NamedStyle * style|default_style||
+
+
+
+=for apidoc |||default_style|FLTK::NamedStyle * new_style|
+
+
+
+=cut
 
 fltk::NamedStyle *
 fltk::LightButton::default_style( fltk::NamedStyle * new_style = NO_INIT )

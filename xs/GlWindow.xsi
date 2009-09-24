@@ -92,13 +92,13 @@ cards with lots of memory.
 
 =begin apidoc
 
-=for apidoc |G|FLTK::GlWindow|new|x|y|w|h|label = ""
+=for apidoc |G|FLTK::GlWindow win|new|int x|int y|int w|int h|char * label = ''|
 
 The constructor sets the L<C<mode()>|/"mode"> to
 C<RGB_COLOR | DEPTH_BUFFER | DOUBLE_BUFFER> which is probably all that is
 needed for most 3D OpenGL graphics.
 
-=for apidoc |G|FLTK::GlWindow|new|w|h|label = ""
+=for apidoc |G|FLTK::GlWindow win|new|int w|int h|char * label = ''|
 
 Same but placed by the OS.
 
@@ -139,15 +139,15 @@ fltk::GlWindow::new(package, ...)
             XSRETURN(1);
         }
 
-=for apidoc |G||create|
+=for apidoc |G||create||
 
 
 
-=for apidoc |G||flush|
+=for apidoc |G||flush||
 
 
 
-=for apidoc |G||destroy|
+=for apidoc |G||destroy||
 
 Besides getting rid of the window, this will destroy the L<context|/"context">
 if it belongs to the window.
@@ -297,7 +297,7 @@ fltk::GlWindow::can_do( int mode = NO_INIT )
 Return the current OpenGL context object being used by this window, or 0 if
 there is none.
 
-=for apidoc |G||context|fltk::GLContext glc|bool destroy_flag = false
+=for apidoc |G||context|FLTK::GLContext glc|bool destroy_flag = false|
 
 Set the OpenGL context object to use to draw this window.
 
@@ -360,7 +360,7 @@ fltk::GlWindow::swap_buffers( )
 void
 fltk::GlWindow::ortho( )
 
-=for apidoc |G|bool |can_do_overlay||
+=for apidoc |G|bool overlay|can_do_overlay||
 
 Return true if the hardware supports OpenGL overlay planes, and FLTK has been
 compiled to use them. If true, L<C<draw_overlay()>|/"draw_overlay"> will be

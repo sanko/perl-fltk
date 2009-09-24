@@ -36,7 +36,7 @@ This is a "bug" and I'll report it when I have the time.
 
 #include <fltk/HelpView.h>
 
-=for apidoc ||FLTK::HelpView|new|x|y|w|h|label = ''|
+=for apidoc ||FLTK::HelpView hv|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new L<HelpView|FLTK::HelpView>.
 
@@ -45,11 +45,11 @@ Creates a new L<HelpView|FLTK::HelpView>.
 fltk::HelpView *
 fltk::HelpView::new( int x, int y, int w, int h, char * label = 0 )
 
-=for apidoc |||dir|directory||
+=for apidoc ||char * dir|directory||
 
 
 
-=for apidoc |||file|filename||
+=for apidoc ||char * file|filename||
 
 
 
@@ -61,7 +61,7 @@ fltk::HelpView::directory ( )
 const char *
 fltk::HelpView::filename( )
 
-=for apidoc ||result|load|filename
+=for apidoc ||int result|load|char * filename|
 
 Load the specified file. Returns C<0> on success and C<-1> on error
 
@@ -70,7 +70,7 @@ Load the specified file. Returns C<0> on success and C<-1> on error
 int
 fltk::HelpView::load( char * filename )
 
-=for apidoc ||pixels|size||
+=for apidoc ||int pixels|size||
 
 
 
@@ -79,11 +79,11 @@ fltk::HelpView::load( char * filename )
 int
 fltk::HelpView::size( )
 
-=for apidoc |||textcolor|color||
+=for apidoc |||textcolor|FLTK::Color color|
 
 
 
-=for apidoc ||FLTK::Color|textcolor|||
+=for apidoc ||FLTK::Color color|textcolor||
 
 
 
@@ -97,11 +97,11 @@ fltk::HelpView::textcolor( fltk::Color color = NO_INIT )
         CODE:
             THIS->textcolor( color );
 
-=for apidoc |||textfont|font|
+=for apidoc |||textfont|FLTK::Font * font|
 
 
 
-=for apidoc ||FLTK::Font|textfont|||
+=for apidoc ||FLTK::Font * font|textfont||
 
 
 
@@ -115,11 +115,11 @@ fltk::HelpView::textfont( fltk::Font * font = NO_INIT )
         CODE:
             THIS->textfont( font );
 
-=for apidoc |||textsize|size|||
+=for apidoc |||textsize|int size|
 
 
 
-=for apidoc ||size|textsize||
+=for apidoc ||int size|textsize||
 
 
 
@@ -133,7 +133,7 @@ fltk::HelpView::textsize( int size = NO_INIT )
             CODE:
                 THIS->textsize( size );
 
-=for apidoc ||str|title||
+=for apidoc ||char * str|title||
 
 
 
@@ -142,15 +142,15 @@ fltk::HelpView::textsize( int size = NO_INIT )
 const char *
 fltk::HelpView::title( )
 
-=for apidoc |||topline|string|
+=for apidoc |||topline|char * string|
 
 Sets the top line to the named line.
 
-=for apidoc |||topline|index||
+=for apidoc |||topline|int index|
 
 Sets the top line to the I<index>th line.
 
-=for apidoc ||num|topline|||
+=for apidoc ||int num|topline|||
 
 Retusn the index of the current top line.
 
@@ -169,11 +169,11 @@ fltk::HelpView::topline( line = NO_INIT )
         CODE:
             THIS->topline( line );
 
-=for apidoc |||leftline|col||
+=for apidoc |||leftline|int col|
 
 Set the left position.
 
-=for apidoc ||col|leftline||||
+=for apidoc ||int col|leftline||
 
 Get the left position.
 
@@ -187,11 +187,11 @@ fltk::HelpView::leftline( int col = NO_INIT )
         CODE:
             THIS->leftline( col );
 
-=for apidoc |||value|string||
+=for apidoc |||value|char * string|
 
 Set the help text directly.
 
-=for apidoc ||string|value||
+=for apidoc ||char * string|value||
 
 Get the current help text.
 
@@ -205,7 +205,7 @@ fltk::HelpView::value( char * value = NO_INIT )
         CODE:
             THIS->value( value );
 
-=for apidoc ||int|find|string|start = 0
+=for apidoc ||int ok|find|char * string|int start = 0|
 
 Find the specified string in the current help text. This is a plain text
 search.

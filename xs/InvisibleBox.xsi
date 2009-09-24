@@ -28,11 +28,11 @@ L<C<resizable()>|FLTK::Widget/"resizable"> widget.
 
 =begin apidoc
 
-=for apidoc ||FLTK::InvisibleBox|new|x|y|w|h|label = ""|||
+=for apidoc ||FLTK::InvisibleBox * box|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::InvisibleBox> object. Obviously.
 
-=for apidoc ||FLTK::InvisibleBox|new|x|y|w|h|label|box|||
+=for apidoc ||FLTK::InvisibleBox * box|new|int x|int y|int w|int h|char * label|FLTK::Box * box|
 
 Creates a new C<FLTK::InvisibleBox> object based on an existing
 L<Box|FLTK::Box>.

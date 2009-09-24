@@ -25,7 +25,7 @@ draws a pie slice.
 
 #include <fltk/FillDial.h>
 
-=for apidoc d||FillDial|new|X|Y|Width|Height|Label = ''
+=for apidoc d||FLTK::FillDial fd|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::FillDial> object.
 
@@ -34,7 +34,7 @@ Creates a new C<FLTK::FillDial> object.
 #include "include/WidgetSubclass.h"
 
 void
-FillDial::new( int x, int y, int w, int h, const char * label = 0 )
+FillDial::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<FillDial>(CLASS,x,y,w,h,label);

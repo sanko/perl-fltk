@@ -26,7 +26,7 @@ FLTK::FileInput - Subclass of FLTK::Browser
 
 #include <fltk/FileInput.h>
 
-=for apidoc d||FileInput|new|X|Y|Width|Height|Label = ''
+=for apidoc d||FLTK::FileInput fi|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::FileInput> object.
 
@@ -45,7 +45,7 @@ fltk::FileInput::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc |||draw_boxes|pressed|rect|
+=for apidoc |||draw_boxes|bool pressed|FLTK::Rectangle * rect|
 
 Draw directory buttons.
 
@@ -55,11 +55,11 @@ void
 fltk::FileInput::draw_boxes( bool pressed, fltk::Rectangle * rect )
     C_ARGS: pressed, * rect
 
-=for apidoc ||FLTK::Color|errorcolor||
+=for apidoc ||FLTK::Color color|errorcolor||
 
 
 
-=for apidoc |||errorcolor|color|
+=for apidoc |||errorcolor|FLTK::Color color|
 
 
 
@@ -76,7 +76,9 @@ fltk::FileInput::errorcolor( fltk::Color color )
         CODE:
             THIS->errorcolor( color );
 
-=for apidoc ||worked|text|string
+=for apidoc ||char * string|text||
+
+=for apidoc |||text|char * string|int length = strlen(string)|
 
 Set the string stored in the widget.
 

@@ -52,7 +52,7 @@ groups and the items in them are widgets.
 
 #include <fltk/Group.h>
 
-=for apidoc ||FLTK::Group|new|x|y|width|height|label = ''|begin = false
+=for apidoc ||FLTK::Group grp|new|int x|int y|int w|int h|char * label = ''|bool begin = false|
 
 Creates a new C<FLTK::Group> widget using the given position, size, and label
 string. The default boxtype is C<NO_BOX>.
@@ -72,7 +72,7 @@ fltk::Group::new( int x, int y, int w, int h, char * label = 0, bool begin = fal
             XSRETURN(1);
         }
 
-=for apidoc ||int|FLTK::Group|children||
+=for apidoc ||int kids|children||
 
 Returns how many child widgets the group has.
 
@@ -81,7 +81,7 @@ Returns how many child widgets the group has.
 int
 fltk::Group::children( )
 
-=for apidoc ||FLTK::Widget|child|index|
+=for apidoc ||FLTK::Widget kid|child|int index|
 
 Returns a child, C<index E<gt>= 0 && index E<lt> children()>. B<No range
 checking is done!>
@@ -91,7 +91,7 @@ checking is done!>
 fltk::Widget *
 fltk::Group::child( int index )
 
-=for apidoc |||begin|||
+=for apidoc |||begin||
 
 Sets the current group so you can build the widget tree by just constructing
 the widgets. L<C<begin()>|/"begin"> is exactly the same as
@@ -99,7 +99,7 @@ L<C<$W-E<gt>current($W)>|/"current">.
 
 B<Don't forget to L<C<end()>|/"end"> the group or window!>
 
-=for apidoc |||end|||
+=for apidoc |||end||
 
 Exactly the same as L<C<$W-E<gt>current($W-E<gt>parent())>|/"current">. Any
 new widgets added to the widget tree will be added to the parent of the group.
@@ -112,14 +112,14 @@ fltk::Group::begin( )
 void
 fltk::Group::end( )
 
-=for apidoc ||FLTK::Group|current|||
+=for apidoc ||FLTK::Group group|current|||
 
 Returns the group being currently built. The L<Widget|FLTK::Widget>
 constructor automatically does C<current()-E<gt>add($widget)> if this is not
 undef. To prevent new widgets from being added to a group, call
 L<C<FLTK::Group::current(0)>|FLTK::Group/"current">.
 
-=for apidoc |||current|group||
+=for apidoc |||current|FLTK::Group * group|
 
 Sets the group being currently built.
 
@@ -133,13 +133,13 @@ fltk::Group::current( fltk::Group * group = NO_INIT )
         CODE:
             THIS->current( group );
 
-=for apidoc ||index|find|widget
+=for apidoc ||int index|find|FLTK::Widget widget|
 
 Searches the children for C<widget>, returns the index of C<widget> or of a
 parent of C<widget> that is a L<C<child()>|/"child"> of this. Returns
 L<C<children()>|/"children"> if the widget is undef or not found.
 
-=for apidoc |||add|widget|||
+=for apidoc |||add|FLTK::Widget * widget|
 
 The widget is removed from its current group (if any) and then added to the
 end of this group.
@@ -152,11 +152,11 @@ fltk::Group::find ( fltk::Widget * widget )
 void
 fltk::Group::add( fltk::Widget * widget )
 
-=for apidoc |||insert|widget|index
+=for apidoc |||insert|FLTK::Widget * widget|int index|
 
 Inserts C<widget> in the <index>th position of this group's stack.
 
-=for apidoc |||insert|widget|widget_before
+=for apidoc |||insert|FLTK::Widget * widget|FLTK::Widget * before|
 
 This does L<C<$G-E<gt>insert($widget, $G-E<gt>find($beforethis))>|/"insert">.
 This will append the widget if C<$beforethis> is not in the group.
@@ -172,11 +172,11 @@ fltk::Group::insert( fltk::Widget * widget, before )
         fltk::Widget * before
         C_ARGS: * widget, before
 
-=for apidoc |||remove|index|
+=for apidoc |||remove|int index|
 
 Remove the C<index>th widget from the group.
 
-=for apidoc |||remove|widget|
+=for apidoc |||remove|FLTK::Widget widget|
 
 Removes a C<widget> from the group. This does nothing if the widget is not
 currently a child of this group.
@@ -202,11 +202,11 @@ See L<C<clear())>|/"clear">
 void
 fltk::Group::remove_all( )
 
-=for apidoc |||replace|index|widget_b
+=for apidoc |||replace|int index|FLTK::Widget * widget_b|
 
 Remove the C<index>th widget and inserts C<widget_b> in its place.
 
-=for apidoc |||replace|widget|widget_b
+=for apidoc |||replace|FLTK::Widget * widget|FLTK::Widget * widget_b|
 
 Remove the C<widget> and inserts C<widget_b> in its place.
 
@@ -221,7 +221,7 @@ fltk::Group::replace( widget, fltk::Widget * widget_b )
         fltk::Widget * widget
         C_ARGS: * widget, * widget_b
 
-=for apidoc |||swap|indexA|indexB|
+=for apidoc |||swap|int indexA|int indexB|
 
 Swaps the C<indexA>th widget with the C<indexB>th widget.
 
@@ -230,7 +230,7 @@ Swaps the C<indexA>th widget with the C<indexB>th widget.
 void
 fltk::Group::swap( int indexA, int indexB )
 
-=for apidoc |||clear|||
+=for apidoc |||clear||
 
 Deletes all children from the group and makes it empty. B<This calls the
 destructor on all the children.>
@@ -242,11 +242,11 @@ See L<C<remove_all()>|/"remove_all">
 void
 fltk::Group::clear( )
 
-=for apidoc |||resizable|widget||
+=for apidoc |||resizable|FLTK::Widget * widget|
 
 Sets the resizing widget.
 
-=for apidoc ||FLTK::Widget|resizable|||
+=for apidoc ||FLTK::Widget * elastic|resizable||
 
 The resizable widget defines the resizing box for the group. When the group is
 resized it calculates a new size and position for all of its children. Widgets
@@ -271,7 +271,7 @@ fltk::Group::resizable( fltk::Widget * widget = NO_INIT )
         CODE:
             THIS->resizable( * widget );
 
-=for apidoc |||add_resizable|widget||
+=for apidoc |||add_resizable|FLTK::Widget * widget|
 
 L<Adds|/"add"> a C<widget> and sets it as the L<resizer|/"resizable"> in one
 fell swoop.
@@ -282,7 +282,7 @@ void
 fltk::Group::add_resizable( fltk::Widget * widget )
     C_ARGS: * widget
 
-=for apidoc |||init_sizes|||
+=for apidoc |||init_sizes||
 
 Indicate that all the remembered child sizes should be reinitialized.
 
@@ -302,7 +302,7 @@ This is automatically done when any child is added or removed.
 void
 fltk::Group::init_sizes( )
 
-=for apidoc |||focus_index|index
+=for apidoc |||focus_index|int index|
 
 The index of the widget that contains the focus. You can initialize this
 before the group is displayed. Changing it while it is displayed does not
@@ -315,7 +315,7 @@ means it will search for any widget that accepts focus.
 This is also used by L<Menu|FLTK::Menu> to locate the item selected by the
 user. See L<C<Menu::get_item()>|FLTK::Menu/"get_item">.
 
-=for apidoc ||index|focus_index||
+=for apidoc ||int index|focus_index||
 
 Returns the index of the widget currently having focus.
 
@@ -329,7 +329,7 @@ fltk::Group::focus_index( int index = NO_INIT )
         CODE:
             THIS->focus_index( index );
 
-=for apidoc |||set_focus|widget|
+=for apidoc |||set_focus|FLTK::Widget * widget|
 
 Same as L<C<focus_index( $index )>|/"focus_index_index">.
 
@@ -338,7 +338,7 @@ Same as L<C<focus_index( $index )>|/"focus_index_index">.
 void
 fltk::Group::set_focus( fltk::Widget * widget )
 
-=for apidoc ||key|navigation_key|||
+=for apidoc ||int key|navigation_key||
 
 Turn Tab into Right or Left for keyboard navigation.
 
@@ -347,7 +347,7 @@ Turn Tab into Right or Left for keyboard navigation.
 int
 fltk::Group::navigation_key( )
 
-=for apidoc d|||fix_old_positions|||
+=for apidoc d|||fix_old_positions||
 
 If this is a L<Group|FLTK::Group> and not a L<Window|FLTK::Window>, subtract
 L<C<x()>|FLTK::Widget/"x"> and L<C<y()>|FLTK::Widget/"y"> from the position of
@@ -359,11 +359,11 @@ are inside a group.
 void
 fltk::Group::fix_old_positions(  )
 
-=for apidoc ||FLTK::Flags|resize_align|||
+=for apidoc ||FLTK::Flags flags|resize_align||
 
 
 
-=for apidoc |||resize_align|flags||
+=for apidoc |||resize_align|FLTK::Flags flags||
 
 
 

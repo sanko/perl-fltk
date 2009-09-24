@@ -24,7 +24,7 @@ FLTK::ccHueBox -
 
 #include <fltk/ColorChooser.h>
 
-=for apidoc ||FLTK::ccHueBox|new|x|y|w|h
+=for apidoc ||FLTK::ccHueBox hb|new|int x|int y|int w|int h|
 
 
 

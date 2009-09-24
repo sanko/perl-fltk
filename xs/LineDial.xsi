@@ -27,7 +27,7 @@ C<LINE>, so it draws a pointer rather than a dot.
 
 #include <fltk/LineDial.h>
 
-=for apidoc ||FLTK::LineDial|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::LineDial * dial|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::LineDial> object. Obviously.
 

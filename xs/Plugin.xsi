@@ -26,7 +26,7 @@ This is a wrapper to make it simple to load plugins on various systems.
 
 =begin apidoc
 
-=for apidoc ||void *|load_plugin|file|symbol|
+=for apidoc ||void * pointer|load_plugin|char * file|char * symbol = ''|
 
 Will load the C<file> as a plugin and then return a pointer to C<symbol> in
 that file.
@@ -49,4 +49,3 @@ BOOT:
     export_tag("load_plugin", "version");
 
 #endif // ifndef DISABLE_PLUGIN
-

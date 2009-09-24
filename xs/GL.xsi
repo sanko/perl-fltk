@@ -50,7 +50,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G||glsetcolor|color
+=for apidoc T[gl]|G||glsetcolor|FLTK::Color color|
 
 
 
@@ -66,11 +66,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G||glstrokerect|x|y|w|h|
+=for apidoc T[gl]|G||glstrokerect|int x|int y|int w|int h|
 
 
 
-=for apidoc T[gl]|G||glfillrect|x|y|w|h|
+=for apidoc T[gl]|G||glfillrect|int x|int y|int w|int h|
 
 
 
@@ -90,7 +90,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G||glsetfont|font|size||
+=for apidoc T[gl]|G||glsetfont|FLTK::Font * font|float size|
 
 
 
@@ -106,11 +106,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G||glgetascent||||
+=for apidoc T[gl]|G||glgetascent||
 
 
 
-=for apidoc T[gl]|G||glgetdescent||||
+=for apidoc T[gl]|G||glgetdescent||
 
 
 
@@ -130,11 +130,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G|width|glgetwidth|string|||
+=for apidoc T[gl]|G|float width|glgetwidth|char * string|
 
 
 
-=for apidoc T[gl]|G|width|glgetwidth|string|length||
+=for apidoc T[gl]|G|float width|glgetwidth|char * string|int length|
 
 
 
@@ -174,7 +174,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::GL
 
-=for apidoc T[gl]|G||gldrawimage|data|x|y|w|h|d = 3|ld = 0
+=for apidoc T[gl]|G||gldrawimage|uchar * data|int x|int y|int w|int h|int d = 3|int ld = 0|
 
 
 

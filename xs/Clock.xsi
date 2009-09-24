@@ -45,7 +45,7 @@ Further changes by Bill Spitzak for fltk
 
 =begin apidoc
 
-=for apidoc ||FLTK::Clock|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::Clock * self|new|int x|int y|int w|int h|char * label = ''|
 
 
 

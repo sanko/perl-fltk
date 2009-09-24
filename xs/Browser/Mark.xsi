@@ -26,7 +26,11 @@ TODO
 
 #include <fltk/Browser.h>
 
-=for apidoc ||Mark|new|
+=for apidoc ||FLTK::Browser::Mark self|new||
+
+
+
+=for apidoc ||FLTK::Browser::Mark self|new|FLTK::Browser::Mark to_clone|
 
 
 
@@ -45,7 +49,7 @@ fltk::Browser::Mark::new( fltk::Browser::Mark * mark = NO_INIT )
         OUTPUT:
             RETVAL
 
-=for apidoc |||destroy|
+=for apidoc |||destroy||
 
 Destroy the mark.
 
@@ -57,7 +61,7 @@ fltk::Browser::Mark::destroy( )
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
 
-=for apidoc ||int|compare|mark2
+=for apidoc ||int result|compare|FLTK::Browser::Mark * mark2|
 
 Returns...
 
@@ -81,7 +85,7 @@ int
 fltk::Browser::Mark::compare( fltk::Browser::Mark * mark2 )
     C_ARGS: * mark2
 
-=for apidoc |||unset|
+=for apidoc |||unset||
 
 
 
@@ -90,7 +94,7 @@ fltk::Browser::Mark::compare( fltk::Browser::Mark * mark2 )
 void
 fltk::Browser::Mark::unset( )
 
-=for apidoc ||bool|is_set|
+=for apidoc ||bool set|is_set||
 
 
 

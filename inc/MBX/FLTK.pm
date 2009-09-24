@@ -229,7 +229,7 @@ package MBX::FLTK;
             sub command {
                 my ($self, $command, $paragraph, $lineno) = @_;
                 if ($command eq 'head1') {
-                    $paragraph =~ s|\s+||;
+                    $paragraph =~ s|\s+$||;
                     $current = \$modules{$package}{'section'}{$paragraph};
                     $$current = {line => $lineno,
                                  file => $self->input_file
@@ -242,6 +242,9 @@ package MBX::FLTK;
                         my ($flags, $prereq, $return, $sub, @args)
                             = split '\|', $1;
                         my $type = $flags =~ m[H] ? '_hide' : 'sub';
+                        warn sprintf 'Malformed apidoc at %s line %d',
+                            $self->input_file, $lineno
+                            if !$sub;
                         $current = \$modules{$package}{$type}{$sub}
                             ->[scalar @{$modules{$package}{$type}{$sub}}];
                         $$current = {flags  => $flags,
@@ -306,21 +309,17 @@ package MBX::FLTK;
         }
 
         sub ACTION_apidoc {
-            my ($self)=@_;
+            my ($self) = @_;
             my $parser = Pod::APIDoc::FLTK->new();
             $parser->parseopts(-want_nonPODs => 1);
             print 'Parsing XS files for documentation... ';
             $parser->parse_from_file('xs/FLTK.xs');
-            print "okay\n";
-            print 'Generating documentation... ';
-
-            #dd \%modules;
+            print "okay\nGenerating documentation... ";
             for my $package (sort keys %modules) {
                 my $file = './blib/lib/' . $package . '.pod';
                 $file =~ s|::|/|g;
                 make_path((splitpath($file))[0 .. 1]);
-
-                #warn sprintf '%-30s => %s', $package, $file;
+                $self->add_to_cleanup($file);
                 open my ($DOC), '>', $file;
                 syswrite $DOC, "=pod\n\n";
                 {
@@ -334,82 +333,63 @@ package MBX::FLTK;
                         syswrite $DOC, "=head1 Functions\n\n";
                         for my $sub (sort keys %{$modules{$package}{'sub'}}) {
                             syswrite $DOC, "=head2 C<$sub>\nX<$sub>\n\n";
-                            if ($modules{$package}{'sub'}{$sub}[0]{'flags'}
-                                =~ m[E])
-                            {   syswrite $DOC,
-                                    (
-                                    $modules{$package}{'sub'}{$sub}[0]{'text'}
-                                        || '');
+                            syswrite $DOC, "=over\n\n";
+                            for my $use (0 ..
+                                    scalar(@{$modules{$package}{'sub'}{$sub}})
+                                    - 1)
+                            {   my $call
+                                    = $self->_document_function($package,
+                                       $sub,
+                                       $modules{$package}{'sub'}{$sub}[$use]);
+                                my $_call = $call;
+                                $_call =~ s|[^\w]+|_|g;
+                                syswrite $DOC, "=item C<$call>X<$_call>\n\n";
+                                syswrite $DOC,
+                                    ($modules{$package}{'sub'}{$sub}[$use]
+                                     {'text'} || '');
+                                syswrite $DOC,
+                                    sprintf "=for hackers %s line %d\n\n",
+                                    $modules{$package}{'sub'}{$sub}[$use]
+                                    {'file'},
+                                    $modules{$package}{'sub'}{$sub}[$use]
+                                    {'line'};
                             }
-                            else {
-                                syswrite $DOC, "=over\n\n";
-                                for my $use (
-                                        0 .. scalar(
-                                            @{$modules{$package}{'sub'}{$sub}}
-                                        ) - 1
-                                    )
-                                {   my $call = sprintf '%s( %s )', $sub,
-                                        join ', ',
-                                        @{$modules{$package}{'sub'}{$sub}
-                                            [$use]{'args'}};
-                                    my $_call = $call;
-                                    $_call =~ s|[^\w+]|_|g;
-                                    syswrite $DOC,
-                                        "=item C<$call>X<$_call>\n\n";
-                                    #syswrite $DOC,
-                                    #    pp(
-                                    #    $modules{$package}{'sub'}{$sub}[$use])
-                                    #    . "\n\n";
-                                    syswrite $DOC,
-                                        ($modules{$package}{'sub'}{$sub}[$use]
-                                         {'text'} || '');
-                                    syswrite $DOC,
-                                        sprintf "=for hackers %s line %d\n\n",
-                                        $modules{$package}{'sub'}{$sub}[$use]
-                                        {'file'},
-                                        $modules{$package}{'sub'}{$sub}[$use]
-                                        {'line'};
-                                }
-                                syswrite $DOC, "=back\n\n";
-
-                                #warn $sub;
-                            }
+                            syswrite $DOC, "=back\n\n";
                         }
+                    }
+                    for my $section (
+                        grep {
+                            !m[(?:NAME|Description|Synopsis)]
+                        } @{$modules{$package}{'@section'}}
+                        )
+                    {   next if !$modules{$package}{'section'}{$section};
+                        syswrite $DOC, "=head1 $section\n\n";
+                        syswrite $DOC,
+                            $modules{$package}{'section'}{$section}{'text'};
                     }
                     {
                         if (scalar keys %{$modules{$package}{'.'}{'author'}})
                         {   syswrite $DOC, "=head1 Author\n\n";
                             for my $author (
-                                    sort
-                                    keys %{$modules{$package}{'.'}{'author'}})
+                                     sort
+                                     keys %{$modules{$package}{'.'}{'author'}}
+                                )
                             {   syswrite $DOC, "$author\n\n";
                             }
                         }
                         else {
                             syswrite $DOC, "=head1 Authors\n\n=over\n\n";
                             for my $author (
-                                    sort
-                                    keys %{$modules{$package}{'.'}{'author'}})
+                                     sort
+                                     keys %{$modules{$package}{'.'}{'author'}}
+                                )
                             {   syswrite $DOC, "=item $author\n\n";
                             }
                             syswrite $DOC, "=back\n\n";
                         }
                     }
                     syswrite $DOC, "=head1 License and Legal\n\n";
-                    syswrite $DOC, <<'END';
-Copyright (C) 2008-2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
-
-This program is free software; you can redistribute it and/or modify it under
-the terms of The Artistic License 2.0.  See the F<LICENSE> file included with
-this distribution or http://www.perlfoundation.org/artistic_license_2_0.  For
-clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
-
-When separated from the distribution, all POD documentation is covered by the
-Creative Commons Attribution-Share Alike 3.0 License. See
-http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
-clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
-
-END
+                    syswrite $DOC, $self->LICENSE() . "\n\n";
                     for my $id (sort keys %{$modules{$package}{'.'}{'git'}}) {
                         syswrite $DOC, "=for git $id\n\n";
                     }
@@ -422,6 +402,65 @@ END
             }
             print "okay\n";
         }
+
+        sub _document_function {
+            my ($self, $package, $sub, $use) = @_;
+
+            # TODO:
+            #   write documentation in here
+            #   mention defaults/types/import tags
+            my ($return, $call, @args) = ('', '', ());
+            my %types = ('AV *' => '@', 'CV *' => '\&');
+            for my $arg (@{$use->{'args'}}) {
+                my ($type, $name, $default)
+                    = ($arg
+                     =~ m[^([\w:\s\*]+)\s+([(?:\w_|\.{3})]+)(?:\s+=\s+(.+))?]s
+                    );
+                if (!(defined $type && defined $name)) {
+                    printf
+                        "Malformed apidoc: Missing parameter type in %s at %s line %d\n",
+                        $arg, $use->{file},
+                        $use->{line};
+                }
+                else {
+                    push @args,
+                        ($name eq '...'
+                         ? ''
+                         : ($types{$type} ? $types{$type} : '$')
+                        ) . $name;
+                }
+            }
+
+            #
+            if ($use->{'return'}) {
+                my ($type, $name, $default)
+                    = ($use->{'return'}
+                       =~ m[^([\w:\s\*]+)\s+([\w_]+)(?:\s+=\s+(.+))?]s);
+                if (!(defined $type && defined $name)) {
+                    printf
+                        "Malformed apidoc: Missing return type in %s at %s line %d\n",
+                        $use->{'return'}, $use->{file}, $use->{line};
+                }
+                elsif ($use->{'flags'} !~ m[E]) {
+                    $return
+                        = 'my '
+                        . ($types{$type} ? $types{$type} : '$')
+                        . $name . ' = ';
+                }
+            }
+            $call
+                = $use->{'flags'} =~ m[E] ? ''
+                : $use->{'flags'} =~ m[F] ? $package . '::'
+                : sub {
+                my $p = shift;
+                $p =~ s|^.*:|\$|g;
+                return lc "$p->";
+                }
+                ->($package);
+            my $usage = sprintf '%s%s%s(%s%s )', $return, $call, $sub,
+                (@args ? ' ' : ''), (join ', ', @args);
+            return $usage;
+        }
     }
     1;
 }
@@ -432,15 +471,19 @@ END
 
 =for $Revision$
 
-=for $Date$Last $Modified$
+=for $Date$ | Last $Modified$
 
 =for $URL$
 
 =for $ID$
 
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
 =cut
-__DATA__
-Copyright (C) 2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+sub LICENSE {
+    <<'ARTISTIC_TWO' }
+Copyright (C) 2008-2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of The Artistic License 2.0.  See the F<LICENSE> file included with
@@ -451,3 +494,4 @@ When separated from the distribution, all original POD documentation is
 covered by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+ARTISTIC_TWO

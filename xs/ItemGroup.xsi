@@ -44,12 +44,12 @@ currently selected.
 
 =begin apidoc
 
-=for apidoc ||FLTK::ItemGroup|new|label = ""|begin = false||
+=for apidoc ||FLTK::ItemGroup group|new|char * label = ''|bool begin = false|
 
 Unlike other widgets the constructor does not take any dimensions since it is
 assummed the container widget will size this correctly.
 
-=for apidoc ||FLTK::ItemGroup|new|label|FLTK::Symbol|begin = false|
+=for apidoc ||FLTK::ItemGroup group|new|char * label|FLTK::Symbol symbol|bool begin = false|
 
 This constructor also sets L<C<image()>|FLTK::Widget/"image">.
 

@@ -19,12 +19,14 @@ FLTK::Button - Push button widget
 =head1 Description
 
 Buttons generate callbacks when they are clicked by the user. You control
-exactly when and how by changing the values for L<C<when()>|/"when">:
+exactly when and how by changing the values for
+L<C<when()>|FLTK::Widget/"when">:
 
 =over 8
 
 =item C<FLTK::WHEN_NEVER>
-The callback is not done, instead L<C<changed()>|/"changed"> is turned on.
+The callback is not done, instead L<C<changed()>|FLTK::Widget/"changed"> is
+turned on.
 
 =item C<FLTK::WHEN_RELEASE>
 This is the default, the callback is done after the user successfully clicks
@@ -32,20 +34,20 @@ the button (i.e. they let it go with the mouse still pointing at it), or when
 a shortcut is typed.
 
 =item C<FLTK::WHEN_CHANGED>
-The callback is done each time the L<C<value()>|/"value"> changes (when the
-user pushes and releases the button, and as the mouse is dragged around in and
-out of the button).
+The callback is done each time the L<C<value()>|FLTK::Widget/"value"> changes
+(when the user pushes and releases the button, and as the mouse is dragged
+around in and out of the button).
 
 =back
 
-Buttons can also generate callbacks in response to
-L<C<FLTK::SHORTCUT>|FLTK/"SHORTCUT"> events. The button can either have an
-explicit L<C<shortcut()>|/"shortcut"> value or a letter shortcut can be
-indicated in the L<C<label()>|/"label"> with an C<&> character before it. For
-the label shortcut it does not matter if C<Alt> is held down, but if you have
-an input field in the same window, the user will have to hold down the C<Alt>
-key so that the input field does not eat the event first as an
-L<C<FLTK::KEY>|FLTK/"KEY"> event.
+Buttons can also generate callbacks in response to C<FLTK::SHORTCUT> events.
+The button can either have an explicit
+L<C<shortcut()>|FLTK::Widget/"shortcut"> value or a letter shortcut can be
+indicated in the L<C<label()>|FLTK::Widget/"label"> with an C<&> character
+before it. For the label shortcut it does not matter if C<Alt> is held down,
+but if you have an input field in the same window, the user will have to hold
+down the C<Alt> key so that the input field does not eat the event first as an
+C<FLTK::KEY> event.
 
 =begin apidoc
 
@@ -53,7 +55,7 @@ L<C<FLTK::KEY>|FLTK/"KEY"> event.
 
 #include <fltk/Button.h>
 
-=for apidoc ||FLTK::Button|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::Button * self|new|int x|int y|int w|int h|char * label = ''
 
 Creates a new C<FLTK::Button> object. Obviously.
 
@@ -72,7 +74,7 @@ fltk::Button::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc E||int|HIDDEN|
+=for apidoc E||int flag|HIDDEN|
 
 Back-comptability value to hide the button
 
@@ -85,7 +87,7 @@ HIDDEN ( )
     OUTPUT:
         RETVAL
 
-=for apidoc ||bool|value|value
+=for apidoc |||value|bool val|
 
 Change the L<C<value()>|/"value">. Redraws the button and returns true if the
 new value is different. This is the same function as
@@ -97,7 +99,7 @@ L<C<Widget::setonly()>|FLTK::Widget/"setonly">.
 If you turn it on, a normal button will draw pushed-in, until the user clicks
 it and releases it.
 
-=for apidoc ||bool|value|
+=for apidoc ||bool val|value|
 
 The current value. C<true> means it is pushed down, C<false> means it is not
 pushed down. The L<ToggleButton|FLTK::ToggleButton> subclass provides the
@@ -119,7 +121,7 @@ fltk::Button::value ( bool value = NO_INIT )
         CODE:
             THIS->value( value );
 
-=for apidoc ||FLTK::NamedStyle|default_style|
+=for apidoc ||FLTK::NamedStyle style|default_style||
 
 NFI
 
@@ -132,14 +134,21 @@ fltk::Button::default_style ( )
     OUTPUT:
         RETVAL
 
-=for apidoc |||draw|glyph_width
+=end apidoc
+
+=head1 Subclassing C<FLTK::Button>
+
+Blah, blah, blah...
+
+=head2 C<draw( $glyph_width )>
 
 This function provides a mess of back-compatabilty and Windows emulation to
-subclasses of Button to draw with. It will draw the button according to the
-current state of being pushed and it's L<C<state()>|/"state">. If non-zero is
-passed for C<GLYPH_WIDTH> then the L<C<glyph()>|/"glyph"> is drawn in that
-space on the left (or on the right if negative), and it assummes the glyph
-indicates the L<C<state()>|/"state">, so the box is only used to indicate the
+subclasses of L<Button|FLTK::Button> to draw with. It will draw the button
+according to the current state of being pushed and it's
+L<C<state()>|FLTK::Widget/"state">. If non-zero is passed for C<GLYPH_WIDTH>
+then the L<C<glyph()>|FLTK::Widget/"glyph"> is drawn in that space on the left
+(or on the right if negative), and it assummes the glyph indicates the
+L<C<state()>|FLTK::Widget/"state">, so the box is only used to indicate the
 pushed state.
 
 =cut

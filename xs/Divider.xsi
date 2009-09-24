@@ -32,7 +32,7 @@ L<Menu|FLTK::Menu> or L<Browser|FLTK::Browser>.
 
 #include <fltk/Divider.h>
 
-=for apidoc d|||new|x|y|width|height|label = ''
+=for apidoc d||FLTK::Divider div|new||
 
 Unlike other widgets the constructor does not take any dimensions, since it is
 assummed the container widget will size this correctly.

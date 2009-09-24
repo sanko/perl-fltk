@@ -36,12 +36,12 @@ the constructor and calling L<C<end()>|FLTK::Group/"end"> in the destructor:
 
 =begin apidoc
 
-=for apidoc ||FLTK::ItemGroup|new|label = ""|
+=for apidoc ||FLTK::ItemGroup * group|new|char * label = ''|
 
 Builds a typical submenu group section, then calls
 L<C<begin()>|FLTK::Group/"begin">.
 
-=for apidoc ||FLTK::ItemGroup|new|label|FLTK::Symbol||
+=for apidoc ||FLTK::ItemGroup * group|new|char * label|FLTK::Symbol * symbol|
 
 This constructor also sets L<C<image()>|FLTK::Widget/"image">.
 
@@ -63,7 +63,7 @@ fltk::MenuSection::new( char * label = 0, fltk::Symbol * symbol = NO_INIT )
             XSRETURN(1);
         }
 
-=for apidoc H||bool|DESTROY||
+=for apidoc H||bool done|DESTROY||
 
 Unlike most widgets, the basic function of L<MenuSection|FLTK::MenuSection>s
 requires it being destroied.
@@ -73,7 +73,7 @@ requires it being destroied.
 bool
 fltk::MenuSection::DESTROY( )
 
-=for apidoc ||FLTK::ItemGroup|group|||
+=for apidoc ||FLTK::ItemGroup * group|group||
 
 Returns the L<ItemGroup>|FLTK::ItemGroup> created by this.
 

@@ -250,16 +250,16 @@ the documentation, lines are of the form:
     E       enum/flag
     F       function rather than an OO method*
     x       experimental and may be removed or changed in a future version
-    T[:X:Y] exported by tags :X and :Y*
+    T[X,Y]  exported by tags :X and :Y
     N       basic functionality has changed since the last major release*
     U       suppress usage example in auto-generated documentation
     H       this is a hidden, internal (hacker only) function
 
  prereq are single letters with the following meanings:
-    G       requires GL*
-    X       requires the X Window system*
+    G       requires GL
+    X       requires the X Window system
     t       requires pthreads (or Windows)*
-    W       requires Windows*
+    W       requires Windows
 
 * denotes stuff I haven't really given enough thought to and probably haven't
 used yet.

@@ -92,7 +92,7 @@ invisible
 
 #include <fltk/Cursor.h>
 
-=for apidoc ||Cursor|cursor|image|x|y|
+=for apidoc ||FLTK::Cursor c|cursor|FLTK::Image * image|int x|int y|
 
 
 
@@ -143,7 +143,7 @@ CURSOR_DEFAULT( )
 
 MODULE = FLTK               PACKAGE = FLTK::Widget
 
-=for apidoc |||cursor|c
+=for apidoc |||cursor|FLTK::Cursor * c|
 
 Change the cursor being displayed on the screen. A widget should do this in
 response to C<ENTER> and C<MOVE> events. FLTK will change it back to

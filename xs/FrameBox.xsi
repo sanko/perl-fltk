@@ -42,7 +42,7 @@ draw faster and with less blinking.
 
 #include <fltk/Box.h>
 
-=for apidoc ||FLTK::FrameBox|new|name|x|y|width|height|pattern|down = 0
+=for apidoc ||FLTK::FrameBox * box|new|char * name|int x|int y|int w|int h|char * pattern|FLTK::Box * down = 0|
 
 Constructor where you give the thickness of the borders used by
 L<C<inset()>|/"inset">.
@@ -52,21 +52,21 @@ L<C<inset()>|/"inset">.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::FrameBox::new( char * name, int dx, int dy, int dw, int dh, char * pattern, fltk::Box * down = 0  )
+fltk::FrameBox::new( char * name, int x, int y, int w, int h, char * pattern, fltk::Box * down = 0  )
     PPCODE:
         void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::FrameBox>(CLASS,name,dx,dy,dw,dh,pattern,down);
+        RETVAL = (void *) new WidgetSubclass<fltk::FrameBox>(CLASS,name,x,y,w,h,pattern,down);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
 
-=for apidoc ||string|data|
+=for apidoc ||char * string|data||
 
 
 
-=for apidoc |||data|string
+=for apidoc |||data|char * string|
 
 
 
@@ -81,7 +81,7 @@ fltk::FrameBox::data( char * string = NO_INIT )
             THIS->data( string );
 
 
-=for apidoc |||_draw|rect
+=for apidoc |||_draw|FLTK::Rectangle * rect|
 
 
 
@@ -91,7 +91,7 @@ void
 fltk::FrameBox::_draw( fltk::Rectangle * rect )
     C_ARGS: * rect
 
-=for apidoc |||inset|rect
+=for apidoc |||inset|FLTK::Rectangle * rect|
 
 
 
@@ -101,11 +101,11 @@ void
 fltk::FrameBox::inset( fltk::Rectangle * rect )
     C_ARGS: * rect
 
-=for apidoc ||bool|fills_rectangle|
+=for apidoc ||bool does_it|fills_rectangle||
 
 
 
-=for apidoc ||bool|is_frame|
+=for apidoc ||bool is_it|is_frame||
 
 
 

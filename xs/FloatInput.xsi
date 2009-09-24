@@ -43,7 +43,7 @@ makes this act like the L<IntInput|FLTK::IntInput> subclass.
 
 #include <fltk/FloatInput.h>
 
-=for apidoc d||FloatInput|new|X|Y|Width|Height|Label = ''
+=for apidoc d||FLTK::FloatInput input|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::FloatInput> object.
 
@@ -52,7 +52,7 @@ Creates a new C<FLTK::FloatInput> object.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::FloatInput::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FloatInput::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::FloatInput>(CLASS,x,y,w,h,label);
@@ -62,15 +62,15 @@ fltk::FloatInput::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc ||int|ivalue||
+=for apidoc ||int int|ivalue||
 
 Convert the string to an integer, using C<int(strtol())>.
 
-=for apidoc ||long|lvalue()||
+=for apidoc ||long long|lvalue()||
 
 Convert the string to a long using C<strtol()>.
 
-=for apidoc ||double|fvalue()||
+=for apidoc ||double float|fvalue()||
 
 Convert the string to a double using C<strtod()>.
 

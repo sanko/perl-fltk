@@ -657,17 +657,17 @@ BOOT:
 
 =begin apidoc
 
-=for apidoc T[events]||int|BUTTON|number
+=for apidoc FT[events]||int flags|BUTTON|int number|
 
-The function C<BUTTON(n)> will turn C<n> (1 .. 8) into the L<flag|/"Flags">
-for a mouse button.
+The function C<BUTTON(n)> will turn C<number> (1 .. 8) into the
+L<flag|/"Flags"> for a mouse button.
 
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
-BUTTON( int n )
+BUTTON( int number )
 
 BOOT:
     export_tag( "BUTTON", "events" );
@@ -732,31 +732,31 @@ BOOT:
 
 =begin apidoc
 
-=for apidoc T[events]||int|event||
+=for apidoc FT[events]||int event|event||
 
 
 
-=for apidoc T[events]||int|event_x||
+=for apidoc FT[events]||int x|event_x||
 
 
 
-=for apidoc T[events]||int|event_y||
+=for apidoc FT[events]||int y|event_y||
 
 
 
-=for apidoc T[events]||int|event_dx||
+=for apidoc FT[events]||int dx|event_dx||
 
 
 
-=for apidoc T[events]||int|event_dy||
+=for apidoc FT[events]||int dy|event_dy||
 
 
 
-=for apidoc T[events]||int|event_x_root||
+=for apidoc FT[events]||int x|event_x_root||
 
 
 
-=for apidoc T[events]||int|event_y_root||
+=for apidoc FT[events]||int y|event_y_root||
 
 
 
@@ -797,11 +797,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|event_clicks||
+=for apidoc FT[events]|||event_clicks|int i|
 
 
 
-=for apidoc T[events]||int|event_clicks||
+=for apidoc FT[events]||int clicks|event_clicks||
 
 
 
@@ -825,11 +825,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|event_is_click||
+=for apidoc FT[events]||bool click|event_is_click||
 
 
 
-=for apidoc T[events]|||event_is_click|bool|
+=for apidoc FT[events]|||event_is_click|bool value|
 
 
 
@@ -838,7 +838,7 @@ MODULE = FLTK               PACKAGE = FLTK::events
 MODULE = FLTK               PACKAGE = FLTK
 
 bool
-event_is_click( bool i = NO_INIT )
+event_is_click( bool value = NO_INIT )
     CASE: items == 0
         CODE:
             RETVAL = fltk::event_is_click( );
@@ -846,18 +846,18 @@ event_is_click( bool i = NO_INIT )
             RETVAL
     CASE: items == 1
         CODE:
-            fltk::event_is_click( i ); /* Really? Only false works? */
+            fltk::event_is_click( value ); /* Really? Only false works? */
 
 BOOT:
     export_tag("event_is_click", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|event_state||
+=for apidoc FT[events]||int state|event_state||
 
 
 
-=for apidoc T[events]||bool|event_state|state|
+=for apidoc FT[events]||bool state|event_state|unsigned state|
 
 
 
@@ -866,7 +866,7 @@ MODULE = FLTK               PACKAGE = FLTK::events
 MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
-event_state( unsigned i = NO_INIT )
+event_state( unsigned state = NO_INIT )
     CASE: items == 0
         CODE:
             RETVAL = fltk::event_state( );
@@ -874,18 +874,18 @@ event_state( unsigned i = NO_INIT )
             RETVAL
     CASE: items == 1
         CODE:
-            RETVAL = (unsigned) fltk::event_state( i );
+            RETVAL = (unsigned) fltk::event_state( state );
 
 BOOT:
     export_tag("event_state", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|event_key||
+=for apidoc FT[events]||int key|event_key||
 
 
 
-=for apidoc T[events]||int|event_button||
+=for apidoc FT[events]||int button|event_button||
 
 
 =cut
@@ -910,7 +910,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|event_key_state|state|
+=for apidoc FT[events]||bool state|event_key_state|unsigned state|
 
 
 
@@ -919,14 +919,14 @@ MODULE = FLTK               PACKAGE = FLTK::events
 MODULE = FLTK               PACKAGE = FLTK
 
 bool
-event_key_state( unsigned x )
+event_key_state( unsigned state )
 
 BOOT:
     export_tag("event_key_state", "events");
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||string|event_text||
+=for apidoc FT[events]||char * string|event_text||
 
 
 
@@ -946,11 +946,11 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|event_length||
+=for apidoc FT[events]||int length|event_length||
 
 
 
-=for apidoc T[events]||int|event_key_repeated||
+=for apidoc FT[events]||int repeated|event_key_repeated||
 
 
 
@@ -976,15 +976,15 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||float|event_pressure||
+=for apidoc FT[events]||float pressure|event_pressure||
 
 
 
-=for apidoc T[events]||float|event_x_tilt||
+=for apidoc FT[events]||float tilt_x|event_x_tilt||
 
 
 
-=for apidoc T[events]||float|event_y_tilt||
+=for apidoc FT[events]||float tilt_y|event_y_tilt||
 
 
 
@@ -1013,7 +1013,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|event_device||
+=for apidoc FT[events]||int id|event_device||
 
 
 
@@ -1033,7 +1033,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|event_inside|rectangle
+=for apidoc FT[events]||bool in|event_inside|FLTK::Rectangle * rectangle|
 
 Returns true if the current L<C<event_x()>|/"event_x"> and
 L<C<event_y()>|/"event_y"> put it inside the L<Rectangle|FLTK::Rectangle>. You
@@ -1058,7 +1058,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|compose|del
+=for apidoc FT[events]||bool changed|compose|int del|
 
 Use of this function is very simple. Any text editing widget should call this
 for each C<KEY> event.
@@ -1091,7 +1091,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||compose_reset||
+=for apidoc FT[events]|||compose_reset||
 
 If the user moves the cursor, be sure to call
 L<C<compose_reset()>|/"compose_reset">. The next call to
@@ -1111,7 +1111,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|try_shortcut||
+=for apidoc FT[events]||bool handled|try_shortcut||
 
 Try sending the current C<KEY> event as a C<SHORTCUT> event.
 
@@ -1143,7 +1143,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||string|key_name|hotkey|
+=for apidoc FT[events]||char * string|key_name|unsigned hotkey|
 
 Unparse a L<C<FLTK::Widget::shortcut()>|FLTK::Widget/"shortcut">, an
 L<C<event_key()>|/"event_key">, or an L<C<event_key()>|/"event_key"> or'd with
@@ -1164,7 +1164,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||int|key|name|
+=for apidoc FT[events]||int key|key|char * name|
 
 Turn a string into a L<C<event_key()>|/"event_key"> value or'd with
 L<C<event_shift()>|/"event_shift"> flags. The returned value can be used by by
@@ -1197,7 +1197,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|int|foreachShortcut|SF|widget
+=for apidoc FT[events]||int value|foreachShortcut|FLTK::ShortcutFunctor * SF|FLTK::Widget * widget|
 
 Calls the L<C<handle()>|FLTK::Subclass/"handle"> method from the passed
 ShortcutFunctor object for every
@@ -1210,7 +1210,7 @@ If C<widget> is not null, only do assignments for that widget, this is much
 faster than searching the entire list. This is useful for drawing the
 shortcuts on a widget (though most fltk widgets only draw the first one).
 
-=for apidoc T[events]|int|foreachShortcut|SF|
+=for apidoc FT[events]||int value|foreachShortcut|FLTK::ShortcutFunctor * SF|
 
 Same. But without widget NULL by default.
 
@@ -1230,7 +1230,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|get_key_state|key
+=for apidoc FT[events]||bool state|get_key_state|int key|
 
 Returns true if the given key was held down (or pressed) I<during the last
 event>. This is constant until the next event is read from the server. The
@@ -1250,8 +1250,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||get_mouse|x|y
-
+=for apidoc FT[events]||AV * xy|get_mouse||
 
 Return where the mouse is on the screen by doing a round-trip query to the
 server. You should use L<C<event_x_root()>|/"event_x_root"> and
@@ -1264,7 +1263,7 @@ your first window). If the display is not open, this will open it.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-get_mouse( IN_OUTLIST int x, IN_OUTLIST int y )
+get_mouse( OUTLIST int x, OUTLIST int y )
     C_ARGS: x, y
 
 BOOT:
@@ -1272,7 +1271,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|warp_mouse|x|y
+=for apidoc FT[events]||bool worked|warp_mouse|int x|int y|
 
 Change where the mouse is on the screen.
 
@@ -1291,7 +1290,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc ||bool|handle|event|window
+=for apidoc F||bool handled|handle|int event|FLTK::Window * window|
 
 This is the function called from the system-specific code for all events that
 can be passed to L<C<Widget::handle()>|FLTK::Subclass/"handle">.
@@ -1319,7 +1318,7 @@ handle( int event, fltk::Window * window )
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||Widget|belowmouse||
+=for apidoc FT[events]||FLTK::Widget * under|belowmouse||
 
 Get the widget that is below the mouse. This is the last widget to respond to
 an C<ENTER> event as long as the mouse is still pointing at it. This is for
@@ -1327,7 +1326,7 @@ highlighting buttons and bringing up tooltips. It is not used to send C<PUSH>
 or C<MOVE> directly, for several obscure reasons, but those events typically
 go to this widget.
 
-=for apidoc T[events]|||belowmouse|Widget|
+=for apidoc FT[events]|||belowmouse|FLTK::Widget * widget|
 
 Change the L<C<belowmouse()>|/"belowmouse"> widget, the previous one and all
 parents (that don't contain the new widget) are sent C<LEAVE> events. Changing
@@ -1355,13 +1354,13 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||Widget|pushed||
+=for apidoc FT[events]||FLTK::Widget * current|pushed||
 
 Get the widget that is being pushed. C<DRAG> or C<RELEASE> (and any more
 C<PUSH>) events will be sent to this widget. This is null if no mouse button
 is being held down, or if no widget responded to the C<PUSH> event.
 
-=for apidoc T[events]|||pushed|Widget|
+=for apidoc FT[events]|||pushed|FLTK::Widget widget|
 
 Change the L<C<pushed()>|/"pushed"> widget. This sends no events.
 
@@ -1385,12 +1384,12 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||Widget|focus||
+=for apidoc FT[events]||FLTK::Widget * widget|focus||
 
 Returns the widgets that will receive C<KEY> events. This is undef if the
 application does not have focus now, or if no widgets accepted focus.
 
-=for apidoc T[events]|||focus|Widget|
+=for apidoc FT[events]|||focus|FLTK::Widget * widget|
 
 Change L<C<focus()>|/"focus"> to the given widget, the previous widget and all
 parents (that don't contain the new widget) are sent C<UNFOCUS> events, the
@@ -1422,7 +1421,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||copy|stuff|length = strlen(stuff)|clipboard = false
+=for apidoc FT[events]|||copy|char * stuff|int length = strlen(stuff)|bool clipboard = false|
 
 Change the current selection. The block of text is copied to an internal
 buffer by FLTK (be careful if doing this in response to a C<PASTE> as this may
@@ -1449,7 +1448,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||paste|widget|clipboard = false
+=for apidoc FT[events]|||paste|FLTK::Widget * widget|bool clipboard = false|
 
 This is what a widget does when a "paste" command (like Ctrl+V or the middle
 mouse click) is done to it. Cause a C<PASTE> event to be sent to the receiver
@@ -1482,7 +1481,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|dnd||
+=for apidoc FT[events]||bool drag|dnd||
 
 Drag and drop the data set by the most recent L<C<copy()>|/"copy"> (with the
 C<clipboard> argument false). Returns true if the data was dropped on
@@ -1503,7 +1502,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||modal|widget|grab = false
+=for apidoc FT[events]|||modal|FLTK::Widget * widget|bool grab = false|
 
 Restricts events to a certain widget.
 
@@ -1536,7 +1535,7 @@ you have some visible window because the system interface needs a visible
 window id. On X be careful that your program does not enter an infinite loop
 while L<C<grab()>|/"grab"> is on, it will lock up your screen!
 
-=for apidoc T[events]||Widget|modal||
+=for apidoc FT[events]||FLTK::Widget current|modal||
 
 Returns the current modal widget, or undef if there isn't one. It is useful to
 test these in timeouts and file descriptor callbacks in order to block actions
@@ -1560,7 +1559,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|grab||
+=for apidoc FT[events]||bool cvalue|grab||
 
 Returns the current value of grab (this is always false if
 L<C<modal()>|/"modal"> is undef).
@@ -1577,7 +1576,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]|||exit_modal||
+=for apidoc FT[events]|||exit_modal||
 
 Turns on L<C<exit_modal_flag()>|/"exit_modal_flag">. This may be used by user
 callbacks to cancel modal state. See also
@@ -1595,7 +1594,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||bool|exit_modal_flag||
+=for apidoc FT[events]||bool eh|exit_modal_flag||
 
 True if L<C<exit_modal()>|/"exit_modal"> has been called. The flag is also set
 by the destruction or hiding of the modal widget, and on Windows by other
@@ -1613,7 +1612,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
-=for apidoc T[events]||string|event_name|event
+=for apidoc FT[events]||char * string|event_name|int event|
 
 Return the corresponding name of an event, should not consume memory if api is
 not used. This is really only good for debugging.

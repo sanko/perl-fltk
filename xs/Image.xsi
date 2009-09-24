@@ -317,11 +317,11 @@ fltk::Image::buffer( )
     OUTPUT:
         RETVAL
 
-=for apidoc |||set_forceARGB32|||
+=for apidoc |||set_forceARGB32||
 
 It pretty much does this already except for mono.
 
-=for apidoc |||clear_forceARGB32|||
+=for apidoc |||clear_forceARGB32||
 
 
 =cut
@@ -332,7 +332,7 @@ fltk::Image::set_forceARGB32( )
 void
 fltk::Image::clear_forceARGB32( )
 
-=for apidoc ||bool|forceARGB32|||
+=for apidoc ||bool ret|forceARGB32||
 
 
 

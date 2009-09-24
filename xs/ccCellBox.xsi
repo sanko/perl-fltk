@@ -24,7 +24,7 @@ FLTK::ccCellBox -
 
 #include <fltk/ColorChooser.h>
 
-=for apidoc ||FLTK::ccCellBox|new|x|y|w|h
+=for apidoc ||FLTK::ccCellBox cb|new|int x|int y|int w|int h|
 
 
 

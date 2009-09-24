@@ -56,7 +56,7 @@ window.
 
 Creates a new C<FLTK::Window> object.
 
-=for apidoc ||FLTK::Window|new|int w|int h|char * label = ''|
+=for apidoc ||FLTK::Window * win|new|int w|int h|char * label = ''|
 
 Same but window is placed by OS.
 
@@ -269,7 +269,7 @@ void
 fltk::Window::system_layout( )
 
 
-=for apidoc |bool db_set|FLTK::Window|double_buffer||
+=for apidoc ||bool db_set|double_buffer||
 
 Returns a true value if L<C<set_double_buffer()>|/"set_double_buffer"> was
 called, returns a false value if
@@ -282,7 +282,7 @@ buffering is efficient turn it on by default).
 bool
 fltk::Window::double_buffer( )
 
-=for apidoc ||FLTK::Window window|drawing_window||
+=for apidoc ||FLTK::Window * window|drawing_window||
 
 Returns the L<Window|FLTK::Window> currently being drawn into. To set this use
 L<C<make_current()>|FLTK::Widget/"make_current">. It will already be set when
@@ -767,10 +767,10 @@ fltk::Window::_icon_resource_example( char * iconID )
         HICON t_icon  =       LoadIcon (xdisplay, iconID);
         if (!t_icon)
             t_icon  = LoadIcon (xdisplay, iconID );
-        warn ("A b_icon is %s", ( b_icon == NULL? "borked": "okay"));
-        warn ("B s_icon is %s", ( s_icon == NULL? "borked": "okay"));
-        warn ("C t_icon is %s", ( t_icon == NULL? "borked": "okay"));
-        warn ("%s | %s", fltk::xdisplay, GetModuleHandle(0));
+        //warn ("A b_icon is %s", ( b_icon == NULL? "borked": "okay"));
+        //warn ("B s_icon is %s", ( s_icon == NULL? "borked": "okay"));
+        //warn ("C t_icon is %s", ( t_icon == NULL? "borked": "okay"));
+        //warn ("%s | %s", fltk::xdisplay, GetModuleHandle(0));
         CreatedWindow* x = CreatedWindow::find(THIS);
 
         if ( ! ( x && xdisplay ) )

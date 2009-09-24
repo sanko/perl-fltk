@@ -28,7 +28,7 @@ FLTK::FileBrowser - Subclass of FLTK::Browser
 
 #include <fltk/FileBrowser.h>
 
-=for apidoc d||FileBrowser|new|X|Y|Width|Height|Label = ''
+=for apidoc d||FLTK::FileBrowser fb|new|int x|int y|int w|int h|char * label = ''|
 
 Creates a new C<FLTK::FileBrowser> object.
 
@@ -37,7 +37,7 @@ Creates a new C<FLTK::FileBrowser> object.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::FileBrowser::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::FileBrowser>(CLASS,x,y,w,h,label);
@@ -47,11 +47,11 @@ fltk::FileBrowser::new( int x, int y, int w, int h, const char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc d||float|icon_size||
+=for apidoc d||float size|icon_size||
 
 
 
-=for apidoc d|||icon_size|size|
+=for apidoc d|||icon_size|float size|
 
 
 
@@ -65,11 +65,11 @@ fltk::FileBrowser::icon_size( float size = NO_INIT )
         CODE:
             THIS->icon_size( size );
 
-=for apidoc d||pattern|filter||
+=for apidoc d||chat * pattern|filter||
 
 
 
-=for apidoc d|||filter|pattern|
+=for apidoc d|||filter|char * pattern|
 
 
 
@@ -83,11 +83,11 @@ fltk::FileBrowser::filter( char * pattern = NO_INIT )
         CODE:
             THIS->filter( pattern );
 
-=for apidoc d||float|textsize||
+=for apidoc d||float size|textsize||
 
 
 
-=for apidoc d|||textsize|size|
+=for apidoc d|||textsize|float size|
 
 
 
@@ -101,11 +101,11 @@ fltk::FileBrowser::textsize( float size = NO_INIT )
         CODE:
             THIS->textsize( size );
 
-=for apidoc d||int|filetype||
+=for apidoc d||int type|filetype||
 
 
 
-=for apidoc d|||filetype|type|
+=for apidoc d|||filetype|int type|
 
 
 
@@ -119,7 +119,7 @@ fltk::FileBrowser::filetype( int type = NO_INIT )
         CODE:
             THIS->filetype( type );
 
-=for apidoc d||dir|directory||
+=for apidoc d||char * dir|directory||
 
 
 =cut
@@ -127,11 +127,11 @@ fltk::FileBrowser::filetype( int type = NO_INIT )
 const char *
 fltk::FileBrowser::directory( )
 
-=for apidoc d|||insert|n|label|icon|
+=for apidoc d|||insert|int n|char * label|FLTK::FileIcon * icon|
 
 
 
-=for apidoc d|||insert|n|label|data|
+=for apidoc d|||insert|int n|char * label|void * data|
 
 
 
@@ -144,7 +144,7 @@ fltk::FileBrowser::insert( int n, char * label, data )
     CASE:
         void           * data
 
-=for apidoc d|||add|line|icon
+=for apidoc d|||add|char * line|FLTK::Icon * icon|
 
 
 
@@ -153,11 +153,11 @@ fltk::FileBrowser::insert( int n, char * label, data )
 void
 fltk::FileBrowser::add( char * line, fltk::FileIcon * icon )
 
-=for apidoc d|||show_hidden|show|
+=for apidoc d|||show_hidden|bool show|
 
 Set this flag if you want to see the hidden files in the browser.
 
-=for apidoc d||show|show_hidden||
+=for apidoc d||bool show|show_hidden||
 
 
 

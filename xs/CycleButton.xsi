@@ -47,7 +47,7 @@ drawing "artistic" user interfaces where all the entire button is an image.
 
 #include <fltk/CycleButton.h>
 
-=for apidoc ||FLTK::CycleButton|new|x|y|w|h|label = ""
+=for apidoc ||FLTK::CycleButton self|new|int x|int y|int w|int h|char * label = ''
 
 Creates a new C<FLTK::CycleButton> object. Obviously.
 
@@ -56,7 +56,7 @@ Creates a new C<FLTK::CycleButton> object. Obviously.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::CycleButton::new( int x, int y, int w, int h, const char * label = 0 )
+fltk::CycleButton::new( int x, int y, int w, int h, char * label = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::CycleButton>(CLASS,x,y,w,h,label);
