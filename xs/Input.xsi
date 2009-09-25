@@ -666,4 +666,6 @@ BOOT:
 
 INCLUDE: MultiLineInput.xsi
 
+INCLUDE: NumericInput.xsi
+
 #endif // ifndef DISABLE_INPUT
