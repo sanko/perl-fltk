@@ -310,8 +310,6 @@ INCLUDE: MenuSection.xsi
 
 INCLUDE: MultiImage.xsi
 
-INCLUDE: MultiLineOutput.xsi
-
 INCLUDE: Plugin.xsi
 
 INCLUDE: Rectangle.xsi
@@ -322,7 +320,6 @@ INCLUDE: Style.xsi
 
 #INCLUDE: Valuator.xsi
 #INCLUDE: ValueInput.xsi
-#INCLUDE: ValueOutput.xsi
 
 INCLUDE: Widget.xsi
 

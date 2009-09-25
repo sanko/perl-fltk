@@ -18,43 +18,31 @@ It is much lighter weight than using an L<FLTK::Output|FLTK::Output> widget
 for this.
 
 There is no way for the user to change the number, but calling
-L<C<value()>|/"value"> will change it.
+L<C<value()>|FLTK::Widget/"value"> will change it.
 
 =cut
 
 
 #include <fltk/ValueOutput.h>
 
-=for apidoc ||FLTK::ValueOutput|new|x|y|w|h|label = ''
+=for apidoc ||FLTK::ValueOutput * output|new|int x|int y|int w|int h|char * label = ''|
 
-TODO
+
 
 =cut
 
-ValueOutput *
-ValueOutput::new( int x, int y, int w, int h, char *label = 0)
-    CODE:
-        RETVAL = new ValueOutput( x, y, w, h, label);
-        RETVAL->copy_label(label);
-#if VERBOSE >= 2
-        warn("%s|%s", RETVAL->label(), label);
-#endif
-    OUTPUT:
-        RETVAL
+void
+fltk::ValueOutput::new( int x, int y, int w, int h, char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::ValueOutput>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
 
-#ifdef ENABLE_DESTROY
-
-bool
-Widget::DESTROY ( )
-    CODE:
-#if VERBOSE >= 2
-        warn ( "Bye, ValueOutput (label: '%s')", THIS->label());
-#endif // #if VERBOSE >= 2
-        delete THIS;
-        RETVAL = true;
-    OUTPUT:
-        RETVAL
-
-#endif // #ifdef ENABLE_DESTROY
+BOOT:
+    isa( "FLTK::ValueOutput" , "FLTK::Output");
 
 #endif // ifndef DISABLE_VALUEOUTPUT

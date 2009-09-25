@@ -668,4 +668,6 @@ INCLUDE: MultiLineInput.xsi
 
 INCLUDE: NumericInput.xsi
 
+INCLUDE: Output.xsi
+
 #endif // ifndef DISABLE_INPUT
