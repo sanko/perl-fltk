@@ -87,7 +87,6 @@ xs/C\+P\.xsi
 
 xs/FLTK_.+
 xs/fltk/.+
-xs/~old/.+
 
 ~autodoc.pl
 ~pod.pl

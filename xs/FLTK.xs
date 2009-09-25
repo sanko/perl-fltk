@@ -328,44 +328,4 @@ INCLUDE: Widget.xsi
 
 INCLUDE: Window.xsi
 
-
-    #INCLUDE: ~old/CheckButton.xsi
-    #INCLUDE: ~old/Choice.xsi
-    #INCLUDE: ~old/Clock.xsi
-    #INCLUDE: ~old/ClockOutput.xsi
-    #INCLUDE: ~old/CreatedWindow.xsi
-    #INCLUDE: ~old/CycleButton.xsi
-    #INCLUDE: ~old/Dial.xsi
-    #INCLUDE: ~old/Divider.xsi
-    #INCLUDE: ~old/FillDial.xsi
-    #INCLUDE: ~old/FillSlider.xsi
-    #INCLUDE: ~old/FlatBox.xsi
-    #INCLUDE: ~old/FloatInput.xsi
-    #INCLUDE: ~old/Font.xsi
-    #INCLUDE: ~old/FrameBox.xsi
-    #INCLUDE: ~old/gifImage.xsi
-    #INCLUDE: ~old/GlutWindow.xsi
-    #INCLUDE: ~old/GlWindow.xsi
-    #INCLUDE: ~old/GSave.xsi
-    #INCLUDE: ~old/Guard.xsi
-    #INCLUDE: ~old/HighlightBox.xsi
-    #INCLUDE: ~old/HighlightButton.xsi
-    #INCLUDE: ~old/Image.xsi
-    #INCLUDE: ~old/ImageType.xsi
-    #INCLUDE: ~old/Input.xsi
-    #INCLUDE: ~old/IntInput.xsi
-    #INCLUDE: ~old/InvisibleBox.xsi
-    #INCLUDE: ~old/Item.xsi
-    #INCLUDE: ~old/ItemGroup.xsi
-    #INCLUDE: ~old/LightButton.xsi
-    #INCLUDE: ~old/LineDial.xsi
-    #INCLUDE: ~old/List.xsi
-    #INCLUDE: ~old/Menu.xsi
-    #INCLUDE: ~old/MenuBar.xsi
-    #INCLUDE: ~old/MenuSection.xsi
-    #INCLUDE: ~old/MenuWindow.xsi
-    #INCLUDE: ~old/Monitor.xsi
-    #INCLUDE: ~old/MultiBrowser.xsi
-    #INCLUDE: ~old/MultiImage.xsi
-
 MODULE = FLTK               PACKAGE = FLTK
