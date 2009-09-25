@@ -100,6 +100,7 @@ xs/MenuSection.xsi
 xs/MenuWindow.xsi
 xs/Monitor.xsi
 xs/MultiBrowser.xsi
+xs/MultiImage.xsi
 xs/NamedStyle.xsi
 xs/Plugin.xsi
 xs/ppport.pl

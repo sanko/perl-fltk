@@ -310,6 +310,8 @@ INCLUDE: LightButton.xsi
 
 INCLUDE: MenuSection.xsi
 
+INCLUDE: MultiImage.xsi
+
 INCLUDE: Plugin.xsi
 
 INCLUDE: Rectangle.xsi

@@ -80,6 +80,7 @@ fltk::MenuSection     *   O_FLTK
       fltk::Monitor   *   O_FLTK
 const fltk::Monitor   *   O_FLTK
 fltk::MultiBrowser    *   O_FLTK
+fltk::MultiImage      *   O_FLTK
 fltk::NamedStyle      *   O_FLTK
 fltk::Rectangle       *   O_FLTK
 fltk::Rectangle           O_FLTK
