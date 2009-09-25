@@ -664,4 +664,6 @@ For L<Input|FLTK::Input> widgets in C<WORDWRAP> mode, you can also do these:
 BOOT:
     isa("FLTK::Input", "FLTK::Widget");
 
+INCLUDE: MultiLineInput.xsi
+
 #endif // ifndef DISABLE_INPUT
