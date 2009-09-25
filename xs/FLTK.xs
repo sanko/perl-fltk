@@ -312,6 +312,8 @@ INCLUDE: MenuSection.xsi
 
 INCLUDE: MultiImage.xsi
 
+INCLUDE: MultiLineOutput.xsi
+
 INCLUDE: Plugin.xsi
 
 INCLUDE: Rectangle.xsi

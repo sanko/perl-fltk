@@ -82,6 +82,7 @@ const fltk::Monitor   *   O_FLTK
 fltk::MultiBrowser    *   O_FLTK
 fltk::MultiImage      *   O_FLTK
 fltk::MultiLineInput  *   O_FLTK
+fltk::MultiLineOutput *   O_FLTK
 fltk::NamedStyle      *   O_FLTK
 fltk::Rectangle       *   O_FLTK
 fltk::Rectangle           O_FLTK
