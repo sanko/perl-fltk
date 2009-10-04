@@ -2,7 +2,7 @@
 layout:     post
 title:      Hello, World!
 categories: [tutorial, basic]
-header:     /~images/posts/HelloWorld.png
+header:     ./~images/posts/HelloWorld.png
 blurb:      Ah, the classics...
 ---
 Here is a very brief example program based on the
@@ -28,7 +28,7 @@ exit run();
 When run, the program will display the window below. You can quit the program
 by closing the window or pressing the ESCape key.
 
-<image class="center noborder" src="/~images/posts/HelloWorld.png" />
+<image class="center noborder" src="./~images/posts/HelloWorld.png" />
 
 ## Using FLTK
 
