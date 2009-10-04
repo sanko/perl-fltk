@@ -3,11 +3,11 @@
 use strict;
 use warnings;
 use FLTK;
-sub window_callback { shift->hide() if ask("Do you really want to exit?") }
+sub window_callback { shift->hide() if ask('Do you really want to exit?') }
 my $window = new FLTK::Window(300, 180);
 $window->callback(\&window_callback);
 $window->begin();
-my $box = new FLTK::Widget(20, 40, 260, 100, "Hello, World!");
+my $box = new FLTK::Widget(20, 40, 260, 100, 'Hello, World!');
 $box->box(UP_BOX);
 $box->labelfont(HELVETICA_BOLD_ITALIC);
 $box->labelsize(36);

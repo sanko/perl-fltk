@@ -3,6 +3,7 @@ Changes
 examples/cursor.pl
 examples/gl.pl
 examples/hello.pl
+examples/helloask.pl
 examples/menubar.pl
 examples/message.pl
 inc/MBX/FLTK.pm

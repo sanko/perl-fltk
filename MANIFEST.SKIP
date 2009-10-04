@@ -67,13 +67,7 @@ xs/~FLTK.+$
 xs/SciTE.properties
 \.exe$
 
-
-
-examples/button.pl
-examples/callback.pl
-examples/demo.menu
-examples/demo.pl
-examples/~testing.pl
+examples/~.+.pl
 lib/FLTK/Constants.pm
 lib/FLTK/InvisibleBox.pod
 examples/pack.pl
@@ -105,12 +99,9 @@ SciTE.session
 .gitignore
 .gitsmudge.pl
 
-
-
 # temp
 Classes.pod
 Compatability.pod
-examples/helloask.pl
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
 examples/tinker.pl
