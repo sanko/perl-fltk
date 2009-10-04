@@ -607,14 +607,18 @@ fltk::Window::show( arga = NO_INIT, argb = NO_INIT )
     CASE: items == 1
         CODE:
             THIS->show( );
-    CASE: items == 2 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2))) == SVt_PVAV
+    CASE: items == 3 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2))) == SVt_PVAV
         int arga
         AV * argb
         CODE:
-            char ** REAL_INDEXES;
-            for ( int i = 0; i < av_len(argb); i++ )
-                REAL_INDEXES[i] = (char *)(av_fetch(argb, i, 0));
-            THIS->show( arga, (char ** ) REAL_INDEXES );
+            char ** _argb = new char * [ av_len( argb ) ];
+            for ( int n = 0; n < av_len( argb ); n++ ) {
+                SV ** item  = av_fetch(argb, n, 0);
+                if ( item && SvOK( * item ) )
+                    _argb[ n ] = (char *) SvPV_nolen( * item );
+            }
+            _argb[ av_len( argb ) ] = 0;
+            THIS->show(arga, _argb );
     CASE: items == 2
         fltk::Window * arga
         CODE:
