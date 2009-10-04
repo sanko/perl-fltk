@@ -18,21 +18,23 @@ FLTK::GlWindow - ...exactly what you think it is
 
 =head1 Description
 
-Provides an area in which the L<C<draw()>|/"draw"> method can use OpenGL to
-draw. This widget sets things up so OpenGL works, and also keeps an OpenGL
-"context" for that window, so that changes to the lighting and projection may
-be reused between redraws. GlWindow also flushes the OpenGL streams and swaps
-buffers after L<C<draw()>|/"draw"> returns.
+Provides an area in which the L<C<draw()>|FLTK::Widget/"draw"> method can use
+L<OpenGL|OpenGL> to draw. This widget sets things up so L<OpenGL|OpenGL>
+works, and also keeps an L<OpenGL|OpenGL> "context" for that window, so that
+changes to the lighting and projection may be reused between redraws.
+L<GlWindow|GlWindow> also flushes the L<OpenGL|OpenGL> streams and swaps
+buffers after L<C<draw()>|FLTK::Widget/"draw"> returns.
 
-You B<must> provide an implementation for L<C<draw()>|/"draw">. You can avoid
-reinitializing the viewport and lights and other things by checking
-L<C<valid()>|/"valid"> at the start of L<C<draw()>|/"draw"> and only doing the
-initialization if it is false.
+You B<must> provide an implementation for L<C<draw()>|FLTK::Widget/"draw">.
+You can avoid reinitializing the viewport and lights and other things by
+checking L<C<valid()>|FLTK::Widget/"valid"> at the start of
+L<C<draw()>|FLTK::Widget/"draw"> and only doing the initialization if it is
+false.
 
-L<C<draw()>|/"draw"> can I<only> use OpenGL calls. Do not attempt to call any
-of the functions in L<FLTK::draw|FLTK::draw>, or X or GDI32 or any other
-drawing api. Do not call L<C<glstart()>|FLTK::gl/"glstart"> or
-L<C<glfinish()>|FLTK::gl/"glfinish">.
+L<C<draw()>|FLTK::Widget/"draw"> can I<only> use L<OpenGL|OpenGL> calls. Do
+not attempt to call any of the functions in L<FLTK::draw|FLTK::draw>, or X or
+GDI32 or any other drawing api. Do not call L<C<glstart()>|FLTK::gl/"glstart">
+or L<C<glfinish()>|FLTK::gl/"glfinish">.
 
 =head2 Double Buffering
 
@@ -40,8 +42,8 @@ Normally double-buffering is enabled. You can disable it by chaning the
 L<C<mode()>|/"mode"> to turn off the C<DOUBLE_BUFFER> bit.
 
 If double-buffering is enabled, the back buffer is made current before
-L<C<draw()>|/"draw"> is called, and the back and front buffers are
-I<automatically> swapped after L<C<draw()>|/"draw"> is completed.
+L<C<draw()>|FLTK::Widget/"draw"> is called, and the back and front buffers are
+I<automatically> swapped after L<C<draw()>|FLTK::Widget/"draw"> is completed.
 
 Some tricks using the front buffer require you to control the swapping. You
 can call L<C<swap_buffers()>|/"swap_buffers"> to swap them (OpenGL does not
@@ -65,13 +67,14 @@ overlays, and besides it is fast enough that the original purpose of them is
 moot.
 
 By default the emulation is to call L<C<draw_overlay()>|/"draw_overlay"> after
-L<C<draw()>|/"draw"> and before swapping the buffers, so the overlay is just
-part of the normal image and does not blink. You can get some of the
-advantages of overlay hardware by setting the C<GL_SWAP_TYPE> environment
-variable, which will cause the front buffer to be used for the
-L<C<draw_overlay()>|/"draw_overlay"> method, and not call L<C<draw()>|/"draw">
-each time the overlay changes. This will be faster if L<C<draw()>|/"draw"> is
-very complex, but the overlay will blink. C<GL_SWAP_TYPE> can be set to:
+L<C<draw()>|FLTK::Widget/"draw"> and before swapping the buffers, so the
+overlay is just part of the normal image and does not blink. You can get some
+of the advantages of overlay hardware by setting the C<GL_SWAP_TYPE>
+environment variable, which will cause the front buffer to be used for the
+L<C<draw_overlay()>|/"draw_overlay"> method, and not call
+L<C<draw()>|FLTK::Widget/"draw"> each time the overlay changes. This will be
+faster if L<C<draw()>|FLTK::Widget/"draw"> is very complex, but the overlay
+will blink. C<GL_SWAP_TYPE> can be set to:
 
 =over
 
@@ -84,9 +87,9 @@ actually copies the back to the front buffer, rather than swapping them. If
 your card does this (most do) then this is best.
 
 =item C<NODAMAGE> indicates that behavior is like C<COPY> but I<nothing>
-changes the back buffer, including overlapping it with another OpenGL window.
-This is true of software OpenGL emulation, and may be true of some modern
-cards with lots of memory.
+changes the back buffer, including overlapping it with another
+L<OpenGL|OpenGL> window. This is true of software L<OpenGL|OpenGL> emulation,
+and may be true of some modern cards with lots of memory.
 
 =back
 
@@ -96,7 +99,7 @@ cards with lots of memory.
 
 The constructor sets the L<C<mode()>|/"mode"> to
 C<RGB_COLOR | DEPTH_BUFFER | DOUBLE_BUFFER> which is probably all that is
-needed for most 3D OpenGL graphics.
+needed for most 3D L<OpenGL|OpenGL> graphics.
 
 =for apidoc |G|FLTK::GlWindow win|new|int w|int h|char * label = ''|
 
@@ -139,33 +142,12 @@ fltk::GlWindow::new(package, ...)
             XSRETURN(1);
         }
 
-=for apidoc |G||create||
-
-
-
-=for apidoc |G||flush||
-
-
-
-=for apidoc |G||destroy||
-
-Besides getting rid of the window, this will destroy the L<context|/"context">
-if it belongs to the window.
-
-=cut
-
-void
-fltk::GlWindow::create( )
-
-void
-fltk::GlWindow::flush( )
-
 =for apidoc |G|char okay|valid||
 
 This flag is turned off on a new window or if the window is ever resized or
-the context is changed. It is turned on after L<C<draw()>|/"draw"> is called.
-L<C<draw()>|/"draw"> can use this to skip initializing the viewport, lights,
-or other pieces of the context.
+the context is changed. It is turned on after L<C<draw()>|FLTK::Widget/"draw">
+is called. L<C<draw()>|FLTK::Widget/"draw"> can use this to skip initializing
+the viewport, lights, or other pieces of the context.
 
   package My_GlWindow_Subclass;
   sub draw {
@@ -198,7 +180,7 @@ fltk::GlWindow::valid( char is_it = NO_INIT )
 
 =for apidoc |G||invalidate||
 
-Turn off L<C<valid()>|/"valid">.
+Turn off L<C<valid()>|FLTK::Widget/"valid">.
 
 =cut
 
@@ -211,8 +193,8 @@ fltk::GlWindow::invalidate( )
 
 =for apidoc |G|bool can|mode|int newmode|
 
-Set or change the OpenGL capabilites of the window. The value can be any of
-the symbols from\L<FLTK::visual|FLTK::visual> OR'd together:
+Set or change the L<OpenGL|OpenGL> capabilites of the window. The value can be
+any of the symbols from L<FLTK::visual|FLTK::visual> OR'd together:
 
 =over
 
@@ -243,7 +225,7 @@ buffering is \a not wanted.
 =item C<STEREO> stereo if possible
 
 =item C<NO_AUTO_SWAP> disables the automatic call to
-L<C<swap_buffers()>|/"swap_buffers"> after L<C<draw()>|/"draw">.
+L<C<swap_buffers()>|/"swap_buffers"> after L<C<draw()>|FLTK::Widget/"draw">.
 
 =item C<NO_ERASE_OVERLAY> if overlay hardware is used, don't call glClear
 before calling L<C<draw_overlay()>|/"draw_overlay">.
@@ -294,18 +276,19 @@ fltk::GlWindow::can_do( int mode = NO_INIT )
 
 =for apidoc |G|FLTK::GLContext glc|context||
 
-Return the current OpenGL context object being used by this window, or 0 if
-there is none.
+Return the current L<OpenGL|OpenGL> context object being used by this window,
+or C<0> if there is none.
 
 =for apidoc |G||context|FLTK::GLContext glc|bool destroy_flag = false|
 
-Set the OpenGL context object to use to draw this window.
+Set the L<OpenGL|OpenGL> context object to use to draw this window.
 
 This is a system-dependent structure (HGLRC on Windows, GLXContext on X, and
 AGLContext (may change) on OS/X), but it is portable to copy the context from
 one window to another. You can also set it to C<undef>, which will force FLTK
 to recreate the context the next time L<C<make_current()>|/"make_current"> is
-called, this is useful for getting around bugs in OpenGL implementations.
+called, this is useful for getting around bugs in L<OpenGL|OpenGL>
+implementations.
 
 C<destroy_flag> indicates that the context belongs to this window and should
 be destroyed by it when no longer needed. It will be destroyed when the window
@@ -328,26 +311,27 @@ fltk::GlWindow::context( fltk::GLContext glc = NO_INIT, bool destroy_flag = fals
 
 =for apidoc |G||make_current||
 
-Selects the OpenGL context for the widget, creating it if necessary. It is
-called automatically prior to the L<C<draw()>|/"draw"> method being called.
-You can call it in L<C<handle()>|/"handle"> to set things up to do OpenGL hit
-detection, or call it other times to do incremental update of the window.
+Selects the L<OpenGL|OpenGL> context for the widget, creating it if necessary.
+It is called automatically prior to the L<C<draw()>|FLTK::Widget/"draw">
+method being called. You can call it in L<C<handle()>|/"handle"> to set things
+up to do L<OpenGL|OpenGL> hit detection, or call it other times to do
+incremental update of the window.
 
 =for apidoc |G||swap_buffers||
 
 Swap the front and back buffers of this window (or copy the back buffer to the
-front, possibly clearing or garbaging the back one, depending on your OpenGL
-implementation.
+front, possibly clearing or garbaging the back one, depending on your
+L<OpenGL|OpenGL> implementation.
 
-This is called automatically after L<C<draw()>|/"draw"> unless the
+This is called automatically after L<C<draw()>|FLTK::Widget/"draw"> unless the
 C<NO_AUTO_SWAP> flag is set in the L<C<mode()>|/"mode">.
 
 =for apidoc |G||ortho||
 
 Set the projection so C<0, 0> is in the lower left of the window and each
 pixel is 1 unit wide/tall. If you are drawing 2D images, your
-L<C<draw()>|/"draw"> method may want to call this when L<C<valid()>|/"valid">
-is false.
+L<C<draw()>|FLTK::Widget/"draw"> method may want to call this when
+L<C<valid()>|FLTK::Widget/"valid"> is false.
 
 =cut
 
@@ -362,11 +346,12 @@ fltk::GlWindow::ortho( )
 
 =for apidoc |G|bool overlay|can_do_overlay||
 
-Return true if the hardware supports OpenGL overlay planes, and FLTK has been
-compiled to use them. If true, L<C<draw_overlay()>|/"draw_overlay"> will be
-called with OpenGL setup to draw these overlay planes, and
+Return true if the hardware supports L<OpenGL|OpenGL> overlay planes, and
+L<FLTK|Alien::FLTK> has been compiled to use them. If true,
+L<C<draw_overlay()>|/"draw_overlay"> will be called with L<OpenGL|OpenGL>
+setup to draw these overlay planes, and
 L<C<redraw_overlay()>|/"redraw_overlay"> will not cause the main
-L<C<draw()>|/"draw"> to be called.
+L<C<draw()>|FLTK::Widget/"draw"> to be called.
 
 =cut
 
@@ -386,10 +371,10 @@ L<C<show()>|/"show"> your window.
 
 =for apidoc |G||make_overlay_current||
 
-Selects the OpenGL context for the widget's overlay. This can be used to do
-incremental OpenGL drawing into the overlay. If hardware overlay is not
-supported, this sets things to draw into the front buffer, which is probably
-not good enough emulation to be usable.
+Selects the L<OpenGL|OpenGL> context for the widget's overlay. This can be
+used to do incremental L<OpenGL|OpenGL> drawing into the overlay. If hardware
+overlay is not supported, this sets things to draw into the front buffer,
+which is probably not good enough emulation to be usable.
 
 =cut
 
@@ -401,6 +386,31 @@ fltk::GlWindow::hide_overlay( )
 
 void
 fltk::GlWindow::make_overlay_current( )
+
+=for apidoc |G||destroy||
+
+Besides getting rid of the window, this will destroy the L<context|/"context">
+if it belongs to the window.
+
+=end apidoc
+
+=head1 Subclassing FLTK::GlWindow
+
+TODO
+
+=over
+
+=item C<create( )>
+
+
+
+=item C<flush( )>
+
+
+
+=back
+
+=cut
 
 BOOT:
     isa("FLTK::GlWindow", "FLTK::Window");
