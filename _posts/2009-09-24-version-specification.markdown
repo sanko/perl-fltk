@@ -7,18 +7,13 @@ categories: [version, fltk.pm]
 If you're thinking FLTK.pm's versioning scheme is a little convoluted, you're
 right.
 
-## FLTK.pm vs FL.pm vs FLTK2.pm vs FLTK???.pm
-
 Historically, the FLTK perl module has been based on the experimental 2.0.x
 branch and I have decided to continue working with the 2.0.x branch under the
-FLTK namespace.
+FLTK namespace. The previous maintainer released a single distribution with
+$VERSION set to 0.52 so, despite the project being only around 30% complete,
+my version numbers will begin with 0.530.
 
-The 3.0.x (or whatever branch is considered current by then) based module will
-be under the FLTK3 namespace. ...unless 3.0.x takes the 1.3.x branch's API
-(which uses FL_ instead of 2.0.x's fltk:: namespace) in which case the module
-will be FL.pm.
-
-## FLTK2 vs. FLTK vs. FLTK???
+## fltk 2.0.x vs. fltk 1.3.x vs. fltk ???
 
 To clarify... and by 'clarify', I mean 'confuse further'...
 
@@ -38,6 +33,11 @@ To clarify... and by 'clarify', I mean 'confuse further'...
 
   The 2.0.x branch predates both the 1.2.x and 1.3.x branches but is still
   considered experimental.
-* A theoretical 3.0.x branch will soon (according to chatter) unify the 1.3.x
-  and 2.0.x branches, borrowing features from both, and reducing confusion for
+* A new 3.0.x branch will soon (according to chatter) unify the 1.3.x  and
+  2.0.x branches, borrowing features from both, and reducing confusion for
   new users.
+
+  The FLTK-Perl project will be following this branch as it develops. For more
+  on the goals of the 3.0.x branch of fltk, see
+  [Easy as 1, 2, 3](http://fltk.org/newsgroups.php?s20445+gfltk.general+v20449+T0)
+  by Matthias Melcher.
