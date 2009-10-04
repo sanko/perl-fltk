@@ -4,6 +4,7 @@ examples/cursor.pl
 examples/gl.pl
 examples/hello.pl
 examples/menubar.pl
+examples/message.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod

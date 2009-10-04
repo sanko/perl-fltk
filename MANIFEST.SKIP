@@ -111,7 +111,6 @@ SciTE.session
 Classes.pod
 Compatability.pod
 examples/helloask.pl
-examples/message.pl
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
 examples/tinker.pl

@@ -5,30 +5,24 @@ use strict;
 use warnings;
 use FLTK;
 $|++;
-if (!FLTK::ask("Do you want to disable beep sounds ?", "continue")) {
+if (!FLTK::ask('Do you want to disable beep sounds?')) {
     FLTK::beep_on_dialog(1);
 }
 FLTK::message(
-            "Spelling check sucessfull, %d errors found with %g%% confidence",
-            1002, 100 * (15 / 77.0));
-FLTK::alert("Quantum fluctuations in the space-time continuum detected, "
-                . "you have %g seconds to comply.",
-            10.0
+     'Spelling check sucessfull, 1002 errors found with 19.4805% confidence');
+FLTK::alert(
+    'Quantum fluctuations in the space-time continuum detected, you have 10 seconds to comply.'
 );
-printf("FLTK::ask returned %d\n",
-       FLTK::ask("Do you really want to %s?", "continue"));
-printf("FLTK::choice returned %d\n",
-       FLTK::choice("Choose one of the following:", "choice0",
-                    "choice1",                      "choice2"
-       )
-);
-my $r = FLTK::input("Please enter a string for '%s':",
-                    "this is the default value",
-                    "testing"
-);
-printf("FLTK::input returned \"%s\"\n", $r ? $r : "NULL");
-$r = FLTK::password("Enter %s's password:", 0, "somebody");
-printf("FLTK::password returned \"%s\"\n", $r ? $r : "NULL");
+printf "FLTK::ask returned %d\n",
+    FLTK::ask('Do you really want to continue?');
+printf "FLTK::choice returned %d\n",
+    FLTK::choice('Choose one of the following:', 'choice0',
+                 'choice1',                      'choice2');
+my $r = FLTK::input('Please enter a string for "testing":',
+                    'this is the default value');
+printf qq[FLTK::input returned "%s"\n], $r ? $r : 'NULL';
+$r = FLTK::password(q[Enter sombody's password:]);
+printf qq[FLTK::password returned "%s"\n], $r ? $r : 'NULL';
 __END__
 Copyright (C) 2009 by Sanko Robinson <sanko@cpan.org>
 
