@@ -34,11 +34,7 @@
 # Dist related stuff
 \bFLTK-[\d\.\_]+
 src/
-
-# Created by me...
-
-^~.*
-\bFLTK2-[\d\.\_]+
+snapshots/
 
 # Avoid objects, archives, and other build-related junk
 \.o$
@@ -64,31 +60,8 @@ xs/~FLTK.+$
 # created by doxygen
 /documentation/html/.+
 
+# SciTE
 xs/SciTE.properties
-\.exe$
-
-examples/~.+.pl
-lib/FLTK/Constants.pm
-lib/FLTK/InvisibleBox.pod
-examples/pack.pl
-
-~Build.pm
-~configure.pl
-
-xs/C\+P\.xsi
-
-~pod\.*.pod
-
-xs/FLTK_.+
-xs/fltk/.+
-
-~autodoc.pl
-~pod.pl
-~pod/perlapi.pod
-~pod/perlintern.pod
-~test.html
-~test.pod6
-
 left.session
 right.session
 SciTE.session
@@ -107,12 +80,10 @@ lib/FLTK/Version.pm
 examples/tinker.pl
 \.html?
 
-# Tests for stuff I haven't (re)written yet
+# Tests for stuff I haven't (re)written yet and utility scripts
 t/~.+
-examples/timer.pl
-examples/fltk.ico
-examples/~cpp.pl
 examples/~.+
+~.+\.pl
 
 # Don't include these developer only files
 inc/MBX/FLTK/Developer.pm
