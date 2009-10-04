@@ -1,4 +1,3 @@
-#!perl -w -I../blib/arch/ -I../blib/lib
 
 =pod
 
