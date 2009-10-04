@@ -41,7 +41,7 @@ my $range     = 12;
 }
 my $gl = MyGlWindow->new(100, 100, 500, 500, 'FLTK OpenGL Window');
 $gl->resizable($gl);
-$gl->show();    # this actually opens the window
+$gl->show(1, [qw[T hi s]]);    # this actually opens the window
 
 sub tick {
     my ($v) = @_;
