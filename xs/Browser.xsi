@@ -920,7 +920,7 @@ find the settings from their L<C<draw()>|/"draw"> methods.
 
 =cut
 
-AV*
+AV *
 fltk::Browser::column_labels ( char * col1 = NO_INIT, ... )
     CASE: items == 1
         CODE:
