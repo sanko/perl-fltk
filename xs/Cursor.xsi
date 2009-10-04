@@ -141,6 +141,22 @@ CURSOR_DEFAULT( )
             CURSOR_NO = 12
           CURSOR_NONE = 13
 
+BOOT:
+    export_tag( "CURSOR_DEFAULT", "cursor" );
+    export_tag( "CURSOR_ARROW",   "cursor" );
+    export_tag( "CURSOR_CROSS",   "cursor" );
+    export_tag( "CURSOR_WAIT",    "cursor" );
+    export_tag( "CURSOR_INSERT",  "cursor" );
+    export_tag( "CURSOR_HAND",    "cursor" );
+    export_tag( "CURSOR_HELP",    "cursor" );
+    export_tag( "CURSOR_MOVE",    "cursor" );
+    export_tag( "CURSOR_NS",      "cursor" );
+    export_tag( "CURSOR_WE",      "cursor" );
+    export_tag( "CURSOR_NWSE",    "cursor" );
+    export_tag( "CURSOR_NESW",    "cursor" );
+    export_tag( "CURSOR_NO",      "cursor" );
+    export_tag( "CURSOR_NONE",    "cursor" );
+
 MODULE = FLTK               PACKAGE = FLTK::Widget
 
 =for apidoc |||cursor|FLTK::Cursor * c|

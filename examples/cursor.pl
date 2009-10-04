@@ -13,6 +13,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use FLTK qw[:cursor :events run];
@@ -45,7 +46,7 @@ my %cursors = ('CURSOR_ARROW'  => CURSOR_ARROW,
             return 0;
         }
         return 1 if ($event == ::PUSH);    # drag the cursor around
-        return FLTK::Widget::handle($self, $event);
+        return 0;
     }
 }
 
