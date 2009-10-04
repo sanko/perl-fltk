@@ -248,7 +248,7 @@ END
         }
         require Perl::Tidy;
         my $demo_files
-            = $self->rscan_dir(File::Spec->catdir('example'), qr[\.pl$]);
+            = $self->rscan_dir(File::Spec->catdir('examples'), qr[\.pl$]);
         my $inst_files
             = $self->rscan_dir(File::Spec->catdir('inc'), qr[\.pm$]);
         for my $files ([keys(%{$self->script_files})],       # scripts first
