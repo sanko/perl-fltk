@@ -1,1 +1,31 @@
+ html body div#container {
+ margin-left:auto;
+ margin-right:auto;
+ max-width: 65em;
+ width:auto!important
+ }
+html body div#container div#hips div#extra-b,
+html body div#container div#hips div#extra-c {
+	display: none;
+}
 
+/*
+~ html body div#container div#hips div#hips-load {
+~ 	max-width: 48em;
+~ 	min-width: 20em;
+~ 	float: left;
+~ }
+~
+~ html body div#container div#hips div#extra-b {
+~ 	color: #FFF;
+~  	float: right;
+~ 	width: 26em;
+~ 	border: 1px solid #fff;
+~ }
+~
+~ html body div#container div#hips div#extra-c {
+~ 	clear: right;border: 1px solid #fff;
+~ 	float: right;
+~ 	width: 26em;
+~ }
+*/
