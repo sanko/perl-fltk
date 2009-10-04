@@ -3,22 +3,24 @@ layout: default
 ---
 <dl id="archives">
 {%for post in site.posts%}
-    {%if post.date|date:"%B" != previous_post.date|date:"%B"%}
-        {%if post.date|date:"%Y" != previous_post.date|date:"%Y"%}
-            {%assign year_changed = true%}
-        {%else%}
-            {%assign year_changed = false%}
-        {%endif%}
+{%  unless post.layout != 'post' or post.categories contains 'page'%}
+{%      if post.date|date:"%B" != previous_post.date|date:"%B"%}
+{%          if post.date|date:"%Y" != previous_post.date|date:"%Y"%}
+{%              assign year_changed = true%}
+{%          else%}
+{%              assign year_changed = false%}
+{%          endif%}
         <dt class="archives-month{%if year_changed%} archives-year{%endif%}">
         {{post.date | date:"%B"}}
-        {%if year_changed%}
+{%          if year_changed%}
             <span id='archives-{{post.date | date:"%Y"}}' class="archives-year">{{post.date | date:"%Y"}}</span>
-        {%endif%}
+{%          endif%}
         </dt>
-    {%endif%}
+{%      endif%}
     <dd>
-        <span class="archives-date">{{post.date | date:"%d"}}</span> <a href=".{{post.url}}" class="archives-post">{{post.title}}</a>
+        <span class="archives-date">{{post.date | date:"%d"}}</span> <a href=".{{post.url}}" class="archives-post">{%if post.categories contains 'tutorial'%}Tutorial: {%endif%}{{post.title}}</a>
     </dd>
-    {%assign previous_post = post%}
+{%      assign previous_post = post%}
+{%  endunless%}
 {%endfor%}
 </dl>

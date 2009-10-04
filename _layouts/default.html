@@ -11,13 +11,14 @@
     <meta name="author"      content="{{site.author.name}}" />
     <meta name="description" content="{{site.description}}" />
 
-    <base href="http://sanko.github.com/fltk-perl/" />
+    <base href="{%if site.source != '.'%}http://sanko.github.com/fltk-perl{%endif%}/" />
+
     <link rel="alternate"  type="application/atom+xml"     href="{{site.feed}}" title="Recent Entries" />
 {%for css in site.css%}
     <link rel="stylesheet" type="text/css"                 href="{{css}}" />{%endfor%}
 {%for css in page.css%}
     <link rel="stylesheet" type="text/css"                 href="{{css}}" />{%endfor%}
-    <link rel="icon"       type="image/vnd.microsoft.icon" href="http://sanko.github.com/fltk-perl/favicon.ico" />
+    <link rel="icon"       type="image/vnd.microsoft.icon" href="/favicon.ico" />
   </head>
   <body>
     <div id="container">
@@ -29,7 +30,7 @@
               "title-fltk">FLTK</span><span class=
               "title-dotpm">.pm</span></a>
               <p class="desc">
-                Interface to the Fast Light Toolkit
+                Bindings to the Fast Light Toolkit
               </p>
             </div>
           </div>
@@ -38,7 +39,7 @@
               <div class="feed">
                 <ul>
                   <li class="rss">
-                    <a href="http://sanko.github.com/fltk-perl/{{site.feed}}">Full Posts</a>
+                    <a href="/{{site.feed}}">Full Posts</a>
                   </li>
                   <li class="twitter">
                   <a href ="http://twitter.com/FLTKpm_commits"
@@ -52,7 +53,7 @@
                 <ul>
                 <li{%if page.url == ''%} class="current-page-item"{%endif%}>
                   <a href=
-                  "http://sanko.github.com/fltk-perl/" title="Home"><span>Home</span></a>
+                  "/" title="Home"><span>Home</span></a>
                 </li>
 {%for p in site.categories.page%}
                 <li class="page-item page-item{{p.id|replace:"/","-"}}{%if page.url == p.url%} current-page-item{%endif%}">
@@ -69,6 +70,13 @@
           <div id="hips-load">
             {{content}}
           </div>
+          <div id="extra-a">
+            <a href="http://github.com/sanko/fltk-perl"><img alt=
+              "Fork me on GitHub" src=
+              "http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" /></a>
+          </div>
+          <div id="extra-b">Extra B</div>
+          <div id="extra-c">Extra C</div>
           <div id="back-to-top">
             <span><a href="#top" title="top">top</a></span>
           </div>
@@ -93,7 +101,7 @@
                  >perl4mIRC</a>
             </span>
             <span class="hov">
-              <a href ="http://sanko.github.com/fltk-perl/"
+              <a href ="/"
                  id   ="fltk"
                  title="You're looking at it."
                  >FLTK.pm</a>
@@ -112,13 +120,6 @@
             </span>
           </p>
         </div>
-        <div id="extra-a">
-          <a href="http://github.com/sanko/fltk-perl"><img alt=
-          "Fork me on GitHub" src=
-          "http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" /></a>
-      </div>
-      <div id="extra-b"></div>
-      <div id="extra-c"></div>
     </div>
 {%for js in site.js%}
     <script src="{{js}}" type="text/javascript" charset="utf-8"></script>{%endfor %}

@@ -1,12 +1,16 @@
-auto:           true
+source:         .
+destination:    ./_site/fltk-perl
+lsi:            false
 pygments:       true
+
+auto:           true
 permalink:      pretty
 paginate:       5
 
 title:          FLTK.pm
 feed:           atom.xml
 sitemap:        sitemap.xml
-description:    "Perl interface to the Fast Light Toolkit"
+description:    "Perl bindings to the Fast Light Toolkit"
 
 author:
     name:       Sanko Robinson
