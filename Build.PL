@@ -78,7 +78,7 @@ my $mb = $class->new(
         resources => {
               bugtracker => 'http://github.com/sanko/fltk-perl/issues',
               ChangeLog => 'http://github.com/sanko/fltk-perl/commits/master',
-              homepage  => 'http://sanko.github.com.com/fltk-perl/',
+              homepage  => 'http://sanko.github.com/fltk-perl/',
               license => 'http://www.perlfoundation.org/artistic_license_2_0',
               repository => 'http://github.com/sanko/fltk-perl'
         }
