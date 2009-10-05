@@ -10,6 +10,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Module::Build;
@@ -68,7 +69,8 @@ my $mb = $class->new(
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
                        )
     ],
-    no_index   => {directory => [qw[examples inc]]},
+    no_index =>
+        {directory => [qw[examples inc]], files => [qw[xs/ppport.pl]]},
     test_files => \@tests,
     meta_merge => {
         generated_by => 'Conversion, software version 7.0',
