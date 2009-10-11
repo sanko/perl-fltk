@@ -120,16 +120,3 @@ sub find_cb {
     return unless $_ =~ m[.+\.t$];
     return push @tests, $File::Find::name;
 }
-
-BEGIN {
-    if ($] < 5.008008) {
-        warn sprintf 'Perl v5.8.8 required--this is only v%vd, stopped', $^V;
-        exit 0;
-    }
-    if ($Module::Build::VERSION < 0.3) {
-        warn sprintf
-            'Module::Build version 0.3 required--this is only version %s',
-            $Module::Build::VERSION;
-        exit 0;
-    }
-}
