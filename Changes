@@ -1,3 +1,21 @@
+Version 0.XXXXX | Next Sunday AD | fcbbbca
+
+    API Changes/Compatibility Information:
+     * New Widget types
+       - FLTK::PackedGroup
+
+    Resolved Issues/Bug Fixes:
+     * ...see below
+
+    Internal/Behavioral Changes:
+     * It actually exists
+
+    Documentation/Sample Code/Test Suite:
+     * ...see above
+
+    Notes:
+     * The FLTK project is just getting started so now's a great time to join
+
 Version 0.530 | 2009-10-05 00:42:52Z (Mon, 05 Oct 2009) | 3b70f43
 
     API Changes/Compatibility Information:

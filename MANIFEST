@@ -108,6 +108,7 @@ xs/MultiLineOutput.xsi
 xs/NamedStyle.xsi
 xs/NumericInput.xsi
 xs/Output.xsi
+xs/PackedGroup.xsi
 xs/Plugin.xsi
 xs/ppport.pl
 xs/rc/fltk.ico

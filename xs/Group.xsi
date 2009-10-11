@@ -382,4 +382,6 @@ BOOT:
 
 INCLUDE: Menu.xsi
 
+INCLUDE: PackedGroup.xsi
+
 #endif // ifndef DISABLE_GROUP
