@@ -87,6 +87,7 @@ fltk::NamedStyle            *   O_FLTK
 fltk::NumericInput          *   O_FLTK
 fltk::PackedGroup           *   O_FLTK
 fltk::pnmImage              *   O_FLTK
+fltk::PopupMenu             *   O_FLTK
 fltk::Output                *   O_FLTK
 fltk::Rectangle             *   O_FLTK
 fltk::Rectangle                 O_FLTK

@@ -731,4 +731,6 @@ BOOT:
 
 INCLUDE: MenuBar.xsi
 
+INCLUDE: PopupMenu.xsi
+
 #endif // ifndef DISABLE_MENU
