@@ -1,8 +1,8 @@
-Version 0.XXXXX | Next Sunday AD | fcbbbca
+Version 0.XXXXX | Next Sunday AD | 53f6547
 
     API Changes/Compatibility Information:
-     * New Widget types
-       - FLTK::PackedGroup
+     * New Widgets/Types
+       - PackedGroup, PixelType
 
     Resolved Issues/Bug Fixes:
      * ...see below

@@ -16,7 +16,7 @@ const uchar *   T_PV
 fltk::Flags            T_INT
 fltk::Color            T_INT
 fltk::Browser::linepos O_FLTK
-fltk::PixelType        O_FLTK
+fltk::PixelType        T_ENUM
 
 # Objects
 fltk::Adjuster        *   O_FLTK

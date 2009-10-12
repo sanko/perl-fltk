@@ -310,6 +310,8 @@ INCLUDE: MenuSection.xsi
 
 INCLUDE: MultiImage.xsi
 
+INCLUDE: PixelType.xsi
+
 INCLUDE: Plugin.xsi
 
 INCLUDE: Rectangle.xsi
