@@ -101,7 +101,7 @@ fltk::PackedGroup::new( int x, int y, int w, int h, char * label = 0, bool begin
             XSRETURN(1);
         }
 
-=for apidoc ||void|spacing|int s|
+=for apidoc |||spacing|int s|
 
 Set a fixed-size gap between all the children. This defaults to zero. If you
 change this in an already-existing one, call
@@ -128,7 +128,7 @@ fltk::PackedGroup::spacing( int s = NO_INIT )
 
 Get the left margin for child widgets.
 
-=for apidoc ||void|margin_left|int l|
+=for apidoc |||margin_left|int l|
 
 Set the left margin for child widgets.
 
@@ -149,7 +149,7 @@ fltk::PackedGroup::margin_left( int l = NO_INIT )
 
 Get the right margin for child widgets.
 
-=for apidoc ||void|margin_right|int r|
+=for apidoc |||margin_right|int r|
 
 Set the right margin for child widgets.
 
@@ -170,7 +170,7 @@ fltk::PackedGroup::margin_right( int r = NO_INIT )
 
 Get the top margin for child widgets.
 
-=for apidoc ||void|margin_top|int t|
+=for apidoc |||margin_top|int t|
 
 Set the top margin for child widgets.
 
@@ -191,7 +191,7 @@ fltk::PackedGroup::margin_top( int t = NO_INIT )
 
 Get the bottom margin for child widgets.
 
-=for apidoc ||void|margin_bottom|int b|
+=for apidoc |||margin_bottom|int b|
 
 Set the bottom margin for child widgets.
 
@@ -208,7 +208,7 @@ fltk::PackedGroup::margin_bottom( int b = NO_INIT )
         CODE:
             THIS->margin_bottom( b );
 
-=for apidoc ||void|margin|int m|
+=for apidoc |||margin|int m|
 
 Set the L<left|FLTK::PackedGroup/"margin_left">,
 L<right|FLTK::PackedGroup/"margin_right">,
