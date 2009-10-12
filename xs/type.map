@@ -13,10 +13,10 @@ const int   *   T_IPTR
 const uchar *   T_PV
 
 # Enum
-fltk::Flags            T_INT
-fltk::Color            T_INT
+fltk::Flags            T_ENUM
+fltk::Color            T_ENUM
 fltk::Browser::linepos O_FLTK
-fltk::PixelType        T_ENUM
+fltk::PixelType        O_FLTK
 
 # Objects
 fltk::Adjuster        *   O_FLTK
