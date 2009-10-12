@@ -1,113 +1,113 @@
 TYPEMAP
 
 # Defaults
-const char  *   T_PV
-const char  **  T_PV
-char        **  T_PV
-uchar           T_U_CHAR
-uchar       *   T_PV
-float           T_FLOAT
-const void  *   T_PTR
-int         *   T_IPTR
-const int   *   T_IPTR
-const uchar *   T_PV
+const char                  *   T_PV
+const char                  **  T_PV
+char                        **  T_PV
+uchar                           T_U_CHAR
+uchar                       *   T_PV
+float                           T_FLOAT
+const void                  *   T_PTR
+int                         *   T_IPTR
+const int                   *   T_IPTR
+const uchar                 *   T_PV
 
 # Enum
-fltk::Flags            T_ENUM
-fltk::Color            T_ENUM
-fltk::Browser::linepos O_FLTK
-fltk::PixelType        O_FLTK
+fltk::Flags                     T_ENUM
+fltk::Color                     T_ENUM
+fltk::Browser::linepos          O_FLTK
+fltk::PixelType                 O_FLTK
 
 # Objects
-fltk::Adjuster        *   O_FLTK
-fltk::AssociationType        O_FLTK
-fltk::AssociationType *   O_FLTK
-fltk::AssociationFunctor     O_FLTK
-fltk::AssociationFunctor *   O_FLTK
-fltk::AlignGroup      *   O_FLTK
-fltk::BarGroup        *   O_FLTK
-fltk::Browser         *   O_FLTK
-fltk::Browser::Mark   *   O_FLTK
-fltk::Box             *   O_FLTK
-fltk::Button          *   O_FLTK
-fltk::Callback        *   O_FLTK
-fltk::ccHueBox        *   O_FLTK
-fltk::ccValueBox      *   O_FLTK
-fltk::ccCellBox       *   O_FLTK
-fltk::CheckButton     *   O_FLTK
-fltk::Choice          *   O_FLTK
-fltk::Clock           *   O_FLTK
-fltk::ClockOutput     *   O_FLTK
-fltk::ColorChooser    *   O_FLTK
-fltk::ComboBox        *   O_FLTK
-fltk::Cursor          *   O_FLTK
-fltk::CycleButton     *   O_FLTK
-fltk::Dial            *   O_FLTK
-fltk::EngravedLabel   *   O_FLTK
-fltk::FileBrowser     *   O_FLTK
-fltk::FileChooser     *   O_FLTK
-fltk::FileIcon        *   O_FLTK
-fltk::FileInput       *   O_FLTK
-fltk::FillDial        *   O_FLTK
-fltk::FillSlider      *   O_FLTK
-fltk::FlatBox         *   O_FLTK
-fltk::FloatInput      *   O_FLTK
-fltk::Font            *   O_FLTK
-fltk::FrameBox        *   O_FLTK
-fltk::GlWindow        *   O_FLTK
-fltk::GLContext           O_FLTK
-fltk::Group           *   O_FLTK
-fltk::HelpDialog      *   O_FLTK
-fltk::HelpView        *   O_FLTK
-fltk::HighlightBox    *   O_FLTK
-fltk::HighlightButton *   O_FLTK
-fltk::Image           *   O_FLTK
-fltk::Input           *   O_FLTK
-fltk::InputBrowser    *   O_FLTK
-fltk::IntInput        *   O_FLTK
-fltk::InvisibleBox    *   O_FLTK
-fltk::Item            *   O_FLTK
-fltk::ItemGroup       *   O_FLTK
-fltk::LabelType       *   O_FLTK
-fltk::LightButton     *   O_FLTK
-fltk::LineDial        *   O_FLTK
-fltk::List            *   O_FLTK
-fltk::Menu            *   O_FLTK
-fltk::MenuBar         *   O_FLTK
-fltk::MenuWindow      *   O_FLTK
-fltk::MenuSection     *   O_FLTK
-      fltk::Monitor       O_FLTK
-      fltk::Monitor   *   O_FLTK
-const fltk::Monitor   *   O_FLTK
-fltk::MultiBrowser    *   O_FLTK
-fltk::MultiImage      *   O_FLTK
-fltk::MultiLineInput  *   O_FLTK
-fltk::MultiLineOutput *   O_FLTK
-fltk::NamedStyle      *   O_FLTK
-fltk::NumericInput    *   O_FLTK
-fltk::PackedGroup     *   O_FLTK
-fltk::pnmImage        *   O_FLTK
-fltk::Output          *   O_FLTK
-fltk::Rectangle       *   O_FLTK
-fltk::Rectangle           O_FLTK
-fltk::Scrollbar       *   O_FLTK
-fltk::Slider          *   O_FLTK
-const fltk::Style     *   O_FLTK
-      fltk::Style     *   O_FLTK
-const fltk::Symbol    *   O_FLTK
-fltk::Symbol          *   O_FLTK
-fltk::ShortcutFunctor *   O_FLTK
-fltk::Valuator        *   O_FLTK
-fltk::ValueInput      *   O_FLTK
-fltk::ValueOutput     *   O_FLTK
-fltk::Widget          *   O_FLTK
-fltk::WidgetSubclass  *   O_FLTK
-const Widget          *   O_FLTK
-      fltk::Window    *   O_FLTK
-const fltk::Window    *   O_FLTK
+fltk::Adjuster              *   O_FLTK
+fltk::AssociationType           O_FLTK
+fltk::AssociationType       *   O_FLTK
+fltk::AssociationFunctor        O_FLTK
+fltk::AssociationFunctor    *   O_FLTK
+fltk::AlignGroup            *   O_FLTK
+fltk::BarGroup              *   O_FLTK
+fltk::Browser               *   O_FLTK
+fltk::Browser::Mark         *   O_FLTK
+fltk::Box                   *   O_FLTK
+fltk::Button                *   O_FLTK
+fltk::Callback              *   O_FLTK
+fltk::ccHueBox              *   O_FLTK
+fltk::ccValueBox            *   O_FLTK
+fltk::ccCellBox             *   O_FLTK
+fltk::CheckButton           *   O_FLTK
+fltk::Choice                *   O_FLTK
+fltk::Clock                 *   O_FLTK
+fltk::ClockOutput           *   O_FLTK
+fltk::ColorChooser          *   O_FLTK
+fltk::ComboBox              *   O_FLTK
+fltk::Cursor                *   O_FLTK
+fltk::CycleButton           *   O_FLTK
+fltk::Dial                  *   O_FLTK
+fltk::EngravedLabel         *   O_FLTK
+fltk::FileBrowser           *   O_FLTK
+fltk::FileChooser           *   O_FLTK
+fltk::FileIcon              *   O_FLTK
+fltk::FileInput             *   O_FLTK
+fltk::FillDial              *   O_FLTK
+fltk::FillSlider            *   O_FLTK
+fltk::FlatBox               *   O_FLTK
+fltk::FloatInput            *   O_FLTK
+fltk::Font                  *   O_FLTK
+fltk::FrameBox              *   O_FLTK
+fltk::GlWindow              *   O_FLTK
+fltk::GLContext                 O_FLTK
+fltk::Group                 *   O_FLTK
+fltk::HelpDialog            *   O_FLTK
+fltk::HelpView              *   O_FLTK
+fltk::HighlightBox          *   O_FLTK
+fltk::HighlightButton       *   O_FLTK
+fltk::Image                 *   O_FLTK
+fltk::Input                 *   O_FLTK
+fltk::InputBrowser          *   O_FLTK
+fltk::IntInput              *   O_FLTK
+fltk::InvisibleBox          *   O_FLTK
+fltk::Item                  *   O_FLTK
+fltk::ItemGroup             *   O_FLTK
+fltk::LabelType             *   O_FLTK
+fltk::LightButton           *   O_FLTK
+fltk::LineDial              *   O_FLTK
+fltk::List                  *   O_FLTK
+fltk::Menu                  *   O_FLTK
+fltk::MenuBar               *   O_FLTK
+fltk::MenuWindow            *   O_FLTK
+fltk::MenuSection           *   O_FLTK
+      fltk::Monitor             O_FLTK
+      fltk::Monitor         *   O_FLTK
+const fltk::Monitor         *   O_FLTK
+fltk::MultiBrowser          *   O_FLTK
+fltk::MultiImage            *   O_FLTK
+fltk::MultiLineInput        *   O_FLTK
+fltk::MultiLineOutput       *   O_FLTK
+fltk::NamedStyle            *   O_FLTK
+fltk::NumericInput          *   O_FLTK
+fltk::PackedGroup           *   O_FLTK
+fltk::pnmImage              *   O_FLTK
+fltk::Output                *   O_FLTK
+fltk::Rectangle             *   O_FLTK
+fltk::Rectangle                 O_FLTK
+fltk::Scrollbar             *   O_FLTK
+fltk::Slider                *   O_FLTK
+const fltk::Style           *   O_FLTK
+      fltk::Style           *   O_FLTK
+const fltk::Symbol          *   O_FLTK
+fltk::Symbol                *   O_FLTK
+fltk::ShortcutFunctor       *   O_FLTK
+fltk::Valuator              *   O_FLTK
+fltk::ValueInput            *   O_FLTK
+fltk::ValueOutput           *   O_FLTK
+fltk::Widget                *   O_FLTK
+fltk::WidgetSubclass        *   O_FLTK
+const Widget                *   O_FLTK
+      fltk::Window          *   O_FLTK
+const fltk::Window          *   O_FLTK
 
-# Objects that aren't members of fltk
-AnsiWidget      *   O_FLTK
+# Objects that aren't   members of fltk
+AnsiWidget                  *   O_FLTK
 
 OUTPUT
 O_FLTK
