@@ -314,6 +314,8 @@ INCLUDE: PixelType.xsi
 
 INCLUDE: Plugin.xsi
 
+INCLUDE: pnmImage.xsi
+
 INCLUDE: Rectangle.xsi
 
 #INCLUDE: Slider.xsi
