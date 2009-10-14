@@ -1,8 +1,8 @@
-Version 0.XXXXX | Next Sunday AD | 53f6547
+Version 0.XXXXX | Next Sunday AD | 10c2d42
 
     API Changes/Compatibility Information:
      * New Widgets/Types
-       - PackedGroup, PixelType
+       - PackedGroup, PixelType, Preferences
 
     Resolved Issues/Bug Fixes:
      * ...see below

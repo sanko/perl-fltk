@@ -316,6 +316,8 @@ INCLUDE: Plugin.xsi
 
 INCLUDE: pnmImage.xsi
 
+INCLUDE: Preferences.xsi
+
 INCLUDE: Rectangle.xsi
 
 #INCLUDE: Slider.xsi

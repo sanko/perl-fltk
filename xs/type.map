@@ -88,6 +88,8 @@ fltk::NumericInput          *   O_FLTK
 fltk::PackedGroup           *   O_FLTK
 fltk::pnmImage              *   O_FLTK
 fltk::PopupMenu             *   O_FLTK
+fltk::Preferences           *   O_FLTK
+fltk::Preferences::Root         T_ENUM
 fltk::Output                *   O_FLTK
 fltk::Rectangle             *   O_FLTK
 fltk::Rectangle                 O_FLTK
