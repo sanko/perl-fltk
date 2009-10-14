@@ -10,6 +10,10 @@ MODULE = FLTK               PACKAGE = FLTK::ValueInput
 
 =for git $Id$ for got=
 
+=head1 NAME
+
+FLTK::ValueInput - Text field for inputing a floating-point number
+
 =head1 Description
 
 Controls a single floating point value through a combination of a

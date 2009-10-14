@@ -10,6 +10,10 @@ MODULE = FLTK               PACKAGE = FLTK::ValueOutput
 
 =for git $Id$ for got=
 
+=head1 NAME
+
+FLTK::ValueOutput - Valuator that displays the number like a text box
+
 =head1 Description
 
 A valuator that displays the number like a text box. This is indended for

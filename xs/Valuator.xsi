@@ -10,6 +10,10 @@ MODULE = FLTK               PACKAGE = FLTK::Valuator
 
 =for git $Id$ for got=
 
+=head1 NAME
+
+FLTK::Valuator - Base class for sliders and all other one-value "knobs"
+
 =head1 Description
 
 Base class for sliders and all other one-value "knobs". The

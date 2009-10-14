@@ -10,6 +10,10 @@ MODULE = FLTK               PACKAGE = FLTK::Slider
 
 =for git $Id$ for got=
 
+=head1 NAME
+
+FLTK::Slider - Slider value control
+
 =head1 Description
 
 This widget contains a sliding "knob" that controls a single floating-point
