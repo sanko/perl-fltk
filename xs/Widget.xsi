@@ -2665,4 +2665,7 @@ INCLUDE: ccValueBox.xsi
 
 INCLUDE: ClockOutput.xsi
 
+
+INCLUDE: ProgressBar.xsi
+
 #endif // ifndef DISABLE_WIDGET

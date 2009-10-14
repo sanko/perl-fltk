@@ -116,6 +116,7 @@ xs/pnmImage.xsi
 xs/PopupMenu.xsi
 xs/ppport.pl
 xs/Preferences.xsi
+xs/ProgressBar.xsi
 xs/rc/fltk.ico
 xs/rc/icons.rc
 xs/rc/resource.h
