@@ -21,7 +21,7 @@ my $automated_testing = $ENV{AUTOMATED_TESTING} || $ENV{PERL_MM_USE_DEFAULT};
 my $is_developer = ((-d '.git') ? 1 : 0) or ($ENV{RELEASE_TESTING} ? 1 : 0);
 my @tests;
 find \&find_cb, qw[t/10000_basic t/20000_functions t/40000_widgets
-    50000_objects t/60000_types], ($is_developer ? 't/90000_author' : ());
+    t/50000_objects t/60000_types], ($is_developer ? 't/90000_author' : ());
 @tests = sort @tests;
 my $class = $is_developer ? 'MBX::FLTK::Developer' : 'MBX::FLTK';
 
@@ -88,13 +88,12 @@ my $mb = $class->new(
     get_options => {'interactive!' => {},
                     'messy!'       => {}
     },
- );#
-$mb->quiet(1); # Don't print while looking for compiler
+);                #
+$mb->quiet(1);    # Don't print while looking for compiler
 print "Checking for a functioning C++ compiler...\n";
 if ($mb->cbuilder->have_compiler()) { print "Looks good\n\n" }
 else { print "fail\n* No compiler found. Exiting.\n"; exit 0 }
-$mb->quiet(0); # You can get noisy again.
-
+$mb->quiet(0);    # You can get noisy again.
 $mb->notes(
     fltk_svn => (
         sub {
