@@ -94,6 +94,7 @@ fltk::ProgressBar           *   O_FLTK
 fltk::Output                *   O_FLTK
 fltk::RadioButton           *   O_FLTK
 fltk::RadioItem             *   O_FLTK
+fltk::RadioLightButton      *   O_FLTK
 fltk::Rectangle             *   O_FLTK
 fltk::Rectangle                 O_FLTK
 fltk::Scrollbar             *   O_FLTK

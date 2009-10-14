@@ -119,6 +119,7 @@ xs/Preferences.xsi
 xs/ProgressBar.xsi
 xs/RadioButton.xsi
 xs/RadioItem.xsi
+xs/RadioLightButton.xsi
 xs/rc/fltk.ico
 xs/rc/icons.rc
 xs/rc/resource.h
