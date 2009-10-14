@@ -2,7 +2,8 @@ Version 0.XXXXX | Next Sunday AD | 10c2d42
 
     API Changes/Compatibility Information:
      * New Widgets/Types
-       - PackedGroup, PixelType, Preferences, ProgressBar, RadioButton
+       - PackedGroup, PixelType, Preferences, ProgressBar, RadioButton,
+           RadioItem
 
     Resolved Issues/Bug Fixes:
      * ...see below

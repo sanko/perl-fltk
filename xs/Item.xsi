@@ -147,4 +147,6 @@ fltk::Item::default_style( fltk::NamedStyle * style = NO_INIT )
 BOOT:
     isa("FLTK::Item", "FLTK::Widget");
 
+INCLUDE: RadioItem.xsi
+
 #endif // ifndef DISABLE_ITEM
