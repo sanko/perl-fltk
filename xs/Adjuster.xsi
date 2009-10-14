@@ -54,18 +54,26 @@ fltk::Adjuster::new( int x, int y, int w, int h, char * label = 0 )
             XSRETURN(1);
         }
 
-=for apidoc d||FLTK::NamedStyle style|default_style|
+=for apidoc ||FLTK::NamedStyle * style|default_style||
 
-TODO
+Get the style
+
+=for apidoc |||default_style|FLTK::NamedStyle * style|
+
+Set the style.
 
 =cut
 
-static fltk::NamedStyle *
-fltk::Adjuster::default_style ( )
-    CODE:
-        RETVAL = THIS->default_style;
-    OUTPUT:
-        RETVAL
+fltk::NamedStyle *
+fltk::Adjuster::default_style( fltk::NamedStyle * style = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->default_style;
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->default_style = style;
 
 =for apidoc d|||soft|int x|
 

@@ -669,7 +669,7 @@ that is also the maximum size (so the window cannot resize in that direction).
 void
 fltk::Window::size_range ( int minW, int minH, int maxW = 0, int maxH = 0, int dw = 0, int dh = 0 )
 
-=for apidoc ||FLTK::NamedStyle style|default_style|
+=for apidoc ||FLTK::NamedStyle * style|default_style|
 
 By default a window has box() set to C<FLAT_BOX>, and the color() set to
 C<GRAY75>, which is a special color cell that is altered by
@@ -682,12 +682,22 @@ the "outside" area, so the window had better be temporary and the user cannot
 move it) by setting the box() to NO_BOX and making draw() only draw the opaque
 part.
 
+=for apidoc |||default_style|FLTK::NamedStyle * style|
+
+Set the style.
+
 =cut
 
 fltk::NamedStyle *
-fltk::Window::default_style( )
-    CODE:
-        RETVAL = THIS->default_style;
+fltk::Window::default_style( fltk::NamedStyle * style = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->default_style;
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
+        CODE:
+            THIS->default_style = style;
 
 =for apidoc ||FLTK::Window win|first||
 
