@@ -78,4 +78,6 @@ fltk::CheckButton::default_style( fltk::NamedStyle * style = NO_INIT )
 BOOT:
     isa("FLTK::CheckButton", "FLTK::Button");
 
+INCLUDE: RadioButton.xsi
+
 #endif // ifndef DISABLE_CHECKBUTTON
