@@ -19,8 +19,8 @@ FLTK::RadioItem - This widget makes a radio item in a popup or pulldown Menu
 =head1 Description
 
 This widget makes a radio item in a popup or pulldown L<Menu|FLTK::Menu>. Its
-behavior in a L<Browser|FLTK::Browser> or L<MultiBrowser|MultiBrowser> is that
-it changes its status on multiple clicks (e.g. double click).
+behavior in a L<Browser|FLTK::Browser> or L<MultiBrowser|FLTK::MultiBrowser>
+is that it changes its status on multiple clicks (e.g. double click).
 
 =begin apidoc
 
