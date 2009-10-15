@@ -4,7 +4,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for git $Id$ for got=
+=for git $Id$
 
 =head1 NAME
 

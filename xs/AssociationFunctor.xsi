@@ -10,7 +10,7 @@ MODULE = FLTK               PACKAGE = FLTK::AssociationFunctor
 
 =for version 0.530
 
-=for git $Id$ for got=
+=for git $Id$
 
 =head1 NAME
 
