@@ -125,6 +125,7 @@ xs/rc/fltk.ico
 xs/rc/icons.rc
 xs/rc/resource.h
 xs/Rectangle.xsi
+xs/RepeatButton.xsi
 xs/run.xsi
 xs/Slider.xsi
 xs/Style.xsi

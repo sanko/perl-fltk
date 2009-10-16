@@ -166,4 +166,6 @@ BOOT:
 
 INCLUDE: CheckButton.xsi
 
+INCLUDE: RepeatButton.xsi
+
 #endif // ifndef DISABLE_BUTTON

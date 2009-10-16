@@ -97,6 +97,7 @@ fltk::RadioItem             *   O_FLTK
 fltk::RadioLightButton      *   O_FLTK
 fltk::Rectangle             *   O_FLTK
 fltk::Rectangle                 O_FLTK
+fltk::RepeatButton          *   O_FLTK
 fltk::Scrollbar             *   O_FLTK
 fltk::Slider                *   O_FLTK
 const fltk::Style           *   O_FLTK
