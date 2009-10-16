@@ -4,7 +4,7 @@ Version 0.XXXXX | Next Sunday AD | c8431a8
      * New Widgets/Types
        - PackedGroup, PixelType, Preferences, ProgressBar, RadioButton,
            RadioItem, RadioLightButton, Rectangle (base class of all Widgets),
-           RepeatButton, ReturnButton, Slider, Valuator
+           RepeatButton, ReturnButton, Scrollbar, Slider, Valuator
 
     Resolved Issues/Bug Fixes:
      * ...see below

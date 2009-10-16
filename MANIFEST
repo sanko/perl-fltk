@@ -128,6 +128,7 @@ xs/Rectangle.xsi
 xs/RepeatButton.xsi
 xs/ReturnButton.xsi
 xs/run.xsi
+xs/Scrollbar.xsi
 xs/Slider.xsi
 xs/Style.xsi
 xs/type.map

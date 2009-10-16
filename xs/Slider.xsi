@@ -272,4 +272,6 @@ The default method is called if this does not return a true value.
 BOOT:
     isa( "FLTK::Slider", "FLTK::Valuator" );
 
+INCLUDE: Scrollbar.xsi
+
 #endif // ifndef DISABLE_SLIDER
