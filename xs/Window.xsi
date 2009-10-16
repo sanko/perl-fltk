@@ -799,6 +799,9 @@ BOOT:
     isa("FLTK::Window", "FLTK::Group");
 
 INCLUDE: GlWindow.xsi
+
 INCLUDE: MenuWindow.xsi
+
+INCLUDE: ShapedWindow.xsi
 
 #endif // ifndef DISABLE_WINDOW

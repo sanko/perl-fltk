@@ -101,12 +101,13 @@ fltk::RepeatButton          *   O_FLTK
 fltk::ReturnButton          *   O_FLTK
 fltk::Scrollbar             *   O_FLTK
 fltk::ScrollGroup           *   O_FLTK
+fltk::ShapedWindow          *   O_FLTK
+fltk::ShortcutFunctor       *   O_FLTK
 fltk::Slider                *   O_FLTK
 const fltk::Style           *   O_FLTK
       fltk::Style           *   O_FLTK
 const fltk::Symbol          *   O_FLTK
 fltk::Symbol                *   O_FLTK
-fltk::ShortcutFunctor       *   O_FLTK
 fltk::Valuator              *   O_FLTK
 fltk::ValueInput            *   O_FLTK
 fltk::ValueOutput           *   O_FLTK
@@ -115,8 +116,9 @@ fltk::WidgetSubclass        *   O_FLTK
 const Widget                *   O_FLTK
       fltk::Window          *   O_FLTK
 const fltk::Window          *   O_FLTK
+fltk::xbmImage              *   O_FLTK
 
-# Objects that aren't   members of fltk
+# Objects that aren't members of fltk
 AnsiWidget                  *   O_FLTK
 
 OUTPUT
