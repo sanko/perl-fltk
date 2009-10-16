@@ -318,6 +318,4 @@ INCLUDE: Style.xsi
 
 #INCLUDE: ValueInput.xsi
 
-INCLUDE: Widget.xsi
-
 MODULE = FLTK               PACKAGE = FLTK

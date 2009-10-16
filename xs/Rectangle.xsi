@@ -350,4 +350,6 @@ fltk::Rectangle::intersect( fltk::Rectangle * r )
 
 INCLUDE: Monitor.xsi
 
+INCLUDE: Widget.xsi
+
 #endif // ifndef DISABLE_RECTANGLE
