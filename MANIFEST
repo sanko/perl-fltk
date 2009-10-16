@@ -126,6 +126,7 @@ xs/rc/icons.rc
 xs/rc/resource.h
 xs/Rectangle.xsi
 xs/RepeatButton.xsi
+xs/ReturnButton.xsi
 xs/run.xsi
 xs/Slider.xsi
 xs/Style.xsi

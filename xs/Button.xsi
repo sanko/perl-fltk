@@ -168,4 +168,6 @@ INCLUDE: CheckButton.xsi
 
 INCLUDE: RepeatButton.xsi
 
+INCLUDE: ReturnButton.xsi
+
 #endif // ifndef DISABLE_BUTTON
