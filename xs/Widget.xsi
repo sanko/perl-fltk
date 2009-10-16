@@ -2340,6 +2340,8 @@ INCLUDE: ccValueBox.xsi
 
 INCLUDE: ClockOutput.xsi
 
+INCLUDE: Group.xsi
+
 INCLUDE: ProgressBar.xsi
 
 INCLUDE: Valuator.xsi
