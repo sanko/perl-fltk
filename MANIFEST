@@ -30,6 +30,7 @@ t/40000_widgets/40022_intinput.t
 t/40000_widgets/40024_item.t
 t/40000_widgets/47010_subclass.t
 t/50000_objects/50001_Preferences.t
+t/50000_objects/50005_Rectangle.t
 t/60000_types/60001_Color.t
 t/60000_types/60002_events.t
 t/60000_types/60003_damage.t

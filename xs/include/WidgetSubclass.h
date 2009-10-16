@@ -60,6 +60,10 @@ public:
             : X( label, shortcut, callback, user_data_, flags ) { // Item
         _class = cls;
     }
+    WidgetSubclass( char * cls, X original, int w, int h, int flags = 0 )
+            : X( original, w, h, flags ) { // Rectangle (clone constructor)
+        _class = cls;
+    };
     WidgetSubclass ( char * cls, int w, int h, char * label )
             : X( w, h, label ) { // Window
         _class = cls;
@@ -81,10 +85,18 @@ public:
             : X( label, begin ) { // ItemGroup
         _class = cls;
     }
+    WidgetSubclass( char * cls, int w, int h )
+            : X( w, h ) { // Rectangle
+        _class = cls;
+    };
     WidgetSubclass ( char * cls, char * name )
             : X( name ) { // FlatBox
         _class = cls;
     }
+    WidgetSubclass( char * cls, X original )
+            : X( original ) { // Rectangle (clone constructor)
+        _class = cls;
+    };
     WidgetSubclass ( char * cls )
             : X( ) { // Divider
         _class = cls;
