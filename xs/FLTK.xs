@@ -322,6 +322,4 @@ INCLUDE: Style.xsi
 
 INCLUDE: Widget.xsi
 
-INCLUDE: Window.xsi
-
 MODULE = FLTK               PACKAGE = FLTK
