@@ -6,6 +6,7 @@ examples/hello.pl
 examples/helloask.pl
 examples/menubar.pl
 examples/message.pl
+examples/progressbar.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod
