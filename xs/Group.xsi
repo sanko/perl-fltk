@@ -384,4 +384,6 @@ INCLUDE: Menu.xsi
 
 INCLUDE: PackedGroup.xsi
 
+INCLUDE: ScrollGroup.xsi
+
 #endif // ifndef DISABLE_GROUP
