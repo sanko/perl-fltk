@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More 0.82 tests => 12;
+use Test::More 0.82 tests => 9;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,10 +26,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:dial]);
-
-# Dial types imported with :dial tag
-for my $sub (qw[NORMAL LINE FILL]) { can_ok(__PACKAGE__, $sub); }
+use_ok('FLTK');
 
 #
 my $W = new FLTK::Window(200, 100);
@@ -53,19 +50,15 @@ note '$C0->angles( 0, 360 )';
 $C0->angles(0, 360);
 is($C0->angle1(), 0,   'angle1 == 0');
 is($C0->angle2(), 360, 'angle2 == 360');
-SKIP: {
-    skip 'Failed to inherit value() from FLTK::Valuator', 2
-        if !scalar @FLTK::Valuator::ISA;
 
-    #
-    for (0 .. 100) {
-        $_ *= 2;
-        $C0->value($_ / 10);
-        $C1->value((360 - $_) / 100);
-        FLTK::wait(0.01);
-    }
-
-    #
-    is($C0->value(), 20,  '$C0->value == 20');
-    is($C1->value(), 1.6, '$C1->value == 1.06');
+#
+for (0 .. 100) {
+    $_ *= 2;
+    $C0->value($_ / 10);
+    $C1->value((360 - $_) / 100);
+    FLTK::wait(0.01);
 }
+
+#
+is($C0->value(), 20,  '$C0->value == 20');
+is($C1->value(), 1.6, '$C1->value == 1.06');
