@@ -2342,4 +2342,6 @@ INCLUDE: ClockOutput.xsi
 
 INCLUDE: ProgressBar.xsi
 
+INCLUDE: Valuator.xsi
+
 #endif // ifndef DISABLE_WIDGET

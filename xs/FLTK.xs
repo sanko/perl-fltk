@@ -264,8 +264,6 @@ INCLUDE: Cursor.xsi
 
 INCLUDE: CycleButton.xsi
 
-INCLUDE: Dial.xsi
-
 INCLUDE: Divider.xsi
 
 INCLUDE: FileBrowser.xsi
@@ -273,8 +271,6 @@ INCLUDE: FileBrowser.xsi
 INCLUDE: FileIcon.xsi
 
 INCLUDE: FileInput.xsi
-
-INCLUDE: FillDial.xsi
 
 INCLUDE: FillSlider.xsi
 
@@ -324,7 +320,6 @@ INCLUDE: Rectangle.xsi
 
 INCLUDE: Style.xsi
 
-#INCLUDE: Valuator.xsi
 #INCLUDE: ValueInput.xsi
 
 INCLUDE: Widget.xsi

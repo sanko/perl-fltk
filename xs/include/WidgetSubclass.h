@@ -197,6 +197,53 @@ public:
             this->X::flush( );
         return;
     };
+    int format( const char * buffer ) { // fltk::Valuator
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        av_push( args, sv_2mortal( newSVpv( buffer, strlen( buffer ) ) ) );
+        handled = _call_method( "format", args );
+        if ( handled != 1 )
+            handled = this->X::format( buffer );
+        return handled;
+    };
+    void value_damage ( ) { // fltk::Valuator
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = _call_method( "value_damage", args );
+        if ( handled != 1 )
+            this->X::value_damage( );
+        return;
+    };
+    void handle_push ( ) { // fltk::Valuator
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = _call_method( "handle_push", args );
+        if ( handled != 1 )
+            this->X::handle_push( );
+        return;
+    };
+    void handle_drag ( double value ) { // fltk::Valuator
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        av_push( args, sv_2mortal( newSVnv( value ) ) );
+        handled = _call_method( "handle_drag", args );
+        if ( handled != 1 )
+            this->X::handle_drag( value );
+        return;
+    };
+    void handle_release ( ) { // fltk::Valuator
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = _call_method( "handle_release", args );
+        if ( handled != 1 )
+            this->X::handle_release( );
+        return;
+    };
 private:
     char * _class;
 protected:
