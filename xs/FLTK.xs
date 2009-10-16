@@ -316,8 +316,6 @@ INCLUDE: Preferences.xsi
 
 INCLUDE: Rectangle.xsi
 
-#INCLUDE: Slider.xsi
-
 INCLUDE: Style.xsi
 
 #INCLUDE: ValueInput.xsi

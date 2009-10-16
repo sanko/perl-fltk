@@ -312,4 +312,6 @@ BOOT:
 
 INCLUDE: Dial.xsi
 
+INCLUDE: Slider.xsi
+
 #endif // ifndef DISABLE_VALUATOR
