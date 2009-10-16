@@ -1,4 +1,4 @@
-#ifndef DISABLE_LIGHTBUTTON
+#ifndef DISABLE_RADIOLIGHTBUTTON
 
 MODULE = FLTK               PACKAGE = FLTK::RadioLightButton
 
@@ -48,4 +48,4 @@ fltK::RadioLightButton::new( int x, int y, int w, int h, const char * label = 0 
 BOOT:
     isa("FLTK::RadioLightButton", "FLTK::LightButton");
 
-#endif // #ifndef DISABLE_LIGHTBUTTON
+#endif // #ifndef DISABLE_RADIOLIGHTBUTTON
