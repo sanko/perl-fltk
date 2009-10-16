@@ -130,6 +130,7 @@ xs/ReturnButton.xsi
 xs/run.xsi
 xs/Scrollbar.xsi
 xs/ScrollGroup.xsi
+xs/SecretInput.xsi
 xs/Slider.xsi
 xs/Style.xsi
 xs/type.map

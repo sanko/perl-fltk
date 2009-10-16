@@ -670,4 +670,6 @@ INCLUDE: NumericInput.xsi
 
 INCLUDE: Output.xsi
 
+INCLUDE: SecretInput.xsi
+
 #endif // ifndef DISABLE_INPUT
