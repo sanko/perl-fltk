@@ -108,7 +108,7 @@ Sets the parent.
 =cut
 
 fltk::Group *
-fltk::Widget::parent ( fltk::Group * group )
+fltk::Widget::parent ( fltk::Group * group = NO_INIT )
     CASE: items == 1
         CODE:
             RETVAL = THIS->parent( );
@@ -118,7 +118,7 @@ fltk::Widget::parent ( fltk::Group * group )
         CODE:
             THIS->parent( group );
 
-=for apidoc ||FLTK::Window * win|window|
+=for apidoc ||FLTK::Window * win|window||
 
 Return a pointer to the L<FLTK::Window|FLTK::Window> this widget is in. (it
 will skip any and all parent widgets between this and the window). Returns
