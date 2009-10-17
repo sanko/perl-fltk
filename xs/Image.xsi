@@ -547,4 +547,6 @@ fltk::Image::make_current( )
 BOOT:
     isa("FLTK::Image", "FLTK::Symbol");
 
+INCLUDE: xpmImage.xsi
+
 #endif // ifndef DISABLE_IMAGE

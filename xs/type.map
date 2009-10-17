@@ -117,6 +117,7 @@ const Widget                *   O_FLTK
       fltk::Window          *   O_FLTK
 const fltk::Window          *   O_FLTK
 fltk::xbmImage              *   O_FLTK
+fltk::xpmImage              *   O_FLTK
 
 # Objects that aren't members of fltk
 AnsiWidget                  *   O_FLTK

@@ -5,7 +5,7 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
        - PackedGroup, PixelType, Preferences, ProgressBar, RadioButton,
            RadioItem, RadioLightButton, Rectangle (base class of all Widgets),
            RepeatButton, ReturnButton, Scrollbar, ScrollGroup, SecretInput
-           (for passwords), ShapedWindow, Slider, Valuator
+           (for passwords), ShapedWindow, Slider, Valuator, xpmImage
 
     Resolved Issues/Bug Fixes:
      * ...see below
@@ -14,7 +14,7 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
      * The :default tag is no longer automatically exported
 
     Documentation/Sample Code/Test Suite:
-     * New example script /examples/progressbar.pl
+     * New example scripts for ProgressBar and xpmImage
 
     Notes:
      * The FLTK project is just getting started so now's a great time to join

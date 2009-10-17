@@ -7,6 +7,7 @@ examples/helloask.pl
 examples/menubar.pl
 examples/message.pl
 examples/progressbar.pl
+examples/xpmImage.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod
@@ -142,3 +143,4 @@ xs/ValueOutput.xsi
 xs/Version.xsi
 xs/Widget.xsi
 xs/Window.xsi
+xs/xpmImage.xsi
