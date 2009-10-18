@@ -38,43 +38,9 @@ false positives from CPAN Testers.
 
 =item FLTK::MenuSection
 
-=item FLTK::MultiImage
-
-=item FLTK::MultiLineOutput
-
 =item FLTK::Mutex
 
-=item FLTK::NamedStyle
-
-=item FLTK::NumericInput
-
-=item FLTK::Output
-
-=item FLTK::PackedGroup
-
-=item FLTK::PopupMenu
-
-=item FLTK::Preferences
-
-=item FLTK::ProgressBar
-
-=item FLTK::RadioButton
-
-=item FLTK::RadioItem
-
-=item FLTK::Rectangle
-
 =item FLTK::RecursiveMutex
-
-=item FLTK::RepeatButton
-
-=item FLTK::ReturnButton
-
-=item FLTK::Scrollbar
-
-=item FLTK::ScrollGroup
-
-=item FLTK::ShapedWindow
 
 =item FLTK::SharedImage
 
@@ -116,8 +82,6 @@ false positives from CPAN Testers.
 
 =item FLTK::Tooltip
 
-=item FLTK::Valuator
-
 =item FLTK::ValueInput
 
 =item FLTK::ValueOutput
@@ -132,11 +96,7 @@ false positives from CPAN Testers.
 
 =item FLTK::WordwrapOutput
 
-=item FLTK::xbmImage
-
 =item FLTK::xpmFileImage
-
-=item FLTK::xpmImage
 
 =back
 
