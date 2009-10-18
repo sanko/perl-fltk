@@ -59,8 +59,9 @@ Constructor that calls L<C<set( )>|FLTK::Rectangle/"set">.
 
 void
 fltk::Rectangle::new( ... )
-    PPCODE:
+    PREINIT:
         void * RETVAL = NULL;
+    PPCODE:
         if ( items == 1 )
             RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS);
         else if ( items == 5 && SvIOK(ST(1)) && SvIOK(ST(2)) && SvIOK(ST(3)) && SvIOK(ST(4)) )
