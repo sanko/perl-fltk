@@ -5,7 +5,8 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
        - PackedGroup, PixelType, Preferences, ProgressBar, RadioButton,
            RadioItem, RadioLightButton, Rectangle (base class of all Widgets),
            RepeatButton, ReturnButton, Scrollbar, ScrollGroup, SecretInput
-           (for passwords), ShapedWindow, Slider, Valuator, xpmImage
+           (for passwords), ShapedWindow, Slider, Symbol (.*Image base class),
+           Valuator, and xpmImage
 
     Resolved Issues/Bug Fixes:
      * ...see below

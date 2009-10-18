@@ -316,6 +316,8 @@ INCLUDE: Rectangle.xsi
 
 INCLUDE: Style.xsi
 
+INCLUDE: Symbol.xsi
+
 #INCLUDE: ValueInput.xsi
 
 MODULE = FLTK               PACKAGE = FLTK

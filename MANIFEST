@@ -136,6 +136,7 @@ xs/SecretInput.xsi
 xs/ShapedWindow.xsi
 xs/Slider.xsi
 xs/Style.xsi
+xs/Symbol.xsi
 xs/type.map
 xs/Valuator.xsi
 xs/ValueInput.xsi

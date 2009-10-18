@@ -96,8 +96,6 @@ false positives from CPAN Testers.
 
 =item FLTK::StyleSet
 
-=item FLTK::Symbol
-
 =item FLTK::TabGroup
 
 =item FLTK::TabGroupPager
