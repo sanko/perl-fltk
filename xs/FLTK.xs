@@ -192,7 +192,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
     $box->labeltype(SHADOW_LABEL);
     $window->end();
     $window->show();
-    exit run();
+    exit FLTK::run();
 
 =head1 See Also
 
