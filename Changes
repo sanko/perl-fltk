@@ -7,6 +7,7 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
            RepeatButton, ReturnButton, Scrollbar, ScrollGroup, SecretInput
            (for passwords), ShapedWindow, Slider, Symbol (.*Image base class),
            Valuator, and xpmImage
+     * Support for fltk's file and directory chooser API
 
     Resolved Issues/Bug Fixes:
      * ...see below

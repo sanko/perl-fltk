@@ -69,6 +69,7 @@ xs/Divider.xsi
 xs/draw.xsi
 xs/EngravedLabel.xsi
 xs/events.xsi
+xs/file_chooser.xsi
 xs/FileBrowser.xsi
 xs/FileIcon.xsi
 xs/FileInput.xsi

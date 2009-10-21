@@ -66,7 +66,7 @@ HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
 
 =begin apidoc
 
-=for apidoc Hx|||_cb_w|WIDGET|(void*)CODE
+=for apidoc Hx|||_cb_w|WIDGET|(void*)CODE|
 
 This is the callback for all widgets. It expects an C<fltk::Widget> object and
 the C<CODE> should be an HV* containing data that looks a little like this...
@@ -103,7 +103,7 @@ void _cb_w ( fltk::Widget * WIDGET, void * CODE ) {
     LEAVE;
 }
 
-=for apidoc H|||_cb_t|(void*)CODE
+=for apidoc H|||_cb_t|(void*)CODE|
 
 This is the generic callback for just about everything. It expects a single
 C<(void*) CODE> parameter which should be an AV* holding data that looks a
@@ -135,7 +135,31 @@ void _cb_t (void * CODE) { // Callbacks for timers, etc.
     LEAVE;
 }
 
-=for apidoc H|||isa|package|parent|
+=for apidoc H|||_cb_f|const char * file|
+
+This is the callback for file_chooser(...) and dir_chooser(...). It expects a
+single C<const char *> parameter which should be the filename. When triggered,
+the code ref handed to file_chooser_callback( CV * ) is called.
+
+=cut
+
+SV * file_chooser_cb;
+
+void _cb_f (const char * file) { // Callback for file_chooser
+    dTHX;
+    if ( ! SvOK( file_chooser_cb ) ) return;
+    dSP;
+    ENTER;
+        SAVETMPS;
+            PUSHMARK( sp );
+    XPUSHs( newSVpv( file, strlen( file ) ) );
+            PUTBACK;
+    call_sv( file_chooser_cb, G_DISCARD );
+        FREETMPS;
+    LEAVE;
+}
+
+=for apidoc H|||isa|const char * package|const char * parent|
 
 This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance.
 
@@ -147,6 +171,12 @@ void isa ( const char * package, const char * parent ) {
              newSVpv( parent, 0 ) );
     // TODO: make this spider up the list and make deeper connections?
 }
+
+=for apidoc H|||export_tag|const char * what|const char * _tag|
+
+Adds a function to a specific export tag.
+
+=cut
 
 void export_tag (const char * what, const char * _tag ) {
     dTHX;
@@ -217,6 +247,8 @@ INCLUDE: damage.xsi
 INCLUDE: draw.xsi
 
 INCLUDE: events.xsi
+
+INCLUDE: file_chooser.xsi
 
 INCLUDE: Flags.xsi
 
