@@ -14,12 +14,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
-=item * Prove that FLTK and L<Alien::FLTK|Alien::FLTK> to build on non-Win32
-systems!
-
-They both build just fine on my Xubuntu box but I get nothing but failures and
-false positives from CPAN Testers.
-
 =item * Document internals and write regression tests
 
 =item * Make sure all examples in POD (c+p from the fltk2 docs) actually work
@@ -105,6 +99,8 @@ false positives from CPAN Testers.
 =head1 Short term goals
 
 =over
+
+=item * Compsite/Mega Widget API
 
 =item * Remove all anti-Perl-isms
 
