@@ -38,6 +38,7 @@ sub btn_cb {
         $progress->position($t / 20);    # update progress bar
         check();     # give fltk some cpu to update the screen
         sleep(1);    # 'your stuff' that's compute intensive
+        last if !$w->visible;  # stop processing if the window has been closed
     }
 
     # Cleanup
