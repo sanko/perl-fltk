@@ -18,7 +18,7 @@ use lib 'inc';
 use Config qw[%Config];
 use File::Find qw[find];
 my $automated_testing = $ENV{AUTOMATED_TESTING} || $ENV{PERL_MM_USE_DEFAULT};
-my $is_developer = ((-d '.git') ? 1 : 0) or ($ENV{RELEASE_TESTING} ? 1 : 0);
+my $is_developer = ($ENV{RELEASE_TESTING} || -d '.git');
 my @tests;
 find \&find_cb, qw[t/10000_basic t/20000_functions t/40000_widgets
     t/50000_objects t/60000_types], ($is_developer ? 't/90000_author' : ());
@@ -69,8 +69,9 @@ my $mb = $class->new(
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
                        )
     ],
-    no_index =>
-        {directory => [qw[examples inc]], files => [qw[xs/ppport.pl]]},
+    no_index => {directory => [qw[examples inc]],
+                 files     => [qw[xs/ppport.pl], @tests]
+    },
     test_files => \@tests,
     meta_merge => {
         generated_by => 'Conversion, software version 7.0',
@@ -88,21 +89,12 @@ my $mb = $class->new(
     get_options => {'interactive!' => {},
                     'messy!'       => {}
     },
-);                #
+);
 $mb->quiet(1);    # Don't print while looking for compiler
 print "Checking for a functioning C++ compiler...\n";
 if ($mb->cbuilder->have_compiler()) { print "Looks good\n\n" }
 else { print "fail\n* No compiler found. Exiting.\n"; exit 0 }
 $mb->quiet(0);    # You can get noisy again.
-$mb->notes(
-    fltk_svn => (
-        sub {
-            $mb->dist_version =~ m[^\d\.(\d+)(?:\_\d+)?$];
-            $1;
-            }
-            ->()
-    )
-);
 $mb->notes(automated_testing => $automated_testing             ? 1 : 0);
 $mb->notes(is_developer      => $is_developer                  ? 1 : 0);
 $mb->notes(verbose           => $mb->args('messy')             ? 1 : 0);
