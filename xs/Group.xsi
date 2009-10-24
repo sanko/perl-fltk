@@ -61,10 +61,9 @@ string. The default boxtype is C<NO_BOX>.
 
 #include "include/WidgetSubclass.h"
 
-void
+void *
 fltk::Group::new( int x, int y, int w, int h, char * label = 0, bool begin = false )
     PPCODE:
-        void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::Group>(CLASS,x,y,w,h,label,begin);
         if (RETVAL != NULL) {
             ST(0) = sv_newmortal();
@@ -88,8 +87,19 @@ checking is done!>
 
 =cut
 
-fltk::Widget *
+void *
 fltk::Group::child( int index )
+    PREINIT:
+        const char * _class;
+    PPCODE:
+        RETVAL = (void *) THIS->child( index );
+        _class = (( WidgetSubclass<fltk::Widget> * ) RETVAL)->bless_class( );
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
 
 =for apidoc |||begin||
 

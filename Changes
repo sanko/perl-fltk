@@ -10,7 +10,7 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
      * Support for fltk's file and directory chooser API
 
     Resolved Issues/Bug Fixes:
-     * ...see below
+     * FLTK::Menu->item() now (attempts to) return correctly blessed widgets
 
     Internal/Behavioral Changes:
      * The :default tag is no longer automatically exported

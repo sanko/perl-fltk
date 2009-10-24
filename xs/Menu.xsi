@@ -195,12 +195,21 @@ user.
 
 =cut
 
-fltk::Widget *
+void *
 fltk::Menu::item( fltk::Widget * value = NO_INIT )
-    CASE: items == 1
-        C_ARGS:
-    CASE: items == 2
-        C_ARGS: value
+    PREINIT:
+        const char * _class;
+    PPCODE:
+        if ( items == 1 ) {
+            _class = (( WidgetSubclass<fltk::Widget> * ) RETVAL)->bless_class( );
+            if (RETVAL != NULL) {
+                ST(0) = sv_newmortal( );
+                sv_setref_pv(ST(0), _class ? _class : "FLTK::Widget", RETVAL); /* -- hand rolled -- */
+                XSRETURN(1);
+            }
+        }
+        else
+            THIS->item( value );
 
 =for apidoc ||bool changed|set_item|AV * indexes|int level|
 
@@ -587,10 +596,14 @@ fltk::Menu::add( label, shortcut, CV * callback, SV * data = NO_INIT, int flags 
     CASE:
         char * label
         unsigned shortcut
+        PREINIT:
+            const char * _class;
         INIT:
             HV * cb = newHV( );
             hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
-            hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
+            _class = (( WidgetSubclass<fltk::Item> * ) RETVAL)->bless_class( );
+            _class = _class ? _class : "FLTK::Item";
+            hv_store( cb , "class",    5, newSVpv( _class, strlen(_class) ), 0 );
             if ( items > 4 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
         C_ARGS: ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
@@ -646,10 +659,14 @@ fltk::Menu::replace( label, shortcut = 0, CV * callback, SV * data = NO_INIT, in
     CASE:
         char * label
         unsigned shortcut
+        PREINIT:
+            const char * _class;
         INIT:
             HV * cb = newHV( );
             hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
-            hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
+            _class = (( WidgetSubclass<fltk::Item> * ) RETVAL)->bless_class( );
+            _class = _class ? _class : "FLTK::Item";
+            hv_store( cb , "class",    5, newSVpv( _class, strlen(_class) ), 0 );
             if ( items > 4 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
         C_ARGS: ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
@@ -691,10 +708,14 @@ fltk::Menu::insert( index, label, shortcut = 0, CV * callback, SV * data = NO_IN
         int        index
         char     * label
         unsigned   shortcut
+        PREINIT:
+            const char * _class;
         INIT:
             HV * cb = newHV( );
             hv_store( cb , "coderef",  7, newSVsv( ST(4) ),            0 );
-            hv_store( cb , "class",    5, newSVpv( "FLTK::Item", 10 ), 0 );
+            _class = (( WidgetSubclass<fltk::Item> * ) RETVAL)->bless_class( );
+            _class = _class ? _class : "FLTK::Item";
+            hv_store( cb , "class",    5, newSVpv( _class, strlen(_class) ), 0 );
             if ( items > 5 )
                 hv_store( cb , "args", 4, newSVsv( data ),             0 );
         C_ARGS: index, ( const char * ) label, shortcut, _cb_w, ( void * ) cb, flags
