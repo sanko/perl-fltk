@@ -28,78 +28,78 @@ class FL_API WidgetSubclass : public X {
 public:
     WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl )
             : X( x, y, w, h, lbl ) { // Just about everything
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
                     uchar nbr, bool v, fltk::Flags a, uchar dw, uchar dh )
             : X( x, y, w, h, lbl, nbr, v, a, dw, dh ) { // AlignGroup
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, int x, int y, int w, int h, int defsize )
             : X( x, y, w, h, defsize ) { // AnsiWidget
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
                     bool begin )
             : X( x, y, w, h, lbl, begin ) { // Group
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, char * name, int dx, int dy, int dw, int dh,
                     char * pattern, fltk::Box * down )
             : X( name, dx, dy, dw, dh, pattern, down ) { // FrameBox
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, fltk::Box * box, int x, int y, int w, int h,
                     const char * lbl )
             : X( box, x, y, w, h, lbl ) { // InvisibleBox
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass( char * cls, const char* label, int shortcut,
                     fltk::Callback * callback, void * user_data_,
                     fltk::Flags flags )
             : X( label, shortcut, callback, user_data_, flags ) { // Item
-        _class = cls;
+       bless_class( cls );
     }
     WidgetSubclass( char * cls, X original, int w, int h, int flags = 0 )
             : X( original, w, h, flags ) { // Rectangle (clone constructor)
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass ( char * cls, int w, int h, char * label )
             : X( w, h, label ) { // Window
-        _class = cls;
+       bless_class( cls );
     }
     WidgetSubclass( char * cls, int x, int y, int w, int h )
             : X( x, y, w, h ) { // ccCellBox, ccValueBox, ccHueBox
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass ( char * cls, char * label, fltk::Symbol * symbol,
                      bool begin )
             : X( label, symbol, begin ) { // ItemGroup
-        _class = cls;
+       bless_class( cls );
     }
     WidgetSubclass( char * cls, char * name, fltk::Box * down )
             : X( name, down ) { // HighlightBox
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass ( char * cls, char * label, bool begin )
             : X( label, begin ) { // ItemGroup
-        _class = cls;
+       bless_class( cls );
     }
     WidgetSubclass( char * cls, int w, int h )
             : X( w, h ) { // Rectangle
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass ( char * cls, char * name )
             : X( name ) { // FlatBox
-        _class = cls;
+       bless_class( cls );
     }
     WidgetSubclass( char * cls, X original )
             : X( original ) { // Rectangle (clone constructor)
-        _class = cls;
+       bless_class( cls );
     };
     WidgetSubclass ( char * cls )
             : X( ) { // Divider
-        _class = cls;
+       bless_class( cls );
     }
 
     ~WidgetSubclass() {
@@ -244,8 +244,13 @@ public:
             this->X::handle_release( );
         return;
     };
-private:
+public:
     char * _class;
+    int    _okay;
+    const char * bless_class( ) { return _okay==1337?_class:0; }
+private:
+    void bless_class ( char * cls) { _class = cls; _okay = 1337; };
+
 protected:
     int _call_method ( const char * method, AV * args ) {
         int retval = 0;
