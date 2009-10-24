@@ -18,6 +18,7 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
     Documentation/Sample Code/Test Suite:
      * Basic Rectangle tests
      * New example scripts for ProgressBar and xpmImage
+     * New FLTK::CheatSheet
 
     Notes:
      * The FLTK project is just getting started so now's a great time to join

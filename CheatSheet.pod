@@ -1,0 +1,163 @@
+=pod
+
+=head1 NAME
+
+FLTK::CheatSheet - FLTK... Cheat sheet. >_> Yeah.
+
+=head1 Description
+
+Here, you'll find common snippets and hints that should help get you started.
+
+It's a work in progress.
+
+=head1 Windows
+
+There are a number of different Window types for various needs:
+
+ Window  .  .  .  .  .  .  .  General purpose window class
+ GlWindow   .  .  .  .  .  .  Allows OpenGL to be used directly in the window
+ ShapedWindow  .  .  .  .  .  Custom shaped Window based on Image
+
+=head1 Widgets
+
+This is a list of major widgets:
+
+ Button  .  .  .  .  .  .  .  You click it. It does stuff.
+ ColorChooser  .  .  .  .  .  Pick a color (with alpha support)
+
+=head1 Dialogs
+
+FLTK has a number of built-in dialogs. Most are simple and function based but
+some are full fledged objects.
+
+These simple dialogs are imported with the C<:dialog> tag:
+
+ alert   .  .  .  .  .  .  .  Same as message except for the '!' icon
+ ask  .  .  .  .  .  .  .  .  Quickly ask the user a 'Yes' or 'No' question
+ color_chooser .  .  .  .  .  Display a ColorChoser widget in a popup dialog
+ choice  .  .  .  .  .  .  .  Query the user with up to three possible choices
+ choice_alert  .  .  .  .  .  Same as choice except for the '!' icon
+ dir_chooser   .  .  .  .  .  Pick a directory from the local filesystem
+ file_chooser  .  .  .  .  .  Pick a file from the local filesystem
+ input   .  .  .  .  .  .  .  Display a string and let the user edit it
+ message .  .  .  .  .  .  .  Pop-up with a message and an 'OK' button
+ password   .  .  .  .  .  .  Display a password field for the user
+
+The more complex dialogs are found in their own packages under the FLTK
+namespace, are object based, and support varying degrees of
+user-interactivity:
+
+ HelpDialog .  .  .  .  .  .  Basic HTML-based help viewer
+
+=head1 Callbacks
+
+Without user interaction, a user interface would be rather pointless. FLTK
+handles default user interaction with a simple callback system. By default,
+all activity triggers the callback but this can be modified in by
+L<subclassing|FLTK::CheatSheet/"Creating Your Own Custom Widgets"> existing
+widgets.
+
+=head1 Creating Your Own Custom Widgets
+
+New widgets are created by subclassing an existing FLTK widget which is as
+easy as setting inheritance. As an example of this see the following snippet
+taken from C<examples/cursor.pl>:
+
+  {
+    package CursorBox;
+    our @ISA = qw[FLTK::Widget];
+
+    sub handle {
+        my ($self, $event) = @_;
+        if ($event == ::ENTER) {
+            $self->cursor($cursors{$self->label()});
+            return 0;
+        }
+        return 1 if ($event == ::PUSH);    # drag the cursor around
+        return 0;
+    }
+  }
+
+Once you've set the base class, you can override the methods which make the
+widget function including L<C<handle( )>|/"Handling Events"> which handles all
+events (keyboard, mouse activity, etc.) and
+L<C<draw( )>|/"Drawing the Widget">. See the individual widgets' documentation
+for specific subclassing information and the section on subclassing in
+L<FLTK::Widget|FLTK::Widget/"Subclassing Widgets">.
+
+=head2 Handling Events
+
+The virtual method L<C<handle( $event )>|FLTK::Widget/"handle"> is called to
+handle each event assed to your custom widget. It can:
+
+=over
+
+=item * Change the state of the widget
+
+=item * Call L<C<redraw( )>|FLTK::Widget/"redraw"> if the widget needs to be
+redisplayed
+
+=item * Call L<C<redraw( $x )>|FLTK::Widget/"redraw"> if the widget needs a
+partial update (assuming you provide support for this in your custom
+C<draw( )> method)
+
+=item * Call L<C<do_callback( )>|FLTK::Widget/"do_callback"> if a callback
+should be generated
+
+=item * Call L<C<handle( )>|FLTK::Widget/"handle"> on child widgets
+
+=back
+
+Events are identified by the C<$event> argument. Other information about the
+most recent event can be acquired by calling the C<event_.*( )> functions.
+This information remains valid until another event is handled.
+
+Here is another example C<handle( )> method. This custom widget would act as a
+pushbutton and also accept the keystroke 'x' to cause the callback:
+
+  {
+    package FLTKx::CSBox;
+    our @ISA = qw[FLTK::Widget];
+    my ($highlight);
+
+    sub handle {
+      my ($self, $event) = @_;
+      if ($event == FLTK::PUSH) {
+        $highlight = 1;
+        $self->redraw();
+        return 1;
+      }
+      elsif ($event == FLTK::DRAG) {
+        my $t = FLTK::event_inside($self);
+        $highlight = $t if $t != $highlight;
+        $self->redraw();
+        return 1;
+      }
+      elsif ($event == FLTK::RELEASE) {
+        if ($highlight) {
+          $highlight = 0;
+          $self->redraw;
+          $self->do_callback();
+          # Never do anything after a callback, as
+          # the callback may have deleted the widget
+        }
+        return 1;
+      }
+      elsif ($event == FLTK::SHORTCUT) {
+        if (FLTK::event_key() == ord 'x') {
+          $self->do_callback();
+          return 1;
+        }
+      }
+      return 0;
+    }
+  }
+
+You must return non-zero if your C<handle( )> method uses the event. If you
+return zero, the default C<handle( )> method is called.
+
+=head2 Drawing the Widget
+
+
+
+=cut
