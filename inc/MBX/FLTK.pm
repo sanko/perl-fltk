@@ -112,7 +112,12 @@ package MBX::FLTK;
 
         sub ACTION_docs {
             my $self = shift;
-            $self->depends_on('apidoc');
+            if ($self->notes('skip_apidoc')) {
+                $self->notes('skip_apidoc' => 0);
+            }
+            else {
+                $self->depends_on('apidoc');
+            }
             return $self->SUPER::ACTION_docs(@_);
         }
         use File::Path qw[make_path];

@@ -72,11 +72,13 @@ package MBX::FLTK::Developer;
 
     sub ACTION_distdir {
         my ($self, $args) = @_;
-        if ($self->notes('do_rcs')) {
+        if ($self->notes('skip_rcs')) {
+            $self->notes('skip_rcs' => 0);
+        }
+        else {
             $self->SUPER::depends_on('changelog');
             $self->SUPER::depends_on('RCS');
         }
-        $self->notes('do_rcs' => 1);
         $self->SUPER::ACTION_distdir(@_);
     }
 
