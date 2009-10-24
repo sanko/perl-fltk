@@ -119,8 +119,8 @@ int
 ask( char * question )
 
 BOOT:
-    export_tag("dialog", "dialog");
-    export_tag("dialog", "default");
+    export_tag("ask", "dialog");
+    export_tag("ask", "default");
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
