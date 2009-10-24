@@ -234,6 +234,8 @@ L<FLTK::Notes|FLTK::Notes>
 
 MODULE = FLTK               PACKAGE = FLTK
 
+PROTOTYPES: DISABLE
+
 BOOT:
     FLTK_stash  = Perl_gv_stashpv(aTHX_ "FLTK", TRUE );
     FLTK_export = Perl_get_hv(aTHX_ "FLTK::EXPORT_TAGS", TRUE );
