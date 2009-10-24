@@ -316,7 +316,7 @@ package MBX::FLTK;
             #   write documentation in here
             #   mention defaults/types/import tags
             my ($return, $call, @args) = ('', '', ());
-            my %types = ('AV *' => '@', 'CV *' => '\&');
+            my %types = ('AV *' => '@', 'CV *' => '\&', 'HV *' => "\%");
             for my $arg (@{$use->{'args'}}) {
                 my ($type, $name, $default)
                     = ($arg
