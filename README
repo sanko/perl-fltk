@@ -17,7 +17,7 @@ Description
 Synopsis
         use strict;
         use warnings;
-        use FLTK;
+        use FLTK qw[:style];
 
         my $window = FLTK::Window->new(300, 180);
         $window->begin();

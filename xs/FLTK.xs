@@ -211,7 +211,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
 
     use strict;
     use warnings;
-    use FLTK;
+    use FLTK qw[:style];
 
     my $window = FLTK::Window->new(300, 180);
     $window->begin();
