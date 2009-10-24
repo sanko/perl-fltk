@@ -336,8 +336,6 @@ package MBX::FLTK;
                         ) . $name;
                 }
             }
-
-            #
             if ($use->{'return'}) {
                 my ($type, $name, $default)
                     = ($use->{'return'}
@@ -360,10 +358,10 @@ package MBX::FLTK;
                 : sub {
                 my $p = shift;
                 $p =~ s|^.*:|\$|g;
-                return lc "$p->";
+                return lc($p) . '-E<gt>';
                 }
                 ->($package);
-            my $usage = sprintf '%s%s%s(%s%s )', $return, $call, $sub,
+            my $usage = sprintf '%s%s%s(%s%s );', $return, $call, $sub,
                 (@args ? ' ' : ''), (join ', ', @args);
             return $usage;
         }
