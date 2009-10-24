@@ -9,14 +9,17 @@
 
 =for git $Id$
 
+=for todo expand into a full text editor
+
 =cut
+
 use strict;
 use warnings;
 use FLTK;
 $|++;
 
 #
-my $win = new FLTK::Window(500, 500, 'Test');
+my $win = new FLTK::Window(500, 21, 'Test');
 $win->begin;
 my $m = FLTK::MenuBar->new(0, 0, 660, 21, 'Test');
 {

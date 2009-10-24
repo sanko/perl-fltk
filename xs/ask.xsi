@@ -124,7 +124,7 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[dialog,default]F||int choice|choice|char * question|char * answer_1|char * answer_2|char * answer_3
+=for apidoc T[dialog,default]F||int choice|choice|char * question|char * answer_1|char * answer_2|char * answer_3|
 
 Shows the message with three buttons below it marked with the strings
 C<answer_1>, C<answer_2>, and C<answer_3>. Returns C<0>, C<1>, or C<2>

@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 0ceb06e
+Version 0.XXXXX | Next Sunday AD | ba2cb27
 
     API Changes/Compatibility Information:
      * New Widgets/Types
@@ -18,10 +18,14 @@ Version 0.XXXXX | Next Sunday AD | 0ceb06e
     Documentation/Sample Code/Test Suite:
      * Basic Rectangle tests
      * New example scripts for ProgressBar and xpmImage
-     * New FLTK::CheatSheet
+     * New FLTK::CheatSheet (incomplete)
 
     Notes:
      * The FLTK project is just getting started so now's a great time to join
+
+    Meanwhile:
+     * Ian Giammarco was born October 23rd at 1:22pm. He was 8lbs 14oz and
+         22in long
 
 Version 0.530 | 2009-10-05 00:42:52Z (Mon, 05 Oct 2009) | 3b70f43
 

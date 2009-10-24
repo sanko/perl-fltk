@@ -10,9 +10,10 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
-use FLTK;
+use FLTK qw[:default :style];
 
 #
 my $window = FLTK::Window->new(300, 180);

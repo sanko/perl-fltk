@@ -13,23 +13,21 @@
 
 use strict;
 use warnings;
-use FLTK;
+use FLTK qw[:dialog];
 $|++;
-if (!FLTK::ask('Do you want to disable beep sounds?')) {
-    FLTK::beep_on_dialog(1);
+if (!ask('Do you want to disable beep sounds?')) {
+    beep_on_dialog(1);
 }
-FLTK::message(
+message(
      'Spelling check sucessfull, 1002 errors found with 19.4805% confidence');
-FLTK::alert(
+alert(
     'Quantum fluctuations in the space-time continuum detected, you have 10 seconds to comply.'
 );
-printf "FLTK::ask returned %d\n",
-    FLTK::ask('Do you really want to continue?');
+printf "FLTK::ask returned %d\n", ask('Do you really want to continue?');
 printf "FLTK::choice returned %d\n",
-    FLTK::choice('Choose one of the following:', 'choice0',
-                 'choice1',                      'choice2');
-my $r = FLTK::input('Please enter a string for "testing":',
-                    'this is the default value');
+    choice('Choose one of the following:', 'choice0', 'choice1', 'choice2');
+my $r = input('Please enter a string for "testing":',
+              'this is the default value');
 printf qq[FLTK::input returned "%s"\n], $r ? $r : 'NULL';
-$r = FLTK::password(q[Enter sombody's password:]);
+$r = password(q[Enter sombody's password:]);
 printf qq[FLTK::password returned "%s"\n], $r ? $r : 'NULL';

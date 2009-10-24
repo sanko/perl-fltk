@@ -10,12 +10,13 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use FLTK;
 
 #
-my $win = FLTK::Window->new(100, 50, 'Purr');
+my $win = FLTK::Window->new(100, 50, 'Cha!');
 $win->image(
     FLTK::xpmImage->new(
 
