@@ -37,4 +37,7 @@ src/
 examples/~*
 *.spell
 
+# NYTProf
+*nytprof*
+
 # $Id$

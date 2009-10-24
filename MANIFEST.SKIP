@@ -91,4 +91,7 @@ inc/MBX/FLTK/Developer.pm
 # Don't include website subproject
 website/.*
 
+# Ignore NYTProfiler stuff
+.*nytprof.+
+
 # $ID$
