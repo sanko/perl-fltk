@@ -85,7 +85,7 @@ package MBX::FLTK::Developer;
     sub ACTION_dist {
         my ($self, $args) = @_;
         require Devel::PPPort;
-        my $ppp = rel2abs(catdir(qw[xs ppport.pl]));
+        my $ppp = rel2abs(catdir(qw[xs include ppport.h]));
         Devel::PPPort::WriteFile($ppp) if !-e $ppp;
         $self->SUPER::ACTION_dist(@_);
     }

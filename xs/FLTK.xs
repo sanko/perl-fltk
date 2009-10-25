@@ -38,8 +38,8 @@ its built-in GLUT emulation.
 #include <perl.h>
 #define NO_XSLOCKS // XSUB.h will otherwise override various things we need
 #include <XSUB.h>
-#define NEED_newCONSTSUB
-#include "./ppport.pl"
+#define NEED_sv_2pv_flags
+#include "./include/ppport.h"
 
 #include <fltk/Widget.h>
 
@@ -237,8 +237,8 @@ MODULE = FLTK               PACKAGE = FLTK
 PROTOTYPES: DISABLE
 
 BOOT:
-    FLTK_stash  = Perl_gv_stashpv(aTHX_ "FLTK", TRUE );
-    FLTK_export = Perl_get_hv(aTHX_ "FLTK::EXPORT_TAGS", TRUE );
+    FLTK_stash  = gv_stashpv("FLTK", TRUE );
+    FLTK_export = get_hv("FLTK::EXPORT_TAGS", TRUE );
 
     # Functions (Exported)
 

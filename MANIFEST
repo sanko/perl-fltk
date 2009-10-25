@@ -91,6 +91,7 @@ xs/HighlightBox.xsi
 xs/HighlightButton.xsi
 xs/Image.xsi
 xs/include/GlWindowSubclass.h
+xs/include/ppport.h
 xs/include/WidgetSubclass.h
 xs/Input.xsi
 xs/InputBrowser.xsi
@@ -119,7 +120,6 @@ xs/PixelType.xsi
 xs/Plugin.xsi
 xs/pnmImage.xsi
 xs/PopupMenu.xsi
-xs/ppport.pl
 xs/Preferences.xsi
 xs/ProgressBar.xsi
 xs/RadioButton.xsi
