@@ -85,8 +85,15 @@ package MBX::FLTK::Developer;
     sub ACTION_dist {
         my ($self, $args) = @_;
         require Devel::PPPort;
-        my $ppp = rel2abs(catdir(qw[xs include ppport.h]));
-        Devel::PPPort::WriteFile($ppp) if !-e $ppp;
+        my $ppp = abs2rel(rel2abs(catdir(qw[xs include ppport.h])));
+        if (!-e $ppp) {
+            printf "Creating %s with Devel::PPPort v%s... ", $ppp,
+                $Devel::PPPort::VERSION;
+            Devel::PPPort::WriteFile($ppp);
+            printf "done\nStripping $ppp... ";
+            system($^X, $ppp, '--strip');
+            print "done\n";
+        }
         $self->SUPER::ACTION_dist(@_);
     }
 

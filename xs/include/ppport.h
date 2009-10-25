@@ -4,7 +4,7 @@
 /*
 ----------------------------------------------------------------------
 
-    D:\Devel\fltk-perl\xs\include\ppport.h -- Perl/Pollution/Portability Version 3.19
+    xs\include\ppport.h -- Perl/Pollution/Portability Version 3.19
 
     Automatically created by Devel::PPPort running under perl 5.010001.
 
@@ -24,7 +24,7 @@ if (@ARGV && $ARGV[0] eq '--unstrip') {
   eval { require Devel::PPPort };
   $@ and die "Cannot require Devel::PPPort, please install.\n";
   if (eval $Devel::PPPort::VERSION < 3.19) {
-    die "ppport.h was originally generated with Devel::PPPort 3.19.\n"
+    die "xs\include\ppport.h was originally generated with Devel::PPPort 3.19.\n"
       . "Your Devel::PPPort is only version $Devel::PPPort::VERSION.\n"
       . "Please install a newer version, or --unstrip will not work.\n";
   }
@@ -66,7 +66,7 @@ __DATA__*/
 #define _dpppDEC2BCD(dec) ((((dec)/100)<<8)|((((dec)%100)/10)<<4)|((dec)%10))
 #define PERL_BCDVERSION ((_dpppDEC2BCD(PERL_REVISION)<<24)|(_dpppDEC2BCD(PERL_VERSION)<<12)|_dpppDEC2BCD(PERL_SUBVERSION))
 #if PERL_REVISION != 5
-#error D:\Devel\fltk-perl\xs\include\ppport.h only works with Perl version 5
+#error xs\include\ppport.h only works with Perl version 5
 #endif
 #ifndef dTHR
 #define dTHR dNOOP
