@@ -70,7 +70,7 @@ my $mb = $class->new(
                        )
     ],
     no_index => {directory => [qw[examples inc]],
-                 files     => [qw[xs/ppport.pl], @tests]
+                 files     => [qw[xs/include/ppport.h], @tests]
     },
     test_files => \@tests,
     meta_merge => {
