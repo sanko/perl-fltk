@@ -69,8 +69,8 @@ my $mb = $class->new(
                              '.' . $Config{'so'}, $Config{'_o'}, $Config{'_a'}
                        )
     ],
-    no_index => {directory => [qw[examples inc]],
-                 files     => [qw[xs/include/ppport.h], @tests]
+    no_index => {directory => [qw[examples inc t]],
+                 files     => [qw[xs/include/ppport.h]]
     },
     test_files => \@tests,
     meta_merge => {
