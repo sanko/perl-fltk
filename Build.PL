@@ -42,7 +42,7 @@ my $mb = $class->new(
                  Config               => 0,
                  Cwd                  => 0,
                  'ExtUtils::ParseXS'  => 0,
-                 'ExtUtils::CBuilder' => 0.24,
+                 'ExtUtils::CBuilder' => 0.26_05,
                  'File::Spec'         => 0,
                  'File::Find'         => 0,
                  'File::Path'         => 2.04,
@@ -54,7 +54,7 @@ my $mb = $class->new(
                        Config               => 0,
                        Cwd                  => 0,
                        'ExtUtils::ParseXS'  => 0,
-                       'ExtUtils::CBuilder' => 0.24,
+                       'ExtUtils::CBuilder' => 0.26_05,
                        'File::Spec'         => 0,
                        'File::Find'         => 0,
                        'File::Path'         => 2.04,
@@ -90,11 +90,9 @@ my $mb = $class->new(
                     'messy!'       => {}
     },
 );
-$mb->quiet(1);    # Don't print while looking for compiler
 print "Checking for a functioning C++ compiler...\n";
 if ($mb->cbuilder->have_compiler()) { print "Looks good\n\n" }
 else { print "fail\n* No compiler found. Exiting.\n"; exit 0 }
-$mb->quiet(0);    # You can get noisy again.
 $mb->notes(automated_testing => $automated_testing             ? 1 : 0);
 $mb->notes(is_developer      => $is_developer                  ? 1 : 0);
 $mb->notes(verbose           => $mb->args('messy')             ? 1 : 0);
