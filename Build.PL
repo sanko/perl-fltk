@@ -91,7 +91,7 @@ my $mb = $class->new(
     },
 );
 print "Checking for a functioning C++ compiler...\n";
-if ($mb->cbuilder->have_compiler()) { print "Looks good\n\n" }
+if ($mb->cbuilder->have_cplusplus()) { print "Looks good\n\n" }
 else { print "fail\n* No compiler found. Exiting.\n"; exit 0 }
 $mb->notes(automated_testing => $automated_testing             ? 1 : 0);
 $mb->notes(is_developer      => $is_developer                  ? 1 : 0);
