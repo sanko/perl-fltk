@@ -49,9 +49,9 @@ package MBX::FLTK;
                 push @obj,
                     $self->cbuilder->compile(
                                       'C++'  => 1,
-                              source => $cpp,
-                              extra_compiler_flags =>
-                                  [Alien::FLTK->cxxflags(), $self->cxxflags()]
+                                      source => $cpp,
+                                      extra_compiler_flags =>
+                                          [$AF->cxxflags(), $self->cxxflags()]
                     );
             }
             make_path(catdir(qw[blib arch auto FLTK]),
@@ -65,13 +65,13 @@ package MBX::FLTK;
                 )
             {   my ($dll, @cleanup)
                     = $self->cbuilder->link(
-                    objects => \@obj,
-                    lib_file =>
-                        catdir(qw[blib arch auto FLTK],
-                               'FLTK.' . $Config{'so'}
-                        ),
-                    module_name        => 'FLTK',
-                    extra_linker_flags => Alien::FLTK->ldflags(qw[gl images]),
+                            objects => \@obj,
+                            lib_file =>
+                                catdir(qw[blib arch auto FLTK],
+                                       'FLTK.' . $Config{'so'}
+                                ),
+                            module_name        => 'FLTK',
+                            extra_linker_flags => $AF->ldflags(qw[gl images]),
                     );
                 @cleanup = map { s["][]g; rel2abs($_); } @cleanup;
                 $self->add_to_cleanup(@cleanup);
