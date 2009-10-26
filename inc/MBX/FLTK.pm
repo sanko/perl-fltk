@@ -16,6 +16,7 @@ package MBX::FLTK;
         sub ACTION_code {
             require Alien::FLTK;    # Should be installed by now
             my ($self, $args) = @_;
+            my $AF = Alien::FLTK->new();
             my (@xs, @rc, @obj);
             find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
             find(sub { push @rc, $File::Find::name if !m[.+\.o$]; }, 'xs/rc');
@@ -47,6 +48,7 @@ package MBX::FLTK;
                 }
                 push @obj,
                     $self->cbuilder->compile(
+                                      'C++'  => 1,
                               source => $cpp,
                               extra_compiler_flags =>
                                   [Alien::FLTK->cxxflags(), $self->cxxflags()]
