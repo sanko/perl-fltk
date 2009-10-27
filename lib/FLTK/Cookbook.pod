@@ -1,0 +1,29 @@
+=pod
+
+=head1 NAME
+
+FLTK::Cookbook - Fresh code just like mom used to make
+
+=head1 Description
+
+Here, you'll find common 'recipes' and hints that should help get you
+moving in the right direction. For a quick guide, see
+L<The Cheatsheet|FLTK::Cheatsheet>.
+
+This documentation is a work in progress.
+
+=head1 The Recipes
+
+=over
+
+=item * L<FLTK::Cookbook::MenuBar::Label|FLTK::Cookbook::MenuBar::Label>
+
+Changes a menu's items' labels at runtime.
+
+=item * L<FLTK::Cookbook::MenuBar::Toggle|FLTK::Cookbook::MenuBar::Toggle>
+
+Shows how to toggle menu items at run time.
+
+=back
+
+=cut

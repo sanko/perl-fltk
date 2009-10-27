@@ -12,6 +12,9 @@ examples/xpmImage.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod
+lib/FLTK/Cookbook.pod
+lib/FLTK/Cookbook/MenuBar/Label.pod
+lib/FLTK/Cookbook/MenuBar/Toggle.pod
 lib/FLTK/Notes.pod
 LICENSE
 Makefile.PL

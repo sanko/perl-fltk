@@ -1,0 +1,62 @@
+
+=pod
+
+=head1 NAME
+
+FLTK::Cookbook::MenuBar::Label - Changing MenuItem's Labels At Runtime
+
+=head1 Description
+
+Demonstrates how to access and change menu items at run time. Click on
+C<Edit -E<gt> Change> to change the contents of the C<Edit> menu.
+
+=head1 The Code
+
+    use strict;
+    use warnings;
+    use FLTK;
+    my $win = FLTK::Window->new(400, 400);
+    $win->begin;
+    my $menu = FLTK::MenuBar->new(0, 0, 400, 25);
+    $menu->add("File/Quit", FLTK::CTRL() + ord 'q', sub { exit 0 });
+    $menu->add(
+        "Edit/Change",
+        FLTK::CTRL() + ord 'c',
+        sub {
+            my $p = $menu->find('Edit/Submenu/Original Aaa');
+            return if !$p;
+            $p->parent->label("New Name");    # Change submenu name
+            $p->label('New Aaa');             # Change item name
+        }
+    );
+    $menu->add('Edit/Submenu/Original Aaa');
+    $menu->add('Edit/Submenu/Bbb');
+    $win->end;
+    $win->show;
+    exit FLTK::run();
+
+=head1 Awknowlegements
+
+Code based on the work of Greg Ercolano
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=head1 License and Legal
+
+Copyright (C) 2008-2009 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of The Artistic License 2.0.  See the F<LICENSE> file included with
+this distribution or http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all original POD documentation is
+covered by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut
