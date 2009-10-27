@@ -36,7 +36,7 @@ my $mb = $class->new(
     dist_version_from => 'lib/FLTK.pm',
     dist_abstract =>
         'Perl interface to the (experimental) 2.0.x branch of the FLTK GUI toolkit',
-    requires => {perl                 => '5.8.0',
+    requires => {perl                 => 5.008000,
                  base                 => 0,
                  'Test::More'         => 0.88,
                  Config               => 0,
@@ -49,7 +49,7 @@ my $mb = $class->new(
                  'Module::Build'      => 0,
                  'Devel::PPPort'      => 0
     },
-    build_requires => {perl                 => '5.8.0',
+    build_requires => {perl                 => 5.008000,
                        'Test::More'         => 0.88,
                        Config               => 0,
                        Cwd                  => 0,
