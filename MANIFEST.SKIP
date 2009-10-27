@@ -73,7 +73,6 @@ SciTE.session
 .gitsmudge.pl
 
 # temp
-Classes.pod
 Compatability.pod
 inc/MBX/---FLTK.pm
 lib/FLTK/Version.pm
