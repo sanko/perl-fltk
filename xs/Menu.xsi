@@ -512,7 +512,7 @@ fltk::Menu::remove( widget )
         char * widget
         C_ARGS: ( const char * ) widget
 
-=for apidoc ||FLTK::Widget * item|add|char * label|unsigned shortcut|CV * callback|SV * data = NO_INIT|int flags = 0|
+=for apidoc ||FLTK::Widget * item|add|char * label|unsigned shortcut = 0|CV * callback = 0|SV * data = NO_INIT|int flags = 0|
 
 Split label at C</> characters and add a hierachial L<Item|FLTK::Item>.
 
@@ -584,8 +584,8 @@ Add a widget to the menu.
 =cut
 
 fltk::Widget *
-fltk::Menu::add( label, shortcut, CV * callback, SV * data = NO_INIT, int flags = 0 )
-    CASE: items == 2
+fltk::Menu::add( label, shortcut = 0, CV * callback = NO_INIT, SV * data = NO_INIT, int flags = 0 )
+    CASE: items == 2 && sv_isobject(ST(1))
         fltk::Widget * label
         CODE:
             THIS->add( label );
@@ -600,7 +600,8 @@ fltk::Menu::add( label, shortcut, CV * callback, SV * data = NO_INIT, int flags 
             const char * _class;
         INIT:
             HV * cb = newHV( );
-            hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
+            if ( items > 3 )
+                hv_store( cb , "coderef",  7, newSVsv( ST(3) ),            0 );
             _class = (( WidgetSubclass<fltk::Item> * ) RETVAL)->bless_class( );
             _class = _class ? _class : "FLTK::Item";
             hv_store( cb , "class",    5, newSVpv( _class, strlen(_class) ), 0 );
