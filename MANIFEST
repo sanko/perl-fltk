@@ -1,6 +1,5 @@
 Build.PL
 Changes
-CheatSheet.pod
 examples/cursor.pl
 examples/gl.pl
 examples/hello.pl
@@ -12,6 +11,7 @@ examples/xpmImage.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
 lib/FLTK/Basics.pod
+lib/FLTK/CheatSheet.pod
 lib/FLTK/Cookbook.pod
 lib/FLTK/Cookbook/MenuBar/Label.pod
 lib/FLTK/Cookbook/MenuBar/Toggle.pod
