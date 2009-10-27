@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 86b5af9
+Version 0.XXXXX | Next Sunday AD | 0197995
 
     API Changes/Compatibility Information:
      * New Widgets/Types
@@ -17,8 +17,9 @@ Version 0.XXXXX | Next Sunday AD | 86b5af9
 
     Documentation/Sample Code/Test Suite:
      * Basic Rectangle tests
-     * New example scripts for ProgressBar and xpmImage
+     * New example script for xpmImage
      * New FLTK::CheatSheet (incomplete)
+     * First few recipes in the FLTK::Cookbook
 
     Notes:
      * The FLTK project is just getting started so now's a great time to join
