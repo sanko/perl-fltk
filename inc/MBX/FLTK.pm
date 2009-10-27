@@ -48,8 +48,9 @@ package MBX::FLTK;
                 }
                 push @obj,
                     $self->cbuilder->compile(
-                                      'C++'  => 1,
-                                      source => $cpp,
+                                      'C++'        => 1,
+                                      source       => $cpp,
+                                      include_dirs => [$AF->include_dirs()],
                                       extra_compiler_flags =>
                                           [$AF->cxxflags(), $self->cxxflags()]
                     );
