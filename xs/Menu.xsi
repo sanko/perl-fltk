@@ -581,10 +581,48 @@ Unlike the L<C<add()>|FLTK::Menu/"add"> with more arguments, this one does
 
 Add a widget to the menu.
 
+=for apidoc Hx||FLTK::Widget * item|add|HV * args|
+
+
+
 =cut
 
 fltk::Widget *
-fltk::Menu::add( label, shortcut, CV * callback, SV * data = NO_INIT, int flags = 0 )
+fltk::Menu::add( label, shortcut = NO_INIT, CV * callback = NO_INIT, SV * data = NO_INIT, int flags = 0 )
+    CASE: items == 2 && (SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVHV)
+        HV * label
+        PREINIT:
+            unsigned   _shortcut = 0;
+            HV   * _cb   = newHV( );
+            SV   * _data;
+            const char * _class;
+        INIT:
+            SV ** __label    = hv_fetch( label, "label",    5, FALSE );
+            SV ** __shortcut = hv_fetch( label, "shortcut", 8, FALSE );
+            SV ** __cb       = hv_fetch( label, "callback", 8, FALSE );
+            SV ** __data     = hv_fetch( label, "data",     4, FALSE );
+            SV ** __flags    = hv_fetch( label, "flags",    5, FALSE );
+            if ( ( SV ** ) NULL == __label )
+                Perl_croak( aTHX_ "%s: requires a 'label' key",
+                    "FLTK::Menu::add" );
+            if ( ( SV ** ) NULL != __shortcut )
+                _shortcut = SvIV( * __shortcut );
+            if ( ( SV ** ) NULL != __cb )
+                hv_store( _cb , "coderef",  7, newSVsv( * __cb ), 0 );
+            if ( ( SV ** ) NULL != __data )
+                if ( ( SV ** ) NULL == __cb)
+                    Perl_warn( aTHX_ "%s: 'data' is useless without a 'callback'",
+                        "FLTK::Menu::add" );
+                else
+                    hv_store( _cb , "args",  4, newSVsv( * __data ), 0 );
+            if ( ( SV ** ) NULL != __flags )
+                flags = SvIV( * __flags );
+        C_ARGS: ( const char * ) SvPV_nolen( * __label ),
+                    ( unsigned ) _shortcut, _cb_w, ( void * ) _cb, flags
+        CLEANUP:
+            _class = ( ( WidgetSubclass<fltk::Item> * ) RETVAL )->bless_class( );
+            _class = _class ? _class : "FLTK::Item";
+            hv_store( _cb , "class", 5, newSVpv( _class, strlen(_class) ), 0 );
     CASE: items == 2
         fltk::Widget * label
         CODE:
