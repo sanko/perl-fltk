@@ -20,7 +20,7 @@
 */
 
 #ifndef fltk_Widget_h
-#include "Widget.h" // Minimum.
+#include <fltk/Widget.h> // Minimum.
 #endif
 
 template< class X >
