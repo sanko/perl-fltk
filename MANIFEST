@@ -6,7 +6,6 @@ examples/hello.pl
 examples/helloask.pl
 examples/menubar.pl
 examples/message.pl
-examples/progressbar.pl
 examples/xpmImage.pl
 inc/MBX/FLTK.pm
 lib/FLTK.pm
@@ -15,6 +14,7 @@ lib/FLTK/CheatSheet.pod
 lib/FLTK/Cookbook.pod
 lib/FLTK/Cookbook/MenuBar/Label.pod
 lib/FLTK/Cookbook/MenuBar/Toggle.pod
+lib/FLTK/Cookbook/ProgressBar/Process.pod
 lib/FLTK/Notes.pod
 LICENSE
 Makefile.PL
