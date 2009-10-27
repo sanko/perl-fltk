@@ -512,7 +512,7 @@ fltk::Menu::remove( widget )
         char * widget
         C_ARGS: ( const char * ) widget
 
-=for apidoc ||FLTK::Widget * item|char * label|unsigned shortcut|CV * callback|SV * data = NO_INIT|int flags = 0
+=for apidoc ||FLTK::Widget * item|add|char * label|unsigned shortcut|CV * callback|SV * data = NO_INIT|int flags = 0|
 
 Split label at C</> characters and add a hierachial L<Item|FLTK::Item>.
 
