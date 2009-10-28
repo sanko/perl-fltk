@@ -24,7 +24,7 @@ Changes a menu's items' labels at runtime.
 
 Shows how to toggle menu items at run time.
 
-=item * L<FLTK::Coookbook::ProgressBar::Process|FLTK::Coookbook::ProgressBar::Process>
+=item * L<FLTK::Cookbook::ProgressBar::Process|FLTK::Cookbook::ProgressBar::Process>
 
 Demonstrates how to update a progress bar within a cpu intensive operation
 without threads.

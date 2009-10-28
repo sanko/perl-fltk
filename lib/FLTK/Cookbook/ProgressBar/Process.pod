@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-FLTK::Coookbook::ProgressBar::Process - Update the user while processing in the background
+FLTK::Cookbook::ProgressBar::Process - Update the user while processing in the background
 
 =head1 Description
 
