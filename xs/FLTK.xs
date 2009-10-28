@@ -61,6 +61,10 @@ using namespace fltk; // TODO: Remove this and use fully qualified names
 #define DISABLE_ADJUSTER
 #endif // #ifndef ENABLE_DEPRECATED
 
+#ifndef MAX_PATH
+#define MAX_PATH 1024
+#endif //#ifndef MAX_PATH
+
 HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
    * FLTK_export; // For inserting stuff directly into FLTK's exports
 
