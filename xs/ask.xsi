@@ -250,30 +250,47 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[dialog]F||FLTK::NamedStyle style|icon_style|||
+=for apidoc T[dialog]F||FLTK::NamedStyle style|icon_style||
 
 This L<Style|FLTK::Style> is used for the C<50x50> icon area on the left of
 all the popup windows. You can change the colors or font used here.
 
-=for apidoc T[dialog]F||FLTK::NamedStyle style|message_style||||
+=for apidoc T[dialog]F|||icon_style|FLTK::NamedStyle style|
+
+Set the icon style.
+
+=for apidoc T[dialog]F||FLTK::NamedStyle style|message_style||
 
 This L<Style|FLTK::Style> is used for the label area for all the popup
 windows. You can change the L<C<textfont()>|FLTK::Style/"textfont"> or
 L<C<textsize()>|FLTK::Style/"textsize"> to make them print differently.
+
+=for apidoc T[dialog]F|||message_style|FLTK::NamedStyle style|
+
+Set the message style.
 
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK
 
 fltk::NamedStyle *
-icon_style(  )
-    CODE:
-        switch ( ix ) {
-            case 0: RETVAL = fltk::icon_style; break;
-            case 1: RETVAL = fltk::message_style; break;
-        }
-    OUTPUT:
-        RETVAL
+icon_style( fltk::NamedStyle * style = NO_INIT )
+    CASE: items == 1
+        CODE:
+            switch ( ix ) {
+                case 0: fltk::icon_style = style; break;
+                case 1: fltk::message_style = style; break;
+            }
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            switch ( ix ) {
+                case 0: RETVAL = fltk::icon_style; break;
+                case 1: RETVAL = fltk::message_style; break;
+            }
+        OUTPUT:
+            RETVAL
     ALIAS:
         message_style = 1
 
