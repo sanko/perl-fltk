@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::GL
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -40,9 +40,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 glstart( )
+    CODE:
+        fltk::glstart( );
 
 void
 glfinish( )
+    CODE:
+        fltk::glfinish( );
 
 BOOT:
     export_tag("glstart",  "gl");
@@ -60,6 +64,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 glsetcolor( fltk::Color color )
+    CODE:
+        fltk::glsetcolor( color );
 
 BOOT:
     export_tag("glsetcolor", "gl");
@@ -80,9 +86,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 glstrokerect( int x, int y, int w, int h )
+    CODE:
+        fltk::glstrokerect( x, y, w, h );
 
 void
 glfillrect ( int x, int y, int w, int h )
+    CODE:
+        fltk::glfillrect ( x, y, w, h );
 
 BOOT:
     export_tag("glstrokerect", "gl");
@@ -100,6 +110,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 glsetfont( fltk::Font * f, float size )
+    CODE:
+        fltk::glsetfont( f, size );
 
 BOOT:
     export_tag("glsetfont", "gl");
@@ -120,9 +132,17 @@ MODULE = FLTK               PACKAGE = FLTK
 
 float
 glgetascent( )
+    CODE:
+        RETVAL = fltk::glgetascent( );
+    OUTPUT:
+        RETVAL
 
 float
 glgetdescent( )
+    CODE:
+        RETVAL = fltk::glgetdescent( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("glgetascent",  "gl");
@@ -144,10 +164,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 float
 glgetwidth( char * string, int length = NO_INIT )
-    CASE: items == 1
-        C_ARGS: string
-    CASE:
-        C_ARGS: string, length
+    CODE:
+        if ( items == 1 )
+            RETVAL = fltk::glgetwidth( string );
+        else
+            RETVAL = fltk::glgetwidth( string, length );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("glgetwidth", "gl");
@@ -163,11 +186,12 @@ MODULE = FLTK               PACKAGE = FLTK::GL
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-gldrawtext ( char * string, float x = NO_INIT, float y = NO_INIT, float z = 0 )
-    CASE: items == 1
-        C_ARGS: string  /* NOTE: n (length) is not supported */
-    CASE: items >= 3
-        C_ARGS: string, /* NOTE: n (length) is not supported */ x, y, z
+gldrawtext( char * string, float x = NO_INIT, float y = NO_INIT, float z = 0 )
+    CODE:
+        if ( items == 1 )
+            fltk::gldrawtext( string /* NOTE: n (length) is not supported */ );
+        else if ( items >= 3 )
+            fltk::gldrawtext( string, /* NOTE: n (length) is not supported */ x, y, z );
 
 BOOT:
     export_tag("gldrawtext", "gl");
@@ -183,7 +207,9 @@ MODULE = FLTK               PACKAGE = FLTK::GL
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-gldrawimage( uchar * data, int x, int y, int w,int h, int d = 3, int ld = 0 )
+gldrawimage( uchar * data, int x, int y, int w, int h, int d = 3, int ld = 0 )
+    CODE:
+        fltk::gldrawimage( data, x, y, w, h, d, ld );
 
 BOOT:
     export_tag("gldrawimage", "gl");

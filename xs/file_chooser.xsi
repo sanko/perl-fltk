@@ -63,6 +63,11 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 dir_chooser( char * message, char * directory, int relative = 0 )
+    CODE:
+        RETVAL = fltk::dir_chooser( message, directory, relative );
+    OUTPUT:
+        RETVAL
+
 
 BOOT:
     export_tag("dir_chooser", "dialog");
@@ -70,9 +75,13 @@ BOOT:
 
 const char *
 file_chooser( char * message, char * pattern, char * filename, int relative = 0 )
+    CODE:
+        RETVAL = fltk::file_chooser( message, pattern, filename, relative );
+    OUTPUT:
+        RETVAL
 
 BOOT:
-    export_tag("alert", "dialog"); // TODO: rename file_chooser tag dialog
+    export_tag("alert", "dialog");
     export_tag("alert", "default");
 
 MODULE = FLTK               PACKAGE = FLTK::file_chooser

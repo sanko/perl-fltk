@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::events
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -668,6 +668,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
 BUTTON( int number )
+    CODE:
+        RETVAL = fltk::BUTTON( number );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag( "BUTTON", "events" );
@@ -767,7 +771,7 @@ MODULE = FLTK               PACKAGE = FLTK
 int
 event( )
     CODE:
-        switch ( ix ) {
+        switch( ix ) {
             case 0: RETVAL = fltk::event( ); break;
             case 1: RETVAL = fltk::event_x( ); break;
             case 2: RETVAL = fltk::event_y( ); break;
@@ -895,14 +899,16 @@ MODULE = FLTK               PACKAGE = FLTK
 unsigned
 event_key( )
     CODE:
-        switch( ix ) {
-            case 0: RETVAL = fltk::event_key(); break;
-            case 1: RETVAL = fltk::event_button(); break;
-        }
+        RETVAL = fltk::event_key( );
     OUTPUT:
         RETVAL
-    ALIAS:
-        event_button = 1
+
+unsigned
+event_button( )
+    CODE:
+        RETVAL = fltk::event_button( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("event_key", "events");
@@ -920,6 +926,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 event_key_state( unsigned state )
+    CODE:
+        RETVAL = fltk::event_key_state( state );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("event_key_state", "events");
@@ -961,14 +971,16 @@ MODULE = FLTK               PACKAGE = FLTK
 unsigned
 event_length( )
     CODE:
-        switch ( ix ) {
-            case 0: RETVAL = fltk::event_length(); break;
-            case 1: RETVAL = fltk::event_key_repeated(); break;
-        }
+        RETVAL = fltk::event_length( );
     OUTPUT:
         RETVAL
-    ALIAS:
-        event_key_repeated = 1
+
+unsigned
+event_key_repeated( )
+    CODE:
+        RETVAL = fltk::event_key_repeated( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("event_length", "events");
@@ -995,16 +1007,23 @@ MODULE = FLTK               PACKAGE = FLTK
 float
 event_pressure( )
     CODE:
-        switch ( ix ) {
-            case 0: RETVAL = fltk::event_pressure(); break;
-            case 1: RETVAL = fltk::event_x_tilt(); break;
-            case 2: RETVAL = fltk::event_y_tilt(); break;
-        }
+        RETVAL = fltk::event_pressure( );
     OUTPUT:
         RETVAL
-    ALIAS:
-        event_x_tilt = 1
-        event_y_tilt = 2
+
+float
+event_x_tilt( )
+    CODE:
+        RETVAL = fltk::event_x_tilt( );
+    OUTPUT:
+        RETVAL
+
+float
+event_y_tilt( )
+    CODE:
+        RETVAL = fltk::event_y_tilt( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("event_pressure", "events");
@@ -1024,7 +1043,7 @@ MODULE = FLTK               PACKAGE = FLTK
 int
 event_device( )
     CODE:
-        RETVAL = event_device( );
+        RETVAL = fltk::event_device( );
     OUTPUT:
         RETVAL
 
@@ -1084,7 +1103,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 compose( IN_OUTLIST int del )
-    C_ARGS: del
+    CODE:
+        RETVAL = fltk::compose( del );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("compose", "events");
@@ -1105,6 +1127,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 compose_reset( )
+    CODE:
+        fltk::compose_reset( );
 
 BOOT:
     export_tag("compose_reset", "events");
@@ -1137,6 +1161,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 try_shortcut( )
+    CODE:
+        RETVAL = fltk::try_shortcut( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("try_shortcut", "events");
@@ -1158,6 +1186,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 key_name( unsigned hotkey )
+    CODE:
+        RETVAL = fltk::key_name( hotkey );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("key_name", "events");
@@ -1191,6 +1223,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
 key( const char * name )
+    CODE:
+        RETVAL = fltk::key( name );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("key", "events");
@@ -1220,10 +1256,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 unsigned
 foreachShortcut( fltk::ShortcutFunctor * SF, fltk::Widget * widget = NO_INIT )
-    CASE: items == 1
-        C_ARGS: * SF
-    CASE: items == 2
-        C_ARGS: widget, * SF
+    CODE:
+        if ( items == 1 )
+            RETVAL = fltk::foreachShortcut( * SF );
+        else if ( items == 2 )
+            RETVAL = fltk::foreachShortcut( widget, * SF );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("foreachShortcut", "events");
@@ -1244,6 +1283,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 get_key_state( unsigned key )
+    CODE:
+        RETVAL = fltk::get_key_state( key );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("get_key_state", "events");
@@ -1262,9 +1305,19 @@ your first window). If the display is not open, this will open it.
 
 MODULE = FLTK               PACKAGE = FLTK
 
-void
-get_mouse( OUTLIST int x, OUTLIST int y )
-    C_ARGS: x, y
+AV *
+get_mouse( )
+    PREINIT:
+        int x, y;
+    INIT:
+        RETVAL = newAV( );
+        sv_2mortal((SV*)RETVAL);
+    CODE:
+        fltk::get_mouse( x, y );
+        av_push( RETVAL, newSViv( x ) );
+        av_push( RETVAL, newSViv( y ) );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("get_mouse", "events");
@@ -1284,6 +1337,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 warp_mouse ( int x, int y )
+    CODE:
+        RETVAL = fltk::warp_mouse ( x, y );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("warp_mouse", "events");
@@ -1315,6 +1372,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 handle( int event, fltk::Window * window )
+    CODE:
+        RETVAL = fltk::handle( event, window );
+    OUTPUT:
+        RETVAL
 
 MODULE = FLTK               PACKAGE = FLTK::events
 
@@ -1409,7 +1470,7 @@ fltk::Widget *
 focus( fltk::Widget * widget = NO_INIT )
     CASE: items == 0
         CODE:
-            RETVAL = focus( );
+            RETVAL = fltk::focus( );
         OUTPUT:
             RETVAL
     CASE: items == 1
@@ -1441,7 +1502,9 @@ with the mouse and for drag & drop (on X this is the XA_PRIMARY selection).
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-copy ( const char * stuff, int len = strlen(stuff), bool clipboard = false )
+copy( const char * stuff, int len = strlen(stuff), bool clipboard = false )
+    CODE:
+        fltk::copy( stuff, len, clipboard );
 
 BOOT:
     export_tag("copy", "events");
@@ -1473,8 +1536,9 @@ require.
 MODULE = FLTK               PACKAGE = FLTK
 
 void
-paste ( fltk::Widget * reciever, bool clipboard = false )
-    C_ARGS: * reciever, clipboard
+paste( fltk::Widget * reciever, bool clipboard = false )
+    CODE:
+        fltk::paste( * reciever, clipboard );
 
 BOOT:
     export_tag("paste", "events");
@@ -1496,6 +1560,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 dnd( )
+    CODE:
+        RETVAL = fltk::dnd( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("dnd", "events");
@@ -1549,7 +1617,10 @@ MODULE = FLTK               PACKAGE = FLTK
 fltk::Widget *
 modal( fltk::Widget * widget = NO_INIT, bool grab = false )
     CASE: items == 0
-        C_ARGS:
+        CODE:
+            RETVAL = fltk::modal( );
+        OUTPUT:
+            RETVAL
     CASE:
         CODE:
             fltk::modal( widget, grab );
@@ -1570,6 +1641,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 grab( )
+    CODE:
+        RETVAL = fltk::grab( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("grab", "events");
@@ -1588,6 +1663,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 exit_modal( )
+    CODE:
+        fltk::exit_modal( );
 
 BOOT:
     export_tag("exit_modal", "events");
@@ -1606,6 +1683,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 exit_modal_flag( )
+    CODE:
+        RETVAL = fltk::exit_modal_flag( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("exit_modal_flag", "events");
@@ -1623,6 +1704,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 const char *
 event_name( int event )
+    CODE:
+        RETVAL = fltk::event_name( event );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("event_name", "events");

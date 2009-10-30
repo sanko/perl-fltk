@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::run
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -47,6 +47,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 display ( char * d )
+    CODE:
+        fltk::display( d );
 
 BOOT:
     export_tag("display", "run");
@@ -71,6 +73,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 bool
 enable_tablet_events( )
+    CODE:
+        RETVAL = fltk::enable_tablet_events( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("enable_tablet_events", "run");
@@ -104,10 +110,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 int
 wait ( double time_to_wait = NO_INIT )
-    CASE: items == 0
-        C_ARGS:
-    CASE:
-        C_ARGS: time_to_wait
+    CODE:
+        if ( items == 0 )
+            RETVAL = fltk::wait( );
+        else
+            RETVAL = fltk::wait( time_to_wait );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("wait", "run");
@@ -158,12 +167,17 @@ MODULE = FLTK               PACKAGE = FLTK
 
 int
 run ( )
-
-int
-check ( )
-
-int
-ready ( )
+    CODE:
+        switch( ix ) {
+            case 0: RETVAL = fltk::run( ); break;
+            case 1: RETVAL = fltk::check( ); break;
+            case 2: RETVAL = fltk::ready( ); break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        check = 1
+        ready = 2
 
 BOOT:
     export_tag("run", "run");
@@ -197,9 +211,13 @@ MODULE = FLTK               PACKAGE = FLTK
 
 void
 redraw( )
+    CODE:
+        fltk::redraw( );
 
 void
 flush( )
+    CODE:
+        fltk::flush( );
 
 BOOT:
     export_tag("redraw", "run");
@@ -231,12 +249,12 @@ int
 damage( int d = NO_INIT )
     CASE: items == 0
         CODE:
-            RETVAL = fltk::damage( );
+            fltk::damage ( );
         OUTPUT:
             RETVAL
     CASE:
         CODE:
-            fltk::damage( );
+            fltk::damage( d );
 
 BOOT:
     export_tag("damage", "run");
@@ -263,6 +281,8 @@ MODULE = FLTK               PACKAGE = FLTK
 
 double
 get_time_secs( )
+    CODE:
+        RETVAL = fltk::get_time_secs( );
 
 BOOT:
     export_tag("get_time_secs", "run");
@@ -309,8 +329,8 @@ add_timeout( double time, CV * callback, SV * args = NO_INIT )
         if ( items == 3 ) /* Callbacks can be called without arguments */
             hv_store( cb, "args", 4, newSVsv( args ),    0 );
         switch( ix ) {
-            case 0:    add_timeout( time, _cb_t, ( void * ) cb ); break;
-            case 1: repeat_timeout( time, _cb_t, ( void * ) cb ); break;
+            case 0:    fltk::add_timeout( time, _cb_t, ( void * ) cb ); break;
+            case 1: fltk::repeat_timeout( time, _cb_t, ( void * ) cb ); break;
         }
     ALIAS:
         repeat_timeout = 1
@@ -355,9 +375,9 @@ has_timeout( CV * coderef, SV * args = NO_INIT )
             ) {RETVAL = true; break; }
         }*/
         switch( ix ) {
-            case 0: RETVAL = has_timeout( _cb_t, ( void * ) cb ); break; // XXX
-            case 1: RETVAL =   has_check( _cb_t, ( void * ) cb ); break; // XXX
-            case 2: RETVAL =    has_idle( _cb_t, ( void * ) cb ); break; // XXX
+            case 0: RETVAL = fltk::has_timeout( _cb_t, ( void * ) cb ); break; // XXX
+            case 1: RETVAL =   fltk::has_check( _cb_t, ( void * ) cb ); break; // XXX
+            case 2: RETVAL =    fltk::has_idle( _cb_t, ( void * ) cb ); break; // XXX
         }
     OUTPUT:
         RETVAL
@@ -444,11 +464,11 @@ remove_timeout( CV * callback, SV * args = NO_INIT )
         if ( items == 2 ) /* Callbacks can be called without arguments */
             hv_store( cb, "args", 4, newSVsv( args ),    0 );
         switch( ix ) {
-            case 0 : remove_timeout( _cb_t, ( void * ) cb ); break; // XXX - meh
-            case 1 :      add_check( _cb_t, ( void * ) cb ); break;
-            case 2 :   remove_check( _cb_t, ( void * ) cb ); break; // XXX - meh
-            case 3 :       add_idle( _cb_t, ( void * ) cb ); break;
-            case 4 :    remove_idle( _cb_t, ( void * ) cb ); break; // XXX - meh
+            case 0 : fltk::remove_timeout( _cb_t, ( void * ) cb ); break; // XXX - meh
+            case 1 :      fltk::add_check( _cb_t, ( void * ) cb ); break;
+            case 2 :   fltk::remove_check( _cb_t, ( void * ) cb ); break; // XXX - meh
+            case 3 :       fltk::add_idle( _cb_t, ( void * ) cb ); break;
+            case 4 :    fltk::remove_idle( _cb_t, ( void * ) cb ); break; // XXX - meh
         }
     ALIAS:
            add_check = 1

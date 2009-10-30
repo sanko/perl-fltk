@@ -43,8 +43,6 @@ its built-in GLUT emulation.
 
 #include <fltk/Widget.h>
 
-using namespace fltk; // TODO: Remove this and use fully qualified names
-
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass

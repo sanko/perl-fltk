@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::AlignGroup
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -29,7 +29,7 @@ L<C<resize()>|/"resize">s the children to fit in the space not required by the
 
 #include <fltk/AlignGroup.h>
 
-=for apidoc d||FLTK::AlignGroup self|new|int x|int y|int width|int height|char * label = ''|uchar n_to_break = 0|bool vertical = 1|FLTK::Flags align = ALIGN_LEFT|uchar dw = 0|uchar dh = 0|
+=for apidoc d||FLTK::AlignGroup self|new|int x|int y|int width|int height|char * label = ''|uchar n_to_break = 0|bool vertical = 1|FLTK::Flags align = FLTK::ALIGN_LEFT|uchar dw = 0|uchar dh = 0|
 
 Creates a new C<FLTK::AlignGroup> object.
 
@@ -38,7 +38,7 @@ Creates a new C<FLTK::AlignGroup> object.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, fltk::Flags align = ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
+fltk::AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, fltk::Flags align = fltk::ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new WidgetSubclass<fltk::AlignGroup>(CLASS,x,y,w,h,label,

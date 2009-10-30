@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::Version
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -47,6 +47,10 @@ MODULE = FLTK               PACKAGE = FLTK
 
 double
 version( )
+    CODE:
+        RETVAL = fltk::version( );
+    OUTPUT:
+        RETVAL
 
 BOOT:
     export_tag("version", "version");
