@@ -214,7 +214,7 @@ END
             $CHANGES_D =~ s[\$(Date)(:[^\$]*)?\$][\$$1: $_Date \$]ig;
             $CHANGES_D =~ s[\$(Mod(ified)?)(:[^\$]*)?\$][\$$1: $_Mod \$]ig;
             $CHANGES_D
-                =~ s[\$(Url)(:[^\$]*)?\$][\$$1: $_Repo/raw/$_Commit/$file \$]ig
+                =~ s[\$(Url)(:[^\$]*)?\$][\$$1: $_Repo/raw/master/$file \$]ig
                 if $_Repo;
             $CHANGES_D
                 =~ s[\$(Rev(ision)?)(?::[^\$]*)?\$]["\$$1: ". ($2?$_Commit:$_Commit_short)." \$"]ige;
