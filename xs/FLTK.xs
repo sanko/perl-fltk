@@ -40,7 +40,7 @@ its built-in GLUT emulation.
 #include <XSUB.h>
 #define NEED_sv_2pv_flags
 #include "./include/ppport.h"
-
+#include "./include/WidgetSubclass.h"
 #include <fltk/Widget.h>
 
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
@@ -193,9 +193,15 @@ void export_tag (const char * what, const char * _tag ) {
     }
 }
 
+=for apidoc H|W|bool||HINSTANCE hInst|DWORD reason|LPVOID lpRes|
+
+Grabs the process global instance handle.
+
+=cut
+
 #ifdef WIN32
 #include <windows.h>
-HINSTANCE dllInstance; // Global library instance handle.
+HINSTANCE dllInstance; /* Global library instance handle. */
 extern "C" BOOL WINAPI DllMain (HINSTANCE hInst, DWORD reason, LPVOID lpRes) {
     switch ( reason ) {
         case DLL_PROCESS_ATTACH:
@@ -365,7 +371,7 @@ L<FLTK::Notes|FLTK::Notes>
 
 =cut
 
-// Alright, let's get things started, shall we?
+/* Alright, let's get things started, shall we? */
 
 MODULE = FLTK               PACKAGE = FLTK
 

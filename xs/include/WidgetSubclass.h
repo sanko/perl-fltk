@@ -19,6 +19,14 @@
 
 */
 
+#define PERL_NO_GET_CONTEXT 1
+#include <EXTERN.h>
+#include <perl.h>
+#define NO_XSLOCKS // XSUB.h will otherwise override various things we need
+#include <XSUB.h>
+#define NEED_sv_2pv_flags
+#include "ppport.h"
+
 #ifndef fltk_Widget_h
 #include <fltk/Widget.h> // Minimum.
 #endif
@@ -253,8 +261,8 @@ private:
 
 protected:
     int _call_method ( const char * method, AV * args ) {
-        int retval = 0;
         dTHX;
+        int retval = 0;
         HV * pkg = gv_stashpv( _class, 0 );
         GV * gv  = gv_fetchmethod_autoload( pkg, method, FALSE );
         if ( !( gv && isGV( gv ) ) )

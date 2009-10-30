@@ -521,10 +521,10 @@ Returns the last Color passed to L<C<setcolor()>|/"setcolor">.
 Returns the last Color passed to L<C<setbgcolor()>|/"setbgcolor">. To actually
 draw in the bg color, do this:
 
-  my $saved = getcolor();
-  setcolor(getbgcolor());
+  my $saved = FLTK::getcolor();
+  FLTK::setcolor(FLTK::getbgcolor());
   draw_stuff();
-  setcolor($saved);
+  FLTK::setcolor($saved);
 
 =cut
 
@@ -814,7 +814,6 @@ line_dashes( )
         RETVAL = newAV( );
         sv_2mortal((SV*)RETVAL);
         const char * ret = fltk::line_dashes( );
-        warn ("|%s|", ret);
         int i = 0;
         while ( ret[ i ] )
             av_push( RETVAL, newSViv( (int) ret[ i++ ] ) );
@@ -1213,7 +1212,7 @@ The size is given in pixels. Many pieces of software express sizes in "points"
 convert these point sizes to pixel sizes use the following code:
 
   my $monitor = FLTK::Monitor::all();
-  my $pixels_per_point = monitor->dpi_y() / 72.0;
+  my $pixels_per_point = $monitor->dpi_y() / 72.0;
   my $font_pixel_size  = $font_point_size * $pixels_per_point;
 
 See the L<FLTK::Font|FLTK::Font> class for a description of what can be passed

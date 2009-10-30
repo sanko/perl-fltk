@@ -18,9 +18,10 @@ FLTK::ask - Implementation of message, ask, choice, and input functions
 
 =head1 Description
 
-Implementation of L<C<FLTK::message()>|/"message">,
-L<C<FLTK::ask(...)>|/"ask">, L<C<FLTK::choice(...)>|/"choice">,
-L<C<FLTK::input()>|/"input">.
+Implementation of L<C<FLTK::message()>|FLTK::ask/"message">,
+L<C<FLTK::ask(...)>|FLTK::ask/"ask">,
+L<C<FLTK::choice(...)>|FLTK::ask/"choice">,
+L<C<FLTK::input()>|FLTK::ask/"input">.
 
 =begin apidoc
 
