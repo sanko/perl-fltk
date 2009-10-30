@@ -193,7 +193,7 @@ void export_tag (const char * what, const char * _tag ) {
     }
 }
 
-=for apidoc H|W|bool||HINSTANCE hInst|DWORD reason|LPVOID lpRes|
+=for apidoc H|W|bool true|DllMain|HINSTANCE hInst|DWORD reason|LPVOID lpRes|
 
 Grabs the process global instance handle.
 
