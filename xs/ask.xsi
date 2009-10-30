@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::ask
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.531
 
 =for git $Id$
 
@@ -300,145 +300,78 @@ BOOT:
 
 MODULE = FLTK               PACKAGE = FLTK::ask
 
-=for apidoc T[dialog]F||char * label|message_window_label||
+=end apidoc
 
-Get the title of L<C<message()>|/"message">, L<C<alert()>|/"alert">,
-L<C<ask()>|/"dialog">, L<C<choice()>|/"choice">, etc. windows.
+=head1 Variables
 
-=for apidoc T[dialog]F|||message_window_label|char * label|
+There are a few variables you my change that affect how L<FLTK|FLTK> behaves.
 
-Set this to change the title of L<C<message()>|/"message">,
-L<C<alert()>|/"alert">, L<C<ask()>|/"dialog">, L<C<choice()>|/"choice">, etc.
-windows.
+=over
 
-=for apidoc F||char * label|no||
+=item * C<$FLTK::message_window_label>
 
-Returns the current value for this variable.
+The value of this is used as the title of L<C<message()>|FLTK::ask/"message">,
+L<C<alert()>|FLTK::ask/"alert">, L<C<ask()>|FLTK::ask/"dialog">,
+L<C<choice()>|FLTK::ask/"choice">, etc. windows.
 
-=for apidoc F|||no|char * label|
+=item * C<$FLTK::no>
 
-You can change this string to convert fltk to a foreign language.
+You can change this string to convert L<FLTK|FLTK> to a foreign language.
 
-=for apidoc F||char * label|yes||
+=item * C<$FLTK::yes>
 
-Returns the current value for this variable.
+You can change this string to convert L<FLTK|FLTK> to a foreign language.
 
-=for apidoc F|||yes|char * label|
+=item * C<$FLTK::ok>
 
-You can change this string to convert fltk to a foreign language.
+You can change this string to convert L<FLTK|FLTK> to a foreign language.
 
-=for apidoc F||char * label|ok||
+=item * C<$FLTK::cancel>
 
-Returns the current value for this variable.
-
-=for apidoc F|||ok|char * label|
-
-You can change this string to convert fltk to a foreign language.
-
-=for apidoc F||char * label|cancel||
-
-Returns the current value for this variable.
-
-=for apidoc F|||cancel|char * label|
-
-You can change this string to convert fltk to a foreign language.
+You can change this string to convert L<FLTK|FLTK> to a foreign language.
 
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-const char *
-message_window_label ( char * label = NO_INIT )
-    CASE: items == 1
-        CODE:
-            switch( ix ) {
-                case 0: fltk::message_window_label = label; break;
-                case 1:                   fltk::no = label; break;
-                case 2:                  fltk::yes = label; break;
-                case 3:                   fltk::ok = label; break;
-                case 4:               fltk::cancel = label; break;
-            }
-    CASE:
-        CODE:
-            switch ( ix ) {
-                case 0: RETVAL = fltk::message_window_label; break;
-                case 1: RETVAL = fltk::no;     break;
-                case 2: RETVAL = fltk::yes;    break;
-                case 3: RETVAL = fltk::ok;     break;
-                case 4: RETVAL = fltk::cancel; break;
-            }
-        OUTPUT:
-            RETVAL
-    ALIAS:
-            no = 1
-           yes = 2
-            ok = 3
-        cancel = 4
-
 BOOT:
-    export_tag("message_window_label", "dialog");
+    magic_ptr_init( "FLTK::message_window_label",
+                                    &fltk::message_window_label );
+    export_tag("$message_window_label", "vars");
+    magic_ptr_init( "FLTK::yes",    &fltk::yes );
+    export_tag("$yes", "vars");
+    magic_ptr_init( "FLTK::no",     &fltk::no );
+    export_tag("$no", "vars");
+    magic_ptr_init( "FLTK::ok",     &fltk::ok );
+    export_tag("$ok", "vars");
+    magic_ptr_init( "FLTK::cancel", &fltk::cancel );
+    export_tag("$cancel", "vars");
 
-MODULE = FLTK               PACKAGE = FLTK::ask
+=item * C<$FLTK::message_window_timeout>
 
-=for apidoc T[dialog]F||double timeout|message_window_timeout||
-
-Returns the current value for
-L<C<message_window_timeout(...)>|/"message_window_timeout">.
-
-=for apidoc T[dialog]F|||message_window_timeout|double timeout|
-
-Set this to a positive value to cause the L<C<message()>|/"message">,
-L<C<alert()>|/"alert">, L<C<ask()>|/"dialog">, L<C<choice()>|/"choice">, etc.
-windows to close automatically after this timeout. If the timeout expires,
-C<-1> will be returned by the functions that return integers. The timeout
-value is a float in seconds.
+Set this to a positive value to cause the L<C<message()>|FLTK::ask/"message">,
+L<C<alert()>|FLTK::ask/"alert">, L<C<ask()>|FLTK::ask/"dialog">,
+L<C<choice()>|FLTK::ask/"choice">, etc. windows to close automatically after
+this timeout. If the timeout expires, C<-1> will be returned by the functions
+that return integers. The timeout value is a float in seconds.
 
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-double
-message_window_timeout( double timeout = NO_INIT )
-    CASE: items == 1
-        CODE:
-            fltk::message_window_timeout = timeout;
-    CASE:
-        CODE:
-            RETVAL = fltk::message_window_timeout;
-        OUTPUT:
-            RETVAL
-
 BOOT:
-    export_tag("message_window_timeout", "dialog");
+    magic_ptr_init( "FLTK::message_window_timeout",
+                    &fltk::message_window_timeout );
+    export_tag("$message_window_timeout", "vars");
 
-MODULE = FLTK               PACKAGE = FLTK::ask
-
-=for apidoc T[dialog]F||bool scroll|message_window_scrollable||
-
-Returns current value of
-L<C<message_window_scrollable(...)>|/"message_window_scrollable">.
-
-=for apidoc T[dialog]F|||message_window_scrollable|bool scroll|
+=item * C<$FLTK::message_window_scrollable>
 
 When this is set to true, then (all) message windows will use scrollbars if
 the given message is too long.
 
+=back
+
 =cut
 
-MODULE = FLTK               PACKAGE = FLTK
-
-bool
-message_window_scrollable( bool scroll = NO_INIT )
-    CASE: items == 1
-        CODE:
-            fltk::message_window_scrollable = scroll;
-    CASE:
-        CODE:
-            RETVAL = fltk::message_window_scrollable;
-        OUTPUT:
-            RETVAL
-
 BOOT:
-    export_tag("message_window_scrollable", "dialog");
+    magic_ptr_init( "FLTK::message_window_scrollable",
+                    &fltk::message_window_scrollable );
+    export_tag("$message_window_scrollable", "vars");
 
 #endif // ifndef DISABLE_ASK

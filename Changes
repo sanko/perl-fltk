@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 0197995
+Version 0.XXXXX | Next Sunday AD | 43d4427
 
     API Changes/Compatibility Information:
      * New Widgets/Types
@@ -8,6 +8,10 @@ Version 0.XXXXX | Next Sunday AD | 0197995
            (for passwords), ShapedWindow, Slider, Symbol (.*Image base class),
            Valuator, and xpmImage
      * Support for fltk's file and directory chooser API
+     * The variables $FLTK::ok, $FLTK::yes, $FLTK::no, $FLTK::cancel,
+           $FLTK::message_window_label, $FLTK::message_window_timeout, and
+           $FLTK::message_window_scrollable are now connected to their C++
+           counterparts and may be imported with the :vars tag
 
     Resolved Issues/Bug Fixes:
      * FLTK::Menu->item() now (attempts to) return correctly blessed widgets
