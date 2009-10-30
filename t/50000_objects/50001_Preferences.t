@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 107;
+use Test::More tests => 106;
 use Module::Build qw[];
 use File::Temp qw[];
 my $test_builder = Test::More->builder;
@@ -26,7 +26,9 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK');
+use FLTK;
+
+#
 is(FLTK::Preferences::SYSTEM(), 0, 'FLTK::Preferences::SYSTEM() == 0');
 is(FLTK::Preferences::USER(),   1, 'FLTK::Preferences::USER() == 1');
 my $dir = File::Temp->newdir('FLTK_Preferences_XXXX', TMPDIR => 1);
@@ -51,9 +53,9 @@ my $dir = File::Temp->newdir('FLTK_Preferences_XXXX', TMPDIR => 1);
                          ],
                          'USER prefs'
     );
-    my $p_prefs
-        = new_ok('FLTK::Preferences', [$dir, 'AcmeSoft', 'WonderWare 2.0'],
-                 'PATH prefs');
+    my $p_prefs =
+        new_ok('FLTK::Preferences', [$dir, 'AcmeSoft', 'WonderWare 2.0'],
+               'PATH prefs');
     ok($s_prefs->getUserdataPath ne $u_prefs->getUserdataPath,
         'SYSTEM and USER prefs are stored in different locations');
     ok($s_prefs->getUserdataPath ne $p_prefs->getUserdataPath,
@@ -68,9 +70,7 @@ my $dir = File::Temp->newdir('FLTK_Preferences_XXXX', TMPDIR => 1);
                        [$prefs, 'New Group'],
                        'Prefs based on existing Prefs object');
 }
-
-
-{# Flush data under various conditions
+{    # Flush data under various conditions
     {    # Leaving scope
         my $prefs = new_ok('FLTK::Preferences',
                            [$dir, 'FLTK', 'Scope'],

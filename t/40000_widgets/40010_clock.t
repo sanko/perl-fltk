@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More 0.82 tests => 21;
+use Test::More 0.82 tests => 20;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,7 +26,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:clock]);
+use FLTK qw[:clock];
 
 # ClockOutput types imported with :clock tag
 for my $sub (qw[SQUARE ANALOG ROUND DIGITAL]) { can_ok(__PACKAGE__, $sub); }
@@ -42,7 +42,7 @@ my $C1 = new_ok('FLTK::Clock' => [100, 0, 100, 100],
 $W->end();
 my $C2 = new_ok('FLTK::Clock' => [100, 0, 100, 100],
                 'new FLTK::Clock( 100, 0, 100, 100 )');
-$W->show();
+$W->show();    # if $interactive;
 
 #
 is($CO->value(), 0, 'Default value for ClockOutput is 0');

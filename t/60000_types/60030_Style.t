@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 46;
+use Test::More tests => 45;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,7 +26,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:style]);
+use FLTK qw[:style];
 
 # Font types imported with :font tag
 for my $sub (qw[ BOLD ITALIC BOLD_ITALIC

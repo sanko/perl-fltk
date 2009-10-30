@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 154;
+use Test::More tests => 153;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,7 +26,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:color]);
+use FLTK qw[:color];
 
 # Color types imported with :color tag
 for my $sub (

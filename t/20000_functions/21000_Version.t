@@ -16,7 +16,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 8;
+use Test::More tests => 7;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -28,7 +28,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:version]);
+use FLTK qw[:version];
 
 # Imported with version tag
 for my $sub (qw[FL_MAJOR_VERSION FL_MINOR_VERSION FL_PATCH_VERSION

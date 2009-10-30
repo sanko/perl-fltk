@@ -30,8 +30,8 @@ my @classes = sort qw[
     Button
     CheckButton
 ];
-plan tests => 1 + 6 * scalar @classes;    # Order of operations ftw!
-use_ok('FLTK', ':events');
+plan tests => 6 * scalar @classes;    # Order of operations ftw!
+use FLTK qw[:events];
 
 #
 my $TEMPLATE = <<'';
@@ -81,7 +81,7 @@ SKIP: {
                         "new Test::$class ( 0, 0, 100, 100 )");
         isa_ok($W1, "FLTK::$class", $W1);
         $W->end();
-        $W->show();
+        $W->show();     # if $interactive;
         FLTK::wait(1);
         $W->hide();
         $W1->destroy();

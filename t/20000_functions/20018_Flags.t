@@ -16,7 +16,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 47;
+use Test::More tests => 46;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -28,7 +28,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK', qw[:flags]);
+use FLTK qw[:flags];
 
 # Event types and Event Keys imported with :flags tag
 for my $sub (qw[ NO_FLAGS

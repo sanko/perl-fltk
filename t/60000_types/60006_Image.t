@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 13;
+use Test::More tests => 12;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -26,7 +26,7 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-use_ok('FLTK');
+use FLTK;
 
 # Set some typical values to use in this next section...
 my ($name, $w, $h, $data, $linedelta) = qw[Name 100 150 RANDOMDATA 300];

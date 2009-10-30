@@ -13,6 +13,7 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More tests => 33;
@@ -50,8 +51,7 @@ ok($cancel = 'Forget it!', 'Change value of cancel to \'Forget it!\'');
 is($FLTK::cancel, 'Forget it!', 'Verify new value of $cancel');
 
 #
-ok(!$message_window_timeout,
-    'Default value for $message_window_timeout');
+ok(!$message_window_timeout, 'Default value for $message_window_timeout');
 ok($message_window_timeout = 0.25,
     'Change value of $message_window_timeout to 0.25');
 is($FLTK::message_window_timeout, 0.25,
@@ -66,8 +66,7 @@ is($FLTK::message_window_scrollable,
     1, 'Verify new value of $message_window_scrollable');
 
 #
-ok(!$message_window_label,
-    'Default value of $message_window_scrollable');
+ok(!$message_window_label, 'Default value of $message_window_scrollable');
 ok($message_window_label = 'This is my title!',
     'Change value of $message_window_label to \'This is my title!\'');
 is($FLTK::message_window_label,
