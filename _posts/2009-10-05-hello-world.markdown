@@ -11,7 +11,7 @@ the fltk2 docs:
 {%highlight perl linenos%}
 use strict;
 use warnings;
-use FLTK;
+use FLTK qw[:all];
 
 my $window = FLTK::Window->new(300, 180);
 $window->begin();
@@ -39,10 +39,14 @@ The basic way to use FLTK is simply:
 This sample program uses Window and Widget. Being class-based, the objects are
 created using typical OO syntax.
 
-Additionally, several non-class functions and symbols may be imported directly
-or with their related tag. As a rule, I only export functions a user requests,
-but FLTK has a very small group of default exports. This <code>:default</code>
-tag includes <code>run( )</code> as it will be used by most programs.
+Additionally, several non-class functions and variables may be imported
+directly or according to their related tag. Nothing is exported by default,
+but FLTK has a number of built in import tags.
+
+In this example, everything is ported with the <code>:all</code> tag. Starting
+your projects with <code>use FLTK qw[:default]</code> may be a good idea as
+the functions in this tag will be used by most programs including
+(<code>run( )</code> among others).
 
 ## Creating the Widgets
 
@@ -109,6 +113,9 @@ call <code>redraw( )</code>, you have to call it yourself. This greatly
 reduces code size and execution time. The only common exception is
 <code>value( )</code>, this does <code>redraw( )</code> if necessary. But
 we'll get into that in a future tutorial.
+
+Importing with the <code>:style</code> tag if your code requires any of these
+or other label and font types.
 
 ## Begin/End of Groups and Windows
 
