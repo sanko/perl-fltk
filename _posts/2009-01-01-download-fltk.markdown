@@ -8,23 +8,11 @@ Listing of current stable packages
 
 ## FLTK-Perl
 
-Current version: Unreleased (see [repo](http://github.com/sanko/fltk-perl/))
-
-<!--
-
-Current version: 0.530 XXXXXX [CPAN](http://search.cpan.org/dist/FLTK/)
-
--->
+Current version: [0.530](http://search.cpan.org/dist/FLTK/) (277e9ef14e02490fce3613fc3b4041d4d55af8c1)
 
 ## Alien::FLTK
 
-Current version: Unreleased (see [repo](http://github.com/sanko/alien-fltk/))
-
-<!--
-
-Current version: 0.530 XXXXXX [CPAN](http://search.cpan.org/dist/FLTK/)
-
--->
+Current version: [0.06921_002](http://search.cpan.org/dist/Alien-Fltk/) (fa1d55fa5a44f4e10693b4e59a8763d273aee76e)
 
 ### History
 
