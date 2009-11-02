@@ -45,8 +45,8 @@ my $mb = $class->new(
                  'ExtUtils::CBuilder' => 0.27,
                  'File::Spec'         => 0,
                  'File::Find'         => 0,
-                 'File::Path'         => 2.04,
-                 'Module::Build'      => 0,
+                 'File::Path'         => 2.07,
+                 'Module::Build'      => '0.35_05',
                  'Devel::PPPort'      => 0
     },
     build_requires => {perl                 => 5.008000,
@@ -57,8 +57,8 @@ my $mb = $class->new(
                        'ExtUtils::CBuilder' => 0.27,
                        'File::Spec'         => 0,
                        'File::Find'         => 0,
-                       'File::Path'         => 2.04,
-                       'Module::Build'      => 0,
+                       'File::Path'         => 2.07,
+                       'Module::Build'      => '0.35_05',
                        'Devel::PPPort'      => 0,
                        'Alien::FLTK'        => '0.06921_002',
                        'Pod::Parser'        => 0
