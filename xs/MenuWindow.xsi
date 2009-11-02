@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::MenuWindow
 
 =head1 NAME
 
-FLTK::MenuWindow -
+FLTK::MenuWindow - Temporary, unmovable popup window
 
 =head1 Description
 

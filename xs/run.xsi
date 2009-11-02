@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::run
 
 =head1 NAME
 
-FLTK::run
+FLTK::run - Basic activity functions for the Fast Light Toolkit
 
 =head1 Description
 

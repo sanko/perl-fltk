@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::ccHueBox
 
 =head1 NAME
 
-FLTK::ccHueBox -
+FLTK::ccHueBox - Part of the FLTK::ColorChooser megawidget
 
 =head1 Description
 

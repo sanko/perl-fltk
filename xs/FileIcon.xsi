@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::FileIcon
 
 =head1 NAME
 
-FLTK::FileIcon -
+FLTK::FileIcon - Subclass of FLTK::Image used to represent a single file type
 
 =head1 Description
 

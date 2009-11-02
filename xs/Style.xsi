@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::Style
 
 =head1 NAME
 
-FLTK::Style -
+FLTK::Style - Simulate themes for the Fast Light Toolkit
 
 =head1 Description
 

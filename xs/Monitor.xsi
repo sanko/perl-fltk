@@ -14,7 +14,7 @@ MODULE = FLTK               PACKAGE = FLTK::Monitor
 
 =head1 NAME
 
-FLTK::Monitor -
+FLTK::Monitor - Represents the entire viewing area
 
 =head1 Description
 
