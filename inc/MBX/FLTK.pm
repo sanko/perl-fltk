@@ -8,7 +8,7 @@ package MBX::FLTK;
     use ExtUtils::CBuilder qw[];
     use File::Spec::Functions qw[catdir rel2abs abs2rel canonpath];
     use File::Find qw[find];
-    use File::Path 2.07 qw[make_path];
+    use File::Path qw[make_path];
     use base 'Module::Build';
     {
         sub cxxflags { return '' }
