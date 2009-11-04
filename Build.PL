@@ -60,7 +60,7 @@ my $mb = $class->new(
                        'File::Path'         => 2.07,
                        'Module::Build'      => '0.35_05',
                        'Devel::PPPort'      => 0,
-                       'Alien::FLTK'        => '0.06921_002',
+                       'Alien::FLTK'        => '0.06921_004',
                        'Pod::Parser'        => 0
     },
     recommends     => {OpenGL => 0.58},
