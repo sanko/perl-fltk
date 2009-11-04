@@ -14,6 +14,8 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * Convert all enum and built-in types to fake tied vars?
+
 =item * Document internals and write regression tests
 
 =item * Make sure all examples in POD (c+p from the fltk2 docs) actually work
