@@ -14,7 +14,6 @@ package MBX::FLTK::Developer;
     use Alien::FLTK;
     use Data::Dump qw[pp];
     use Cwd qw[cwd];
-    sub cxxflags { return; qw[-W -Wall] }
     {
         my ($cwd, %seen, %packages, @xsi_files);
 

@@ -11,7 +11,6 @@ package MBX::FLTK;
     use File::Path qw[make_path];
     use base 'Module::Build';
     {
-        sub cxxflags { return '' }
 
         sub ACTION_code {
             require Alien::FLTK;    # Should be installed by now
@@ -48,11 +47,10 @@ package MBX::FLTK;
                 }
                 push @obj,
                     $self->cbuilder->compile(
-                                      'C++'        => 1,
-                                      source       => $cpp,
-                                      include_dirs => [$AF->include_dirs()],
-                                      extra_compiler_flags =>
-                                          [$AF->cxxflags(), $self->cxxflags()]
+                                       'C++'        => 1,
+                                       source       => $cpp,
+                                       include_dirs => [$AF->include_dirs()],
+                                       extra_compiler_flags => $AF->cxxflags()
                     );
             }
             make_path(catdir(qw[blib arch auto FLTK]),
