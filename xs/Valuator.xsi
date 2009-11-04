@@ -314,4 +314,6 @@ INCLUDE: Dial.xsi
 
 INCLUDE: Slider.xsi
 
+INCLUDE: ValueInput.xsi
+
 #endif // ifndef DISABLE_VALUATOR

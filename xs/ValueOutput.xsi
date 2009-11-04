@@ -28,7 +28,6 @@ L<C<value()>|FLTK::Widget/"value"> will change it.
 
 =cut
 
-
 #include <fltk/ValueOutput.h>
 
 =for apidoc ||FLTK::ValueOutput * output|new|int x|int y|int w|int h|char * label = ''|

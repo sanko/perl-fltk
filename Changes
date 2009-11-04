@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | b75accf
+Version 0.XXXXX | Next Sunday AD | 07b4f2f
 
     API Changes/Compatibility Information:
      * New Widgets/Types
@@ -6,7 +6,7 @@ Version 0.XXXXX | Next Sunday AD | b75accf
            RadioItem, RadioLightButton, Rectangle (base class of all Widgets),
            RepeatButton, ReturnButton, Scrollbar, ScrollGroup, SecretInput
            (for passwords), ShapedWindow, Slider, Symbol (.*Image base class),
-           Valuator, and xpmImage
+           Valuator, ValueInput, and xpmImage
      * Support for fltk's file and directory chooser API
      * The variables $FLTK::ok, $FLTK::yes, $FLTK::no, $FLTK::cancel,
            $FLTK::message_window_label, $FLTK::message_window_timeout, and
