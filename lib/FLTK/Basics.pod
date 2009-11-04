@@ -18,9 +18,8 @@ This chapter will show you how to write a very simple FLTK program.
 
     use strict;
     use warnings;
-    use FLTK;
+    use FLTK qw[:style];
 
-    #
     my $window = FLTK::Window->new(300, 180);
     $window->begin();
     my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
@@ -30,7 +29,7 @@ This chapter will show you how to write a very simple FLTK program.
     $box->labeltype(SHADOW_LABEL);
     $window->end();
     $window->show();
-    exit run();
+    exit FLTK::run();
 
 The resulting program will display a window. You can quit the program by
 closing the window or pressing the C<ESC>ape key.
@@ -39,16 +38,17 @@ closing the window or pressing the C<ESC>ape key.
 
 The basic way to C<use FLTK> is simply:
 
-    use FLTK;
+    use FLTK qw[:style];
 
 Each widget in FLTK is represented by it's own class. This sample program
 uses a L<Window|FLTK::Window> and L<Widgets|FLTK::Widget>.
 
 In addition, several non-class functions and symbols can also be imported,
 they are grouped into tags with lower-case names. You should only include the
-ones you need. In this case C<run> is included automatically as it is in the
-C<:default> tag. The C<:default> tag contans most functions needed by the main
-part of a program to get FLTK to run.
+ones you need. In our example, the label L<font|FLTK::Widget/"labelfont"> and
+L<type|FLTK::Widget/"labeltype"> are set using built in variables which we
+import for use with the C<:style> tag. To import methods used by most
+programs, use the C<:default> tag.
 
 =head2 Creating the Widgets
 
@@ -144,7 +144,7 @@ to the window server).
 
 =head2 The Main Event Loop
 
-    exit run();
+    exit FLTK::run();
 
 This will repeatedly wait for and then process events from the user.
 L<C<FLTK::run()>|FLTK/"run"> does not return until all of the windows under
