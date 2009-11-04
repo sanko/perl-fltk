@@ -10,7 +10,7 @@
 
 =head1 NAME
 
-FLTK - Perl Interface to the Fast Light Toolkit
+FLTK - Perl bindings to the Fast Light Toolkit
 
 =head1 Description
 
