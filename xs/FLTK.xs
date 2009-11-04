@@ -313,7 +313,7 @@ a tied variable).
 static void magic_ptr_init( const char * var, int * ptr ) {
     dTHX;
     SV * sv;
-    struct ufuncs ufuncs_int = { magic_ptr_get_int, magic_ptr_set_int, (int) ptr };
+    struct ufuncs ufuncs_int = { magic_ptr_get_int, magic_ptr_set_int, (long) ptr };
     sv = get_sv( var, GV_ADD|GV_ADDMULTI );
     sv_magic(sv, NULL, PERL_MAGIC_uvar, (char *)&ufuncs_int, sizeof(ufuncs_int));
     return;
@@ -322,7 +322,7 @@ static void magic_ptr_init( const char * var, int * ptr ) {
 static void magic_ptr_init( const char * var, float * ptr ) {
     dTHX;
     SV * sv;
-    struct ufuncs ufuncs_float = { magic_ptr_get_float, magic_ptr_set_float, (int) ptr };
+    struct ufuncs ufuncs_float = { magic_ptr_get_float, magic_ptr_set_float, (long) ptr };
     sv = get_sv( var, GV_ADD|GV_ADDMULTI );
     sv_magic(sv, NULL, PERL_MAGIC_uvar, (char *)&ufuncs_float, sizeof(ufuncs_float));
     return;
@@ -331,7 +331,7 @@ static void magic_ptr_init( const char * var, float * ptr ) {
 static void magic_ptr_init( const char * var, bool * ptr ) {
     dTHX;
     SV * sv;
-    struct ufuncs ufuncs_bool = { magic_ptr_get_bool, magic_ptr_set_bool, (int) ptr };
+    struct ufuncs ufuncs_bool = { magic_ptr_get_bool, magic_ptr_set_bool, (long) ptr };
     sv = get_sv( var, GV_ADD|GV_ADDMULTI );
     sv_magic(sv, NULL, PERL_MAGIC_uvar, (char *)&ufuncs_bool, sizeof(ufuncs_bool));
     return;
@@ -340,7 +340,7 @@ static void magic_ptr_init( const char * var, bool * ptr ) {
 static void magic_ptr_init( const char * var, const char ** ptr ) {
     dTHX;
     SV * sv;
-    struct ufuncs ufuncs_char_ptr = { magic_ptr_get_char_ptr, magic_ptr_set_char_ptr, (int) ptr };
+    struct ufuncs ufuncs_char_ptr = { magic_ptr_get_char_ptr, magic_ptr_set_char_ptr, (long) ptr };
     sv = get_sv( var, GV_ADD|GV_ADDMULTI );
     sv_magic(sv, NULL, PERL_MAGIC_uvar, (char *)&ufuncs_char_ptr, sizeof(ufuncs_char_ptr));
     return;
