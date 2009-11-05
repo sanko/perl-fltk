@@ -56,10 +56,10 @@ my $dir = File::Temp->newdir('FLTK_Preferences_XXXX', TMPDIR => 1);
     my $p_prefs =
         new_ok('FLTK::Preferences', [$dir, 'AcmeSoft', 'WonderWare 2.0'],
                'PATH prefs');
-    ok($s_prefs->getUserdataPath ne $u_prefs->getUserdataPath,
-        'SYSTEM and USER prefs are stored in different locations');
-    ok($s_prefs->getUserdataPath ne $p_prefs->getUserdataPath,
-        'SYSTEM and PATH prefs are stored in different locations');
+    isn't($s_prefs->getUserdataPath, $u_prefs->getUserdataPath,
+          'SYSTEM and USER prefs are stored in different locations');
+    isn't($s_prefs->getUserdataPath, $p_prefs->getUserdataPath,
+          'SYSTEM and PATH prefs are stored in different locations');
     ok($u_prefs->getUserdataPath ne $p_prefs->getUserdataPath,
         'USER and PATH prefs are stored in different locations');
 }
