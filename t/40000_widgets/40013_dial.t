@@ -61,4 +61,4 @@ for (0 .. 100) {
 
 #
 is($C0->value(), 20,  '$C0->value == 20');
-is($C1->value(), 1.6, '$C1->value == 1.06');
+like($C1->value(), qr[^1.6\d*$], '$C1->value is around 1.06');
