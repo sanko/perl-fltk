@@ -34,8 +34,7 @@ my $mb = $class->new(
     license           => 'artistic_2',
     dist_author       => 'Sanko Robinson <sanko@cpan.org>',
     dist_version_from => 'lib/FLTK.pm',
-    dist_abstract =>
-        'Perl bindings to the (experimental) 2.0.x branch of the FLTK GUI toolkit',
+    dist_abstract     => 'Perl bindings to the Fast Light Toolkit',
     requires => {perl                 => 5.008000,
                  base                 => 0,
                  'Test::More'         => 0.88,
