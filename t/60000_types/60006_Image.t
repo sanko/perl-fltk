@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 12;
+use Test::More tests => 10;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -48,18 +48,6 @@ my $image_e = new_ok('FLTK::Image',
 my $image_f = new_ok('FLTK::Image',
                      [$image_a->pixeltype(), $w, $h, $name],
                      "FLTK::Image->new( PixelType, $w, $h, '$name' )");
-
-# Testing new(data, FLTK::PixelType, int w, int h)
-my $image_g = new_ok('FLTK::Image',
-                     [$data, $image_a->pixeltype(), $w, $h],
-                     "FLTK::Image->new( '$data', PixelType, $w, $h )");
-
-# Testing new(data, FLTK::PixelType, int w, int h, int linedelta)
-my $image_h = new_ok(
-                  'FLTK::Image',
-                  [$data, $image_a->pixeltype(), $w, $h, $linedelta],
-                  "FLTK::Image->new( '$data', PixelType, $w, $h, $linedelta )"
-);
 
 #
 is($image_c->width(),  100, '$image_c->width( ) == 100');
