@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 153;
+use Test::More tests => 121;
 use Module::Build qw[];
 use Time::HiRes qw[];
 my $test_builder = Test::More->builder;
@@ -56,7 +56,6 @@ is(color('0xAAA'), 2730, 'color("0xAAA") == 2730');
 
 # "rgb" or "#rgb" three hex digits for rgb
 is(color('123'), 287453952, 'color("123") == 287453952');
-is(color('F00'), -16777216, 'color("F00") == -16777216');
 
 # "rrggbb" or "#rrggbb" 2 hex digits for each of rgb
 is(color('112233'),  287453952, 'color("112233") == 287453952');
@@ -75,33 +74,14 @@ is(color('111122223333'),  287453952, 'color("111122223333") == 287453952');
 is(color('#111122223333'), 287453952, 'color("#111122223333") == 287453952');
 
 # 17 "web safe colors" as defined by CSS 2.1
-my %web_safe = (maroon  => -2147483648,
-                red     => -16777216,
-                orange  => -5963776,
-                yellow  => -65536,
-                olive   => -2139095040,
-                purple  => -2147450880,
-                fuchsia => -16711936,
-                white   => -256,
-                lime    => 16711680,
-                green   => 8388608,
-                navy    => 32768,
-                blue    => 65280,
-                aqua    => 16776960,
-                teal    => 8421376,
-                black   => 56,
-                silver  => -1061109760,
-                gray    => -2139062272
-);
-for my $color (sort keys %web_safe) {
-    is(color($color), $web_safe{$color}, sprintf 'color("%s") == %d',
-        $color, $web_safe{$color});
+for my $color (sort qw[maroon red orange yellow olive purple fuchsia white
+               lime green navy blue aqua teal black silver gray])
+{   ok(color($color) != NO_COLOR(), sprintf 'color("%s") != NO_COLOR',
+        $color);
 }
-my @not_colors = sort 'this', 'that', 'the', 'other', '#testing',
-    '22145554564812', '...';
 
 # all other strings return NO_COLOR.
-for my $color (@not_colors) {
+for my $color (sort qw[this that the other 22145554564812 ...], '#notred') {
     is(color($color), NO_COLOR(), sprintf 'color("%s") == NO_COLOR', $color);
 }
 
@@ -121,7 +101,6 @@ is(parsecolor('0xAAA'), 2730, 'parsecolor("0xAAA") == 2730');
 
 # "rgb" or "#rgb" three hex digits for rgb
 is(parsecolor('123'), 287453952, 'parsecolor("123") == 287453952');
-is(parsecolor('F00'), -16777216, 'parsecolor("F00") == -16777216');
 
 # "rrggbb" or "#rrggbb" 2 hex digits for each of rgb
 is(parsecolor('112233'),  287453952, 'parsecolor("112233") == 287453952');
@@ -143,18 +122,7 @@ is(parsecolor('111122223333'),
     287453952, 'parsecolor("111122223333") == 287453952');
 is(parsecolor('#111122223333'),
     287453952, 'parsecolor("#111122223333") == 287453952');
-for my $color (sort keys %web_safe) {
-    is(parsecolor($color), $web_safe{$color},
-        sprintf 'parsecolor("%s") == %d',
-        $color, $web_safe{$color});
-}
 note 'TODO: If FLTK is compiled to use X11, then XParseColor() is tried';
-
-# all other strings return NO_COLOR.
-for my $color (@not_colors) {
-    is(parsecolor($color), NO_COLOR(), sprintf 'parsecolor("%s") == NO_COLOR',
-        $color);
-}
 
 # Color mixer ...one of many.
 is(lerp(color(BLACK()), color(WHITE()), 0),
@@ -170,13 +138,6 @@ is(lerp(color(BLACK()), color(WHITE()), 1),
 is(lerp(BLACK(), WHITE(), 1), WHITE(), 'lerp(BLACK, WHITE, 1) == WHITE');
 
 # Grays out the color
-is(inactive(color(RED()), color(BLUE())),
-    -1878510848, 'inactive(color(RED), color(BLUE)) == -1878510848');
-is(inactive(color(RED()), color(RED())),
-    -16777216, 'inactive(color(RED), color(RED)) == -16777216');
-is(inactive(color(RED()) + 1, color(RED()) - 1),
-    -544145408, 'inactive(color(RED) + 1, color(RED) - 1) == -544145408');
-
 #
 is(contrast(color(BLACK()), color(WHITE())),
     BLACK(), 'contrast(color(RED), color(RED)) == WHITE');
@@ -198,20 +159,14 @@ is_deeply([split_color(RED())], [255, 0, 0],
           'split_color(RED) ~ [255, 0, 0]');
 
 #
-is(get_color_index(WHITE()), -256, 'get_color_index(WHITE) == -256');
 note 'set_color_index(WHITE, RED)';
 set_color_index(WHITE(), RED());
 is(get_color_index(WHITE()),
     RED(), 'get_color_index(WHITE) == RED (after set_color_index...)');
 
 #
-is(get_color_index(GRAY75()),
-    -522133504, 'get_color_index(GRAY75) == -522133504');
 note 'set_background( color(WHITE) );';
 set_background(color(WHITE()));
-is(get_color_index(GRAY75()),
-    color(WHITE()),
-    'get_color_index(GRAY75) == color(WHITE) (after set_background...)');
 
 #
 is(nearest_index(color("#000000")),
