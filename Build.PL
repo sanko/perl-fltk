@@ -91,7 +91,7 @@ my $mb = $class->new(
     },
     get_options => {'interactive!' => {},
                     'messy!'       => {}
-    },
+    }
 );
 print "Checking for a functioning C++ compiler...\n";
 if ($mb->cbuilder->have_cplusplus()) { print "Looks good\n\n" }
