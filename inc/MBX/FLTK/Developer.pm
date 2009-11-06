@@ -144,7 +144,7 @@ For more information, see the commit log:
 %sUrl%s
 END
 
-     # Keep a backup (just in case) and move the file so we can create it next
+        # Keep a backup just in case
         rename('Changes', 'Changes.bak')
             || die sprintf 'Failed to rename Changes (%s)', $^E;
 
@@ -221,12 +221,11 @@ END
             # Skip to the next file if this one wasn't updated
             next FILE if $CHANGES_D eq $CHANGES_O;
 
-     #warn qq[Updated $file];
-     #die $CHANGES_D;
-     # Keep a backup (just in case) and move the file so we can create it next
-     #rename($file, $file . '.bak')
-     #    || die sprintf 'Failed to rename %s (%s)', $file, $^E;
-     # open and lock the file
+            # Keep a backup just in case
+            rename($file, $file . '.bak')
+                || die sprintf 'Failed to rename %s (%s)', $file, $^E;
+
+            # open and lock the file
             sysopen(my ($CHANGES_W),
                     $file, Fcntl::O_WRONLY() | Fcntl::O_CREAT())
                 || warn(sprintf q[Failed to open %s for reading: %s], $file,
