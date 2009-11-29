@@ -15,7 +15,7 @@ layout: nil
 
 {%for post in site.posts%}
 	<url>
-		<loc>http://sanko.github.com/fltk-perl/{{post.url}}/</loc>
+		<loc>http://sanko.github.com/fltk-perl{{post.url}}</loc>
 		<lastmod>{{site.time}}</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.2</priority>
