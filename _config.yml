@@ -7,7 +7,7 @@ auto:           true
 permalink:      pretty
 paginate:       5
 
-title:          FLTK.pm
+title:          FLTK - Perl Bindings to the Fast Light Toolkit
 feed:           atom.xml
 sitemap:        sitemap.xml
 description:    "Perl bindings to the Fast Light Toolkit"
