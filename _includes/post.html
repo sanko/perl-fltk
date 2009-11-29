@@ -1,22 +1,79 @@
 <!-- Post -->
-<div id="post{{post.id|replace:"/","-"}}" class="post{%for cat in post.categories%} category-{{cat}}{%endfor%}{%for tag in post.topics%} tag-{{topic}}{%endfor%}">
-  <div class="post-head">
-	<h1>
-{%if page.url != post.url%}{%if page.url != '/tutorial'%}{%if post.categories contains 'tutorial'%}Tutorial: {%endif%}{%endif%}{%endif%}
-{%if page.url == post.url%}
-	{{post.title}}
+<div id="content-item-{{post.id|replace:"/","-"}}" class="content-item post{%for cat in post.categories%} category-{{cat}}{%endfor%}{%for tag in post.topics%} tag-{{topic}}{%endfor%}">
+          <div class="content-details" id="content-details-{{post.id|replace:"/","-"}}">
+            <h3>
+{%if page.url != post.url%}
+	{%if page.url != '/tutorial'%}
+		{%if post.categories contains 'tutorial'%}
+			Tutorial:
+		{%endif%}
+	{%endif%}
+	<a href=".{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
 {%else%}
-	  <a href=".{{post.url}}" rel="bookmark" title="Permanent Link to {{post.title}}">{{post.title}}</a>
+	{{post.title}}
 {%endif%}
-	</h1>
+            </h3>
+            <ul class="content-item-details" id="details-{{post.id|replace:"/","-"}}">
 {%unless post.categories contains 'page'%}
-	<small class="post-time">
-	  <strong class="day">{{post.date|date:"%d"}}</strong>
-	  <strong class="month-year">{{post.date|date:"%b<br />%Y"|uppercase}}</strong>
-	</small>
+				<li>
+				{{post.date|date:"%b %d%t %Y"}}
+				</li>
 {%endunless%}
-  </div>
-  <div class="post-content">
+
+{%if post.categories contains 'documentation'%}
+				<li>
+				{{post.abstract}}
+				</li>
+{%endif%}
+
+{%if post.categories == empty%}
+	  <li class="content-item-details-category">
+		In: Uncategorized
+	  </li>
+{%else%}
+	  <li class="content-item-details-category">Categories:
+{%for category in post.categories%}
+		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{category | escape}}"
+		   title="View all posts in &quot;{{category}}&quot;">{{category}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
+	  </li>
+{%endif%}
+{%if post.topics%}
+	  <li class="content-item-details-tag">Tags:
+{%for topic in post.topics%}
+		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{topic | escape}}"
+		   title="View posts tagged with &quot;{{topic}}&quot;">{{topic}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
+	  </li>
+{%endif%}
+
+				<li>
+{%if post.nocomments%}
+		Comments Disabled
+{%elsif post.categories contains 'page'%}
+		<!-- No comments on static/index pages -->
+{%else%}
+		<a href=".{{post.url}}#disqus_thread" title="Comment on {{post.title}}">
+	      &nbsp;&nbsp; Comments
+        </a>
+{%endif%}
+				</li>
+
+{% if page.previous || page.next %}
+ <li>
+	Pages:
+{%if page.previous%}
+
+		<a class="prev" href="{{page.previous.url}}">&laquo; {{page.previous.title | truncatewords:5}}</a>
+	{%endif%}
+	{%if page.next%}
+		<a class="next" href="{{page.next.url}}">{{page.next.title | truncatewords:5}} &raquo;</a>
+	{%endif%}
+</li>
+{%endif%}
+
+            </ul>
+          </div>
+          <div class="content-body" id="content-body-{{post.id|replace:"/","-"}}">
+            <div class="entry" id="entry-{{post.id|replace:"/","-"}}">
 {%if post.categories contains 'tutorial' and page.url != post.url and post.header%}
 	<img alt="{{post.title}} Preview" class="center noborder" src="{{post.header}}" />
 {%  if page.url == post.url%}
@@ -32,48 +89,23 @@
 	{{post.content}}
 {%	endif%}
 {%endif%}
-  </div>
-  <div class="post-details">
-    <ul>
-{%if post.categories == empty%}
-	  <li class="post-details-category">
-		In: Uncategorized
-	  </li>
+             </div>
+{%if page.nocomments%}
+    <!-- Without comments -->
+{%elsif page.categories contains 'page'%}
+	<!-- No comments on static/index pages -->
 {%else%}
-	  <li class="post-details-category">In:
-{%for category in post.categories%}
-		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{category | escape}}"
-		   title="View all posts in &quot;{{category}}&quot;">{{category}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
-	  </li>
+    <!-- With comments -->
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+		var disqus_developer = (/localhost|github|dev/i).test(location.host);
+	</script>
+	<script type="text/javascript" src="http://disqus.com/forums/{{site.disqus.id}}/embed.js"></script>
+	<noscript>
+		<a href="http://{{site.disqus.id}}.disqus.com/?url=ref">View the discussion thread.</a>
+	</noscript>
+    <!-- /With comments -->
 {%endif%}
-{%if post.topics%}
-	  <li class="post-details-tag">Tags:
-{%for topic in post.topics%}
-		<a href="http://www.google.com/search?q=site:{{"sanko.github.com/fltk-perl/" | escape}}+{{topic | escape}}"
-		   title="View posts tagged with &quot;{{topic}}&quot;">{{topic}}</a>{%if forloop.last != true%}, {%endif%}{%endfor%}
-	  </li>
-{%endif%}
-    </ul>
-  </div>
-  <div class="post-more">
-	<ul>
-{%if page.url != post.url%}
-	  <li class="post-more-read">
-		<a href=".{{post.url}}" title="Read More {{post.title}}">Read More</a>
-	  </li>
-{%endif%}
-	  <li class="post-more-comment">
-{%if post.nocomments%}
-		Comments Disabled
-{%elsif post.categories contains 'page'%}
-		<!-- No comments on static/index pages -->
-{%else%}
-		<a href=".{{post.url}}#disqus_thread" title="Comment on {{post.title}}">
-	      &nbsp;&nbsp; Comments
-        </a>
-{%endif%}
-	  </li>
-	</ul>
   </div>
 </div>
 <!-- /Post -->
