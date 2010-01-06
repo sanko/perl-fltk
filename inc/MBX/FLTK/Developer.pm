@@ -52,7 +52,7 @@ package MBX::FLTK::Developer;
                 }
                 if ($package and $version) {
                     chdir $cwd;
-                    $packages{$package}{'file'} ||= abs2rel($abs);
+                    $packages{$package}{'file'} = abs2rel($abs);
                     $packages{$package}{'file'} =~ s|\\|/|g;
                     $packages{$package}{'version'} = $version;
                 }
