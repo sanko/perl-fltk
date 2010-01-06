@@ -1,4 +1,13 @@
-Version 0.531 | 2009-11-06 03:10:41Z (Fri, 06 Nov 2009) | 8133705
+Version 0.XXXXX | Next Sunday AD | 5184c9a
+
+    API Changes/Compatibility Information:
+     * New Widgets/Types
+       - TextBuffer, Selection
+
+    Meanwhile:
+     * 開例 R. was born November 16th at 8:58am. She was 3.670kg and 52cm long
+
+Version 0.531 | 2009-11-06 03:34:36Z (Fri, 06 Nov 2009) | 53908ec
 
     API Changes/Compatibility Information:
      * New Widgets/Types

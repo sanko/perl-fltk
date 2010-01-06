@@ -108,6 +108,8 @@ const fltk::Style           *   O_FLTK
       fltk::Style           *   O_FLTK
 const fltk::Symbol          *   O_FLTK
 fltk::Symbol                *   O_FLTK
+fltk::TextBuffer            *   O_FLTK
+fltk::TextSelection         *   O_FLTK
 fltk::Valuator              *   O_FLTK
 fltk::ValueInput            *   O_FLTK
 fltk::ValueOutput           *   O_FLTK

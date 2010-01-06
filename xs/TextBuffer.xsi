@@ -1,0 +1,110 @@
+#ifndef DISABLE_TEXTBUFFER
+
+MODULE = FLTK               PACKAGE = FLTK::TextBuffer
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for version 0.532
+
+=for git $Id$
+
+=head1 NAME
+
+FLTK::TextBuffer -
+
+=head1 Description
+
+
+
+=cut
+
+#include <fltk/TextBuffer.h>
+
+=head1 Constructor
+
+=for apidoc d||FLTK::TextBuffer buffer|new|int requested_size|
+
+Creates an empty text buffer of pre-determined size. Use this to avoid
+unnecessary re-allocation if you know exactly how much the buffer will need to
+hold.
+
+=head2 Usage
+
+=for markdown {%highlight perl%}
+
+  my $buffer_1 = FLTK::TextBuffer->new( $requested_size );
+  my $buffer_2 = FLTK::TextBuffer->new( 1027 * 256 );
+
+=for markdown {%endhighlight%}
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+fltk::TextBuffer::new( int requested_size )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new fltk::TextBuffer( requested_size );
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=head1 Methods
+
+
+
+
+
+=head2 C<my $txt = $buffer_1-E<gt>text( )>
+X<text>
+
+=for apidoc ||const char * txt|text||
+
+Return the entire contents of the text buffer.
+
+=head2 C<$buffer_1-E<gt>text( $txt )>
+
+=for apidoc |||text|const char * txt|
+
+Replace the entire contents of the text buffer.
+
+=cut
+
+const char *
+fltk::TextBuffer::text ( const char * txt = NO_INIT )
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->text( );
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            THIS->text( txt );
+
+=pod X<text_range>
+
+=head2 C<my $txt = $buffer_1-E<gt>text_range( $start, $end )>
+
+=for apidoc ||char * txt|text_range|int start|int end|
+
+Returns a copy of the text between C<$start> and C<$end> character positions.
+Positions are C<0> (zero) based and the range does I<not> include the
+character pointed to by C<$end>.
+
+=cut
+
+char *
+fltk::TextBuffer::text_range( int start, int end )
+
+
+INCLUDE: TextSelection.xsi
+
+
+#endif // ifndef DISABLE_TEXTBUFFER

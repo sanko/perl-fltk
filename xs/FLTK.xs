@@ -485,6 +485,8 @@ INCLUDE: Style.xsi
 
 INCLUDE: Symbol.xsi
 
+INCLUDE: TextBuffer.xsi
+
 #INCLUDE: ValueInput.xsi
 
 MODULE = FLTK               PACKAGE = FLTK

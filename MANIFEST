@@ -142,6 +142,8 @@ xs/ShapedWindow.xsi
 xs/Slider.xsi
 xs/Style.xsi
 xs/Symbol.xsi
+xs/TextBuffer.xsi
+xs/TextSelection.xsi
 xs/type.map
 xs/Valuator.xsi
 xs/ValueInput.xsi
