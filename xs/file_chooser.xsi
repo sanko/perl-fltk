@@ -92,6 +92,8 @@ This function is called every time the user navigates to a new file or
 directory in the file chooser. It can be used to preview the result in the
 main window.
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

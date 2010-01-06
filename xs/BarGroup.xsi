@@ -126,6 +126,8 @@ fltk::BarGroup::open( )
 
 
 
+=end apidoc
+
 =cut
 
 int

@@ -181,6 +181,8 @@ MODULE = FLTK               PACKAGE = FLTK::GL
 
 
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

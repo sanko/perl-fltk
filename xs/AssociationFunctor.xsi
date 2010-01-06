@@ -33,6 +33,8 @@ For each found association this function is called. If the function returns
 true the loop is aborted and the data pointer for the current association is
 returned.
 
+=end apidoc
+
 =cut
 
 #include <fltk/WidgetAssociation.h>

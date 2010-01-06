@@ -108,6 +108,7 @@ fltk::FrameBox::inset( fltk::Rectangle * rect )
 =for apidoc ||bool is_it|is_frame||
 
 
+=end apidoc
 
 =cut
 

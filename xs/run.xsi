@@ -452,6 +452,8 @@ the idle callback.
 
 Removes the specified idle callback, if it is installed.
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

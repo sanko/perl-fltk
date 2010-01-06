@@ -14,22 +14,10 @@ FLTK - Perl bindings to the Fast Light Toolkit
 
 =head1 Description
 
-FLTK is-
-
-=for html <span style="color:#F00;font-size:2em;">
-
-B<This project has a long way to go so I am seeking volunteers to help with
-testing and development.>
-
-Please see the L<TODO list|FLTK::Todo> and the notes on
-L<getting started|FLTK::Notes/"Join the Team">.
-
-=for html </span>
-
-Ahem. FLTK is a graphical user interface toolkit for X (UNIX®),
-Microsoft® Windows®, OS/X, and several other platforms. FLTK provides modern
-GUI functionality without the bloat and supports 3D graphics via OpenGL® and
-its built-in GLUT emulation.
+FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft® Windows®,
+OS/X, and several other platforms. FLTK provides modern GUI functionality
+without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT
+emulation.
 
 =cut
 
@@ -350,6 +338,8 @@ static void magic_ptr_init( const char * var, const char ** ptr ) {
 
 =head1 Synopsis
 
+=for markdown {%highlight perl linenos%}
+
     use strict;
     use warnings;
     use FLTK qw[:style];
@@ -364,6 +354,8 @@ static void magic_ptr_init( const char * var, const char ** ptr ) {
     $window->end();
     $window->show();
     exit FLTK::run();
+
+=for markdown {%endhighlight%}
 
 =head1 See Also
 

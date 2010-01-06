@@ -1609,6 +1609,8 @@ If C<dx> or C<dy> are larger than the rectangle then this just calls C<code>
 for the entire rectangle. This is also done on systems (Quartz) that do not
 support copying screen regions.
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

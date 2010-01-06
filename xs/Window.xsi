@@ -45,10 +45,14 @@ window.
 
 =head1 Synopsis
 
+=for markdown {%highlight perl linenos%}
+
   use FLTK;
   my $win = FLTK::Window->new(100, 100, 500, 800);
   $win->show();
   FLTK::run();
+
+=for markdown {%endhighlight%}
 
 =begin apidoc
 

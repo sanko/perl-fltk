@@ -74,6 +74,8 @@ returns C<true>, or <undef>.
 See also L<Widget::foreach()|FLTK::Widget/"foreach"> and
 L<AssociationType::foreach()|FLTK::AssociationType/"foreach">.
 
+=end apidoc
+
 =cut
 
 SV *

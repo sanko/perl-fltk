@@ -1698,6 +1698,8 @@ MODULE = FLTK               PACKAGE = FLTK::events
 Return the corresponding name of an event, should not consume memory if api is
 not used. This is really only good for debugging.
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

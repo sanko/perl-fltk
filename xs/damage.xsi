@@ -27,6 +27,8 @@ damage bits to limit the amount of drawing that needs to be done, and the
 L<C<Widget::draw()>|FLTK::Widget/"draw"> method can test these bits to decide
 what to draw:
 
+=for markdown {%highlight perl linenos%}
+
   package MyClass;
 
   sub handle {
@@ -45,6 +47,8 @@ what to draw:
       draw_part2() if ($self->damage() & (DAMAGE_ALL() | 2));
       draw_part3() if ($self->damage() & (DAMAGE_ALL() | 4));
   }
+
+=for markdown {%endhighlight%}
 
 Except for C<DAMAGE_ALL>, each widget is allowed to assign any meaning to any
 of the bits it wants. The enumerations are just to provide suggested meanings.

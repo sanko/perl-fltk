@@ -321,6 +321,8 @@ AnsiWidget::getFontSize( )
 
 Converts ANSI colors to FLTK colors.
 
+=end apidoc
+
 =cut
 
 fltk::Color

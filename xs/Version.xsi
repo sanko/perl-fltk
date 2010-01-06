@@ -41,6 +41,8 @@ Returns the value of C<FL_VERSION> that FLTK was compiled with. This can be
 compared to the C<FL_VERSION> function to see if the shared library of fltk
 your program linked with is up to date.
 
+=end apidoc
+
 =cut
 
 MODULE = FLTK               PACKAGE = FLTK

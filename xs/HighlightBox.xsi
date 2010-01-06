@@ -63,6 +63,7 @@ fltk::HighlightBox::_draw( fltk::Rectangle * rect )
 =for apidoc ||bool eh|is_frame|
 
 
+=end apidoc
 
 =cut
 

@@ -6,12 +6,8 @@ FLTK::Notes - Annotated Guide to the Ins and Outs of FLTK
 
 =head1 Description
 
-=for html <span style="color:#F00;font-size:2em;">
-
 B<I am actively seeking volunteers to help test and develop this project.
 Please see the notes on L<joining the team|/"Join the Team">.>
-
-=for html </span>
 
 This is a first draft attempt at defining a road map for future development
 and a behavioral reference for users and third-party developers.
