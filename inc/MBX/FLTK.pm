@@ -123,7 +123,6 @@ package MBX::FLTK;
         }
         use File::Path qw[make_path];
         use File::Spec::Functions qw[splitpath];
-        my %modules;
         {
 
             package Pod::APIDoc::FLTK;
@@ -137,11 +136,13 @@ package MBX::FLTK;
                 my ($self, $command, $paragraph, $lineno) = @_;
                 if ($command eq 'head1') {
                     $paragraph =~ s|\s+$||;
-                    $current = \$modules{$package}{'section'}{$paragraph};
+                    $current = \$self->{'apidoc_modules'}{$package}{'section'}
+                        {$paragraph};
                     $$current = {line => $lineno,
                                  file => $self->input_file
                     };
-                    push @{$modules{$package}{'@section'}}, $paragraph;
+                    push @{$self->{'apidoc_modules'}{$package}{'@section'}},
+                        $paragraph;
                     return;
                 }
                 elsif ($command eq 'for') {
@@ -152,8 +153,13 @@ package MBX::FLTK;
                         warn sprintf 'Malformed apidoc at %s line %d',
                             $self->input_file, $lineno
                             if !$sub;
-                        $current = \$modules{$package}{$type}{$sub}
-                            ->[scalar @{$modules{$package}{$type}{$sub}}];
+                        $current
+                            = \$self->{'apidoc_modules'}{$package}{$type}
+                            {$sub}->[
+                            scalar
+                            @{$self->{'apidoc_modules'}{$package}{$type}
+                                    {$sub}}
+                            ];
                         $$current = {flags  => $flags,
                                      prereq => $prereq,
                                      return => $return,
@@ -165,7 +171,7 @@ package MBX::FLTK;
                     }
                     elsif (
                          $paragraph =~ m[(license|author|version|git)\s+(.+)])
-                    {   $modules{$package}{'.'}{$1}{$2}++;
+                    {   $self->{'apidoc_modules'}{$package}{'.'}{$1}{$2}++;
                         return;
                     }
                 }
@@ -222,7 +228,7 @@ package MBX::FLTK;
             print 'Parsing XS files for documentation... ';
             $parser->parse_from_file('xs/FLTK.xs');
             print "okay\nGenerating documentation... ";
-            for my $package (sort keys %modules) {
+            for my $package (sort keys %{$self->{'apidoc_modules'}}) {
                 my $file = './blib/lib/' . $package . '.pod';
                 $file =~ s|::|/|g;
                 make_path((splitpath($file))[0 .. 1]);
@@ -231,35 +237,47 @@ package MBX::FLTK;
                 syswrite $DOC, "=pod\n\n";
                 {
                     for my $section (qw[NAME Description Synopsis]) {
-                        next if !$modules{$package}{'section'}{$section};
+                        next
+                            if !$parser->{'apidoc_modules'}{$package}
+                                {'section'}{$section};
                         syswrite $DOC, "=head1 $section\n\n";
                         syswrite $DOC,
-                            $modules{$package}{'section'}{$section}{'text'};
+                            $parser->{'apidoc_modules'}{$package}{'section'}
+                            {$section}{'text'};
                     }
-                    if (keys %{$modules{$package}{'sub'}}) {
-                        syswrite $DOC, "=head1 Functions\n\n";
-                        for my $sub (sort keys %{$modules{$package}{'sub'}}) {
-                            syswrite $DOC, "=head2 C<$sub>\nX<$sub>\n\n";
+                    if (keys %{$parser->{'apidoc_modules'}{$package}{'sub'}})
+                    {   syswrite $DOC, "=head1 Functions\n\n";
+                        for my $sub (
+                              sort keys
+                              %{$parser->{'apidoc_modules'}{$package}{'sub'}})
+                        {   syswrite $DOC, "=head2 C<$sub>\nX<$sub>\n\n";
                             syswrite $DOC, "=over\n\n";
-                            for my $use (0 ..
-                                    scalar(@{$modules{$package}{'sub'}{$sub}})
-                                    - 1)
+                            for my $use (
+                                 0 .. scalar(
+                                     @{  $parser->{'apidoc_modules'}{$package}
+                                             {'sub'}{$sub}
+                                         }
+                                 ) - 1
+                                )
                             {   my $call
-                                    = $self->_document_function($package,
-                                       $sub,
-                                       $modules{$package}{'sub'}{$sub}[$use]);
+                                    = $self->_document_function(
+                                         $package,
+                                         $sub,
+                                         $parser->{'apidoc_modules'}{$package}
+                                             {'sub'}{$sub}[$use]
+                                    );
                                 my $_call = $call;
                                 $_call =~ s|[^\w]+|_|g;
                                 syswrite $DOC, "=item C<$call>X<$_call>\n\n";
                                 syswrite $DOC,
-                                    ($modules{$package}{'sub'}{$sub}[$use]
-                                     {'text'} || '');
+                                    ($parser->{'apidoc_modules'}{$package}
+                                     {'sub'}{$sub}[$use]{'text'} || '');
                                 syswrite $DOC,
                                     sprintf "=for hackers %s line %d\n\n",
-                                    $modules{$package}{'sub'}{$sub}[$use]
-                                    {'file'},
-                                    $modules{$package}{'sub'}{$sub}[$use]
-                                    {'line'};
+                                    $parser->{'apidoc_modules'}{$package}
+                                    {'sub'}{$sub}[$use]{'file'},
+                                    $parser->{'apidoc_modules'}{$package}
+                                    {'sub'}{$sub}[$use]{'line'};
                             }
                             syswrite $DOC, "=back\n\n";
                         }
@@ -267,19 +285,29 @@ package MBX::FLTK;
                     for my $section (
                         grep {
                             !m[(?:NAME|Description|Synopsis)]
-                        } @{$modules{$package}{'@section'}}
+                        } @{$parser->{'apidoc_modules'}{$package}{'@section'}}
                         )
-                    {   next if !$modules{$package}{'section'}{$section};
+                    {   next
+                            if !$parser->{'apidoc_modules'}{$package}
+                                {'section'}{$section};
                         syswrite $DOC, "=head1 $section\n\n";
                         syswrite $DOC,
-                            $modules{$package}{'section'}{$section}{'text'};
+                            $parser->{'apidoc_modules'}{$package}{'section'}
+                            {$section}{'text'};
                     }
                     {
-                        if (scalar keys %{$modules{$package}{'.'}{'author'}})
+                        if (scalar keys %{
+                                $parser->{'apidoc_modules'}{$package}{'.'}
+                                    {'author'}
+                            }
+                            )
                         {   syswrite $DOC, "=head1 Author\n\n";
                             for my $author (
-                                     sort
-                                     keys %{$modules{$package}{'.'}{'author'}}
+                                sort
+                                keys %{
+                                    $parser->{'apidoc_modules'}{$package}{'.'}
+                                        {'author'}
+                                }
                                 )
                             {   syswrite $DOC, "$author\n\n";
                             }
@@ -287,8 +315,11 @@ package MBX::FLTK;
                         else {
                             syswrite $DOC, "=head1 Authors\n\n=over\n\n";
                             for my $author (
-                                     sort
-                                     keys %{$modules{$package}{'.'}{'author'}}
+                                sort
+                                keys %{
+                                    $parser->{'apidoc_modules'}{$package}{'.'}
+                                        {'author'}
+                                }
                                 )
                             {   syswrite $DOC, "=item $author\n\n";
                             }
@@ -297,15 +328,14 @@ package MBX::FLTK;
                     }
                     syswrite $DOC, "=head1 License and Legal\n\n";
                     syswrite $DOC, $self->LICENSE() . "\n\n";
-                    for my $id (sort keys %{$modules{$package}{'.'}{'git'}}) {
-                        syswrite $DOC, "=for git $id\n\n";
+                    for my $id (
+                         sort keys
+                         %{$parser->{'apidoc_modules'}{$package}{'.'}{'git'}})
+                    {   syswrite $DOC, "=for git $id\n\n";
                     }
                 }
                 syswrite $DOC, "=cut\n";
                 close $DOC;
-
-                #dd $modules{$package};
-                #die;
             }
             print "okay\n";
         }
