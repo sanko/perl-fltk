@@ -36,8 +36,9 @@ hold.
 
 =for markdown {%highlight perl%}
 
-  my $buffer_1 = FLTK::TextBuffer->new( $requested_size );
-  my $buffer_2 = FLTK::TextBuffer->new( 1027 * 256 );
+    my $buffer   = FLTK::TextBuffer->new( $requested_size );
+    my $buffer_2 = FLTK::TextBuffer->new( 1027 * 256 );
+    my $buffer_3 = FLTK::TextBuffer->new( );
 
 =for markdown {%endhighlight%}
 
@@ -46,7 +47,7 @@ hold.
 #include "include/WidgetSubclass.h"
 
 void
-fltk::TextBuffer::new( int requested_size )
+fltk::TextBuffer::new( int requested_size = 0 )
     PPCODE:
         void * RETVAL = NULL;
         RETVAL = (void *) new fltk::TextBuffer( requested_size );
@@ -58,18 +59,25 @@ fltk::TextBuffer::new( int requested_size )
 
 =head1 Methods
 
+=head2 C<< my $length = $buffer->length( ) >>
 
+=for apidoc ||int length|length||
 
+=cut
 
+int
+fltk::TextBuffer::length( )
 
-=head2 C<my $txt = $buffer_1-E<gt>text( )>
+=pod
+
+=head2 C<< my $txt = $buffer->text( ) >>
 X<text>
 
 =for apidoc ||const char * txt|text||
 
 Return the entire contents of the text buffer.
 
-=head2 C<$buffer_1-E<gt>text( $txt )>
+=head2 C<< $buffer->text( $txt ) >>
 
 =for apidoc |||text|const char * txt|
 
@@ -88,9 +96,22 @@ fltk::TextBuffer::text ( const char * txt = NO_INIT )
         CODE:
             THIS->text( txt );
 
-=pod X<text_range>
+=pod
+X<character>
 
-=head2 C<my $txt = $buffer_1-E<gt>text_range( $start, $end )>
+=head2 C<< my $char = $buffer->character( $pos ) >>
+
+=for apidoc ||char char|character|int pos|
+
+=cut
+
+char
+fltk::TextBuffer::character( int pos )
+
+=pod
+X<text_range>
+
+=head2 C<my $txt = $buffer-E<gt>text_range( $start, $end )>
 
 =for apidoc ||char * txt|text_range|int start|int end|
 
@@ -104,7 +125,45 @@ char *
 fltk::TextBuffer::text_range( int start, int end )
 
 
-INCLUDE: TextSelection.xsi
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INCLUDE: TextSelection.xsi
 
 #endif // ifndef DISABLE_TEXTBUFFER
