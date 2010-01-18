@@ -1,3 +1,3 @@
 [submodule "website"]
 	path = website
-	url = git@github.com:sanko/fltk-perl.git
+	url = git@github.com:sanko/perl-fltk2.git

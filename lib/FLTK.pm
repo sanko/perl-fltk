@@ -14,7 +14,7 @@ package FLTK;
 
 use strict;
 use warnings;
-our $VERSION_BASE = 531; our $UNSTABLE_RELEASE = 1; our $VERSION = sprintf(($UNSTABLE_RELEASE ? '%.3f_%03d' : '%.3f'), $VERSION_BASE / 1000, $UNSTABLE_RELEASE);
+our $BASE = 531; our $DEV = 1; our $VERSION = sprintf(($DEV ? '%.3f_%03d' : '%.3f'), $BASE / 1000, $DEV);
 use XSLoader;
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];

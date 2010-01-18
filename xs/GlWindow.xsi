@@ -347,7 +347,7 @@ fltk::GlWindow::ortho( )
 =for apidoc |G|bool overlay|can_do_overlay||
 
 Return true if the hardware supports L<OpenGL|OpenGL> overlay planes, and
-L<FLTK|Alien::FLTK> has been compiled to use them. If true,
+L<the fltk2 libs|Alien::FLTK2> have been compiled to use them. If true,
 L<C<draw_overlay()>|/"draw_overlay"> will be called with L<OpenGL|OpenGL>
 setup to draw these overlay planes, and
 L<C<redraw_overlay()>|/"redraw_overlay"> will not cause the main

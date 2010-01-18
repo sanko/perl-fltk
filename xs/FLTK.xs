@@ -10,7 +10,7 @@
 
 =head1 NAME
 
-FLTK - Perl bindings to the Fast Light Toolkit
+FLTK - Perl bindings to the 2.0.x branch of the Fast Light Toolkit
 
 =head1 Description
 
@@ -18,6 +18,9 @@ FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft® Windows®
 OS/X, and several other platforms. FLTK provides modern GUI functionality
 without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT
 emulation.
+
+This module, L<FLTK|FLTK>, exposes bindings to the experimental 2.0.x branch
+of the Fast Light Toolkit.
 
 =cut
 
@@ -35,8 +38,7 @@ emulation.
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 
-#include <config.h> // created in / during fltk2's configure stage and
-                         // installed to /fltk/include/ by Alien::FLTK
+#include <config.h>                 // created and installed by Alien::FLTK2
 
 #if HAVE_GL == 0
 #define DISABLE_GL       1

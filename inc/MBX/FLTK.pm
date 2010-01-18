@@ -1,4 +1,4 @@
-package MBX::FLTK;
+package inc::MBX::FLTK;
 {
     use strict;
     use warnings;
@@ -13,9 +13,9 @@ package MBX::FLTK;
     {
 
         sub ACTION_code {
-            require Alien::FLTK;    # Should be installed by now
+            require Alien::FLTK2;    # Should be installed by now
             my ($self, $args) = @_;
-            my $AF = Alien::FLTK->new();
+            my $AF = Alien::FLTK2->new();
             my (@xs, @rc, @obj);
             find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
             find(sub { push @rc, $File::Find::name if !m[.+\.o$]; }, 'xs/rc');

@@ -21,7 +21,7 @@ in this document.
 
 =item Website and Blog
 
-Eventually, the official website will be http://sanko.github.com/fltk-perl/.
+Eventually, the official website will be http://sanko.github.com/perl-fltk/.
 There you'll find html versions of all the documentation, examples, the
 development blog, and links to other resources.
 
@@ -30,14 +30,14 @@ development blog, and links to other resources.
 =item Live support
 
 Eventually, the official means of support for L<FLTK|FLTK> may be through
-C<#fltk-perl> on... some IRC network. Probably Freenode. If anyone aside from
-me decides to show up on a regular basis.
+C<#fltk> on... some IRC network. Probably Freenode. If anyone aside from me
+decides to show up on a regular basis.
 
 Yeah, ...eventually.
 
 =item Receive Commit and Issue Tracker Updates
 
-Follow the project on github: http://github.com/sanko/fltk-perl/
+Follow the project on github: http://github.com/sanko/perl-fltk2/
 
 =item Mailinglist
 
@@ -45,7 +45,7 @@ I'd need someone to host it. :\
 
 =item Issue Tracker
 
-Use http://github.com/sanko/fltk-perl/issues/list for bug tracking. Please
+Use http://github.com/sanko/perl-fltk2/issues/list for bug tracking. Please
 include as much information as possible and review the list in the
 L<Bug Tracking|/"Bug Tracking"> section below.
 
@@ -157,7 +157,7 @@ cool too.
 
 =head2 Prerequisites
 
-L<FLTK|FLTK> requires L<Alien::FLTK|Alien::FLTK> (which attempts to build and
+L<FLTK|FLTK> requires L<Alien::FLTK2|Alien::FLTK2> (which attempts to build and
 install a local copy of the fltk libs) is listed as prerequisite in
 C<Build.PL> so, unless you answer 'no' when prompted, the CPAN shell should
 automatically install it for you.
@@ -201,9 +201,9 @@ procedure:
 
 See also: L<Distribution Testing|/"Distribution Testing">
 
-=head2 Installing the fltk2 Libraries
+=head2 Installing the FLTK Libraries
 
-Please refer to L<Alien::FLTK|Alien::FLTK>.
+Please refer to L<Alien::FLTK2|Alien::FLTK2>.
 
 =head2 Backward Compatibility
 
@@ -316,7 +316,7 @@ the L<join the team|/"Join the Team"> section below.
 
 C<FLTK> is too large for just one person to hack on. If you're XS, C++, or
 just Perl-adept and would like to help, you can start by forking the project
-on github: http://github.com/sanko/fltk-perl/. When ready, send me a pull
+on github: http://github.com/sanko/perl-fltk2/. When ready, send me a pull
 request, I'll look over your changes and get back to you. Minor patches get
 your name in the changelog. Really major contributions get your name in the
 L<Acknowledgments|FLTK/Acknowledgments> section and an invitation to be a

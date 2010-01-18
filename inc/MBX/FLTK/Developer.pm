@@ -1,4 +1,4 @@
-package MBX::FLTK::Developer;
+package inc::MBX::FLTK::Developer;
 {
     use strict;
     use warnings;
@@ -10,8 +10,7 @@ package MBX::FLTK::Developer;
     use File::Basename qw[dirname];
     use File::Find qw[find];
     use File::Path 2.07 qw[make_path];
-    use base 'MBX::FLTK';
-    use Alien::FLTK;
+    use base 'inc::MBX::FLTK';
     use Data::Dump qw[pp];
     use Cwd qw[cwd];
     {
