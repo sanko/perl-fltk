@@ -14,6 +14,10 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * Complete FLTK::TextBuffer
+
+=item * Complete FLTK::TabGroup
+
 =item * Convert all enum and built-in types to fake tied vars?
 
 =item * Document internals and write regression tests
