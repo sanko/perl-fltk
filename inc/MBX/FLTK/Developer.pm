@@ -49,8 +49,8 @@ package inc::MBX::FLTK::Developer;
                 elsif ($line =~ m[^=for version ([\d\.\_]+)$]) {
                     $version = $1;
                 }
-                if ($package and $version) {
-                    chdir $cwd;
+                if ($package and $version and (!defined $packages{$package}))
+                {   chdir $cwd;
                     $packages{$package}{'file'} = abs2rel($abs);
                     $packages{$package}{'file'} =~ s|\\|/|g;
                     $packages{$package}{'version'} = $version;
