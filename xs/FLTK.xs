@@ -10,7 +10,7 @@
 
 =head1 NAME
 
-FLTK - Perl bindings to the 2.0.x branch of the Fast Light Toolkit
+FLTK - Perl bindings to the C<2.0.x> branch of the Fast Light Toolkit
 
 =head1 Description
 
