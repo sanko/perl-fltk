@@ -50,7 +50,7 @@ package inc::MBX::FLTK;
                                        'C++'        => 1,
                                        source       => $cpp,
                                        include_dirs => [$AF->include_dirs()],
-                                       extra_compiler_flags => $AF->cxxflags()
+                                       extra_compiler_flags => [$AF->cxxflags()]
                     );
             }
             make_path(catdir(qw[blib arch auto FLTK]),
@@ -70,7 +70,7 @@ package inc::MBX::FLTK;
                                        'FLTK.' . $Config{'so'}
                                 ),
                             module_name        => 'FLTK',
-                            extra_linker_flags => $AF->ldflags(qw[gl images]),
+                            extra_linker_flags => [$AF->ldflags(qw[gl images])],
                     );
                 @cleanup = map { s["][]g; rel2abs($_); } @cleanup;
                 $self->add_to_cleanup(@cleanup);
