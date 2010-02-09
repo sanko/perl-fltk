@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 5184c9a
+Version 0.XXXXX | Next Sunday AD | 40a87ce
 
     API Changes/Compatibility Information:
      * New Widgets/Types
@@ -6,6 +6,7 @@ Version 0.XXXXX | Next Sunday AD | 5184c9a
 
     Meanwhile:
      * 開例 R. was born November 16th at 8:58am. She was 3.670kg and 52cm long
+     * Requires Alien::FLTK2 now that Alien::FLTK builds the 1.3.x branch
 
 Version 0.531 | 2009-11-06 03:34:36Z (Fri, 06 Nov 2009) | 53908ec
 

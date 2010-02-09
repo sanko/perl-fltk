@@ -14,6 +14,8 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * FLTK::Theme
+
 =item * Complete FLTK::TextBuffer
 
 =item * Complete FLTK::TabGroup
