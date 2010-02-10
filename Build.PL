@@ -34,7 +34,7 @@ my $mb = $class->new(
     dist_author => 'Sanko Robinson <sanko@cpan.org>',
     dist_abstract =>
         'Perl bindings to the 2.0.x branch of the Fast Light Toolkit',
-    requires => {'Alien::FLTK2' => 0.06970016,
+    requires => {'Alien::FLTK2' => 0.06970017,
                  base           => 0,
                  Config         => 0,
                  Cwd            => 0,
@@ -49,7 +49,7 @@ my $mb = $class->new(
                  'Pod::Parser'        => 0,
                  'Test::More'         => 0.88
     },
-    build_requires => {'Alien::FLTK2' => 0.06970016,
+    build_requires => {'Alien::FLTK2' => 0.06970017,
                        base           => 0,
                        Config         => 0,
                        Cwd            => 0,
