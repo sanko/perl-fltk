@@ -54,7 +54,7 @@ package inc::MBX::FLTK;
                     );
             }
             make_path(catdir(qw[blib arch auto FLTK]),
-                      {verbose => !$self->quiet(), mode => 0711});
+                      {verbose => !$self->quiet(), mode => 0777});
             @obj = map { canonpath abs2rel($_) } @obj;
             if (!$self->up_to_date([@obj],
                                    catdir(qw[blib arch auto FLTK],
