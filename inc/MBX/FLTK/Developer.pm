@@ -11,7 +11,6 @@ package inc::MBX::FLTK::Developer;
     use File::Find qw[find];
     use File::Path 2.07 qw[make_path];
     use base 'inc::MBX::FLTK';
-    use Data::Dump qw[pp];
     use Cwd qw[cwd];
     {
         my ($cwd, %seen, %packages, @xsi_files);

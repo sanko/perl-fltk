@@ -50,25 +50,22 @@ package inc::MBX::FLTK;
                     chdir 'xs/rc';
                     print $self->do_system(sprintf 'windres %s %s',
                                       $dot_rc, $dot_o) ? "okay\n" : "fail!\n";
-                    chdir $self->base_dir;
+                    chdir rel2abs($self->base_dir);
                 }
                 map { abs2rel($_) } @obj;
             }
         XS: for my $XS (@xs) {
                 my $cpp = _xs_to_cpp($self, $XS)
                     or do { printf 'Cannot Parse %s', $XS; exit 0 };
-                if ($self->up_to_date($cpp, $self->cbuilder->object_file($cpp)
-                    )
-                    )
-                {   push @obj, $self->cbuilder->object_file($cpp);
+                if ($self->up_to_date($cpp, $CC->object_file($cpp))) {
+                    push @obj, $CC->object_file($cpp);
                     next XS;
                 }
                 push @obj,
-                    $self->cbuilder->compile(
-                                       'C++'        => 1,
-                                       source       => $cpp,
-                                       include_dirs => [$AF->include_dirs()],
-                                       extra_compiler_flags => [$AF->cxxflags()]
+                    $CC->compile('C++'        => 1,
+                                 source       => $cpp,
+                                 include_dirs => [$AF->include_dirs()],
+                                 extra_compiler_flags => [$AF->cxxflags()]
                     );
             }
             make_path(catdir(qw[blib arch auto FLTK]),
@@ -81,14 +78,14 @@ package inc::MBX::FLTK;
                 )
                 )
             {   my ($dll, @cleanup)
-                    = $self->cbuilder->link(
-                            objects => \@obj,
-                            lib_file =>
-                                catdir(qw[blib arch auto FLTK],
-                                       'FLTK.' . $Config{'so'}
-                                ),
-                            module_name        => 'FLTK',
-                            extra_linker_flags => [$AF->ldflags(qw[gl images])],
+                    = $CC->link(
+                          objects => \@obj,
+                          lib_file =>
+                              catdir(qw[blib arch auto FLTK],
+                                     'FLTK.' . $Config{'so'}
+                              ),
+                          module_name        => 'FLTK',
+                          extra_linker_flags => [$AF->ldflags(qw[gl images])],
                     );
                 @cleanup = map { s["][]g; rel2abs($_); } @cleanup;
                 $self->add_to_cleanup(@cleanup);
@@ -257,7 +254,7 @@ package inc::MBX::FLTK;
                     for my $section (qw[NAME Description Synopsis]) {
                         next
                             if !$parser->{'apidoc_modules'}{$package}
-                                {'section'}{$section};
+                            {'section'}{$section};
                         syswrite $DOC, "=head1 $section\n\n";
                         syswrite $DOC,
                             $parser->{'apidoc_modules'}{$package}{'section'}
@@ -307,7 +304,7 @@ package inc::MBX::FLTK;
                         )
                     {   next
                             if !$parser->{'apidoc_modules'}{$package}
-                                {'section'}{$section};
+                            {'section'}{$section};
                         syswrite $DOC, "=head1 $section\n\n";
                         syswrite $DOC,
                             $parser->{'apidoc_modules'}{$package}{'section'}
