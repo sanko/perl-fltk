@@ -5,17 +5,35 @@ package inc::MBX::FLTK;
     $|++;
     use Config qw[%Config];
     use ExtUtils::ParseXS qw[];
-    use ExtUtils::CBuilder qw[];
     use File::Spec::Functions qw[catdir rel2abs abs2rel canonpath];
     use File::Find qw[find];
     use File::Path qw[make_path];
     use base 'Module::Build';
     {
 
+        package My::ExtUtils::CBuilder;
+        use base 'ExtUtils::CBuilder';
+
+        sub do_system {
+            my ($self, @cmd) = @_;
+            @cmd = grep { defined && length } @cmd;
+            @cmd = map { s[\s+$][]; s[^\s+][]; $_ } @cmd;
+            print "@cmd\n" if !$self->{'quiet'};
+            my $cmd = join ' ', @cmd;
+            `$cmd`;
+            return 1;
+
+            #(my( $program), @cmd) = @cmd;
+            #return !system ($program, @cmd);
+        }
+    }
+    {
+
         sub ACTION_code {
             require Alien::FLTK2;    # Should be installed by now
             my ($self, $args) = @_;
             my $AF = Alien::FLTK2->new();
+            my $CC = My::ExtUtils::CBuilder->new();
             my (@xs, @rc, @obj);
             find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
             find(sub { push @rc, $File::Find::name if !m[.+\.o$]; }, 'xs/rc');
