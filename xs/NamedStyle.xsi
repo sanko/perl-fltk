@@ -52,4 +52,7 @@ fltk::NamedStyle::destroy( )
         delete THIS;
         sv_setsv(ST(0), &PL_sv_undef);
 
+BOOT:
+    isa("FLTK::NamedStyle", "FLTK::Style");
+
 #endif // ifndef DISABLE_NAMEDSTYLE
