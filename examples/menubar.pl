@@ -12,7 +12,6 @@
 =for todo expand into a full text editor
 
 =cut
-
 use strict;
 use warnings;
 use FLTK;
@@ -41,7 +40,6 @@ build_menus($m, $win);
     $m->add_many('This|is|n/o/t/h|er|test');
     $XXXXX = 2;
 }
-
 $win->end();
 $win->show();
 FLTK::run;

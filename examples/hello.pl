@@ -11,7 +11,6 @@ L<FLTK::Basics|FLTK::Basics>
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use FLTK qw[:default :style];

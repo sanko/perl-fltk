@@ -12,7 +12,6 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use FLTK qw[:cursor :events run];
