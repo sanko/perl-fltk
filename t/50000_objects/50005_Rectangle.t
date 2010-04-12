@@ -6,7 +6,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Tests for xs/Preferences.xsi
+=for abstract Tests for xs/Rectangle.xsi
 
 =for git $Id$
 
