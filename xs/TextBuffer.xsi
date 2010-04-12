@@ -219,18 +219,20 @@ fltk::TextBuffer::copy( fltk::TextBuffer * from_buffer, int from_start, int from
 =pod
 X<undo>
 
-=head2 C<my $okay = $bufferE<gt>undo( $cursorPosition )>
+=head2 C<my ($okay, $cursorPosition) = $bufferE<gt>undo( )>
 
-=for apidoc ||int okay|undo|int * cursorPosition = 0|
+=for apidoc A||AV * return|undo||
 
 Removes text according to the undo variables or inserts text from the undo
-buffer. C<$cursorPosition> will be set to the position of the cursor after
-this change.
+buffer.
+
+The return value is a list of integers indicating is the process was
+successful and the current C<$cursorPosition> after this change.
 
 =cut
 
 int
-fltk::TextBuffer::undo( IN_OUT int cursorPosition = 0 )
+fltk::TextBuffer::undo( OUTLIST int cursorPosition )
 
 =pod
 X<canUndo>
