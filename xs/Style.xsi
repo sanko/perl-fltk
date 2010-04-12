@@ -453,13 +453,17 @@ with other Widgets.
 bool
 fltk::Style::dynamic( )
 
-=for apidoc ||FLTK::Style * style|find|char * name|
+=for apidoc F||FLTK::NamedStyle * style|find|char * name|
 
 
 =cut
 
-fltk::Style *
-fltk::Style::find ( char * name )
+fltk::NamedStyle *
+find ( char * name )
+   CODE:
+        RETVAL = (fltk::NamedStyle *) fltk::Style::find( name );
+    OUTPUT:
+        RETVAL
 
 =for apidoc ||FLTK::Box * box|box||
 
