@@ -269,6 +269,7 @@ the documentation, lines are of the form:
     N       basic functionality has changed since the last major release*
     U       suppress usage example in auto-generated documentation
     H       this is a hidden, internal (hacker only) function
+    A       interface or functionality differs from the original API
 
  prereq are single letters with the following meanings:
     G       requires GL
