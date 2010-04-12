@@ -243,7 +243,7 @@ package inc::MBX::FLTK;
             print 'Parsing XS files for documentation... ';
             $parser->parse_from_file('xs/FLTK.xs');
             print "okay\nGenerating documentation... ";
-            for my $package (sort keys %{$self->{'apidoc_modules'}}) {
+            for my $package (sort keys %{$parser->{'apidoc_modules'}}) {
                 my $file = './blib/lib/' . $package . '.pod';
                 $file =~ s|::|/|g;
                 make_path((splitpath($file))[0 .. 1]);
@@ -308,7 +308,7 @@ package inc::MBX::FLTK;
                         syswrite $DOC, "=head1 $section\n\n";
                         syswrite $DOC,
                             $parser->{'apidoc_modules'}{$package}{'section'}
-                            {$section}{'text'};
+                            {$section}{'text'} || '';
                     }
                     {
                         if (scalar keys %{
