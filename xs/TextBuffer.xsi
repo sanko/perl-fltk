@@ -246,9 +246,95 @@ Lets the undo system know if we can undo changes.
 void
 fltk::TextBuffer::canUndo( char flag = 1 )
 
+=pod
+X<insertfile>
 
+=head2 C<my $status = $buffer-E<gt>insertfle( $file, $position )>
 
+=for apidoc ||int status|insertfile|const char * file|int position|int bufferlen = 128*1024|
 
+Inserts the contents of a <$file> at the given C<$position>. Optionally, a
+third <$bufferlen> argument is passed which can limit the amount of data
+brought in from the C<$file>.
+
+On error, the return value is C<2>. Otherwise, the return value is C<0>.
+
+=cut
+
+int
+fltk::TextBuffer::insertfile( const char * file, int position, int bufferlen = 128*1024 )
+
+=pod
+X<appendfile>
+
+=head2 C<my $status = $buffer-E<gt>appendfile( $file )>
+
+=for apidoc ||int status|appendfile|const char * file|int bufferlen = 128*1024|
+
+Appends the contents of a <$file> to the end of the buffer. Optionally, a
+second <$bufferlen> argument is passed which can limit the amount of data
+brought in from the C<$file>.
+
+On error, the return value is C<2>. Otherwise, the return value is C<0>.
+
+=cut
+
+int
+fltk::TextBuffer::appendfile( const char * file, int bufferlen = 128*1024 )
+
+=pod
+X<loadfile>
+
+=head2 C<my $status = $buffer-E<gt>loadfile( file )>
+
+=for apidoc ||int status|loadfile|const char * file|int bufferlen = 128*1024|
+
+Loads the contents of a <$file> to fill the buffer (current content is
+replaced). Optionally, a second <$bufferlen> argument is passed which can
+limit the amount of data brought in from the C<$file>.
+
+On error, the return value is C<2>. Otherwise, the return value is C<0>.
+
+=cut
+
+int
+fltk::TextBuffer::loadfile( const char * file, int bufferlen = 128*1024 )
+
+=pod
+X<outputfile>
+
+=head2 C<my $status = $buffer-E<gt>outputfile( $file, $start, $end )>
+
+=for apidoc ||int status|outputfile|const char * file|int start|int end|int bufferlen = 128*1024|
+
+Saves the contents of the buffer to a <$file> starting with the data at the
+C<$start> position through the C<$end>. Optionally, a fourth <$bufferlen> a
+rgument is passed which can limit the amount of data written to the C<$file>.
+
+On error, the return value is C<2>. Otherwise, the return value is C<0>.
+
+=cut
+
+int
+fltk::TextBuffer::outputfile( const char * file, int start, int end, int bufferlen = 128*1024 )
+
+=pod
+X<savefile>
+
+=head2 C<my $status = $buffer-E<gt>savefile( $file )>
+
+=for apidoc ||int status|savefile|const char * file|int bufferlen = 128*1024|
+
+Saves the contents of the buffer to a <$file>. Optionally, a second
+<$bufferlen> argument is passed which can limit the amount of data written to
+the C<$file>.
+
+On error, the return value is C<2>. Otherwise, the return value is C<0>.
+
+=cut
+
+int
+fltk::TextBuffer::savefile( const char * file, int bufferlen = 128*1024 )
 
 INCLUDE: TextSelection.xsi
 
