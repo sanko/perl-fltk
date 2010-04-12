@@ -56,6 +56,30 @@ of the Fast Light Toolkit.
 HV * FLTK_stash,  // For inserting stuff directly into FLTK's namespace
    * FLTK_export; // For inserting stuff directly into FLTK's exports
 
+SV * fltk_theme_CV;
+fltk::Theme * original_theme = &fltk::theme_;
+
+bool _fltk_theme( ) {
+    dTHX;
+    warn ("Here");
+    if ( fltk_theme_CV && SvOK( fltk_theme_CV ) ) {
+        warn ("Trying to call fltk_theme sub...");
+        int count, ret_val;
+    dSP;
+    ENTER;
+        SAVETMPS;
+            PUSHMARK( sp );
+            PUTBACK;
+    count = call_sv( fltk_theme_CV, G_SCALAR );
+            SPAGAIN;
+    ret_val = ( bool ) ( ( count != 1 ) ? 0 : POPi );
+        FREETMPS;
+    LEAVE;
+        return ret_val;
+    }
+    return (*original_theme)();
+}
+
 =begin apidoc
 
 =for apidoc Hx|||_cb_w|WIDGET|(void*)CODE|
@@ -488,6 +512,8 @@ INCLUDE: Style.xsi
 INCLUDE: Symbol.xsi
 
 INCLUDE: TextBuffer.xsi
+
+INCLUDE: Theme.xsi
 
 #INCLUDE: ValueInput.xsi
 

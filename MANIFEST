@@ -145,6 +145,7 @@ xs/Symbol.xsi
 xs/TabGroup.xsi
 xs/TextBuffer.xsi
 xs/TextSelection.xsi
+xs/Theme.xsi
 xs/type.map
 xs/Valuator.xsi
 xs/ValueInput.xsi

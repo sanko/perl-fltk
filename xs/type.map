@@ -17,6 +17,7 @@ fltk::Flags                     T_ENUM
 fltk::Color                     T_ENUM
 fltk::Browser::linepos          O_FLTK
 fltk::PixelType                 O_FLTK
+fltk::Theme                     O_FLTK
 
 # Objects
 fltk::Adjuster              *   O_FLTK
