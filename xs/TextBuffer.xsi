@@ -103,6 +103,8 @@ X<character>
 
 =for apidoc ||char char|character|int pos|
 
+Returns the character at buffer position C<$pos>. Positions start at C<0>.
+
 =cut
 
 char
@@ -124,41 +126,124 @@ character pointed to by C<$end>.
 char *
 fltk::TextBuffer::text_range( int start, int end )
 
+=pod
+X<text_in_rectangle>
 
+=head2 C<my $txt = $bufferE<gt>text_in_rectangle( $start, $end, $rectStart, $rectEnd )>
 
+=for apidoc |||char * txt|text_in_rectangle|int start|int end|int rectStart|int rectEnd|
 
+Returns a copy of the text between C<$start> and C<$end> character positions.
+Positions are C<0> (zero) based and the range does I<not> include the
+character pointed to by C<$end>.
 
+=cut
 
+char *
+fltk::TextBuffer::text_in_rectangle( int start, int end, int rectStart, int rectEnd )
 
+=pod
+X<insert>
 
+=head2 C<$bufferE<gt>insert( $pos, $text )>
 
+=for apidoc |||void|insert|int pos|const char * text|
 
+Inserts string C<$text> at position C<$pos>.
 
+=cut
 
+void
+fltk::TextBuffer::insert( int pos, const char * text )
 
+=pod
+X<append>
 
+=head2 C<$bufferE<gt>append( $text )>
 
+=for apidoc |||void|append|const char * text|
 
+Appends C<$text> to the end of the buffer.
 
+=cut
 
+void
+fltk::TextBuffer::append( const char * text )
 
+=pod
+X<remove>
 
+=head2 C<$bufferE<gt>remove( $start, $end )>
 
+=for apidoc |||void|remove|int start|int end|
 
+Deletes the text between C<$start> and C<$end> character positions. Positions
+are C<0> (zero) based and the range does I<not> include the character pointed
+to by C<$end>.
 
+=cut
 
+void
+fltk::TextBuffer::remove( int start, int end )
 
+=pod
+X<replace>
 
+=head2 C<$bufferE<gt>replace( $start, $end, $text )>
 
+=for apidoc |||void|replace|int start|int end|const char * text|
 
+Deletes the characters between C<$start> and C<$end>, and inserts the string
+C<$text> in their place.
 
+=cut
 
+void
+fltk::TextBuffer::replace( int start, int end, const char * text )
 
+=pod
+X<copy>
 
+=head2 C<$to_bufferE<gt>copy( $from_buffer, $from_start, $from_end, $to_pos )>
 
+=for apidoc |||void|copy|fltk::TextBuffer * from_buffer|int from_start|int from_end|int to_pos|
 
+Copy the characters between C<$from_start> and C<$from_end> in
+C<$from_buffer>, and inserts the string into your object at C<$to_pos>.
 
+=cut
 
+void
+fltk::TextBuffer::copy( fltk::TextBuffer * from_buffer, int from_start, int from_end, int to_pos )
+
+=pod
+X<undo>
+
+=head2 C<my $okay = $bufferE<gt>undo( )>
+
+=for apidoc |||int okay|undo|int cursorPosition = 0|
+
+Removes text according to the undo variables or inserts text from the undo
+buffer.
+
+=cut
+
+int
+fltk::TextBuffer::undo( int cursorPosition = 0 )
+
+=pod
+X<canUndo>
+
+=head2 C<$bufferE<gt>canUndo( $flag ) >
+
+=for apidoc |||void|canUndo|char flag = 1|
+
+Lets the undo system know if we can undo changes.
+
+=cut
+
+void
+fltk::TextBuffer::canUndo( char flag = 1 )
 
 
 
