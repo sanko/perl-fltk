@@ -91,7 +91,7 @@ fltk::BarGroup::layout( )
 
 bool
 fltk::BarGroup::opened( bool value = NO_INIT )
-    CASE: !items
+    CASE: items == 1
         C_ARGS:
      CASE:
         C_ARGS: value
@@ -132,7 +132,7 @@ fltk::BarGroup::open( )
 
 int
 fltk::BarGroup::glyph_size( int value = NO_INIT )
-    CASE: !items
+    CASE: items == 1
         CODE:
             RETVAL = THIS->glyph_size( );
     CASE:

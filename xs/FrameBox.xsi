@@ -74,9 +74,12 @@ fltk::FrameBox::new( char * name, int x, int y, int w, int h, char * pattern, fl
 
 const char *
 fltk::FrameBox::data( char * string = NO_INIT )
-    CASE: ! items
-        C_ARGS:
-    CASE:
+    CASE: items == 1
+        CODE:
+            RETVAL = THIS->data( );
+        OUTPUT:
+            RETVAL
+    CASE: items == 2
         CODE:
             THIS->data( string );
 

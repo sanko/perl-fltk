@@ -188,12 +188,12 @@ C<$name>, so the C<draw( )> method can examine these arguments.
 
 const fltk::Symbol *
 find( const char * name, char * end = NO_INIT )
-    CASE: items == 2
+    CASE: items == 1
         CODE:
             RETVAL = fltk::Symbol::find( name );
         OUTPUT:
             RETVAL
-    CASE: items == 3
+    CASE: items == 2
         CODE:
             RETVAL = fltk::Symbol::find( name, (const char *) end );
         OUTPUT:
