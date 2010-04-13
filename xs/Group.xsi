@@ -398,6 +398,8 @@ INCLUDE: ScrollGroup.xsi
 
 INCLUDE: TabGroup.xsi
 
+INCLUDE: TextDisplay.xsi
+
 INCLUDE: Window.xsi
 
 #endif // ifndef DISABLE_GROUP

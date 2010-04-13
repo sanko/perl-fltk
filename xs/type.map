@@ -112,6 +112,7 @@ fltk::Symbol                *   O_FLTK
 fltk::TabGroup              *   O_FLTK
 fltk::TabGroupPager         *   O_FLTK
 fltk::TextBuffer            *   O_FLTK
+fltk::TextDisplay           *   O_FLTK
 fltk::TextSelection         *   O_FLTK
 fltk::Valuator              *   O_FLTK
 fltk::ValueInput            *   O_FLTK

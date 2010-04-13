@@ -227,11 +227,11 @@ C<$string> (unless C<$length> is 0, in which case it makes it point to a
 zero-length string).
 
 C<$string> must point to static memory that will not be altered until at least
-the L<Input|Input> widget is destroyed or the L<C<text()>|/"text"> is changed
-again. If the user attempts to edit the string it is then copied to the
-internal buffer and the editing done there. This can save a lot of time and
-memory if your program is changing the string to various constants a lot but
-the user rarely edits it.
+the L<Input|FLTK::Input> widget is destroyed or the L<C<text()>|/"text"> is
+changed again. If the user attempts to edit the string it is then copied to
+the internal buffer and the editing done there. This can save a lot of time
+and memory if your program is changing the string to various constants a lot
+but the user rarely edits it.
 
 =for apidoc ||bool ret|static_text|char * string|
 

@@ -1,6 +1,8 @@
 Version 0.XXXXX | Next Sunday AD | a873164
 
     API Changes/Compatibility Information:
+     * New Widgets/Types
+       - TextDisplay
      * Early FLTK::Theme support
 
     Meanwhile:
