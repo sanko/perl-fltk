@@ -453,6 +453,135 @@ typical string terminator in C<C++>
 int
 fltk::TextBuffer::character_width( char character, int indent = 0, int tabDist = 8, char nullSubsChar = 0 )
 
+=pod
+
+X<count_displayed_characters>
+
+=head2 C<my $width = $buffer-E<gt>count_displayed_characters( $lineStartPos, $targetPos )>
+
+=for apidoc ||int width|count_displayed_characters|int lineStartPos|int targetPos|
+
+Count the number of displayed characters between buffer position
+C<$linestartpos> and C<$targetpos>. Displayed characters are the characters
+shown on the screen to represent characters in the buffer, where tabs and
+control characters are expanded.
+
+=cut
+
+int
+fltk::TextBuffer::count_displayed_characters( int lineStartPos, int targetPos )
+
+=pod
+
+X<count_displayed_characters_utf>
+
+=head2 C<my $width = $buffer-E<gt>count_displayed_characters_utf( $lineStartPos, $targetPos )>
+
+=for apidoc ||int width|count_displayed_characters_utf|int lineStartPos|int targetPos|
+
+Count the number of displayed characters between buffer position
+C<$linestartpos> and C<$targetpos>. Displayed characters are the characters
+shown on the screen to represent characters in the buffer, where tabs and
+control characters are expanded.
+
+This method is utf8-aware.
+
+=cut
+
+int
+fltk::TextBuffer::count_displayed_characters_utf( int lineStartPos, int targetPos )
+
+=pod
+
+X<skip_displayed_characters>
+
+=head2 C<my $width = $buffer-E<gt>skip_displayed_characters( $startPos, $nChars )>
+
+=for apidoc ||int width|skip_displayed_characters|int startPos|int nChars|
+
+Count forward from buffer position C<$startPos> in displayed characters.
+Displayed characters are the characters shown on the screen to represent
+characters in the buffer, where tabs and control characters are expanded.
+
+=cut
+
+int
+fltk::TextBuffer::skip_displayed_characters( int startPos, int targetPos )
+
+=pod
+
+X<skip_displayed_characters_utf>
+
+=head2 C<my $width = $buffer-E<gt>skip_displayed_characters_utf( $startPos, $nChars )>
+
+=for apidoc ||int width|skip_displayed_characters_utf|int startPos|int nChars|
+
+Count forward from buffer position C<$startPos> in displayed characters.
+Displayed characters are the characters shown on the screen to represent
+characters in the buffer, where tabs and control characters are expanded.
+
+This method is utf8-aware.
+
+=cut
+
+int
+fltk::TextBuffer::skip_displayed_characters_utf( int startPos, int targetPos )
+
+=pod
+
+X<count_lines>
+
+=head2 C<my $lines = $buffer-E<gt>count_lines( $startPos, $endPos )>
+
+=for apidoc ||int lines|count_lines|int startPos|int endPos|
+
+Count the number of newlines between C<$startPos> and C<$endPos> in a buffer.
+The character at position C<$endPos> is not counted.
+
+=cut
+
+int
+fltk::TextBuffer::count_lines( int startPos, int endPos )
+
+=pod
+
+X<skip_lines>
+
+=head2 C<my $lines = $buffer-E<gt>skip_lines( $startPos, $nLines )>
+
+=for apidoc ||int lines|skip_lines|int startPos|int nLines|
+
+Finds the first character of the line C<$nLines> forward from C<$startPos> in
+a buffer and returns its position.
+
+=cut
+
+int
+fltk::TextBuffer::skip_lines( int startPos, int nLines )
+
+=pod
+
+X<rewind_lines>
+
+=head2 C<my $lines = $buffer-E<gt>rewind_lines( $startPos, $nLines )>
+
+=for apidoc ||int lines|rewind_lines|int startPos|int nLines|
+
+Finds the position of the first character of the line C<$nLines> backwards
+from C<$startPos> (not counting the character pointed to by C<$startPos> if
+that is a newline). C<$nlines == 0> means find the beginning of the line.
+
+=cut
+
+int
+fltk::TextBuffer::rewind_lines( int startPos, int nLines )
+
+
+
+
+
+
+
 INCLUDE: TextSelection.xsi
 
 #endif // ifndef DISABLE_TEXTBUFFER
