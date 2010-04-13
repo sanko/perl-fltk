@@ -8,7 +8,7 @@ MODULE = FLTK               PACKAGE = FLTK::TextDisplay
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.532
 
 =for git $Id$
 
@@ -579,5 +579,7 @@ ATTR_NONE ( )
     ALIAS:
         ATTR_UNDERLINE = 1
            ATTR_HIDDEN = 2
+
+INCLUDE: TextDisplay/StyleTableEntry.xsi
 
 #endif // #ifndef DISABLE_TEXTDISPLAY

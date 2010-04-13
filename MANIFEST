@@ -146,6 +146,7 @@ xs/Symbol.xsi
 xs/TabGroup.xsi
 xs/TextBuffer.xsi
 xs/TextDisplay.xsi
+xs/TextDisplay/StyleTableEntry.xsi
 xs/TextSelection.xsi
 xs/Theme.xsi
 xs/type.map
