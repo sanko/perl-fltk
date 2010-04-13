@@ -37,6 +37,7 @@ of the Fast Light Toolkit.
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk
 #define DISABLE_ASSOCIATIONFUNCTOR  // Requires subclass
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
+#define DISABLE_TEXTBUFFER          // Floating on a sea of bugs
 
 #include <config.h>                 // created and installed by Alien::FLTK2
 

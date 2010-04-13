@@ -402,20 +402,32 @@ the number of characters from the start of the line for figuring tabs
 
 =cut
 
-char *
+SV *
 fltk::TextBuffer::expand_character( character, int indent, int tabDist = NO_INIT, char nullSubsChar = NO_INIT )
-    CASE: SvPOK(ST(1)) && items >= 4
+    CASE: items == 5
         char character
         CODE:
-            int drop = THIS->expand_character( character, indent, RETVAL, tabDist, nullSubsChar );
-        OUTPUT:
-            RETVAL
+            char * ret;
+            warn("Y");
+            int len = THIS->expand_character( character, indent, ret, tabDist, nullSubsChar );
+            warn("YY | %d | %s", len, ret);
+            ST( 0 ) = newSVpv( ret, len );
+            warn("YYY");
+            sv_2mortal( ST( 0 ) );
+            warn("YYYY");
+            XSRETURN( 1 );
     CASE:
         int character
         CODE:
-            int drop = THIS->expand_character( character, indent, RETVAL );
-        OUTPUT:
-            RETVAL
+            char * ret = 0;
+            warn("X");
+            int len = THIS->expand_character( character, indent, ret );
+            warn("XX | %d | %s", len, ret);
+            ST( 0 ) = newSVpv( ret, len );
+            warn("XXX");
+            sv_2mortal( ST( 0 ) );
+            warn("XXXX");
+            XSRETURN( 1 );
 
 =pod
 
@@ -576,11 +588,30 @@ that is a newline). C<$nlines == 0> means find the beginning of the line.
 int
 fltk::TextBuffer::rewind_lines( int startPos, int nLines )
 
+=pod
 
+=begin TODO
 
+bool findchar_forward(int startPos, char searchChar, int* foundPos);
+bool findchar_backward(int startPos, char searchChar, int* foundPos);
 
+bool findchars_forward(int startpos, const char *searchChars, int *foundPos);
+bool findchars_backward(int startpos, const char *searchChars, int *foundPos);
 
+bool search_forward(int startPos, const char* searchString, int* foundPos,
+                    bool matchCase = false);
 
+bool search_backward(int startPos, const char* searchString, int* foundPos,
+                     bool matchCase = false);
+
+char null_substitution_character() { return nullsubschar_; }
+TextSelection* primary_selection() { return &primary_; }
+TextSelection* secondary_selection() { return &secondary_; }
+TextSelection* highlight_selection() { return &highlight_; }
+
+=end TODO
+
+=cut
 
 INCLUDE: TextSelection.xsi
 

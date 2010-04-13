@@ -1,0 +1,298 @@
+#ifndef DISABLE_TEXTDISPLAY
+
+MODULE = FLTK               PACKAGE = FLTK::TextDisplay
+
+=pod
+
+=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+
+=for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=for version 0.530
+
+=for git $Id$
+
+=head1 NAME
+
+FLTK::TextDisplay -
+
+=head1 Description
+
+
+
+=begin apidoc
+
+=cut
+
+#include <fltk/TextDisplay.h>
+
+=for apidoc ||FLTK::TabGroup * group|new|int x|int y|int w|int h|char * label = ''|
+
+Creates a new L<TextDisplay|FLTK::TextDisplay> widget using the given
+position, size, and label string.
+
+=cut
+
+#include "include/WidgetSubclass.h"
+
+void
+fltk::TextDisplay::new( int x, int y, int w, int h, const char * label = 0 )
+    PPCODE:
+        void * RETVAL = NULL;
+        RETVAL = (void *) new WidgetSubclass<fltk::TextDisplay>(CLASS,x,y,w,h,label);
+        if (RETVAL != NULL) {
+            ST(0) = sv_newmortal();
+            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
+            XSRETURN(1);
+        }
+
+=for apidoc ||int length|size||
+
+Returns the number of characters in L<C<text()>|/"text">. This may be greater
+than C<length($input-E<gt>text())> if there are C<NULL> characters in it.
+
+=cut
+
+int
+fltk::TextDisplay::size( )
+
+=for apidoc ||char * string|text||
+
+The current string, as edited by the user. L<C<size()>|/"size"> returns how
+many bytes are in the string.
+
+=for apidoc |||text|char * string|
+
+Set the text.
+
+=cut
+
+SV *
+fltk::TextDisplay::text( char * string = NO_INIT )
+    CASE: items == 1
+        CODE:
+            ST( 0 ) = newSVpv( (char *) THIS->text( ), 0 );
+            sv_2mortal( ST( 0 ) );
+            XSRETURN( 1 );
+    CASE: items == 2
+        CODE:
+            THIS->text( string );
+            XSRETURN_EMPTY;
+
+=for apidoc ||bool ret|static_text|char * string|
+
+Same as L<C<text($string)>|/"text_string">, except it does not copy the
+string, instead it makes L<C<text()>|/"text"> return a pointer to C<$string>.
+
+C<$string> must point to static memory that will not be altered until at least
+the L<TextDisplay|FLTK::TextDisplay> widget is destroyed or the
+L<C<text()>|/"text"> is changed again. If the user attempts to edit the string
+it is then copied to the internal buffer and the editing done there. This can
+save a lot of time and memory if your program is changing the string to
+various constants a lot but the user rarely edits it.
+
+=cut
+
+void
+fltk::TextDisplay::static_text( char * string )
+    CASE: items == 2
+        C_ARGS: string
+
+=for apidoc ||char chr|at|int index|
+
+Same as L<C<text()[$index]>|/"text">, but may be faster in plausible
+implementations. No bounds checking is done.
+
+=cut
+
+char
+fltk::TextDisplay::at( int index )
+
+=for apidoc |||buffer|FLTK::TextBuffer * buffer|
+
+Attach a L<text buffer|FLTK::TextBuffer> to display, replacing the current
+buffer (if any).
+
+=for apidoc ||FLTK::TextBuffer * buffer|buffer||
+
+Get the associated L<text buffer|FLTK::TextBuffer>.
+
+=cut
+
+fltk::TextBuffer *
+fltk::TextDisplay::buffer( fltk::TextBuffer * buffer )
+    CASE: items == 2
+        CODE:
+            THIS->buffer( buffer );
+        OUTPUT:
+    CASE:
+        C_ARGS:
+        OUTPUT:
+            RETVAL
+
+=for apidoc |||append|const char * text|
+
+Append text to the end of the buffer.
+
+=for apidoc |||insert|const char * text|
+
+Insert text to the current cursor position.
+
+=for apidoc |||overstrike|const char * text|
+
+Overstrike text from the current cursor position.
+
+=cut
+
+void
+fltk::TextDisplay::append( const char * text )
+
+void
+fltk::TextDisplay::insert( const char * text )
+
+void
+fltk::TextDisplay::overstrike( const char * text )
+
+=for apidoc |||insert_position|int newPos|
+
+Set new cursor position.
+
+=for apidoc ||int currentPos|insert_position||
+
+Get current cursor position.
+
+=cut
+
+int
+fltk::TextDisplay::insert_position( int newPos )
+    CASE: items == 2
+        CODE:
+            THIS->insert_position( newPos );
+        OUTPUT:
+    CASE:
+        C_ARGS:
+
+=for apidoc |||show_insert_position||
+
+Make cursor position visible in screen.
+
+=cut
+
+void
+fltk::TextDisplay::show_insert_position( )
+
+=for apidoc |||show_cursor|bool b = true|
+
+Show cursor.
+
+=cut
+
+void
+fltk::TextDisplay::show_cursor( bool b = true )
+
+=for apidoc |||hide_cursor||
+
+Hide cursor.
+
+=cut
+
+void
+fltk::TextDisplay::hide_cursor( )
+
+=for apidoc ||bool state|cursor_on||
+
+Returns cursor visibility state.
+
+=cut
+
+bool
+fltk::TextDisplay::cursor_on( )
+
+=for apidoc |||cursor_style|int style|
+
+Set cursor style.
+
+=cut
+
+void
+fltk::TextDisplay::cursor_style( int style )
+
+=for apidoc ||FLTK::Color color|cursor_color||
+
+Returns cursor color.
+
+=for apidoc |||cursor_color|FLTK::Color * color|
+
+Set cursor color.
+
+=cut
+
+fltk::Color
+fltk::TextDisplay::cursor_color( fltk::Color color = NO_INIT )
+    CASE: items == 2
+        CODE:
+            THIS->cursor_color( color );
+        OUTPUT:
+    CASE:
+        C_ARGS:
+
+=for apidoc ||int start|word_start|int pos|
+
+Returns begining of the word where C<$pos> is located.
+
+=for apidoc ||int end|word_end|int pos|
+
+=cut
+
+int
+fltk::TextDisplay::word_start( int pos )
+
+int
+fltk::TextDisplay::word_end( int pos )
+
+=for apidoc |||next_word||
+
+Go to the next word.
+
+=cor apidoc |||previous_word||
+
+Go to the previous word.
+
+=cut
+
+void
+fltk::TextDisplay::next_word( )
+
+void
+fltk::TextDisplay::previous_word( )
+
+=for apidoc |||wrap_mode|bool wrap|int wrap_margin = 0|
+
+Set wrapping mode. C<$wrap_margin> is width to wrap at, zero means use
+L<C<w()>|FLTK::Rectangle/"w">.
+
+=cut
+
+void
+fltk::TextDisplay::wrap_mode( bool wrap, int wrap_margin = 0 )
+
+=for apidoc |||linenumber_width|int width|
+
+Set line number area width.
+
+=for apidoc ||int width|linenumber_width||
+
+Returns line number area width.
+
+=cut
+
+int
+fltk::TextDisplay::linenumber_width( int width = NO_INIT )
+    CASE: items == 2
+        CODE:
+            THIS->linenumber_width( width );
+        OUTPUT:
+    CASE:
+        C_ARGS:
+
+#endif // #ifndef DISABLE_TEXTDISPLAY
