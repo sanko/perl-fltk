@@ -354,4 +354,230 @@ fltk::TextDisplay::move_up( )
 bool
 fltk::TextDisplay::move_down( )
 
+=for apidoc |||redisplay_range|int start|int end|
+
+Redisplay text in a defined range.
+
+=cut
+
+void
+fltk::TextDisplay::redisplay_range( int start, int end )
+
+=for apidoc |||scroll|int topLineNum|int horizOffset|
+
+Scroll to a new position.
+
+=cut
+
+void
+fltk::TextDisplay::scroll( int topLineNum, int horizOffset )
+
+=for apidoc ||bool inside|in_selection|int X|int Y|
+
+Returns a true value if position C<($X, $Y)> is inside of the primary
+TextSelection.
+
+=cut
+
+bool
+fltk::TextDisplay::in_selection( int X, int Y )
+
+=for apidoc ||int start|line_start|int position|
+
+Returns the beginning of the line where C<$position> is located.
+
+=for apidoc ||int end|line_end|int position|bool start_pos_is_line_start = false|
+
+Returns the end of the line where C<$position> is located.
+
+=cut
+
+int
+fltk::TextDisplay::line_start( int position )
+
+int
+fltk::TextDisplay::line_end( int position, bool start_pos_is_line_start = false )
+
+=for apidoc ||int count|visible_lines||
+
+Returns the number of visible lines.
+
+=cut
+
+int
+fltk::TextDisplay::visible_lines( )
+
+=for apidoc ||int index|top_line||
+
+Returns the current visible topline.
+
+=cut
+
+int
+fltk::TextDisplay::top_line( )
+
+=for apidoc ||int offset|hor_offset||
+
+Returns the current horizontal offset
+
+=cut
+
+int
+fltk::TextDisplay::hor_offset( )
+
+=for apidoc ||int start|find_next_char|int position|
+
+Finds the start of the next character, starting from C<$position>. If
+C<$position> points to the start of a character, it is returned. This is
+mainly used with UTF-8 strings.
+
+=cut
+
+int
+fltk::TextDisplay::find_next_char( int position )
+
+=for apidoc ||int start|find_prev_char|int position|
+
+Finds the start of the previous character, starting from C<$position>. If
+C<$position> points to the start of a character, it is returned. This is
+mainly used with UTF-8 strings.
+
+=cut
+
+int
+fltk::TextDisplay::find_prev_char( int position )
+
+=for apidoc ||int position|xy_to_position|int X|int Y|int PosType = CHARACTER_POS|
+
+Translates window coordinates to the nearest (insert cursor or character cell)
+text position. The parameter C<$posType> specifies how to interpret the
+position:
+
+=over
+
+=item C<FLTK::TextDisplay::CURSOR_POS> means translate the coordinates to the
+nearest cursor position
+
+=item C<FLTK::TextDisplay::CHARACTER_POS> means return the position of the
+character closest to C<($X, $Y)>
+
+=back
+
+=cut
+
+int
+fltk::TextDisplay::xy_to_position( int X, int Y, int PosType = fltk::TextDisplay::CHARACTER_POS )
+
+=for apidoc ||AV * row_col|xy_to_rowcol|int X|int Y|int PosType
+
+Translates window coordinates to the nearest row and column number for
+positioning the cursor. This, of course, makes no sense when the font is
+proportional, since there are no absolute columns. The parameter C<$posType>
+specifies how to interpret the position:
+
+
+=over
+
+=item C<FLTK::TextDisplay::CURSOR_POS> means translate the coordinates to the
+nearest position between characters
+
+=item C<FLTK::TextDisplay::CHARACTER_POS> means translate the position to the
+nearest character cell.
+
+=back
+
+=cut
+
+void
+fltk::TextDisplay::xy_to_rowcol( int X, int Y, OUTLIST int row, OUTLIST int column, int PosType )
+
+=for apidoc ||bool in_range|position_to_xy|int position|int * X|int * Y|
+
+Translates a buffer text position to the C<XY> location where the top left of
+the cursor would be positioned to point to that character. Returns C<0> if the
+position is not displayed because it is B<vertically> outof view. If the
+position is horizontally out of view, returns the C<X> coordinate where the
+position would be if it were visible.
+
+=cut
+
+bool
+fltk::TextDisplay::position_to_xy( int position, IN_OUTLIST int X, IN_OUTLIST int Y )
+
+=for apidoc ||int count|total_lines||
+
+Returns the total number of lines.
+
+=cut
+
+int
+fltk::TextDisplay::total_lines( )
+
+int
+NORMAL_CURSOR ( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = fltk::TextDisplay::NORMAL_CURSOR; break;
+            case 1: RETVAL = fltk::TextDisplay::CARET_CURSOR;  break;
+            case 2: RETVAL = fltk::TextDisplay::DIM_CURSOR;    break;
+            case 3: RETVAL = fltk::TextDisplay::BLOCK_CURSOR;  break;
+            case 4: RETVAL = fltk::TextDisplay::HEAVY_CURSOR;  break;
+         }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+          CARET_CURSOR = 1
+            DIM_CURSOR = 2
+          BLOCK_CURSOR = 3
+          HEAVY_CURSOR = 4
+
+int
+CURSOR_POS ( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = fltk::TextDisplay::CURSOR_POS;    break;
+            case 1: RETVAL = fltk::TextDisplay::CHARACTER_POS; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        CHARACTER_POS = 1
+
+=begin developers
+
+drag types- they match fltk::event_clicks() so that single clicking to start a
+collection selects by character, double clicking selects by word and triple
+clicking selects by line.
+
+=cut
+
+int
+DRAG_CHAR ( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = fltk::TextDisplay::DRAG_CHAR; break;
+            case 1: RETVAL = fltk::TextDisplay::DRAG_WORD; break;
+            case 2: RETVAL = fltk::TextDisplay::DRAG_LINE; break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        DRAG_WORD = 1
+        DRAG_LINE = 2
+
+
+int
+ATTR_NONE ( )
+    CODE:
+        switch ( ix ) {
+            case 0: RETVAL = fltk::TextDisplay::ATTR_NONE;      break;
+            case 1: RETVAL = fltk::TextDisplay::ATTR_UNDERLINE; break;
+            case 2: RETVAL = fltk::TextDisplay::ATTR_HIDDEN;    break;
+        }
+    OUTPUT:
+        RETVAL
+    ALIAS:
+        ATTR_UNDERLINE = 1
+           ATTR_HIDDEN = 2
+
 #endif // #ifndef DISABLE_TEXTDISPLAY
