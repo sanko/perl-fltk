@@ -14,6 +14,8 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =over
 
+=item * FLTK::TextDisplay::StyleTableEntry
+
 =item * FLTK::Theme
 
 =item * Complete FLTK::TextBuffer
@@ -69,8 +71,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 =item FLTK::TabGroupPager
 
 =item FLTK::TextBuffer
-
-=item FLTK::TextDisplay
 
 =item FLTK::TextEditor
 
