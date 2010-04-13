@@ -324,4 +324,34 @@ fltk::TextDisplay::highlight_data( fltk::TextBuffer * styleBuffer, fltk::TextDis
         }*/
         THIS->highlight_data( styleBuffer, styleTable, nStyles, unfinishedStyle, _cb_u, ( void * ) cb );
 
+=for apidoc ||bool okay||move_right||
+
+Move cursor to the right.
+
+=for apidoc ||bool okay||move_left||
+
+Move cursor to the left.
+
+=for apidoc ||bool okay||move_up||
+
+Move cursor up.
+
+=for apidoc ||bool okay|move_down||
+
+Move curosr down.
+
+=cut
+
+bool
+fltk::TextDisplay::move_right( )
+
+bool
+fltk::TextDisplay::move_left( )
+
+bool
+fltk::TextDisplay::move_up( )
+
+bool
+fltk::TextDisplay::move_down( )
+
 #endif // #ifndef DISABLE_TEXTDISPLAY
