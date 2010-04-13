@@ -13,7 +13,7 @@ package FLTK;
 =cut
 use strict;
 use warnings;
-our $BASE = 532; our $DEV = 5; our $VERSION = sprintf(($DEV ? '%.3f_%03d' : '%.3f'), $BASE / 1000, $DEV);
+our $BASE = 531; our $DEV = 4; our $VERSION = sprintf(($DEV ? '%.3f_%03d' : '%.3f'), $BASE / 1000, $DEV);
 use XSLoader;
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
