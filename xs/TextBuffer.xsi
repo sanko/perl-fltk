@@ -97,6 +97,7 @@ fltk::TextBuffer::text ( const char * txt = NO_INIT )
             THIS->text( txt );
 
 =pod
+
 X<character>
 
 =head2 C<< my $char = $buffer->character( $pos ) >>
@@ -111,6 +112,7 @@ char
 fltk::TextBuffer::character( int pos )
 
 =pod
+
 X<text_range>
 
 =head2 C<my $txt = $buffer-E<gt>text_range( $start, $end )>
@@ -127,9 +129,10 @@ char *
 fltk::TextBuffer::text_range( int start, int end )
 
 =pod
+
 X<text_in_rectangle>
 
-=head2 C<my $txt = $bufferE<gt>text_in_rectangle( $start, $end, $rectStart, $rectEnd )>
+=head2 C<my $txt = $buffer-E<gt>text_in_rectangle( $start, $end, $rectStart, $rectEnd )>
 
 =for apidoc ||char * txt|text_in_rectangle|int start|int end|int rectStart|int rectEnd|
 
@@ -143,9 +146,10 @@ char *
 fltk::TextBuffer::text_in_rectangle( int start, int end, int rectStart, int rectEnd )
 
 =pod
+
 X<insert>
 
-=head2 C<$bufferE<gt>insert( $pos, $text )>
+=head2 C<$buffer-E<gt>insert( $pos, $text )>
 
 =for apidoc |||insert|int pos|const char * text|
 
@@ -157,9 +161,10 @@ void
 fltk::TextBuffer::insert( int pos, const char * text )
 
 =pod
+
 X<append>
 
-=head2 C<$bufferE<gt>append( $text )>
+=head2 C<$buffer-E<gt>append( $text )>
 
 =for apidoc |||append|const char * text|
 
@@ -171,9 +176,10 @@ void
 fltk::TextBuffer::append( const char * text )
 
 =pod
+
 X<remove>
 
-=head2 C<$bufferE<gt>remove( $start, $end )>
+=head2 C<$buffer-E<gt>remove( $start, $end )>
 
 =for apidoc |||remove|int start|int end|
 
@@ -187,9 +193,10 @@ void
 fltk::TextBuffer::remove( int start, int end )
 
 =pod
+
 X<replace>
 
-=head2 C<$bufferE<gt>replace( $start, $end, $text )>
+=head2 C<$buffer-E<gt>replace( $start, $end, $text )>
 
 =for apidoc |||replace|int start|int end|const char * text|
 
@@ -202,9 +209,10 @@ void
 fltk::TextBuffer::replace( int start, int end, const char * text )
 
 =pod
+
 X<copy>
 
-=head2 C<$to_bufferE<gt>copy( $from_buffer, $from_start, $from_end, $to_pos )>
+=head2 C<$to_buffer-E<gt>copy( $from_buffer, $from_start, $from_end, $to_pos )>
 
 =for apidoc |||copy|fltk::TextBuffer * from_buffer|int from_start|int from_end|int to_pos|
 
@@ -217,9 +225,10 @@ void
 fltk::TextBuffer::copy( fltk::TextBuffer * from_buffer, int from_start, int from_end, int to_pos )
 
 =pod
+
 X<undo>
 
-=head2 C<my ($okay, $cursorPosition) = $bufferE<gt>undo( )>
+=head2 C<my ($okay, $cursorPosition) = $buffer-E<gt>undo( )>
 
 =for apidoc A||AV * return|undo||
 
@@ -235,9 +244,10 @@ int
 fltk::TextBuffer::undo( OUTLIST int cursorPosition )
 
 =pod
+
 X<canUndo>
 
-=head2 C<$bufferE<gt>canUndo( $flag ) >
+=head2 C<$buffer-E<gt>canUndo( $flag ) >
 
 =for apidoc |||canUndo|char flag = 1|
 
@@ -249,14 +259,15 @@ void
 fltk::TextBuffer::canUndo( char flag = 1 )
 
 =pod
+
 X<insertfile>
 
 =head2 C<my $status = $buffer-E<gt>insertfle( $file, $position )>
 
 =for apidoc ||int status|insertfile|const char * file|int position|int bufferlen = 128*1024|
 
-Inserts the contents of a <$file> at the given C<$position>. Optionally, a
-third <$bufferlen> argument is passed which can limit the amount of data
+Inserts the contents of a C<$file> at the given C<$position>. Optionally, a
+third C<$bufferlen> argument is passed which can limit the amount of data
 brought in from the C<$file>.
 
 On error, the return value is C<2>. Otherwise, the return value is C<0>.
@@ -267,14 +278,15 @@ int
 fltk::TextBuffer::insertfile( const char * file, int position, int bufferlen = 128*1024 )
 
 =pod
+
 X<appendfile>
 
 =head2 C<my $status = $buffer-E<gt>appendfile( $file )>
 
 =for apidoc ||int status|appendfile|const char * file|int bufferlen = 128*1024|
 
-Appends the contents of a <$file> to the end of the buffer. Optionally, a
-second <$bufferlen> argument is passed which can limit the amount of data
+Appends the contents of a C<$file> to the end of the buffer. Optionally, a
+second C<$bufferlen> argument is passed which can limit the amount of data
 brought in from the C<$file>.
 
 On error, the return value is C<2>. Otherwise, the return value is C<0>.
@@ -285,14 +297,15 @@ int
 fltk::TextBuffer::appendfile( const char * file, int bufferlen = 128*1024 )
 
 =pod
+
 X<loadfile>
 
 =head2 C<my $status = $buffer-E<gt>loadfile( file )>
 
 =for apidoc ||int status|loadfile|const char * file|int bufferlen = 128*1024|
 
-Loads the contents of a <$file> to fill the buffer (current content is
-replaced). Optionally, a second <$bufferlen> argument is passed which can
+Loads the contents of a C<$file> to fill the buffer (current content is
+replaced). Optionally, a second C<$bufferlen> argument is passed which can
 limit the amount of data brought in from the C<$file>.
 
 On error, the return value is C<2>. Otherwise, the return value is C<0>.
@@ -303,14 +316,15 @@ int
 fltk::TextBuffer::loadfile( const char * file, int bufferlen = 128*1024 )
 
 =pod
+
 X<outputfile>
 
 =head2 C<my $status = $buffer-E<gt>outputfile( $file, $start, $end )>
 
 =for apidoc ||int status|outputfile|const char * file|int start|int end|int bufferlen = 128*1024|
 
-Saves the contents of the buffer to a <$file> starting with the data at the
-C<$start> position through the C<$end>. Optionally, a fourth <$bufferlen> a
+Saves the contents of the buffer to a C<$file> starting with the data at the
+C<$start> position through the C<$end>. Optionally, a fourth C<$bufferlen> a
 rgument is passed which can limit the amount of data written to the C<$file>.
 
 On error, the return value is C<2>. Otherwise, the return value is C<0>.
@@ -321,14 +335,15 @@ int
 fltk::TextBuffer::outputfile( const char * file, int start, int end, int bufferlen = 128*1024 )
 
 =pod
+
 X<savefile>
 
 =head2 C<my $status = $buffer-E<gt>savefile( $file )>
 
 =for apidoc ||int status|savefile|const char * file|int bufferlen = 128*1024|
 
-Saves the contents of the buffer to a <$file>. Optionally, a second
-<$bufferlen> argument is passed which can limit the amount of data written to
+Saves the contents of the buffer to a C<$file>. Optionally, a second
+C<$bufferlen> argument is passed which can limit the amount of data written to
 the C<$file>.
 
 On error, the return value is C<2>. Otherwise, the return value is C<0>.
@@ -337,6 +352,106 @@ On error, the return value is C<2>. Otherwise, the return value is C<0>.
 
 int
 fltk::TextBuffer::savefile( const char * file, int bufferlen = 128*1024 )
+
+=pod
+
+X<expand_character>
+
+=head2 C<my $output = $buffer-E<gt>expand_character( $character, $indent, $tabDist, $nullSubsChar )>
+
+=for apidoc A||char * output|expand_character|char character|int indent = 0|int tabDist = NO_INIT|int nullSubsChar = NO_INIT|
+
+Expand a single character from the text buffer into it's screen representation
+(which may be several characters for a tab or a control code).
+
+Optional parameters include:
+
+=over
+
+=item C<$indent>
+
+the number of characters from the start of the line for figuring tabs
+
+=item C<$tabDist>
+
+the number of spaces (C< >) a tab (C<\t>) consumes
+
+=item C<$nullSubsChar>
+
+the character which will be used in place of null (C<\0>) characters, the
+typical string terminator in C<C++>
+
+=back
+
+=head2 C<my $output = $buffer-E<gt>expand_character( $position, $indent )>
+
+=for apidoc A||char * output|expand_character|int position|int indent = 0|
+
+Get a character from the text buffer expanded into it's screen representation
+(which may be several characters for a tab or a control code).
+
+Optional parameters include:
+
+=over
+
+=item C<$indent>
+
+the number of characters from the start of the line for figuring tabs
+
+=back
+
+=cut
+
+char *
+fltk::TextBuffer::expand_character( character, int indent, int tabDist = NO_INIT, char nullSubsChar = NO_INIT )
+    CASE: SvPOK(ST(1)) && items >= 4
+        char character
+        CODE:
+            int drop = THIS->expand_character( character, indent, RETVAL, tabDist, nullSubsChar );
+        OUTPUT:
+            RETVAL
+    CASE:
+        int character
+        CODE:
+            int drop = THIS->expand_character( character, indent, RETVAL );
+        OUTPUT:
+            RETVAL
+
+=pod
+
+X<character_width>
+
+=head2 C<my $width = $buffer-E<gt>character_width( $char, $indent, $tabDist, $nullSubsChar )>
+
+=for apidoc A||char * output|character_width|char char|int indent = 0|int tabDist = NO_INIT|int nullSubsChar = NO_INIT|
+
+Returns the length in displayed characters of C<$char> expanded for display.
+If the buffer for which the character width is being measured is doing null
+substitution, <$nullSubsChar> should be passed as that character.
+
+Optional parameters include:
+
+=over
+
+=item C<$indent>
+
+the number of characters from the start of the line for figuring tabs
+
+=item C<$tabDist>
+
+the number of spaces (C< >) a tab (C<\t>) consumes
+
+=item C<$nullSubsChar>
+
+the character which will be used in place of null (C<\0>) characters, the
+typical string terminator in C<C++>
+
+=back
+
+=cut
+
+int
+fltk::TextBuffer::character_width( char character, int indent = 0, int tabDist = 8, char nullSubsChar = 0 )
 
 INCLUDE: TextSelection.xsi
 
