@@ -34,7 +34,7 @@ package inc::MBX::FLTK::Developer;
             my ($rel) = canonpath abs2rel($abs);
             return !warn "We've already parsed '$abs'!" if $seen{$abs}++;
             return !warn "Cannot open $rel: $!" if !open(my $FH, '<', $abs);
-            my ($package, $version);
+            my ($package, $version, $_package);
         PARA: while (my $line = <$FH>) {
 
                 if ($line =~ m[^\s*INCLUDE:\s*(.+\.xsi?)\s*$]) {
@@ -47,12 +47,13 @@ package inc::MBX::FLTK::Developer;
                 }
                 elsif ($line =~ m[^=for version ([\d\.\_]+)$]) {
                     $version = $1;
+                    $_package = $package;
                 }
                 if ($package and $version and (!defined $packages{$package}))
                 {   chdir $cwd;
-                    $packages{$package}{'file'} = abs2rel($abs);
-                    $packages{$package}{'file'} =~ s|\\|/|g;
-                    $packages{$package}{'version'} = $version;
+                    $packages{$_package}{'file'} = abs2rel($abs);
+                    $packages{$_package}{'file'} =~ s|\\|/|g;
+                    $packages{$_package}{'version'} = $version;
                 }
             }
         }
