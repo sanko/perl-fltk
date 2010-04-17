@@ -10,7 +10,7 @@ MODULE = FLTK               PACKAGE = FLTK::Scrollbar
 
 =for git $Id$
 
-=for version 0.0531
+=for version 0.531
 
 =head1 NAME
 
