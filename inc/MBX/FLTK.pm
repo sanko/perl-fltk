@@ -47,12 +47,12 @@ package inc::MBX::FLTK;
                     next if $self->up_to_date($dot_rc, $dot_o);
                     printf 'Building Win32 resource: %s... ',
                         abs2rel($dot_rc);
-                    chdir 'xs/rc';
+                    chdir $self->base_dir . '/xs/rc';
                     print $self->do_system(sprintf 'windres %s %s',
                                       $dot_rc, $dot_o) ? "okay\n" : "fail!\n";
                     chdir rel2abs($self->base_dir);
                 }
-                map { abs2rel($_) } @obj;
+                map { abs2rel($_) if -f } @obj;
             }
         XS: for my $XS (@xs) {
                 my $cpp = _xs_to_cpp($self, $XS)
