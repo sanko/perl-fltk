@@ -4,11 +4,11 @@ MODULE = FLTK               PACKAGE = FLTK::TabGroup
 
 =pod
 
-=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+=for license Artistic License 2.0 | Copyright (C) 2009-2010 by Sanko Robinson
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.530
+=for version 0.533
 
 =for git $Id$
 
@@ -231,10 +231,10 @@ fltk::TabGroup::tab_height( )
 
 =for apidoc ||int index, AV * position, AV * width|tab_positions||
 
-Returns the left edges of each tab (plus a fake left edge for a tab past the
-right-hand one). These positions are actually of the left edge of the slope.
-They are either seperated by the correct distance or by
-C<$tabgroup->pager->slope( )> or by zero.
+Returns the index of the selected item, the left edges of each tab (plus a
+fake left edge for a tab past the right-hand one). These positions are
+actually of the left edge of the slope. They are either seperated by the
+correct distance or by C<$tabgroup->pager->slope( )> or by zero.
 
 Return value is the index of the selected item.
 
@@ -243,29 +243,19 @@ Return value is the index of the selected item.
 AV *
 fltk::TabGroup::tab_positions( )
     CODE:
-        int ** p; int ** w;int index;
-        p[ 0 ] = w[ 0 ] = 0;
+        int children = THIS->children();
+        int p[ children - 1 ], w[ children - 1 ], index, i;
+        AV * _position = newAV( ); //sv_2mortal((SV*)_position );
+        AV * _width    = newAV( ); //sv_2mortal((SV*)_width );
         RETVAL = newAV( ); sv_2mortal((SV*)RETVAL);
-        AV * _position = newAV( ); sv_2mortal((SV*)_position );
-        AV * _width    = newAV( ); sv_2mortal((SV*)_width );
-        warn (" A ");
-        index = THIS->tab_positions( *p, *w );
-        warn (" A2 ");
+        index  = THIS->tab_positions( p, w );
+        for ( i = 0; i <= children; i++ ) {
+            av_push( _position, newSViv( (int) p[ i ] ) );
+            av_push( _width,    newSViv( (int) w[ i ] ) );
+        }
         av_push( RETVAL, newSViv( index ) );
-        warn (" B ");
-        {   int i = 0;
-            while ( p[ i ] )
-                av_push( _position, newSViv( (int) p[ i++ ] ) );
-        }
-        warn (" C ");
-        av_push( RETVAL, newSVsv( (SV*) _position ) );
-        {   int i = 0;
-            while ( w[ i ] )
-                av_push( _width, newSViv( (int) w[ i++ ] ) );
-        }
-        warn (" D ");
-        av_push( RETVAL, newSVsv( (SV*) _width ) );
-        warn (" E ");
+        av_push( RETVAL, (SV*) _position );
+        av_push( RETVAL, (SV*) _width );
     OUTPUT:
         RETVAL
 
@@ -284,18 +274,6 @@ fltk::TabGroup::draw_tab( int x1, int x2, int W, int H, fltk::Widget * o, int se
 
 void
 fltk::TabGroup::draw_tab_background( )
-
-
-
-
-
-
-
-
-
-
-
-
 
 BOOT:
     isa("FLTK::TabGroup", "FLTK::Group");
