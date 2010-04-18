@@ -3,6 +3,10 @@ Version 0.XXXXX | Next Sunday AD | b9f4e5a
     Resolved Issues/Bug Fixes:
      * Cleaned up general stupidity in FLTK::TabGroup->tab_positions()
 
+    Documentation/Sample Code/Test Suite:
+     * New FLTK::Cookbook::TabGroup::Simple
+
+
 Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
 
     API Changes/Compatibility Information:

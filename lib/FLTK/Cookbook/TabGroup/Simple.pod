@@ -1,0 +1,92 @@
+=pod
+
+=head1 NAME
+
+FLTK::Cookbook::TabGroup::Simple - Very simple demonstation of FLTK::TabGroup
+
+=head1 Description
+
+It really doesn't get much simpler than this.
+
+=head1 The Code
+
+
+    use strict;
+    use warnings;
+    use FLTK qw[run];
+
+    my $win = FLTK::Window->new(500, 200);
+    $win->begin;
+    {
+        my $tabs = FLTK::TabGroup->new(10, 10, 500 - 20, 200 - 20);
+        $tabs->begin;
+        $tabs->callback(
+            sub {
+                my $self = shift;
+                printf <<'END',
+Tab change!
+Current tab index: %d
+Current tab label: %s
+END
+                    $self->value, # zero based index
+                    $self->selected_child->label; # selected_child() is a Widget
+            }
+        );
+        {   # Aaa tab
+            my $aaa = FLTK::Group->new(10, 20, 500 - 20, 200 - 45, "Aaa");
+            $aaa->begin;
+            {   my $b1 = FLTK::Button->new(10, 20, 90, 25, "Button A1");
+                my $b2 = FLTK::Button->new(10, 50, 90, 25, "Button A2");
+                my $b3 = FLTK::Button->new(10, 80, 90, 25, "Button A3");
+            }
+            $aaa->end();
+
+            # Bbb tab
+            my $bbb = FLTK::Group->new(10, 35, 500 - 10, 200 - 35, "Bbb");
+            $bbb->begin;
+            {   my $b1 = FLTK::Button->new(10,  20, 90, 25, "Button B1");
+                my $b2 = FLTK::Button->new(110, 20, 90, 25, "Button B2");
+                my $b3 = FLTK::Button->new(210, 20, 90, 25, "Button B3");
+                my $b4 = FLTK::Button->new(10,  50, 90, 25, "Button B4");
+                my $b5 = FLTK::Button->new(110, 50, 90, 25, "Button B5");
+                my $b6 = FLTK::Button->new(210, 50, 90, 25, "Button B6");
+                my $b7 = FLTK::Button->new(310, 35, 90, 25, "Goto first tab");
+                $b7->callback(
+                    sub {
+                        $tabs->value(0)   # does not trigger TabGroup callback
+                    }
+                );
+            }
+            $bbb->end();
+        }
+        $tabs->end();
+    }
+    $win->end();
+    $win->show();
+    exit run();
+
+=head1 Awknowlegements
+
+Code based on the work of Greg Ercolano
+
+=head1 Author
+
+Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
+
+=head1 License and Legal
+
+Copyright (C) 2008-2010 by Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of The Artistic License 2.0.  See the F<LICENSE> file included with
+this distribution or http://www.perlfoundation.org/artistic_license_2_0.  For
+clarification, see http://www.perlfoundation.org/artistic_2_0_notes.
+
+When separated from the distribution, all original POD documentation is
+covered by the Creative Commons Attribution-Share Alike 3.0 License.  See
+http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
+clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+=for git $Id$
+
+=cut

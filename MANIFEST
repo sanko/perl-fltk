@@ -15,6 +15,7 @@ lib/FLTK/Cookbook.pod
 lib/FLTK/Cookbook/MenuBar/Label.pod
 lib/FLTK/Cookbook/MenuBar/Toggle.pod
 lib/FLTK/Cookbook/ProgressBar/Process.pod
+lib/FLTK/Cookbook/TabGroup/Simple.pod
 lib/FLTK/Notes.pod
 LICENSE
 Makefile.PL
