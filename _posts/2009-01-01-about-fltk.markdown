@@ -12,7 +12,7 @@ The project is just getting off the ground right now, which means it&#39;s
 a great time to get involved. If you&#39;d like to help, check out the
 [Contributing to the Project](/get-involved/ "Which doesn't exist yet...")
 page or go ahead and fork the project on
-[GitHub](http://github.com/sanko/fltk-perl).
+[GitHub](http://github.com/sanko/perl-fltk2).
 
 ### About FLTK
 
