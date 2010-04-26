@@ -37,7 +37,7 @@ To clarify... and by 'clarify', I mean 'confuse further'...
   2.0.x branches, borrowing features from both, and reducing confusion for
   new users.
 
-  The FLTK-Perl project will be following this branch as it develops. For more
+  The perl-fltk2 project will be following this branch as it develops. For more
   on the goals of the 3.0.x branch of fltk, see
   [Easy as 1, 2, 3](http://fltk.org/newsgroups.php?s20445+gfltk.general+v20449+T0)
   by Matthias Melcher.

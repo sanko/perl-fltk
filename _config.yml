@@ -1,5 +1,5 @@
 source:         .
-destination:    ./_site/fltk-perl
+destination:    ./_site/perl-fltk2
 lsi:            false
 pygments:       true
 
@@ -20,15 +20,26 @@ disqus:
     id:         sanko
 
 css:
-    - ~stylesheets/reset.css
-    - ~stylesheets/layout.css
-    - ~stylesheets/typography.css
-    - ~stylesheets/paint.css
-    - ~stylesheets/discus-comments.css
-    - ~stylesheets/testing.css
-    - ~stylesheets/syntax.css
-
+    #- ~stylesheets/reset.css
+    #- ~stylesheets/layout.css
+    #- ~stylesheets/typography.css
+    #- ~stylesheets/paint.css
+    #- ~stylesheets/discus-comments.css
+    #- ~stylesheets/testing.css
+    #- ~stylesheets/syntax.css
+    - stylesheets/reset.css
+    - stylesheets/index.css
 js: []
 
 google:
     analytics:  UA-683755-6
+
+system:
+    layouts:
+        page:
+            settings: { }
+    categories:
+        page:
+            layout:     page
+            display:    true
+
