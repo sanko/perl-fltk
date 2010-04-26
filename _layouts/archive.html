@@ -3,7 +3,7 @@ layout: default
 ---
 <dl id="archives">
 {%for post in site.posts%}
-{%  unless post.layout != 'post' or post.categories contains 'page'%}
+{%  unless post.layout != 'post' or post.categories contains 'page' or post.categories contains 'documentation' or post.categories contains 'hidden' %}
 {%      if post.date|date:"%B" != previous_post.date|date:"%B"%}
 {%          if post.date|date:"%Y" != previous_post.date|date:"%Y"%}
 {%              assign year_changed = true%}
