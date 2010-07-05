@@ -62,6 +62,7 @@ my $mb = $class->new(
                        'Module::Build'      => '0.36',
                        perl                 => 5.008000,
                        'Pod::Parser'        => 0,
+                       'TAP::Harness'       => 3.18,
                        'Test::More'         => 0.88
     },
     recommends     => {OpenGL => 0.58},
@@ -73,7 +74,24 @@ my $mb = $class->new(
     no_index => {directory => [qw[examples inc t]],
                  files     => [qw[xs/include/ppport.h]]
     },
-    test_files => \@tests,
+    test_files       => \@tests,
+    test_file_exts   => [qw(.t .tap .txt)],
+    use_tap_harness  => 1,
+    tap_harness_args => {
+                  jobs  => 9,
+                  rules => {
+                      par => [
+                          {seq => '/t/10000_basic/*'},
+                          {seq => '/t/20000_functions/*'},
+                          {seq => '/t/40000_widgets/*'},
+                          {seq => '/t/50000_objects/*'},
+                          {seq => '/t/60000_types/*'},
+                          {seq => '/t/80000_experimental/*'},
+                          ($is_developer ? {seq => '/t/90000_author/*'} : ()),
+                          '*'
+                      ]
+                  }
+    },
     meta_merge => {
         keywords => [
             qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
