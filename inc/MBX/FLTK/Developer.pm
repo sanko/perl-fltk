@@ -10,8 +10,47 @@ package inc::MBX::FLTK::Developer;
     use File::Basename qw[dirname];
     use File::Find qw[find];
     use File::Path 2.07 qw[make_path];
-    use base 'inc::MBX::FLTK';
+    use lib '../../..';
+    use parent 'inc::MBX::FLTK';
     use Cwd qw[cwd];
+    use 5.010;
+
+    sub new {
+        my $class = shift;
+        my $self  = $class->SUPER::new(@_);
+        $self->metafile('META.json') if $self->metafile eq 'META.yml';
+        return $self;
+    }
+
+    sub write_metafile {
+        my $s = shift;
+        require CPAN::Meta::Converter;
+        require CPAN::Meta::Validator;
+        require JSON;
+        JSON->VERSION(2);
+        my $data = {};
+        $s->prepare_metadata($data);
+        $data->{'meta-spec'} = {    # In reality, it's probably a hybrid...
+                 url     => 'http://search.cpan.org/perldoc?CPAN::Meta::Spec',
+                 version => 2
+        };
+        my $metafile = $s->metafile;
+        my $cmc      = CPAN::Meta::Converter->new($data);   # ...so we convert
+        $data = $cmc->convert(version => 2);    # ...and clean it up here
+        my $cmv = CPAN::Meta::Validator->new($data);
+        say $_    # ...and double check the result
+            for $cmv->is_valid
+            ? ()
+            : 'Invalid META structure. Errors found:', $cmv->errors;
+        $data->{generated_by} = 'Conversion, Software version 7.0';
+        open my ($fh), '>',    # ...and eventually save it to disk.
+            $metafile || die "can't open $metafile for writing: $!";
+        syswrite $fh, JSON->new->ascii(1)->pretty->canonical(1)->encode($data)
+            || die "can't print metadata to $metafile: $!";
+        close $fh || die "error closing $metafile: $!";
+        $s->{'wrote_metadata'} = 1;
+        $s->_add_to_manifest('MANIFEST', $metafile);
+    }
     {
         my ($cwd, %seen, %packages, @xsi_files);
 
@@ -32,11 +71,11 @@ package inc::MBX::FLTK::Developer;
             my ($abs) = canonpath rel2abs($inc);
             my ($dir) = canonpath dirname($abs);
             my ($rel) = canonpath abs2rel($abs);
-            return !warn "We've already parsed '$abs'!" if $seen{$abs}++;
+
+            #return !warn "We've already parsed '$abs'!" if $seen{$abs}++;
             return !warn "Cannot open $rel: $!" if !open(my $FH, '<', $abs);
             my ($package, $version, $_package);
         PARA: while (my $line = <$FH>) {
-
                 if ($line =~ m[^\s*INCLUDE:\s*(.+\.xsi?)\s*$]) {
                     chdir $dir;
                     $self->_grab_metadata(canonpath rel2abs $1);
@@ -46,7 +85,7 @@ package inc::MBX::FLTK::Developer;
                 {   $package = $1;
                 }
                 elsif ($line =~ m[^=for version ([\d\.\_]+)$]) {
-                    $version = $1;
+                    $version  = $1;
                     $_package = $package;
                 }
                 if ($package and $version and (!defined $packages{$package}))
@@ -63,13 +102,19 @@ package inc::MBX::FLTK::Developer;
         my ($self, $dir, $file, $quiet) = @_;
         $file ||= $dir;
         if (0 && 'bzip') {
-            $self->do_system('tar --mode=0755 -cj' . ($quiet ? q[] : 'v') . "f $file.tar.bz2 $dir");
+            $self->do_system(  'tar --mode=0755 -cj'
+                             . ($quiet ? q[] : 'v')
+                             . "f $file.tar.bz2 $dir");
         }
-        elsif(0 && 'gzip') {
-            $self->do_system('tar --mode=0755 -cz' . ($quiet ? q[] : 'v') . "f $file.tar.gz $dir");
+        elsif (0 && 'gzip') {
+            $self->do_system(  'tar --mode=0755 -cz'
+                             . ($quiet ? q[] : 'v')
+                             . "f $file.tar.gz $dir");
         }
         else {
-            $self->do_system('tar --mode=0755 -c' . ($quiet ? q[] : 'v') . "f $file.tar $dir");
+            $self->do_system(  'tar --mode=0755 -c'
+                             . ($quiet ? q[] : 'v')
+                             . "f $file.tar $dir");
             $self->do_system("gzip -9 -f -n $file.tar");
         }
         return 1;
@@ -150,7 +195,7 @@ For more information, see the commit log:
 %sUrl%s
 END
 
-        # Keep a backup just in case
+     # Keep a backup (just in case) and move the file so we can create it next
         rename('Changes', 'Changes.bak')
             || die sprintf 'Failed to rename Changes (%s)', $^E;
 
@@ -174,6 +219,7 @@ END
     sub ACTION_RCS {
         my ($self) = @_;
         require POSIX;
+        require File::Spec;
         print 'Running fake RCS...';
         my @manifest_files = sort keys %{$self->_read_manifest('MANIFEST')};
     FILE: for my $file (@manifest_files, __FILE__) {
@@ -210,6 +256,10 @@ END
                 $_Date;
             my $_Repo
                 = $self->{'properties'}{'meta_merge'}{'resources'}
+                {'repository'}{'web'}
+                || $self->{'properties'}{'meta_merge'}{'resources'}
+                {'repository'}{'url'}
+                || $self->{'properties'}{'meta_merge'}{'resources'}
                 {'repository'}
                 || '';
 
@@ -227,7 +277,9 @@ END
             # Skip to the next file if this one wasn't updated
             next FILE if $CHANGES_D eq $CHANGES_O;
 
-            # Keep a backup just in case
+     #warn qq[Updated $file];
+     #die $CHANGES_D;
+     # Keep a backup (just in case) and move the file so we can create it next
             rename($file, $file . '.bak')
                 || die sprintf 'Failed to rename %s (%s)', $file, $^E;
 
@@ -260,17 +312,17 @@ END
             return;
         }
         require Perl::Tidy;
+        require File::Spec;
         my $demo_files
-            = $self->rscan_dir(File::Spec->catdir('examples'), qr[\.pl$]);
-        my $inst_files
-            = $self->rscan_dir(File::Spec->catdir('inc'), qr[\.pm$]);
+            = -d 'examples' ? $self->rscan_dir('examples', qr[\.pl$]) : [];
+        my $inst_files = -d 'inc' ? $self->rscan_dir('inc', qr[\.pm$]) : [];
         for my $files ([keys(%{$self->script_files})],       # scripts first
                        [values(%{$self->find_pm_files})],    # modules
                        [@{$self->find_test_files}],          # test suite next
                        [@{$inst_files}],                     # installer files
                        [@{$demo_files}]                      # demos last
             )
-        {   $files = [sort map { File::Spec->rel2abs('./' . $_) } @{$files}];
+        {   $files = [sort map { File::Spec->rel2abs($_) } @{$files}];
 
             # One at a time...
             for my $file (@$files) {

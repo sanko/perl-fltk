@@ -1,11 +1,11 @@
-Version 0.XXXXX | Next Sunday AD | b9f4e5a
+Version 0.XXXXX | In the not too distant future | 03b0572
 
     Resolved Issues/Bug Fixes:
      * Cleaned up general stupidity in FLTK::TabGroup->tab_positions()
 
-    Documentation/Sample Code/Test Suite:
+    Documentation/Sample Code/Test Suite/Metadata:
      * New FLTK::Cookbook::TabGroup::Simple
-
+     * Move from META.yml to META.json. The future is now.
 
 Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
 
@@ -70,7 +70,7 @@ Version 0.530 | 2009-10-05 00:42:52Z (Mon, 05 Oct 2009) | 3b70f43
 
 _ -.-. .... .- -. --. . ... _________________________________________
 For more information, see the commit log:
-    http://github.com/sanko/perl-fltk2/commits/master
+    http://github.com/sanko/perl-fltk2/commits/master/
 
 $Ver$ from git $Rev$
 $Date$

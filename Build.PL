@@ -75,16 +75,20 @@ my $mb = $class->new(
     },
     test_files => \@tests,
     meta_merge => {
-        generated_by => 'Conversion, software version 7.0',
-        keywords     => [
+        keywords => [
             qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
         ],
         resources => {
-             bugtracker => 'http://github.com/sanko/perl-fltk2/issues',
-             ChangeLog => 'http://github.com/sanko/perl-fltk2/commits/master',
-             homepage  => 'http://sanko.github.com/perl-fltk2/',
-             license => 'http://www.perlfoundation.org/artistic_license_2_0',
-             repository => 'http://github.com/sanko/perl-fltk2'
+            bugtracker => {web => 'http://github.com/sanko/perl-fltk2/issues',
+                           mailto => 'sanko@cpan.org'
+            },
+            repository => {url  => 'git://github.com/sanko/perl-fltk2.git',
+                           web  => 'http://github.com/sanko/perl-fltk2',
+                           type => 'git'
+            },
+            ChangeLog => 'http://github.com/sanko/perl-fltk2/commits/master/',
+            homepage  => 'http://sanko.github.com/perl-fltk2/',
+            license => ['http://www.perlfoundation.org/artistic_license_2_0']
         }
     },
     needs_compiler => 1,    # adds ExtUtils::CBuilder to build_requires

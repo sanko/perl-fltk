@@ -20,7 +20,7 @@ lib/FLTK/Notes.pod
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
-META.yml
+META.json
 README
 t/10000_basic/10001_use_ok.t
 t/20000_functions/20010_ask.t
