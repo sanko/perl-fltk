@@ -18,7 +18,6 @@ lib/FLTK/Cookbook/ProgressBar/Process.pod
 lib/FLTK/Cookbook/TabGroup/Simple.pod
 lib/FLTK/Notes.pod
 LICENSE
-Makefile.PL
 MANIFEST			This list of files
 META.json
 README
