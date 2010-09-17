@@ -6,7 +6,7 @@
 
     xs\include\ppport.h -- Perl/Pollution/Portability Version 3.19
 
-    Automatically created by Devel::PPPort running under perl 5.010001.
+    Automatically created by Devel::PPPort running under perl 5.012001.
 
     Version 3.x, Copyright (c) 2004-2009, Marcus Holland-Moritz.
 
