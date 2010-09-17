@@ -5,13 +5,14 @@
 
 =for abstract Tests Widget::cursor()
 
-=for license Artistic License 2.0 | Copyright (C) 2009 by Sanko Robinson
+=for license Artistic License 2.0 | Copyright (C) 2009,2010 by Sanko Robinson
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use FLTK qw[:cursor :events run];
