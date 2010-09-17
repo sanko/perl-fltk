@@ -18,6 +18,7 @@ use warnings;
 use Test::More tests => 62;
 use Module::Build qw[];
 use Time::HiRes qw[];
+use Test::NeedsDisplay;
 my $test_builder = Test::More->builder;
 chdir '../..' if not -d '_build';
 use lib 'inc';

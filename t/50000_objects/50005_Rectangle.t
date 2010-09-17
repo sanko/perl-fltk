@@ -16,6 +16,7 @@ use warnings;
 use Test::More tests => 199;
 use Module::Build qw[];
 use File::Temp qw[];
+use Test::NeedsDisplay;
 my $test_builder = Test::More->builder;
 chdir '../..' if not -d '_build';
 use lib 'inc';

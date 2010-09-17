@@ -63,7 +63,8 @@ my $mb = $class->new(
                        perl                 => 5.008000,
                        'Pod::Parser'        => 0,
                        'TAP::Harness'       => 3.18,
-                       'Test::More'         => 0.88
+                       'Test::More'         => 0.88,
+                       'Test::NeedsDisplay' => 1.07
     },
     recommends     => {OpenGL => 0.58},
     add_to_cleanup => [qw[FLTK-*],
