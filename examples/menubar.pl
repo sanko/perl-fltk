@@ -30,11 +30,10 @@ my $m = FLTK::MenuBar->new(0, 0, 660, 21, 'Test');
 }
 build_menus($m, $win);
 {
-    use Data::Dump;
-    sub test { warn 'Click 2'; dd \@_ }
+    sub test { warn 'Click 2'; warn Dumper \@_ }
     my $XXXXX = 100;
     $m->add('This/is/a/te\/st', 0,
-            sub { warn 'Click 1'; dd \@_; },
+            sub { warn 'Click 1'; warn Dumper \@_; },
             [qw'X fsaf', $XXXXX]);
     $m->add('This/is/a/test', 0, \&test);
 
@@ -57,10 +56,9 @@ sub build_menus {
         0,
         sub {
             warn 'New File';
-            use Data::Dump;
-            dd $_[0];
-            $m->item(shift);
-            dd $m->item;
+            warn Dumper \@_;
+            $m->item(@_);
+            warn Dumper $m->item;
         }
     );
     FLTK::Item->new(
@@ -90,7 +88,7 @@ sub build_menus {
                     FLTK::ACCELERATOR + ord 'v',
                     sub { warn 'view_cb' }, 0);
     my $item = FLTK::Item->new("&Close View");
-    $item->callback(sub { warn 'close_cb'; use Data::Dump; dd \@_ });
+    $item->callback(sub { warn 'close_cb'; warn Dumper \@_ });
     new FLTK::Divider();
     {
         my $x = FLTK::ItemGroup->new('Submenu');
