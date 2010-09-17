@@ -130,6 +130,7 @@ xs/RadioButton.xsi
 xs/RadioItem.xsi
 xs/RadioLightButton.xsi
 xs/rc/fltk.ico
+xs/rc/FLTK_version_rc.PL
 xs/rc/icons.rc
 xs/rc/resource.h
 xs/Rectangle.xsi
