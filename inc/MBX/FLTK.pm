@@ -43,15 +43,24 @@ package inc::MBX::FLTK;
                 my @dot_rc = grep defined,
                     map { m[\.(rc)$] ? rel2abs($_) : () } @rc;
                 for my $dot_rc (@dot_rc) {
-                    my $dot_o
-                        = $dot_rc =~ m[^(.*)\.] ? $1 . $Config{'_o'} : next;
+                    my $dot_o = $dot_rc =~ m[^(.*)\.] ? $1 . '.res' : next;
                     push @obj, $dot_o;
                     next if $self->up_to_date($dot_rc, $dot_o);
                     printf 'Building Win32 resource: %s... ',
                         abs2rel($dot_rc);
                     chdir $self->base_dir . '/xs/rc';
-                    print $self->do_system(sprintf 'windres %s %s',
+                    require Config;
+                    my $cc = $Config{'ccname'} || $Config{'cc'};
+                    if ($cc eq 'cl') {    # MSVC
+                        print $self->do_system(
+                                      sprintf 'rc.exe /l 0x409 /fo"%s" %s',
+                                      $dot_o, $dot_rc) ? "okay\n" : "fail!\n";
+                    }
+                    else {                # GCC
+                        print $self->do_system(
+                                      sprintf 'windres -O coff -i %s -o %s',
                                       $dot_rc, $dot_o) ? "okay\n" : "fail!\n";
+                    }
                     chdir rel2abs($self->base_dir);
                 }
                 map { abs2rel($_) if -f } @obj;
