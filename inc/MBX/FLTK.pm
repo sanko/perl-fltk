@@ -34,10 +34,12 @@ package inc::MBX::FLTK;
             my ($self, $args) = @_;
             my $AF = Alien::FLTK2->new();
             my $CC = My::ExtUtils::CBuilder->new();
-            my (@xs, @rc, @obj);
+            my (@xs, @rc, @pl, @obj);
             find(sub { push @xs, $File::Find::name if m[.+\.xs$]; }, 'xs');
-            find(sub { push @rc, $File::Find::name if !m[.+\.o$]; }, 'xs/rc');
+            find(sub { push @pl, $File::Find::name if m[.+\.pl$]i; }, 'xs/rc');
             if ($self->is_windowsish) {
+                $self->do_system($^X, $_) for @pl;
+                find(sub { push @rc, $File::Find::name if m[.+\.rc$]; }, 'xs/rc');
                 my @dot_rc = grep defined,
                     map { m[\.(rc)$] ? rel2abs($_) : () } @rc;
                 for my $dot_rc (@dot_rc) {
