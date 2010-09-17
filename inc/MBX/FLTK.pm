@@ -79,13 +79,14 @@ package inc::MBX::FLTK;
                 )
             {   my ($dll, @cleanup)
                     = $CC->link(
-                          objects => \@obj,
-                          lib_file =>
-                              catdir(qw[blib arch auto FLTK],
-                                     'FLTK.' . $Config{'so'}
-                              ),
-                          module_name        => 'FLTK',
-                          extra_linker_flags => [$AF->ldflags(qw[gl images])],
+                              objects => \@obj,
+                              lib_file =>
+                                  catdir(qw[blib arch auto FLTK],
+                                         'FLTK.' . $Config{'so'}
+                                  ),
+                              module_name => 'FLTK',
+                              extra_linker_flags =>
+                                  [$AF->ldflags('images', $AF->capabilities)],
                     );
                 @cleanup = map { s["][]g; rel2abs($_); } @cleanup;
                 $self->add_to_cleanup(@cleanup);
