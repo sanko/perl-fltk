@@ -40,4 +40,6 @@ examples/~*
 # NYTProf
 *nytprof*
 
-# $Id$
+# Ignore resource output and dynamically generated resources
+*.res
+xs/rc/version.rc
