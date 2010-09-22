@@ -121,8 +121,7 @@ package inc::MBX::FLTK;
             return $cpp
                 if $self->up_to_date([@xsi, $xs, catdir('xs', $typemap)],
                                      $cpp);
-            printf '%s -> %s (%s)... ', $xs, $cpp, $typemap;
-
+            printf q"Parsing '%s' into '%s' w/ '%s'... ", $xs, $cpp, $typemap;
             local @ExtUtils::ParseXS::BootCode= ();
             if (ExtUtils::ParseXS->process_file(filename    => $xs,
                                                 output      => $cpp,
