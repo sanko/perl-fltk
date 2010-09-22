@@ -67,7 +67,7 @@ package inc::MBX::FLTK;
                 }
                 map { abs2rel($_) if -f } @obj;
             }
-        XS: for my $XS (@xs) {
+        XS: for my $XS (sort { lc $a cmp lc $b }  @xs) {
                 my $cpp = _xs_to_cpp($self, $XS)
                     or do { printf 'Cannot Parse %s', $XS; exit 0 };
                 if ($self->up_to_date($cpp, $CC->object_file($cpp))) {
