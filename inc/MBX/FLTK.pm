@@ -123,6 +123,7 @@ package inc::MBX::FLTK;
                                      $cpp);
             printf '%s -> %s (%s)... ', $xs, $cpp, $typemap;
 
+            local @ExtUtils::ParseXS::BootCode= ();
             if (ExtUtils::ParseXS->process_file(filename    => $xs,
                                                 output      => $cpp,
                                                 'C++'       => 1,
