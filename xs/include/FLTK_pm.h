@@ -91,7 +91,7 @@ little like this...
 
 =cut
 */
-void _cb_t (void * CODE); // Callbacks for timers, etc.
+void _cb_t ( void * CODE ); // Callbacks for timers, etc.
 
 /*
 =for apidoc H|||_cb_u|int position|(void *) CODE|
@@ -107,7 +107,7 @@ parameter which should be an AV* holding data that looks a little like this...
 
 =cut
 */
-void _cb_u ( int position, void * CODE); // Callback for TextDisplay->highlight_data( ... )
+void _cb_u ( int position, void * CODE ); // Callback for TextDisplay->highlight_data( ... )
 
 /*
 =for apidoc H|||isa|const char * package|const char * parent|
@@ -125,7 +125,7 @@ Adds a function to a specific export tag.
 
 =cut
 */
-void export_tag (const char * what, const char * _tag );
+void export_tag ( const char * what, const char * _tag );
 
 /*
 =for TODO This whole magic variable stuff screams "Refactor and rethink me!"

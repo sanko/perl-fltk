@@ -31,11 +31,11 @@
 
 template<>
 void WidgetSubclass<fltk::GlWindow>::draw ( ) {
-    int handled = 1; /* safe to assume for now */
-    dTHX;
-    AV * args = newAV();
-    handled = _call_method( "draw", args );
-    /* GlWindow::draw( ) is a pure virtual function */
+	int handled = 1; /* safe to assume for now */
+	dTHX;
+	AV * args = newAV();
+	handled = _call_method( "draw", args );
+	/* GlWindow::draw( ) is a pure virtual function */
 }
 
 #endif // #ifndef fltk_GlWindowSubclass_h
