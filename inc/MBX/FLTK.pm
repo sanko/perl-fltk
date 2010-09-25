@@ -15,7 +15,7 @@ package inc::MBX::FLTK;
         package My::ExtUtils::CBuilder;
         use base 'ExtUtils::CBuilder';
 
-        sub XXXXXXXXXXXXXXXXXXXXdo_system {
+        sub do_system {
             my ($self, @cmd) = @_;
             @cmd = grep { defined && length } @cmd;
             @cmd = map { s[\s+$][]; s[^\s+][]; $_ } @cmd;
