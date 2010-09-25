@@ -1,4 +1,4 @@
-#!perl -Iblib/lib -Iblib/arch
+#!perl
 
 =pod
 
@@ -13,16 +13,15 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
-use Test::More tests => 29;
+use Test::More tests => 30;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use Test::NeedsDisplay;
 my $test_builder = Test::More->builder;
-chdir '../..' if not -d '_build';
-use lib 'inc';
+BEGIN { chdir '../..' if not -d '_build'; }
+use lib 'inc', 'blib/lib', 'blib/arch', 'lib';
 my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');
@@ -95,4 +94,8 @@ is(password("This is a test.", "default"),
 is( choice("This is a test.", 'One', 'Two', 'Three'),
     -1,
     'choice("This is a test.", "One", "Two", "Three") returns -1 on timeout'
+);
+is( choice_alert("This is a test.", 'One', 'Two', 'Three'),
+    -1,
+    'choice_alert("This is a test.", "One", "Two", "Three") returns -1 on timeout'
 );
