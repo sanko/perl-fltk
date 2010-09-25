@@ -11,15 +11,14 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
 use Test::More skip_all => 'fltk::TextBuffer is buggy';
 use Module::Build qw[];
 use File::Temp qw[tempfile];
 my $test_builder = Test::More->builder;
-chdir '../../' if not -d '_build';
-use lib 'inc';
+BEGIN { chdir '../..' if not -d '_build'; }
+use lib 'inc', 'blib/lib', 'blib/arch', 'lib';
 my $build           = Module::Build->current;
 my $release_testing = $build->notes('release_testing');
 my $verbose         = $build->notes('verbose');

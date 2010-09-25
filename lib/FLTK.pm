@@ -14,7 +14,7 @@ package FLTK;
 
 use strict;
 use warnings;
-our $MAJOR = 532; our $MINOR = 5; our $DEV = 3; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
+our $MAJOR = 532; our $MINOR = 5; our $DEV = 4; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
 use XSLoader;
 use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
 use Exporter qw[import];
@@ -32,7 +32,7 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;    # When you want to import everything
     if 1 < scalar keys %EXPORT_TAGS;
 @EXPORT    # Export these tags (if prepended w/ ':') or functions by default
     = sort map { m[^:(.+)] ? @{$EXPORT_TAGS{$1}} : $_ } qw[:style :default]
-    if 0;    # 1 < scalar keys %EXPORT_TAGS;
+    if 0 && keys %EXPORT_TAGS > 1;
 1;
 
 =pod

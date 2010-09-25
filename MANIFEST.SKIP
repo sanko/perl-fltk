@@ -97,3 +97,5 @@ website/.*
 # Ignore resource output and dynamically generated resources
 .+\.res
 xs/rc/version.rc
+xs/include/FLTK_pm_boot.h
+.+\.cxx

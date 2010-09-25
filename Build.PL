@@ -34,7 +34,7 @@ my $mb = $class->new(
     dist_author => 'Sanko Robinson <sanko@cpan.org>',
     dist_abstract =>
         'Perl bindings to the 2.0.x branch of the Fast Light Toolkit',
-    requires       => {base => 0, Exporter => 0, XSLoader => 0},
+    requires       => {Exporter => 0, XSLoader => 0},
     build_requires => {'Alien::FLTK2' => 0.07704,
                        base           => 0,
                        Config         => 0,
@@ -66,20 +66,8 @@ my $mb = $class->new(
     test_files       => \@tests,
     test_file_exts   => [qw(.t .tap .txt)],
     use_tap_harness  => 1,
-    tap_harness_args => {
-                  jobs  => 9,
-                  rules => {
-                      par => [
-                          {seq => '/t/10000_basic/*'},
-                          {seq => '/t/20000_functions/*'},
-                          {seq => '/t/40000_widgets/*'},
-                          {seq => '/t/50000_objects/*'},
-                          {seq => '/t/60000_types/*'},
-                          {seq => '/t/80000_experimental/*'},
-                          ($is_developer ? {seq => '/t/90000_author/*'} : ()),
-                          '*'
-                      ]
-                  }
+    tap_harness_args => {jobs  => 9,
+                         rules => {par => ['*']}
     },
     meta_merge => {
         keywords => [
