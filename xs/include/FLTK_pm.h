@@ -36,7 +36,7 @@
 
 #include <fltk/../config.h>                 // created and installed by Alien::FLTK2
 
-#if HAVE_GL == 0
+#ifndef HAVE_GL
 #define DISABLE_GL       1
 #define DISABLE_GLWINDOW 1
 #endif
