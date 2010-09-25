@@ -1,8 +1,11 @@
-Version 0.XXXXX | Next Sunday AD | 5b16415
+Version 0.XXXXX | Next Sunday AD | 964a0d9
 
     Resolved Issues/Bug Fixes:
      * Cleaned up general stupidity in FLTK::TabGroup->tab_positions()
      * Attempt to use the correct resource builder for MSVC
+
+    Internal/Behavioral Changes:
+     * Build system has been tweaked to avoid a bug in ExtUtils::ParseXS
 
     Documentation/Sample Code/Test Suite/Metadata:
      * New FLTK::Cookbook::TabGroup::Simple

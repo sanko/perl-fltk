@@ -322,8 +322,6 @@ package inc::MBX::FLTK;
                 $parser->parse_from_file($xs);
                 print "\n";
             }
-            use Data::Dump;
-            ddx $parser;
             print "Generating documentation... ";
             for my $package (sort keys %{$parser->{'apidoc_modules'}}) {
                 my $file = './blib/lib/' . $package . '.pod';
