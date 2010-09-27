@@ -12,7 +12,7 @@ MODULE = FLTK::Symbol               PACKAGE = FLTK::Symbol
 
 =for git $Id$
 
-=for version 0.531
+=for version 0.532006
 
 =for todo Subclass this like Widget
 

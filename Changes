@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 394a5fd
+Version 0.532006 | 2010-09-25 14:58:55Z (Sat, 25 Sep 2010) | 33a0e4c
 
     Resolved Issues/Bug Fixes:
      * Cleaned up general stupidity in FLTK::TabGroup->tab_positions()
@@ -8,6 +8,7 @@ Version 0.XXXXX | Next Sunday AD | 394a5fd
 
     Internal/Behavioral Changes:
      * Build system has been tweaked to avoid a bug in ExtUtils::ParseXS
+     * Require Perl 5.10 (which I consider quite old) or better
 
     Documentation/Sample Code/Test Suite/Metadata:
      * New FLTK::Cookbook::TabGroup::Simple

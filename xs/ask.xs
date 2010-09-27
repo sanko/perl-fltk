@@ -10,7 +10,7 @@ MODULE = FLTK::ask               PACKAGE = FLTK::ask
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.531
+=for version 0.532006
 
 =for git $Id$
 

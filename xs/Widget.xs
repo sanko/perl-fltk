@@ -10,7 +10,7 @@ MODULE = FLTK::Widget               PACKAGE = FLTK::Widget
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532
+=for version 0.532006
 
 =for git $Id$
 

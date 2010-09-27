@@ -12,7 +12,7 @@ MODULE = FLTK::ScrollGroup               PACKAGE = FLTK::ScrollGroup
 
 =for git $Id$
 
-=for version 0.531
+=for version 0.532006
 
 =head1 NAME
 

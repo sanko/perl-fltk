@@ -131,6 +131,8 @@ C<in_main_thread()>
 
 =item * Subclass-able L<Image|FLTK::Image>
 
+=item * GL fails on *nix for reasons unknown to me. Works fine on Win32.
+
 =back
 
 =head1 Long term goals
