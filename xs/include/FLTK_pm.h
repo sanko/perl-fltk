@@ -26,6 +26,9 @@
 #include <XSUB.h>
 #define NEED_sv_2pv_flags
 #include "ppport.h"
+
+#include <fltk/../config.h>         // created and installed by Alien::FLTK2
+
 #include "WidgetSubclass.h"
 #include <fltk/Widget.h>
 
@@ -34,9 +37,9 @@
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 #define DISABLE_TEXTBUFFER          // Floating on a sea of bugs
 
-#include <fltk/../config.h>                 // created and installed by Alien::FLTK2
+#undef HAVE_GL                      // Testing!!!!!!!!!!!!!!
 
-#ifndef HAVE_GL
+#if !HAVE_GL
 #define DISABLE_GL       1
 #define DISABLE_GLWINDOW 1
 #endif
