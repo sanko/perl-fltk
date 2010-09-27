@@ -81,7 +81,7 @@ isa_ok(icon_style(),    'FLTK::NamedStyle', 'icon_style()');
 
 #
 note
-    'These pop up and go a way quick because the message_window_timeout is now 0.25s';
+    'These pop up and go away quick because the message_window_timeout is now 0.25s';
 ok(!message("This is a test."),
     'message("This is a test.") always returns void');
 ok(!alert("This is a test."), 'alert("This is a test.") always returns void');
