@@ -454,6 +454,7 @@ BOOT:
     FLTK_export = get_hv( "FLTK::EXPORT_TAGS", TRUE );
     cvrv = eval_pv(
         "sub {"
+        "    require DynaLoader;"
         "    my $package = shift;"
         "    my $symbol  = $package;"
         "    $symbol =~ s[\\W][_]g;"
