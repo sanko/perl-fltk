@@ -1,6 +1,7 @@
 Version 0.XXXXX | Next Sunday AD | d6f90aa
 
     Documentation/Sample Code/Test Suite/Metadata:
+     * Updated repo URLs
      * Updated README
      * Moved basic POD from xs/FLTK.xs to lib/FLTK.pm
      * Allow systems to skip tests when Test::NeedsDisplay fails
