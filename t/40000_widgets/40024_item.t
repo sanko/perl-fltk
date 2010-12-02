@@ -11,12 +11,13 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
 use Test::More 0.82 tests => 6;
 use Module::Build qw[];
 use Time::HiRes qw[];
-use Test::NeedsDisplay;
+use Test::NeedsDisplay ':skip_all';
 my $test_builder = Test::More->builder;
 BEGIN { chdir '../..' if not -d '_build'; }
 use lib 'inc', 'blib/lib', 'blib/arch', 'lib';
