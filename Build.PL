@@ -36,6 +36,7 @@ my $mb = $class->new(
         'Perl bindings to the 2.0.x branch of the Fast Light Toolkit',
     requires       => {DynaLoader => 0, Exporter => 0, XSLoader => 0},
     build_requires => {'Alien::FLTK2' => 0.07704001,
+    configure_requires => {'Module::Build' => 0.36},
                        base           => 0,
                        Config         => 0,
                        Cwd            => 0,
