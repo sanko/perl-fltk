@@ -37,7 +37,7 @@ Yeah, ...eventually.
 
 =item Receive Commit and Issue Tracker Updates
 
-Follow the project on github: http://github.com/sanko/perl-fltk2/
+Follow the project on github: http://github.com/sanko/perl-fltk/
 
 =item Mailinglist
 
@@ -45,7 +45,7 @@ I'd need someone to host it. :\
 
 =item Issue Tracker
 
-Use http://github.com/sanko/perl-fltk2/issues/list for bug tracking. Please
+Use http://github.com/sanko/perl-fltk/issues/list for bug tracking. Please
 include as much information as possible and review the list in the
 L<Bug Tracking|/"Bug Tracking"> section below.
 
@@ -317,7 +317,7 @@ the L<join the team|/"Join the Team"> section below.
 
 C<FLTK> is too large for just one person to hack on. If you're XS, C++, or
 just Perl-adept and would like to help, you can start by forking the project
-on github: http://github.com/sanko/perl-fltk2/. When ready, send me a pull
+on github: http://github.com/sanko/perl-fltk/. When ready, send me a pull
 request, I'll look over your changes and get back to you. Minor patches get
 your name in the changelog. Really major contributions get your name in the
 L<Acknowledgments|FLTK/Acknowledgments> section and an invitation to be a

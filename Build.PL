@@ -75,15 +75,15 @@ my $mb = $class->new(
             qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
         ],
         resources => {
-            bugtracker => {web => 'http://github.com/sanko/perl-fltk2/issues',
+            bugtracker => {web => 'http://github.com/sanko/perl-fltk/issues',
                            mailto => 'sanko@cpan.org'
             },
-            repository => {url  => 'git://github.com/sanko/perl-fltk2.git',
-                           web  => 'http://github.com/sanko/perl-fltk2',
+            repository => {url  => 'git://github.com/sanko/perl-fltk.git',
+                           web  => 'http://github.com/sanko/perl-fltk',
                            type => 'git'
             },
-            ChangeLog => 'http://github.com/sanko/perl-fltk2/commits/master/',
-            homepage  => 'http://sanko.github.com/perl-fltk2/',
+            ChangeLog => 'http://github.com/sanko/perl-fltk/commits/master/',
+            homepage  => 'http://sanko.github.com/perl-fltk/',
             license => ['http://www.perlfoundation.org/artistic_license_2_0']
         }
     },
