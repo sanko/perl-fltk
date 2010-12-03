@@ -77,7 +77,8 @@ of the Fast Light Toolkit.
 
 =head1 See Also
 
-L<FLTK::Notes|FLTK::Notes>
+L<FLTK::Notes|FLTK::Notes>, L<FLTK::Basics|FLTK::Basics>,
+L<FLTK::Cookbook|FLTK::Cookbook>, and L<FLTK::CheatSheet|FLTK::CheatSheet>
 
 =head1 Author
 

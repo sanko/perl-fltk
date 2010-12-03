@@ -24,7 +24,7 @@ Synopsis
         exit FLTK::run();
 
 See Also
-    FLTK::Notes
+    FLTK::Notes, FLTK::Basics, FLTK::Cookbook and FLTK::CheatSheet
 
 Author
     Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
