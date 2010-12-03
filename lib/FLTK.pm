@@ -45,16 +45,6 @@ package FLTK;
 
 FLTK - Perl bindings to the 2.0.x branch of the Fast Light Toolkit
 
-=head1 Description
-
-FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft® Windows®,
-OS/X, and several other platforms. FLTK provides modern GUI functionality
-without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT
-emulation.
-
-This module, L<FLTK|FLTK>, exposes bindings to the experimental 2.0.x branch
-of the Fast Light Toolkit.
-
 =head1 Synopsis
 
 =for markdown {%highlight perl linenos%}
@@ -75,6 +65,15 @@ of the Fast Light Toolkit.
     exit FLTK::run();
 
 =for markdown {%endhighlight%}
+
+=head1 Description
+FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft® Windows®,
+OS/X, and several other platforms. FLTK provides modern GUI functionality
+without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT
+emulation.
+
+This module, L<FLTK|FLTK>, exposes bindings to the experimental 2.0.x branch
+of the Fast Light Toolkit.
 
 =head1 See Also
 
