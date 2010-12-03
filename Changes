@@ -1,10 +1,17 @@
-Version 0.XXXXX | Next Sunday AD | d6f90aa
+Version 0.XXXXX | Next Sunday AD | 7c48fb9
+
+    API Changes/Compatibility Information:
+     * FLTK::Group->add( ... ), ->insert( ... ), and ->replace( ... ) now
+         return the widget added, inserted, or used as a replacement. This
+         allows code like my $box = $window->add( FLTK::Widget->( ... ) ); and
+         is not compatible with the C++ API
 
     Documentation/Sample Code/Test Suite/Metadata:
      * Updated repo URLs
      * Updated README
      * Moved basic POD from xs/FLTK.xs to lib/FLTK.pm
      * Allow systems to skip tests when Test::NeedsDisplay fails
+     * Upgraded ask( ... ) and choice( ... ) to major C++/Perl API differences
 
 Version 0.532006 | 2010-09-27 04:13:25Z (Mon, 27 Sep 2010) | 04ca288
 

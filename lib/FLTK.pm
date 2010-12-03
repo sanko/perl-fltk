@@ -15,7 +15,7 @@ package FLTK;
 
     use strict;
     use warnings;
-    our $MAJOR = 532; our $MINOR = 6; our $DEV = 1; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
+    our $MAJOR = 532; our $MINOR = 6; our $DEV = 2; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
     use XSLoader;
     use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
     use Exporter qw[import];
@@ -39,6 +39,8 @@ package FLTK;
 }
 1;
 
+=pod
+
 =encoding utf8
 
 =head1 NAME
@@ -53,20 +55,19 @@ FLTK - Perl bindings to the 2.0.x branch of the Fast Light Toolkit
     use warnings;
     use FLTK qw[:style];
 
-    my $window = FLTK::Window->new(300, 180);
-    $window->begin();
-    my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
+    my $win = FLTK::Window->new(300, 180);
+    my $box = $win->add(FLTK::Widget->new(20, 40, 260, 100, 'Hello, World!'));
     $box->box(UP_BOX);
     $box->labelfont(HELVETICA_BOLD_ITALIC);
     $box->labelsize(36);
     $box->labeltype(SHADOW_LABEL);
-    $window->end();
-    $window->show();
+    $win->show();
     exit FLTK::run();
 
 =for markdown {%endhighlight%}
 
 =head1 Description
+
 FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft® Windows®,
 OS/X, and several other platforms. FLTK provides modern GUI functionality
 without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT

@@ -1,27 +1,25 @@
 NAME
     FLTK - Perl bindings to the Fast Light Toolkit
 
+Synopsis
+    use strict;
+    use warnings;
+    use FLTK qw[:style];
+
+    my $win = FLTK::Window->new(300, 180);
+    my $box = $win->add(FLTK::Widget->new(20, 40, 260, 100, 'Hello, World!'));
+    $box->box(UP_BOX);
+    $box->labelfont(HELVETICA_BOLD_ITALIC);
+    $box->labelsize(36);
+    $box->labeltype(SHADOW_LABEL);
+    $win->show();
+    exit FLTK::run();
+
 Description
     FLTK is a graphical user interface toolkit for X (UNIX®), Microsoft®
     Windows®, OS/X, and several other platforms. FLTK provides modern GUI
     functionality without the bloat and supports 3D graphics via OpenGL® and
     its built-in GLUT emulation.
-
-Synopsis
-        use strict;
-        use warnings;
-        use FLTK qw[:style];
-
-        my $window = FLTK::Window->new(300, 180);
-        $window->begin();
-        my $box = FLTK::Widget->new(20, 40, 260, 100, "Hello, World!");
-        $box->box(UP_BOX);
-        $box->labelfont(HELVETICA_BOLD_ITALIC);
-        $box->labelsize(36);
-        $box->labeltype(SHADOW_LABEL);
-        $window->end();
-        $window->show();
-        exit FLTK::run();
 
 See Also
     FLTK::Notes, FLTK::Basics, FLTK::Cookbook and FLTK::CheatSheet
@@ -30,7 +28,7 @@ Author
     Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
 License and Legal
-    Copyright (C) 2008-2009 by Sanko Robinson <sanko@cpan.org>
+    Copyright (C) 2008-2010 by Sanko Robinson <sanko@cpan.org>
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of The Artistic License 2.0. See the LICENSE file

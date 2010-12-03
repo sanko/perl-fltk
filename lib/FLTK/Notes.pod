@@ -86,7 +86,12 @@ the issue tracker.
 
 =head3 Major Differences
 
-[TODO]
+=over
+
+=item * L<C<choice(...)>|FLTK::ask/choice>'s choices (<_<) are shown in the
+correct order; from left to right.
+
+=back
 
 =head3 Minor Differences
 
@@ -107,8 +112,6 @@ incomplete without C<arg(0, '-geometry blah', 0)> support.
 Working around XSUB's inability to take true variable argument lists isn't
 worth the time nor effort.
 
-=item * L<C<choice(...)>|FLTK::ask/choice>'s choices (<_<) are shown in the
-correct order; from left to right.
 
 =item * Anti-perl-isms
 
@@ -145,6 +148,11 @@ C<$r, $b, $g> as opposed the C function which is defined as
 C<void hsv2rbg(h, s, v, r, b, g)> and changes C<r, b, g> in place.
 
 =back
+
+=item * L<<< C<< FLTK::Group->add( ... ) >>|FLTK::Group/"add" >>>,
+L<<< C<< FLTK::Group->insert( ... ) >>|FLTK::Group/"insert" >>>, and
+L<<< C<< FLTK::Group->replace( ... ) >>|FLTK::Group/"replace" >>>, return the
+widget added, inserted, or used as a replacement as of C<0.532006_002>
 
 =back
 

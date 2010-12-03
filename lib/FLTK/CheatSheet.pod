@@ -158,6 +158,6 @@ return zero, the default C<handle( )> method is called.
 
 =head2 Drawing the Widget
 
-
+TODO
 
 =cut
