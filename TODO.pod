@@ -80,8 +80,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::TiledImage
 
-=item FLTK::ToggleButton
-
 =item FLTK::ToggleItem
 
 =item FLTK::Tooltip

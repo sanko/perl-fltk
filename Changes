@@ -1,10 +1,12 @@
-Version 0.XXXXX | Next Sunday AD | 7c48fb9
+Version 0.XXXXX | Next Sunday AD | a0e0992
 
     API Changes/Compatibility Information:
      * FLTK::Group->add( ... ), ->insert( ... ), and ->replace( ... ) now
          return the widget added, inserted, or used as a replacement. This
          allows code like my $box = $window->add( FLTK::Widget->( ... ) ); and
          is not compatible with the C++ API
+     * New Widgets/Types
+       - ToggleButton
 
     Documentation/Sample Code/Test Suite/Metadata:
      * Updated repo URLs

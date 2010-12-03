@@ -151,6 +151,7 @@ xs/TextDisplay.xs
 xs/TextDisplay/StyleTableEntry.xs
 xs/TextSelection.xs
 xs/Theme.xs
+xs/ToggleButton.xs
 xs/type.map
 xs/Valuator.xs
 xs/ValueInput.xs
