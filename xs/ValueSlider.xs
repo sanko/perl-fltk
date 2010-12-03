@@ -12,7 +12,7 @@ MODULE = FLTK::ValueSlider               PACKAGE = FLTK::ValueSlider
 
 =for git $Id$
 
-=for version 0.532006
+=for version 0.532007
 
 =head1 NAME
 

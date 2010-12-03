@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | a0e0992
+Version 0.XXXXX | Next Sunday AD | 55c4599
 
     API Changes/Compatibility Information:
      * FLTK::Group->add( ... ), ->insert( ... ), and ->replace( ... ) now
