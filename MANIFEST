@@ -156,6 +156,7 @@ xs/type.map
 xs/Valuator.xs
 xs/ValueInput.xs
 xs/ValueOutput.xs
+xs/ValueSlider.xs
 xs/Version.xs
 xs/Widget.xs
 xs/Window.xs

@@ -42,8 +42,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::List
 
-=item FLTK::MenuSection
-
 =item FLTK::Mutex
 
 =item FLTK::RecursiveMutex
@@ -53,8 +51,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 =item FLTK::ShortcutAssignment
 
 =item FLTK::SignalMutex
-
-=item FLTK::Slider
 
 =item FLTK::StatusBarGroup
 
@@ -68,11 +64,7 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::StyleSet
 
-=item FLTK::TabGroup
-
 =item FLTK::TabGroupPager
-
-=item FLTK::TextBuffer
 
 =item FLTK::TextEditor
 
@@ -83,12 +75,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 =item FLTK::ToggleItem
 
 =item FLTK::Tooltip
-
-=item FLTK::ValueInput
-
-=item FLTK::ValueOutput
-
-=item FLTK::ValueSlider
 
 =item FLTK::Widget (partially complete)
 
