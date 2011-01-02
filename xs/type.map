@@ -17,6 +17,7 @@ fltk::Flags                     T_ENUM
 fltk::Color                     T_ENUM
 fltk::Browser::linepos          O_FLTK
 fltk::PixelType                 O_FLTK
+fltk::StatusBarGroup::Position  T_ENUM
 fltk::Theme                     O_FLTK
 
 # Objects
@@ -105,6 +106,7 @@ fltk::ScrollGroup           *   O_FLTK
 fltk::ShapedWindow          *   O_FLTK
 fltk::ShortcutFunctor       *   O_FLTK
 fltk::Slider                *   O_FLTK
+fltk::StatusBarGroup        *   O_FLTK
 const fltk::Style           *   O_FLTK
       fltk::Style           *   O_FLTK
 const fltk::Symbol          *   O_FLTK

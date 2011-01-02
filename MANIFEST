@@ -143,6 +143,7 @@ xs/ScrollGroup.xs
 xs/SecretInput.xs
 xs/ShapedWindow.xs
 xs/Slider.xs
+xs/StatusBarGroup.xs
 xs/Style.xs
 xs/Symbol.xs
 xs/TabGroup.xs

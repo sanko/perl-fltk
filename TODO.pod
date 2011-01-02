@@ -52,8 +52,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::SignalMutex
 
-=item FLTK::StatusBarGroup
-
 =item FLTK::StringArray
 
 =item FLTK::StringHierarchy

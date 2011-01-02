@@ -6,7 +6,7 @@ Version 0.XXXXX | Next Sunday AD | 55c4599
          allows code like my $box = $window->add( FLTK::Widget->( ... ) ); and
          is not compatible with the C++ API
      * New Widgets/Types
-       - ToggleButton, ValueSlider
+       - StatusBarGroup, ToggleButton, ValueSlider
 
     Documentation/Sample Code/Test Suite/Metadata:
      * Updated repo URLs
