@@ -20,6 +20,12 @@ void register_constant( const char * name, SV * value ) {
     newCONSTSUB( FLTK_stash, name, value );
 }
 
+void register_constant( const char * package, const char * name, SV * value ) {
+    dTHX;
+    HV * _stash  = gv_stashpv( package, TRUE );
+    newCONSTSUB( _stash, name, value );
+}
+
 =begin apidoc
 
 =for apidoc Hx|||_cb_w|WIDGET|(void*)CODE|

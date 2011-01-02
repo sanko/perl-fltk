@@ -60,6 +60,7 @@ HINSTANCE dllInstance( );
 #endif // #ifdef WIN32
 
 void register_constant( const char *, SV * );
+void register_constant( const char *, const char *, SV * );
 
 /*
 =begin apidoc
