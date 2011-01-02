@@ -94,12 +94,14 @@ fltk::Group::child( int index )
     PREINIT:
         const char * _class;
     PPCODE:
-        RETVAL = (void *) THIS->child( index );
-        _class = (( WidgetSubclass<fltk::Widget> * ) RETVAL)->bless_class( );
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
+        if ( index < THIS->children( ) ) {
+            RETVAL = (void *) THIS->child( index );
+            _class = (( WidgetSubclass<fltk::Widget> * ) RETVAL)->bless_class( );
+            if (RETVAL != NULL) {
+                ST(0) = sv_newmortal();
+                sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), RETVAL); /* -- hand rolled -- */
+                XSRETURN(1);
+            }
         }
 
 

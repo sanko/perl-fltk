@@ -1,5 +1,8 @@
 Version 0.XXXXX | Next Sunday AD | 55c4599
 
+    Resolved Issues/Bug Fixes:
+     * $group->child( $i ) no longer crashes when $group has less than $i kids
+
     API Changes/Compatibility Information:
      * FLTK::Group->add( ... ), ->insert( ... ), and ->replace( ... ) now
          return the widget added, inserted, or used as a replacement. This
