@@ -25,9 +25,9 @@ by creating and calling L<C<begin()>|FLTK::Group/"begin"> on an ItemGroup in
 the constructor and calling L<C<end()>|FLTK::Group/"end"> in the destructor:
 
   $mymenu->begin( );
-  FLTK::Item->new('in main menu');
+  my $mnuMain = FLTK::ItemGroup->new('in main menu');
   {
-    FLTK::MenuSection->new('submenu title');
+    my $mnuMainSub = FLTK::MenuSection->new('submenu title');
     FLTK::Item->new('in submenu');
     FLTK::Item->new('also in submenu');
   } # destructor ends the submenu
