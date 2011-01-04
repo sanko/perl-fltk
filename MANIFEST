@@ -153,7 +153,9 @@ xs/TextDisplay/StyleTableEntry.xs
 xs/TextSelection.xs
 xs/Theme.xs
 xs/ToggleButton.xs
+xs/ToggleItem.xs
 xs/type.map
+xs/Untitled0.xs
 xs/Valuator.xs
 xs/ValueInput.xs
 xs/ValueOutput.xs
