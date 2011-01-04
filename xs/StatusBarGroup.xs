@@ -87,11 +87,11 @@ fltk::StatusBarGroup::new( int x = 24, int y = NO_INIT, int w = NO_INIT, int h =
             XSRETURN(1);
         }
 
-=for ||void|child_box|fltk::Box * b|
+=for apidoc |||child_box|fltk::Box * b|
 
 Set a default box to all texts inside the status bar.
 
-=for ||void|child_box|fltk::Box * b|FLTK::StatusBarGroup::Position pos
+=for apidoc |||child_box|fltk::Box * b|FLTK::StatusBarGroup::Position pos
 
 Set a default box to text a particular posiiton inside the statusbar.
 
@@ -104,7 +104,7 @@ fltk::StatusBarGroup::child_box( fltk::Box * b, fltk::StatusBarGroup::Position p
     CASE:
         C_ARGS: b, pos
 
-=for apidoc ||void|set|const char * t|FLTK::StatusBarGroup::Position pos = SBAR_RIGHT|
+=for apidoc |||set|const char * t|FLTK::StatusBarGroup::Position pos = SBAR_RIGHT|
 
 Set a simple string in the statusbar at a given position alignment spec.
 
