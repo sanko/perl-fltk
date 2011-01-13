@@ -131,6 +131,41 @@ void _cb_u ( int position, void * CODE) { // Callback for TextDisplay->highlight
     LEAVE;
 }
 
+=for apidoc H|||_cb_f|int fd|(void *) CODE|
+
+This is the callback for FLTK::add_fh(...). It expects an C<int> parameter
+which represents a filehandle's fileno and a C<(void*) CODE> parameter which
+should be an AV* holding data that looks a little like this...
+
+  [
+    SV * coderef,
+    SV * args  # optional arguments sent along to coderef
+  ]
+
+=cut
+
+void _cb_f ( int fd, void * CODE) { // Callback for add_fh( ... )
+    dTHX;
+    if ( CODE == NULL )     return;
+     HV * cb       = ( HV * ) CODE;
+    if ( cb       == NULL ) return;
+    SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
+    if ( cb_code  == ( SV ** ) NULL ) return;
+    SV ** cb_args  = hv_fetch( cb, "args",    4, FALSE );
+    SV ** cb_class = hv_fetch( cb, "class",   5, FALSE );
+    dSP;
+    ENTER;
+        SAVETMPS;
+            PUSHMARK( sp );
+    XPUSHs(sv_2mortal(newSViv(fd)));
+    /* XXX - reopen fd to the correct mode */
+    if ( cb_args != NULL ) XPUSHs( * cb_args );
+            PUTBACK;
+    call_sv( * cb_code, G_DISCARD );
+        FREETMPS;
+    LEAVE;
+}
+
 =for apidoc H|||isa|const char * package|const char * parent|
 
 This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance. This now

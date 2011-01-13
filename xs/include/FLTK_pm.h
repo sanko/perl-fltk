@@ -114,6 +114,22 @@ parameter which should be an AV* holding data that looks a little like this...
 void _cb_u ( int position, void * CODE ); // Callback for TextDisplay->highlight_data( ... )
 
 /*
+=for apidoc H|||_cb_f|int fd|(void *) CODE|
+
+This is the callback for FLTK::add_fh(...). It expects an C<int> parameter
+which represents a filehandle's fileno and a C<(void*) CODE> parameter which
+should be an AV* holding data that looks a little like this...
+
+  [
+    SV * coderef,
+    SV * args  # optional arguments sent along to coderef
+  ]
+
+=cut
+*/
+void _cb_f ( int fd, void * CODE ); // Callback for add_fh( ... )
+
+/*
 =for apidoc H|||isa|const char * package|const char * parent|
 
 This pushes C<parent> onto C<package>'s C<@ISA> list for inheritance.
