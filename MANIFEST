@@ -1,6 +1,7 @@
 Build.PL
 Changes
 examples/cursor.pl
+examples/echo.pl
 examples/gl.pl
 examples/hello.pl
 examples/helloask.pl
