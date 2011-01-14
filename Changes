@@ -10,6 +10,7 @@ Version 0.XXXXX | Next Sunday AD | 889cb74
          is not compatible with the C++ API
      * New Widgets/Types
        - StatusBarGroup, ToggleButton, ToggleItem, ValueSlider
+     * Add support for add_fd( ... ) and remove_fd( ... )
 
     Documentation/Sample Code/Test Suite/Metadata:
      * Updated repo URLs

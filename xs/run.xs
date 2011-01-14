@@ -1,5 +1,9 @@
 #include "include/FLTK_pm.h"
 
+#ifndef PerlIO
+#define PerlIO_fileno(f) fileno(f)
+#endif
+
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
 #ifndef DISABLE_RUN
@@ -129,7 +133,7 @@ MODULE = FLTK::run               PACKAGE = FLTK::run
 
 Calls L<C<FLTK::wait()>|/"wait"> as long as any windows are not closed. When
 all the windows are hidden or destroyed (checked by seeing if
-L<C<Window::first()>|FLTK::Window/"first"> is undef) this will return with
+L<C<FLTK::Window::first()>|FLTK::Window/"first"> is undef) this will return with
 zero. A program can also exit by having a callback call C<exit>.
 
 Most FLTK programs will end with C<exit FLTK::run();>.
@@ -349,7 +353,7 @@ repeat_timeout( double time, CV * callback, SV * args = NO_INIT )
         fltk::repeat_timeout( time, _cb_t, ( void * ) cb );
 
 BOOT:
-    export_tag("add_timeout", "run");
+    export_tag("add_timeout",    "run");
     export_tag("repeat_timeout", "run");
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
@@ -547,5 +551,151 @@ BOOT:
     export_tag("remove_check", "run");
     export_tag("add_idle", "run");
     export_tag("remove_idle", "run");
+
+MODULE = FLTK::run               PACKAGE = FLTK::run
+
+=for apidoc F||bool okay|add_fd|PerlIO * fh|int events|CV * callback|SV * args|
+
+Adds a handle to the list watched by FLTK.
+
+C<$events> may be any combination of the following:
+
+=over
+
+=item * C<FLTK::READ>: The callback is triggered whenever there is data to be
+read.
+
+Listening sockets trigger this when a new incoming connection is attempted.
+
+=item * C<FLTK::WRITE>: The callback is triggered whenever the filehandle or
+socket is ready to accept new data.
+
+=item * C<FLTK::EXCEPT>: The callback is triggered whenever the filehandle or
+socket is encounters an exception.
+
+=back
+
+...these constants are exported through the C<:fd> tag.
+
+The callback is called with the filehandle as the first argument and any data
+in C<args> as the second argument. It is called in response to user events,
+but exactly when depends on the widget. For instance a button calls it when
+the button is released.
+
+B<NOTE>: To make use of callbacks, your perl must be recent enough to support
+weak references.
+
+=for apidoc F||bool okay|add_fd|int fileno|int events|CV * callback|SV * args|
+
+Adds the handle (if it exists) with the particular fileno.
+
+=cut
+
+BOOT:
+    register_constant("READ",   newSViv( fltk::READ   ));
+    export_tag("READ", "fd");
+    register_constant("WRITE",  newSViv( fltk::WRITE  ));
+    export_tag("WRITE", "fd");
+    register_constant("EXCEPT", newSViv( fltk::EXCEPT ));
+    export_tag("EXCEPT", "fd");
+
+MODULE = FLTK::run               PACKAGE = FLTK
+
+bool
+add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
+    CASE: SvIOK( ST(0) )
+        int fh
+        CODE:
+            RETVAL = true;
+            HV * cb = newHV( );
+            hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
+            if ( items == 3 ) /* Callbacks can be called without arguments */
+                hv_store( cb, "args", 4, newSVsv( args ),   0 );
+            hv_store( cb, "fileno", 6, newSViv( fh ),   0 );
+            PerlIO * _fh;
+            int fd = PerlLIO_dup(fh);
+            /* XXX: user should check errno on undef returns */
+            if (fd < 0)
+                RETVAL = false;
+            else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) )
+                RETVAL = false;
+            else /* converts perl's fd into a winsock fd on win32 */
+                fltk::add_fd(
+                    _get_osfhandle( fh ), events, _cb_f, ( void * ) cb
+                );
+        OUTPUT:
+            RETVAL
+    CASE:
+        PerlIO * fh
+        CODE:
+            RETVAL = true;
+            HV * cb = newHV( );
+            hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
+            if ( items == 3 ) /* Callbacks can be called without arguments */
+                hv_store( cb, "args", 4, newSVsv( args ),  0 );
+            /* converts perl's fd into a winsock fd on win32 */
+            int fileno = PerlIO_fileno( fh );
+            hv_store( cb, "fileno", 6, newSViv( fileno ),  0 );
+            hv_store( cb, "fh",     2, newSVsv( (SV *) fh ),  0 );
+            fltk::add_fd(
+                _get_osfhandle( fileno ), events, _cb_f, ( void * ) cb
+            );
+        OUTPUT:
+            RETVAL
+
+BOOT:
+    export_tag("add_fd", "fd");
+
+MODULE = FLTK::run               PACKAGE = FLTK::run
+
+=for apidoc F|||remove_fd|PerlIO * fh|int when = -1|
+
+Removes a handle from the list watched by FLTK.
+
+The optional C<$when> argument may be any combination of the following:
+
+=over
+
+=item * C<FLTK::READ>: The callback is triggered whenever there is data to be
+read.
+
+Listening sockets trigger this when a new incoming connection is attempted.
+
+=item * C<FLTK::WRITE>: The callback is triggered whenever the filehandle or
+socket is ready to accept new data.
+
+=item * C<FLTK::EXCEPT>: The callback is triggered whenever the filehandle or
+socket is encounters an exception.
+
+=back
+
+...these constants are exported through the C<:fd> tag.
+
+By default, the filehandle is removed completly which is the same as passing
+C<-1>.
+
+=for apidoc F|||remove_fd|int fileno|int when = -1|
+
+Removes the handle (if it exists) with the particular fileno.
+
+=cut
+
+MODULE = FLTK::run               PACKAGE = FLTK
+
+void
+remove_fd( fh, int when = -1 )
+    CASE: SvIOK( ST(0) )
+        int fh
+        CODE:
+            /* converts perl's fd into a winsock fd on win32 */
+            fltk::remove_fd( _get_osfhandle( fh ), when );
+    CASE:
+        PerlIO * fh
+        CODE:
+            /* converts perl's fd into a winsock fd on win32 */
+            fltk::remove_fd( _get_osfhandle( PerlIO_fileno( fh ) ), when );
+
+BOOT:
+    export_tag("remove_fd", "fd");
 
 #endif // ifndef DISABLE_RUN
