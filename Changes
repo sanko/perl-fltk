@@ -2,6 +2,7 @@ Version 0.XXXXX | Next Sunday AD | 889cb74
 
     Resolved Issues/Bug Fixes:
      * $group->child( $i ) no longer crashes when $group has less than $i kids
+     * FLTK::Window::first( ) correctly returns the first/primary window
 
     API Changes/Compatibility Information:
      * FLTK::Group->add( ... ), ->insert( ... ), and ->replace( ... ) now

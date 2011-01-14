@@ -711,7 +711,7 @@ fltk::Window::default_style( fltk::NamedStyle * style = NO_INIT )
         CODE:
             THIS->default_style = style;
 
-=for apidoc ||FLTK::Window win|first||
+=for apidoc F||FLTK::Window win|first||
 
 Returns the id of some L<C<visible()>|/"visible"> window. If there is more
 than one, the last one to receive an event is returned. This is useful as a
@@ -720,7 +720,7 @@ L<C<FLTK::Window::exec()>|FLTK::Window/"exec"> uses it for this if no other
 parent is specified. This is also used by L<C<FLTK::run()>|FLTK/"run"> to see
 if any windows still exist.
 
-=for apidoc |||first|FLTK::Window window|
+=for apidoc F|||first|FLTK::Window window|
 
 If this C<window> is visible, this removes it from wherever it is in the list
 and inserts it at the top, as though it received an event. This can be used to
@@ -731,15 +731,13 @@ L<C<FLTK::ask()>|FLTK/"ask">.
 =cut
 
 fltk::Window *
-fltk::Window::first( fltk::Window * window = NO_INIT )
-    CASE: items == 1
-        CODE:
-            THIS->first( );
-        OUTPUT:
-            RETVAL
-    CASE:
-        CODE:
-            THIS->first( window );
+first( fltk::Window * window = NO_INIT )
+    PROTOTYPE: DISABLE
+    CODE:
+        if( items == 0 )
+            RETVAL = fltk::Window::first( );
+        else
+            fltk::Window::first( window );
 
 =for apidoc ||FLTK::Window win|next||
 
