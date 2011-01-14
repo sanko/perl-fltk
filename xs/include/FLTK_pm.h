@@ -17,6 +17,8 @@
 
 */
 
+#define FLTK_DEBUG 0
+
 #define PERL_NO_GET_CONTEXT 1
 
 #define __cplusplus 1
