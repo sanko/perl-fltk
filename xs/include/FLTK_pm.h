@@ -39,7 +39,9 @@
 #define DISABLE_ASSOCIATIONTYPE     // Requires subclass
 #define DISABLE_TEXTBUFFER          // Floating on a sea of bugs
 
-#undef HAVE_GL                      // Testing!!!!!!!!!!!!!!
+#if !WIN32                          // Disable GL on Win32. I have some thing
+#undef HAVE_GL                      // to figure out first
+#endif // !WIN32                    // http://www.mail-archive.com/fltk@easysw.com/msg08519.html
 
 #if !HAVE_GL
 #define DISABLE_GL       1
