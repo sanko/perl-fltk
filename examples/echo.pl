@@ -50,7 +50,7 @@ $window->end();
                     sysread($peer, my ($data), 1024 * 16)
                         || return remove_fd($peer);
                     syswrite($peer, $data);
-                    return if ord $data != 3;    # Close connection on Ctrl-C
+                    return if $data ~= m[^quit\b];
                     remove_fd($peer);
                     shutdown $peer, 2;
                     close $peer;
