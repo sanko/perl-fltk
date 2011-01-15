@@ -3,6 +3,9 @@
 #ifndef PerlIO
 #define PerlIO_fileno(f) fileno(f)
 #endif
+#ifndef _get_osfhandle
+#define _get_osfhandle(f) f // converts perl fd into a winsock fd on win32
+#endif
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
@@ -619,7 +622,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
                 RETVAL = false;
             else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) )
                 RETVAL = false;
-            else /* converts perl's fd into a winsock fd on win32 */
+            else
                 fltk::add_fd(
                     _get_osfhandle( fh ), events, _cb_f, ( void * ) cb
                 );
@@ -633,7 +636,6 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
             hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
             if ( items == 3 ) /* Callbacks can be called without arguments */
                 hv_store( cb, "args", 4, newSVsv( args ),  0 );
-            /* converts perl's fd into a winsock fd on win32 */
             int fileno = PerlIO_fileno( fh );
             hv_store( cb, "fileno", 6, newSViv( fileno ),  0 );
             hv_store( cb, "fh",     2, newSVsv( (SV *) fh ),  0 );
@@ -687,12 +689,10 @@ remove_fd( fh, int when = -1 )
     CASE: SvIOK( ST(0) )
         int fh
         CODE:
-            /* converts perl's fd into a winsock fd on win32 */
             fltk::remove_fd( _get_osfhandle( fh ), when );
     CASE:
         PerlIO * fh
         CODE:
-            /* converts perl's fd into a winsock fd on win32 */
             fltk::remove_fd( _get_osfhandle( PerlIO_fileno( fh ) ), when );
 
 BOOT:
