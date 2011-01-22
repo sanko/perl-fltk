@@ -92,7 +92,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FFT[run]||int events|wait||
+=for apidoc FT[run]||int events|wait||
 
 Same as L<C<FLTK::wait(infinity)>|/"wait">. Call this repeatedly to "run" your
 program. You can also check what happened each time after this returns, which
@@ -203,12 +203,12 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc F|||redraw||
+=for apidoc FT[run]|||redraw||
 
 Redraws all widgets. This is a good idea if you have made global changes to
 the styles.
 
-=for apidoc F|||flush||
+=for apidoc FT[run]|||flush||
 
 Get the display up to date. This is done by calling L<C<layout()>|/"layout">
 on all Window objects with L<C<layout_damage()>|/"layout_damage"> and then
@@ -253,7 +253,7 @@ L<C<flush()>|FLTK/"flush"> should be called again after waiting for more
 events. This is useful in some instances such as X windows that are waiting
 for a mapping event before being drawn.
 
-=for apidoc F|||damage|int d|
+=for apidoc FT[run]|||damage|int d|
 
 Sets L<C<damage()>|/"damage"> to C<d>.
 
@@ -277,7 +277,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FFT[run]||int time|get_time_secs||
+=for apidoc FT[run]||int time|get_time_secs||
 
 Return portable time that increases by C<1.0> each second.
 
@@ -361,20 +361,20 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FHxt[run]||bool exitsts|has_timeout|CV * coderef|SV * args|
+=for apidoc FHxT[run]||bool exitsts|has_timeout|CV * coderef|SV * args|
 
 Returns true if the timeout exists and has not been called yet.
 
 This doesn't work right now because I stuff perl's datatypes where I shouldn't
 ...I'll come back to it.
 
-=for apidoc FHxt[run]||bool eh|has_check|CV * coderef|SV * args|
+=for apidoc FHxT[run]||bool eh|has_check|CV * coderef|SV * args|
 
 Return true if L<C<add_check()>|/"add_check"> has been done with this
 C<coderef> and C<args>, and L<C<remove_check()>|/"remove_check"> has not been
 done.
 
-=for apidoc FHxt[run]||bool eh|has_idle|CV * coderef|SV * args|
+=for apidoc FHxT[run]||bool eh|has_idle|CV * coderef|SV * args|
 
 Returns true if the specified idle callback is currently installed.
 
@@ -437,7 +437,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FHxt[run]|||remove_timeout|CV * coderef|SV * args|
+=for apidoc FHxT[run]|||remove_timeout|CV * coderef|SV * args|
 
 Removes all pending timeout callbacks that match the function and arg. Does
 nothing if there are no matching ones that have not been called yet.
@@ -550,14 +550,14 @@ remove_idle( CV * callback, SV * args = NO_INIT )
 
 BOOT:
     export_tag("remove_timeout", "run");
-    export_tag("add_check", "run");
-    export_tag("remove_check", "run");
-    export_tag("add_idle", "run");
-    export_tag("remove_idle", "run");
+    export_tag("add_check",      "run");
+    export_tag("remove_check",   "run");
+    export_tag("add_idle",       "run");
+    export_tag("remove_idle",    "run");
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc F||bool okay|add_fd|PerlIO * fh|int events|CV * callback|SV * args|
+=for apidoc FT[fd]||bool okay|add_fd|PerlIO * fh|int events|CV * callback|SV * args|
 
 Adds a handle to the list watched by FLTK.
 
@@ -588,7 +588,7 @@ the button is released.
 B<NOTE>: To make use of callbacks, your perl must be recent enough to support
 weak references.
 
-=for apidoc F||bool okay|add_fd|int fileno|int events|CV * callback|SV * args|
+=for apidoc FT[fd]||bool okay|add_fd|int fileno|int events|CV * callback|SV * args|
 
 Adds the handle (if it exists) with the particular fileno.
 
@@ -652,7 +652,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc F|||remove_fd|PerlIO * fh|int when = -1|
+=for apidoc FT[fd]|||remove_fd|PerlIO * fh|int when = -1|
 
 Removes a handle from the list watched by FLTK.
 
