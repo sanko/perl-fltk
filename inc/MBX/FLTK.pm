@@ -145,9 +145,8 @@ package inc::MBX::FLTK;
                                    )
                 )
                 )
-            {   my ($dll, @cleanup)
-                    = $CC->link(
-                              objects => \@obj,
+            {   my ($dll, @cleanup) =
+                    $CC->link(objects => \@obj,
                               lib_file =>
                                   catdir(qw[blib arch auto FLTK],
                                          'FLTK.' . $Config{'so'}
@@ -225,7 +224,8 @@ package inc::MBX::FLTK;
                 my ($self, $command, $paragraph, $lineno) = @_;
                 if ($command eq 'head1') {
                     $paragraph =~ s|\s+$||;
-                    $current = \$self->{'apidoc_modules'}{$package}{'section'}
+                    $current =
+                        \$self->{'apidoc_modules'}{$package}{'section'}
                         {$paragraph};
                     $$current = {line => $lineno,
                                  file => $self->input_file
@@ -236,15 +236,15 @@ package inc::MBX::FLTK;
                 }
                 elsif ($command eq 'for') {
                     if ($paragraph =~ m[^(?:apidoc)\s+(.+)]) {
-                        my ($flags, $prereq, $return, $sub, @args)
-                            = split '\|', $1;
+                        my ($flags, $prereq, $return, $sub, @args) =
+                            split '\|', $1;
                         my $type = $flags =~ m[H] ? '_hide' : 'sub';
                         warn sprintf 'Malformed apidoc at %s line %d',
                             $self->input_file, $lineno
                             if !$sub;
-                        $current
-                            = \$self->{'apidoc_modules'}{$package}{$type}
-                            {$sub}->[
+                        $current =
+                            \$self->{'apidoc_modules'}{$package}{$type}{$sub}
+                            ->[
                             scalar
                             @{$self->{'apidoc_modules'}{$package}{$type}
                                     {$sub}}
@@ -289,8 +289,8 @@ package inc::MBX::FLTK;
                 if ($line =~ m[^INCLUDE: (.+\.xsi?)]) {
                     $self->parse_from_file('xs/' . $1);
                 }
-                elsif ($line
-                      =~ m[^MODULE\s*=\s*FLTK(?:::\w+)?\s+PACKAGE\s*=\s*(.+)])
+                elsif ($line =~
+                       m[^MODULE\s*=\s*FLTK(?:::\w+)?\s+PACKAGE\s*=\s*(.+)])
                 {   $package = $1;
                 }
                 return $line;
@@ -354,8 +354,8 @@ package inc::MBX::FLTK;
                                          }
                                  ) - 1
                                 )
-                            {   my $call
-                                    = $self->_document_function(
+                            {   my $call =
+                                    $self->_document_function(
                                          $package,
                                          $sub,
                                          $parser->{'apidoc_modules'}{$package}
@@ -468,9 +468,9 @@ package inc::MBX::FLTK;
             my ($return, $call, @args) = ('', '', ());
             my %types = ('AV *' => '@', 'CV *' => '\&', 'HV *' => "\%");
             for my $arg (@{$use->{'args'}}) {
-                my ($type, $name, $default)
-                    = ($arg
-                     =~ m[^([\w:\s\*]+)\s+([(?:\w_|\.{3})]+)(?:\s+=\s+(.+))?]s
+                my ($type, $name, $default) =
+                    ($arg =~
+                     m[^([\w:\s\*]+)\s+([(?:\w_|\.{3})]+)(?:\s+=\s+(.+))?]s
                     );
                 if (!(defined $type && defined $name)) {
                     printf
@@ -487,17 +487,16 @@ package inc::MBX::FLTK;
                 }
             }
             if ($use->{'return'}) {
-                my ($type, $name, $default)
-                    = ($use->{'return'}
-                       =~ m[^([\w:\s\*]+)\s+([\w_]+)(?:\s+=\s+(.+))?]s);
+                my ($type, $name, $default) =
+                    ($use->{'return'} =~
+                     m[^([\w:\s\*]+)\s+([\w_]+)(?:\s+=\s+(.+))?]s);
                 if (!(defined $type && defined $name)) {
                     printf
                         "Malformed apidoc: Missing return type in %s at %s line %d\n",
                         $use->{'return'}, $use->{file}, $use->{line};
                 }
                 elsif ($use->{'flags'} !~ m[E]) {
-                    $return
-                        = 'my '
+                    $return = 'my '
                         . ($types{$type} ? $types{$type} : '$')
                         . $name . ' = ';
                 }
