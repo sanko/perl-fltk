@@ -49,6 +49,7 @@ fltk::BarGroup::new ( int x, int y, int w, int h, char * label = 0, bool begin =
             sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
             XSRETURN(1);
         }
+
 =for apidoc ||FLTK::NamedStyle * style|default_style||
 
 Get the style
