@@ -501,9 +501,10 @@ package inc::MBX::FLTK;
                         . $name . ' = ';
                 }
             }
-            $call
-                = $use->{'flags'} =~ m[E] ? ''
-                : $use->{'flags'} =~ m[F] ? $package . '::'
+            $call =
+                $use->{'flags'} =~ m[E]
+                ? ''
+                : $use->{'flags'} =~ m[F] ? 'FLTK::'    #$package . '::'
                 : sub {
                 my $p = shift;
                 $p =~ s|^.*:|\$|g;
