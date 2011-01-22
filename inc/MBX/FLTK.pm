@@ -367,6 +367,30 @@ package inc::MBX::FLTK;
                                 syswrite $DOC,
                                     ($parser->{'apidoc_modules'}{$package}
                                      {'sub'}{$sub}[$use]{'text'} || '');
+                                {
+                                    my $tags =
+                                        ($parser->{'apidoc_modules'}{$package}
+                                         {'sub'}{$sub}[$use]{'flags'} =~
+                                         m|T\[(.+?)\]|) ? $1 : '';
+                                    if ($tags) {
+                                        my @tags =
+                                            map {"C<:$_>"} split m[\s*,\s*],
+                                            $tags;
+                                        syswrite $DOC,
+                                            sprintf
+                                            "Import this function with the %s tag%s.\n\n",
+                                            (  @tags == 1
+                                             ? $tags[0]
+                                             : join(', ',
+                                                    @tags[0 ... (@tags - 2)])
+                                                 . ' or '
+                                                 . $tags[-1]
+                                            ),
+                                            $#tags ? 's' : '';
+
+                #warn sprintf 'XXX - Import %s with %s', $sub, $tags if $tags;
+                                    }
+                                }
                                 syswrite $DOC,
                                     sprintf "=for hackers %s line %d\n\n",
                                     $parser->{'apidoc_modules'}{$package}
