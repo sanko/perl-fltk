@@ -3,9 +3,9 @@
 #ifndef PerlIO
 #define PerlIO_fileno(f) fileno(f)
 #endif
-#ifndef _get_osfhandle
-#define _get_osfhandle(f) f // converts perl fd into a winsock fd on win32
-#endif
+//#ifndef _get_osfhandle
+//#define _get_osfhandle(f) f // converts perl fd into a winsock fd on win32
+//#endif
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
@@ -616,16 +616,18 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
                 hv_store( cb, "args", 4, newSVsv( args ),   0 );
             hv_store( cb, "fileno", 6, newSViv( fh ),   0 );
             PerlIO * _fh;
-            int fd = PerlLIO_dup(fh);
+            int fd = PerlLIO_dup( fh );
             /* XXX: user should check errno on undef returns */
             if (fd < 0)
                 RETVAL = false;
             else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) )
                 RETVAL = false;
-            else
+            else {
+                hv_store( cb, "fh",     2, newSVsv( (SV *) _fh ),  0 );
                 fltk::add_fd(
                     _get_osfhandle( fh ), events, _cb_f, ( void * ) cb
                 );
+            }
         OUTPUT:
             RETVAL
     CASE:
