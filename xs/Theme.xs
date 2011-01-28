@@ -28,7 +28,7 @@ bool _fltk_theme( ) {
 
 #endif // #ifndef DISABLE_THEME
 
-MODULE = FLTK::theme               PACKAGE = FLTK::theme
+MODULE = FLTK::Theme               PACKAGE = FLTK::Theme
 
 #ifndef DISABLE_THEME
 
@@ -85,7 +85,7 @@ what to draw:
 
 #include <fltk/Style.h>
 
-MODULE = FLTK::theme               PACKAGE = FLTK
+MODULE = FLTK::Theme               PACKAGE = FLTK
 
 SV *
 theme( theme = NO_INIT )

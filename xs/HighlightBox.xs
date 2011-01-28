@@ -16,7 +16,7 @@ MODULE = FLTK::HighlightBox               PACKAGE = FLTK::HighlightBox
 
 =head1 NAME
 
-FLTK::HightlightBox - Draw a box only when highlighted or selected
+FLTK::HighlightBox - Draw a box only when highlighted or selected
 
 =head1 Description
 
