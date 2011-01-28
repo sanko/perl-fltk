@@ -3,9 +3,9 @@
 #ifndef PerlIO
 #define PerlIO_fileno(f) fileno(f)
 #endif
-//#ifndef _get_osfhandle
-//#define _get_osfhandle(f) f // converts perl fd into a winsock fd on win32
-//#endif
+#ifndef _WIN32
+#define _get_osfhandle(f) f // converts perl fd into a winsock fd on win32
+#endif
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 

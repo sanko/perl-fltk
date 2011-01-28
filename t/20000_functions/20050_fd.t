@@ -11,10 +11,9 @@
 =for git $Id$
 
 =cut
-
 use strict;
 use warnings;
-use Test::More tests => 14;
+use Test::More tests => 18;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use Socket;
@@ -34,12 +33,12 @@ my $i;
 SKIP: {
     my ($client, $server);
     my $port = 0;
-    skip "socket: $!", 14
+    skip "socket: $!", 18
         if !socket $server, PF_INET, SOCK_STREAM, getprotobyname 'tcp';
-    skip "bind: $!", 13 if !bind $server, sockaddr_in $port, INADDR_ANY;
-    skip "listen: $!", 12 if !listen $server, 3;
+    skip "bind: $!", 17 if !bind $server, sockaddr_in $port, INADDR_ANY;
+    skip "listen: $!", 16 if !listen $server, 3;
     ($port, my $iaddr) = sockaddr_in getsockname($server);
-    diag "echo server started on port $port\n";
+    note "echo server started on port $port\n";
     ok add_fd(
         $server, READ,
         sub {
@@ -48,13 +47,15 @@ SKIP: {
             return remove_fd $server if !$paddr;
             my ($port, $iaddr) = sockaddr_in $paddr;
             my $name = gethostbyaddr $iaddr, AF_INET;
-            diag "connection from $name [", inet_ntoa($iaddr),
+            note "connection from $name [", inet_ntoa($iaddr),
                 "] at port $port\n";
-            add_fd(
+            ok add_fd(
                 $peer, READ,
                 sub {
                     my $p = shift;
-                    return remove_fd $peer if !sysread $p, my $data, 16384;
+                    my $read = sysread $p, my $data, 16384;
+                    ok $read, "read $read bytes from peer";
+                    return remove_fd $peer if !$read;
                     my $wrote = syswrite $p, $data;
                     ok $wrote, "wrote $wrote bytes to peer ($wrote)";
                     return if $data !~ m[^quit\b]i;
@@ -64,7 +65,8 @@ SKIP: {
                     close $p;
                     $i++;
                 }
-            );
+                ),
+                'added new peer to list of watched file descriptors';
         }
         ),
         'added server to watch list for reading (accept)';
@@ -72,17 +74,17 @@ SKIP: {
 
         # Client
         my $iaddr = inet_aton('127.0.0.1')
-            || skip 'cannot resolve localhost?!?', 11;
+            || skip 'cannot resolve localhost?!?', 15;
         my $paddr = sockaddr_in($port, $iaddr);
         socket($client, PF_INET, SOCK_STREAM, getprotobyname('tcp'))
-            || skip "socket: $!", 10;
-        connect($client, $paddr) || skip "connect: $!", 9;
+            || skip "socket: $!", 14;
+        connect($client, $paddr) || skip "connect: $!", 13;
         ok add_fd(
             fileno $client,    # Use the fileno for this... just to test
             WRITE,
             sub {
                 is syswrite(shift, "Test!\n"), 6,
-                    'wrote 6 bytes to client (Test\\n)';
+                    'wrote 6 bytes to server (Test\\n)';
             }
             ),
             'added fileno($client) for write (checks connect)';
@@ -107,5 +109,5 @@ SKIP: {
             ),
             'added $client to watch list for read';
     }
-    for (1 .. 60) { sleep 1; FLTK::wait(1); last if $i; }
+    for (1 .. 60) { FLTK::wait(1); last if $i; }
 }
