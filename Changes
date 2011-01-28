@@ -20,6 +20,7 @@ Version 0.XXXXX | Next Sunday AD | 889cb74
      * Allow systems to skip tests when Test::NeedsDisplay fails
      * Upgraded ask( ... ) and choice( ... ) to major C++/Perl API differences
      * New, simple IO watcher example (echo server)
+     * New, simple add_fd( ... ) and remove_fd( ... ) tests
      * Final docs are generated on Build dist rather than Build install
 
 Version 0.532006 | 2010-09-27 04:13:25Z (Mon, 27 Sep 2010) | 04ca288

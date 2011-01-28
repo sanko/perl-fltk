@@ -652,7 +652,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FT[fd]|||remove_fd|PerlIO * fh|int when = -1|
+=for apidoc FT[fd]||bool okay|remove_fd|PerlIO * fh|int when = -1|
 
 Removes a handle from the list watched by FLTK.
 
@@ -678,7 +678,7 @@ socket is encounters an exception.
 By default, the filehandle is removed completly which is the same as passing
 C<-1>.
 
-=for apidoc F|||remove_fd|int fileno|int when = -1|
+=for apidoc F||bool okay|remove_fd|int fileno|int when = -1|
 
 Removes the handle (if it exists) with the particular fileno.
 
@@ -686,16 +686,22 @@ Removes the handle (if it exists) with the particular fileno.
 
 MODULE = FLTK::run               PACKAGE = FLTK
 
-void
+bool
 remove_fd( fh, int when = -1 )
     CASE: SvIOK( ST(0) )
         int fh
         CODE:
             fltk::remove_fd( _get_osfhandle( fh ), when );
+            RETVAL = 1;
+        OUTPUT:
+            RETVAL
     CASE:
         PerlIO * fh
         CODE:
             fltk::remove_fd( _get_osfhandle( PerlIO_fileno( fh ) ), when );
+            RETVAL = 1;
+        OUTPUT:
+            RETVAL
 
 BOOT:
     export_tag("remove_fd", "fd");
