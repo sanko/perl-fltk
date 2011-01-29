@@ -145,8 +145,9 @@ package inc::MBX::FLTK;
                                    )
                 )
                 )
-            {   my ($dll, @cleanup) =
-                    $CC->link(objects => \@obj,
+            {   my ($dll, @cleanup)
+                    = $CC->link(
+                              objects => \@obj,
                               lib_file =>
                                   catdir(qw[blib arch auto FLTK],
                                          'FLTK.' . $Config{'so'}
