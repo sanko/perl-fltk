@@ -14,10 +14,11 @@
 
 use strict;
 use warnings;
-use Test::More tests => 106;
+use Test::More 0.82;
 use Module::Build qw[];
 use File::Temp qw[];
 use Test::NeedsDisplay ':skip_all';
+plan tests => 106;
 my $test_builder = Test::More->builder;
 BEGIN { chdir '../..' if not -d '_build'; }
 use lib 'inc', 'blib/lib', 'blib/arch', 'lib';

@@ -18,6 +18,7 @@ use Test::More 0.82;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use Test::NeedsDisplay ':skip_all';
+plan tests => 6;
 my $test_builder = Test::More->builder;
 BEGIN { chdir '../..' if not -d '_build'; }
 use lib 'inc', 'blib/lib', 'blib/arch', 'lib';
@@ -27,7 +28,6 @@ my $verbose         = $build->notes('verbose');
 my $interactive     = $build->notes('interactive');
 
 #
-plan tests => 6;
 use FLTK qw[:events];
 
 #

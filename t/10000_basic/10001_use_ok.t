@@ -14,9 +14,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More 0.82;
 use Module::Build qw[];
 use Time::HiRes qw[];
+plan tests => 1;
 my $test_builder = Test::More->builder;
 BEGIN { chdir '../..' if not -d '_build'; }
 use lib 'inc', 'blib/lib', 'blib/arch', 'lib';

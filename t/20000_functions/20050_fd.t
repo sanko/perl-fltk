@@ -11,9 +11,11 @@
 =for git $Id$
 
 =cut
+
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More 0.82;
+plan tests => 18;
 use Module::Build qw[];
 use Time::HiRes qw[];
 use Socket;
