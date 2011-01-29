@@ -12,10 +12,9 @@ package FLTK;
 =for git $Id$
 
 =cut
-
     use strict;
     use warnings;
-    our $MAJOR = 532; our $MINOR = 6; our $DEV = 4; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
+    our $MAJOR = 532; our $MINOR = 6; our $DEV = 5; our $VERSION = sprintf('%1.3f%03d' . ($DEV ? (($DEV < 0 ? '' : '_') . '%03d') : ('')), $MAJOR / 1000, $MINOR, abs $DEV);
     use XSLoader;
     use vars qw[@EXPORT_OK @EXPORT %EXPORT_TAGS];
     use Exporter qw[import];
