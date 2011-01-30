@@ -612,7 +612,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
             RETVAL = true;
             HV * cb = newHV( );
             hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
-            if ( items == 3 ) /* Callbacks can be called without arguments */
+            if ( items == 4 ) /* Callbacks can be called without arguments */
                 hv_store( cb, "args", 4, newSVsv( args ),   0 );
             hv_store( cb, "fileno", 6, newSViv( fh ),   0 );
             PerlIO * _fh;
@@ -636,7 +636,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
             RETVAL = true;
             HV * cb = newHV( );
             hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
-            if ( items == 3 ) /* Callbacks can be called without arguments */
+            if ( items == 4 ) /* Callbacks can be called without arguments */
                 hv_store( cb, "args", 4, newSVsv( args ),  0 );
             int fileno = PerlIO_fileno( fh );
             hv_store( cb, "fileno", 6, newSViv( fileno ),  0 );
