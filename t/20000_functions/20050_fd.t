@@ -111,5 +111,5 @@ SKIP: {
             ),
             'added $client to watch list for read';
     }
-    for (1 .. 60) { FLTK::wait(1); last if $i; }
 }
+for (1 .. 60) { FLTK::wait(1); last if $i; }

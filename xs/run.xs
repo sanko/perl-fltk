@@ -623,7 +623,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
             else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) )
                 RETVAL = false;
             else {
-                hv_store( cb, "fh",     2, newSVsv( (SV *) _fh ),  0 );
+                //hv_store( cb, "fh",     2, newSVsv( (SV *) _fh ),  0 );
                 fltk::add_fd(
                     _get_osfhandle( fh ), events, _cb_f, ( void * ) cb
                 );
@@ -640,7 +640,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
                 hv_store( cb, "args", 4, newSVsv( args ),  0 );
             int fileno = PerlIO_fileno( fh );
             hv_store( cb, "fileno", 6, newSViv( fileno ),  0 );
-            hv_store( cb, "fh",     2, newSVsv( (SV *) fh ),  0 );
+            //hv_store( cb, "fh",     2, newSVsv( (SV *) fh ),  0 );
             fltk::add_fd(
                 _get_osfhandle( fileno ), events, _cb_f, ( void * ) cb
             );
