@@ -24,6 +24,9 @@ Version 0.XXXXX | Next Sunday AD | 889cb74
      * Final docs are generated on Build dist rather than Build install
      * Delay test plan until we know Test::NeedsDisplay is finished
 
+    Notes:
+     * Requires AF2 0.08323
+
 Version 0.532006 | 2010-09-27 04:13:25Z (Mon, 27 Sep 2010) | 04ca288
 
     Resolved Issues/Bug Fixes:
