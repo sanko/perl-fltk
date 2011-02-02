@@ -1,4 +1,4 @@
-Version 0.XXXXX | Next Sunday AD | 889cb74
+Version 0.532007 | 2011-01-30 18:51:54Z (Sun, 30 Jan 2011) | 6090ead
 
     Resolved Issues/Bug Fixes:
      * $group->child( $i ) no longer crashes when $group has less than $i kids
@@ -12,6 +12,7 @@ Version 0.XXXXX | Next Sunday AD | 889cb74
      * New Widgets/Types
        - StatusBarGroup, ToggleButton, ToggleItem, ValueSlider
      * Add support for add_fd( ... ) and remove_fd( ... )
+     * FLTK::GLWindow is no longer disabled on Win32 (try the example)
 
     Documentation/Sample Code/Test Suite/Metadata:
      * Updated repo URLs
