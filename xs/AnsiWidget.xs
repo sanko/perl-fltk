@@ -108,18 +108,14 @@ Creates a new C<FLTK::AnsiWidget> object.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+AnsiWidget *
 AnsiWidget::new( int x, int y, int w, int h, int defsize )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<AnsiWidget>(CLASS,x,y,w,h,defsize);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal( );
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<AnsiWidget>(CLASS,x,y,w,h,defsize);
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||layout||
 
@@ -193,7 +189,6 @@ Draws the given image onto the offscreen buffer.
 
 void
 AnsiWidget::drawImage( fltk::Image * img, int x, int y, int sx, int sy, int w, int h )
-
 
 =for apidoc |||saveImage|char * filename|int x|int y|int w|int h|
 

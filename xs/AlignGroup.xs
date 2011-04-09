@@ -69,19 +69,15 @@ L<FLTK::ALIGN_LEFT|FLTK::Flags/"FLTK::ALIGN_LEFT">
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::AlignGroup *
 fltk::AlignGroup::new( int x, int y, int w, int h, const char * label = 0, uchar n_to_break = 0, bool vertical = 1, fltk::Flags align = fltk::ALIGN_LEFT, uchar dw = 0, uchar dh = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::AlignGroup>(CLASS,x,y,w,h,label,
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::AlignGroup>(CLASS,x,y,w,h,label,
                                         n_to_break, vertical, align, dw, dh );
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    OUTPUT:
+        RETVAL
 
 =head1 Methods
 X<layout>

@@ -1,5 +1,5 @@
-#ifndef fltk_WidgetSubclass_h
-#define fltk_WidgetSubclass_h
+#ifndef fltk_RectangleSubclass_h
+#define fltk_RectangleSubclass_h
 
 /*
 
@@ -9,7 +9,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for abstract Cheap (as in 'shoddy') Widget subclassing
+=for abstract Cheap (as in 'shoddy') Rectangle subclassing
 
 =for seealso xs/Subclass.xsi
 
@@ -27,93 +27,97 @@
 #define NEED_sv_2pv_flags
 #include "ppport.h"
 
-#ifndef fltk_Widget_h
-#include <fltk/Widget.h> // Minimum.
+#ifndef fltk_Rectangle_h
+#include <fltk/Rectangle.h> // Minimum.
+#endif
+
+#ifndef fltk_TabGroup_h
+#include "fltk/TabGroup.h" // For TabGroupPager
 #endif
 
 template< class X >
-class FL_API WidgetSubclass : public X {
+class FL_API RectangleSubclass : public X {
 public:
-    WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl )
+    RectangleSubclass( char * cls, int x, int y, int w, int h, const char * lbl )
             : X( x, y, w, h, lbl ) { // Just about everything
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
+    RectangleSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
                     uchar nbr, bool v, fltk::Flags a, uchar dw, uchar dh )
             : X( x, y, w, h, lbl, nbr, v, a, dw, dh ) { // AlignGroup
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, int x, int y, int w, int h, int defsize )
-            : X( x, y, w, h, defsize ) { // AnsiWidget
+    RectangleSubclass( char * cls, int x, int y, int w, int h, int defsize )
+            : X( x, y, w, h, defsize ) { // AnsiRectangle
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
+    RectangleSubclass( char * cls, int x, int y, int w, int h, const char * lbl,
                     bool begin )
             : X( x, y, w, h, lbl, begin ) { // Group
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, char * name, int dx, int dy, int dw, int dh,
+    RectangleSubclass( char * cls, char * name, int dx, int dy, int dw, int dh,
                     char * pattern, fltk::Box * down )
             : X( name, dx, dy, dw, dh, pattern, down ) { // FrameBox
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, fltk::Box * box, int x, int y, int w, int h,
+    RectangleSubclass( char * cls, fltk::Box * box, int x, int y, int w, int h,
                     const char * lbl )
             : X( box, x, y, w, h, lbl ) { // InvisibleBox
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, const char* label, int shortcut,
+    RectangleSubclass( char * cls, const char* label, int shortcut,
                     fltk::Callback * callback, void * user_data_,
                     fltk::Flags flags )
             : X( label, shortcut, callback, user_data_, flags ) { // Item
         bless_class( cls );
     }
-    WidgetSubclass( char * cls, X original, int w, int h, int flags = 0 )
+    RectangleSubclass( char * cls, X original, int w, int h, int flags = 0 )
             : X( original, w, h, flags ) { // Rectangle (clone constructor)
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, int w, int h, char * label )
+    RectangleSubclass( char * cls, int w, int h, char * label )
             : X( w, h, label ) { // Window
         bless_class( cls );
     }
-    WidgetSubclass( char * cls, int x, int y, int w, int h )
+    RectangleSubclass( char * cls, int x, int y, int w, int h )
             : X( x, y, w, h ) { // ccCellBox, ccValueBox, ccHueBox
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, char * label, fltk::Symbol * symbol,
+    RectangleSubclass( char * cls, char * label, fltk::Symbol * symbol,
                     bool begin )
             : X( label, symbol, begin ) { // ItemGroup
         bless_class( cls );
     }
-    WidgetSubclass( char * cls, char * name, fltk::Box * down )
+    RectangleSubclass( char * cls, char * name, fltk::Box * down )
             : X( name, down ) { // HighlightBox
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, char * label, bool begin )
+    RectangleSubclass( char * cls, char * label, bool begin )
             : X( label, begin ) { // ItemGroup
         bless_class( cls );
     }
-    WidgetSubclass( char * cls, int w, int h )
+    RectangleSubclass( char * cls, int w, int h )
             : X( w, h ) { // Rectangle
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, char * name )
+    RectangleSubclass( char * cls, char * name )
             : X( name ) { // FlatBox
         bless_class( cls );
     }
-    WidgetSubclass( char * cls, X original )
+    RectangleSubclass( char * cls, X original )
             : X( original ) { // Rectangle (clone constructor)
         bless_class( cls );
     };
-    WidgetSubclass( char * cls, int h )
+    RectangleSubclass( char * cls, int h )
             : X( h ) { // StatusBarGroup
         bless_class( cls );
     }
-    WidgetSubclass( char * cls )
-            : X( ) { // Divider
+    RectangleSubclass( char * cls )
+            : X( ) { // Divider, TabGroupPager
         bless_class( cls );
     }
-    //~WidgetSubclass( ) {
+    //~RectangleSubclass( ) {
     //    this->~X( );
     //}
     int handle( int event ) {
@@ -254,12 +258,18 @@ public:
             this->X::handle_release( );
         return;
     };
+
+    // TabGroupPager
+    int which ( fltk::TabGroup * group, int event_x, int event_y ) { };
+    const char * mode_name( ) const { };
+    int id ( ) const { };
+    fltk::TabGroupPager * clone( ) const { };
 public:
     char * _class;
     int    _okay;
     const char * bless_class( ) {
         return _okay == 1337 ? _class : 0;
-    }
+    };
 private:
     void bless_class ( char * cls ) {
         _class = cls;
@@ -298,4 +308,5 @@ protected:
         return retval;
     };
 };
-#endif // #ifndef fltk_WidgetSubclass_h
+
+#endif // #ifndef fltk_RectangleSubclass_h

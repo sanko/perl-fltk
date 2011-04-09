@@ -21,127 +21,152 @@ fltk::StatusBarGroup::Position  T_ENUM
 fltk::Theme                     O_FLTK
 
 # Objects
-fltk::Adjuster              *   O_FLTK
+fltk::Adjuster              *   O_FLTK_SUBCLASSY
 fltk::AssociationType           O_FLTK
 fltk::AssociationType       *   O_FLTK
 fltk::AssociationFunctor        O_FLTK
 fltk::AssociationFunctor    *   O_FLTK
-fltk::AlignGroup            *   O_FLTK
-fltk::BarGroup              *   O_FLTK
-fltk::Browser               *   O_FLTK
-fltk::Browser::Mark         *   O_FLTK
-fltk::Box                   *   O_FLTK
-fltk::Button                *   O_FLTK
+fltk::AlignGroup            *   O_FLTK_SUBCLASSY
+fltk::BarGroup              *   O_FLTK_SUBCLASSY
+fltk::Browser               *   O_FLTK_SUBCLASSY
+fltk::Browser::Mark         *   O_FLTK_SUBCLASSY
+fltk::Box                   *   O_FLTK_SUBCLASSY
+fltk::Button                *   O_FLTK_SUBCLASSY
 fltk::Callback              *   O_FLTK
-fltk::ccHueBox              *   O_FLTK
-fltk::ccValueBox            *   O_FLTK
-fltk::ccCellBox             *   O_FLTK
-fltk::CheckButton           *   O_FLTK
-fltk::Choice                *   O_FLTK
-fltk::Clock                 *   O_FLTK
-fltk::ClockOutput           *   O_FLTK
-fltk::ColorChooser          *   O_FLTK
-fltk::ComboBox              *   O_FLTK
+fltk::ccHueBox              *   O_FLTK_SUBCLASSY
+fltk::ccValueBox            *   O_FLTK_SUBCLASSY
+fltk::ccCellBox             *   O_FLTK_SUBCLASSY
+fltk::CheckButton           *   O_FLTK_SUBCLASSY
+fltk::Choice                *   O_FLTK_SUBCLASSY
+fltk::Clock                 *   O_FLTK_SUBCLASSY
+fltk::ClockOutput           *   O_FLTK_SUBCLASSY
+fltk::ColorChooser          *   O_FLTK_SUBCLASSY
+fltk::ComboBox              *   O_FLTK_SUBCLASSY
 fltk::Cursor                *   O_FLTK
-fltk::CycleButton           *   O_FLTK
-fltk::Dial                  *   O_FLTK
-fltk::EngravedLabel         *   O_FLTK
-fltk::FileBrowser           *   O_FLTK
-fltk::FileChooser           *   O_FLTK
+fltk::CycleButton           *   O_FLTK_SUBCLASSY
+fltk::Dial                  *   O_FLTK_SUBCLASSY
+fltk::Divider               *   O_FLTK_SUBCLASSY
+fltk::EngravedLabel         *   O_FLTK_SUBCLASSY
+fltk::FileBrowser           *   O_FLTK_SUBCLASSY
+fltk::FileChooser           *   O_FLTK_SUBCLASSY
 fltk::FileIcon              *   O_FLTK
-fltk::FileInput             *   O_FLTK
-fltk::FillDial              *   O_FLTK
-fltk::FillSlider            *   O_FLTK
-fltk::FlatBox               *   O_FLTK
-fltk::FloatInput            *   O_FLTK
+fltk::FileInput             *   O_FLTK_SUBCLASSY
+fltk::FillDial              *   O_FLTK_SUBCLASSY
+fltk::FillSlider            *   O_FLTK_SUBCLASSY
+fltk::FlatBox               *   O_FLTK_SUBCLASSY
+fltk::FloatInput            *   O_FLTK_SUBCLASSY
 fltk::Font                  *   O_FLTK
-fltk::FrameBox              *   O_FLTK
-fltk::GlWindow              *   O_FLTK
+fltk::FrameBox              *   O_FLTK_SUBCLASSY
+fltk::GlWindow              *   O_FLTK_SUBCLASSY
 fltk::GLContext                 O_FLTK
-fltk::Group                 *   O_FLTK
-fltk::HelpDialog            *   O_FLTK
-fltk::HelpView              *   O_FLTK
-fltk::HighlightBox          *   O_FLTK
-fltk::HighlightButton       *   O_FLTK
+fltk::Group                 *   O_FLTK_SUBCLASSY
+fltk::HelpDialog            *   O_FLTK_SUBCLASSY
+fltk::HelpView              *   O_FLTK_SUBCLASSY
+fltk::HighlightBox          *   O_FLTK_SUBCLASSY
+fltk::HighlightButton       *   O_FLTK_SUBCLASSY
 fltk::Image                 *   O_FLTK
-fltk::Input                 *   O_FLTK
-fltk::InputBrowser          *   O_FLTK
-fltk::IntInput              *   O_FLTK
-fltk::InvisibleBox          *   O_FLTK
-fltk::Item                  *   O_FLTK
-fltk::ItemGroup             *   O_FLTK
-fltk::LabelType             *   O_FLTK
-fltk::LightButton           *   O_FLTK
-fltk::LineDial              *   O_FLTK
+fltk::Input                 *   O_FLTK_SUBCLASSY
+fltk::InputBrowser          *   O_FLTK_SUBCLASSY
+fltk::IntInput              *   O_FLTK_SUBCLASSY
+fltk::InvisibleBox          *   O_FLTK_SUBCLASSY
+fltk::Item                  *   O_FLTK_SUBCLASSY
+fltk::ItemGroup             *   O_FLTK_SUBCLASSY
+fltk::LabelType             *   O_FLTK_SUBCLASSY
+fltk::LightButton           *   O_FLTK_SUBCLASSY
+fltk::LineDial              *   O_FLTK_SUBCLASSY
 fltk::List                  *   O_FLTK
-fltk::Menu                  *   O_FLTK
-fltk::MenuBar               *   O_FLTK
-fltk::MenuWindow            *   O_FLTK
-fltk::MenuSection           *   O_FLTK
-      fltk::Monitor             O_FLTK
-      fltk::Monitor         *   O_FLTK
-const fltk::Monitor         *   O_FLTK
-fltk::MultiBrowser          *   O_FLTK
-fltk::MultiImage            *   O_FLTK
-fltk::MultiLineInput        *   O_FLTK
-fltk::MultiLineOutput       *   O_FLTK
+fltk::Menu                  *   O_FLTK_SUBCLASSY
+fltk::MenuBar               *   O_FLTK_SUBCLASSY
+fltk::MenuWindow            *   O_FLTK_SUBCLASSY
+fltk::MenuSection           *   O_FLTK_SUBCLASSY
+      fltk::Monitor             O_FLTK_SUBCLASSY
+      fltk::Monitor         *   O_FLTK_SUBCLASSY
+const fltk::Monitor         *   O_FLTK_SUBCLASSY
+fltk::MultiBrowser          *   O_FLTK_SUBCLASSY
+fltk::MultiImage            *   O_FLTK_SUBCLASSY
+fltk::MultiLineInput        *   O_FLTK_SUBCLASSY
+fltk::MultiLineOutput       *   O_FLTK_SUBCLASSY
 fltk::NamedStyle            *   O_FLTK
-fltk::NumericInput          *   O_FLTK
-fltk::PackedGroup           *   O_FLTK
-fltk::pnmImage              *   O_FLTK
-fltk::PopupMenu             *   O_FLTK
-fltk::Preferences           *   O_FLTK
+fltk::NumericInput          *   O_FLTK_SUBCLASSY
+fltk::PackedGroup           *   O_FLTK_SUBCLASSY
+fltk::pnmImage              *   O_FLTK_SUBCLASSY
+fltk::PopupMenu             *   O_FLTK_SUBCLASSY
+fltk::Preferences           *   O_FLTK_SUBCLASSY
 fltk::Preferences::Root         T_ENUM
-fltk::ProgressBar           *   O_FLTK
-fltk::Output                *   O_FLTK
-fltk::RadioButton           *   O_FLTK
-fltk::RadioItem             *   O_FLTK
-fltk::RadioLightButton      *   O_FLTK
-fltk::Rectangle             *   O_FLTK
-fltk::Rectangle                 O_FLTK
-fltk::RepeatButton          *   O_FLTK
-fltk::ReturnButton          *   O_FLTK
-fltk::Scrollbar             *   O_FLTK
-fltk::ScrollGroup           *   O_FLTK
-fltk::ShapedWindow          *   O_FLTK
+fltk::ProgressBar           *   O_FLTK_SUBCLASSY
+fltk::Output                *   O_FLTK_SUBCLASSY
+fltk::RadioButton           *   O_FLTK_SUBCLASSY
+fltk::RadioItem             *   O_FLTK_SUBCLASSY
+fltk::RadioLightButton      *   O_FLTK_SUBCLASSY
+fltk::Rectangle             *   O_FLTK_SUBCLASSY
+fltk::Rectangle                 O_FLTK_SUBCLASSY
+fltk::RepeatButton          *   O_FLTK_SUBCLASSY
+fltk::ReturnButton          *   O_FLTK_SUBCLASSY
+fltk::Scrollbar             *   O_FLTK_SUBCLASSY
+fltk::ScrollGroup           *   O_FLTK_SUBCLASSY
+fltk::SecretInput           *   O_FLTK_SUBCLASSY
+fltk::ShapedWindow          *   O_FLTK_SUBCLASSY
 fltk::ShortcutFunctor       *   O_FLTK
-fltk::Slider                *   O_FLTK
-fltk::StatusBarGroup        *   O_FLTK
+fltk::Slider                *   O_FLTK_SUBCLASSY
+fltk::StatusBarGroup        *   O_FLTK_SUBCLASSY
 const fltk::Style           *   O_FLTK
       fltk::Style           *   O_FLTK
 const fltk::Symbol          *   O_FLTK
-fltk::Symbol                *   O_FLTK
-fltk::TabGroup              *   O_FLTK
-fltk::TabGroupPager         *   O_FLTK
+fltk::Symbol                *   O_FLTK_SUBCLASSY
+fltk::TabGroup              *   O_FLTK_SUBCLASSY
+fltk::TabGroupPager         *   O_FLTK_SUBCLASSY
 fltk::TextBuffer            *   O_FLTK
-fltk::TextDisplay           *   O_FLTK
+fltk::TextDisplay           *   O_FLTK_SUBCLASSY
 fltk::TextDisplay::StyleTableEntry * O_FLTK
 fltk::TextSelection         *   O_FLTK
-fltk::ToggleItem            *   O_FLTK
-fltk::Valuator              *   O_FLTK
-fltk::ValueInput            *   O_FLTK
-fltk::ValueOutput           *   O_FLTK
-fltk::Widget                *   O_FLTK
-fltk::WidgetSubclass        *   O_FLTK
-const Widget                *   O_FLTK
-      fltk::Window          *   O_FLTK
-const fltk::Window          *   O_FLTK
+fltk::ToggleButton          *   O_FLTK_SUBCLASSY
+fltk::ToggleItem            *   O_FLTK_SUBCLASSY
+fltk::Valuator              *   O_FLTK_SUBCLASSY
+fltk::ValueInput            *   O_FLTK_SUBCLASSY
+fltk::ValueOutput           *   O_FLTK_SUBCLASSY
+fltk::ValueSlider           *   O_FLTK_SUBCLASSY
+fltk::Widget                *   O_FLTK_SUBCLASSY
+const Widget                *   O_FLTK_SUBCLASSY
+      fltk::Window          *   O_FLTK_SUBCLASSY
+const fltk::Window          *   O_FLTK_SUBCLASSY
 fltk::xbmImage              *   O_FLTK
 fltk::xpmImage              *   O_FLTK
 
 # Objects that aren't members of fltk
-AnsiWidget                  *   O_FLTK
+AnsiWidget                  *   O_FLTK_SUBCLASSY
+
+# Custom
+RectangleSubclass<fltk::Widget>    * O_FLTK_SUBCLASSY
+RectangleSubclass<fltk::Rectangle> * O_FLTK_SUBCLASSY
 
 OUTPUT
+O_FLTK_SUBCLASSY
+    //warn( \"${Package}::[$func_name]() -- $var\" );
+    sv_setref_pv(
+        $arg,
+        //\"FLTK::${(my $ntt=$ntype)=~s'(Ptr$?|^.*\W)''g;\$ntt}\",
+        ${$func_name =~ m[^new\b] ? \"CLASS" : $func_name eq 'add' ? \"${var}->bless_class()" : ($subtype=~m'<?fltk::(.+)>') ? \qq["FLTK::$1"] : ($subtype=~m'^(?:const\s+)?fltk::(.+)$') ? \qq["FLTK::$1"] : \q["BORKED!!!"]},
+        ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${subtype} | ${ntype} */
+
 O_FLTK
-    sv_setref_pv( $arg, \"FLTK::${(my $ntt=$ntype)=~s'(Ptr$?|^.*\W)''g;\$ntt}\", ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${ntype} */
+    sv_setref_pv(
+        $arg,
+        \"FLTK::${(my $ntt=$ntype)=~s'(Ptr$?|^.*\W)''g;\$ntt}\",
+        ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${subtype} | ${ntype} */
 
 INPUT
-O_FLTK
-    if (sv_isobject($arg) && sv_derived_from($arg, \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\")) /* ${ntype} */
-        $var = INT2PTR( $type, SvIV( ( SV * ) SvRV( $arg ) ) );
+O_FLTK_SUBCLASSY
+    if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )) // Subclassable: ${subtype} |  ${ntype}
+        {IV tmp = SvIV((SV*)SvRV($arg)); $var = INT2PTR(RectangleSubclass<${(my $ntt=$type)=~s'\s+?\*''g;\$ntt}> *,tmp);} //$var = INT2PTR( RectangleSubclass<$type>, SvIV( ( SV * ) SvRV( $arg ) ) );
     else
-        Perl_croak( aTHX_ \"%s: %s is not of type %s\",
+        croak( \"%s: %s is not of type %s\",
+            ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )
+
+O_FLTK
+    if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )) // Non-subclassable: ${subtype} | ${ntype}
+         $var = INT2PTR( $type, SvIV( ( SV * ) SvRV( $arg ) ) );
+     else
+        croak( \"%s: %s is not of type %s\",
             ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )
 
 /*

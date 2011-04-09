@@ -51,18 +51,14 @@ L<C<inset()>|/"inset">.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::FrameBox *
 fltk::FrameBox::new( char * name, int x, int y, int w, int h, char * pattern, fltk::Box * down = 0  )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::FrameBox>(CLASS,name,x,y,w,h,pattern,down);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::FrameBox>(CLASS,name,x,y,w,h,pattern,down);
+    OUTPUT:
+        RETVAL
 
 =for apidoc ||char * string|data||
 

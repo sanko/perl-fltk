@@ -94,31 +94,32 @@ Creates a L<Preferences|FLTK::Preferences> object.
 
 fltk::Preferences *
 fltk::Preferences::new( ... )
-    CODE:
-        if ( items == 4 && SvIOK(ST(1)) && SvPOK(ST(2)) && SvPOK(ST(3)) ) {
+    CASE: ( items == 4 && SvIOK(ST(1)) && SvPOK(ST(2)) && SvPOK(ST(3)) )
+        CODE:
             /* Root root, const char * vendor, const char * application */
             fltk::Preferences::Root root = (fltk::Preferences::Root) SvIV(ST(1));
             const char * vendor          = (const char *)            SvPV_nolen(ST(2));
             const char * application     = (const char *)            SvPV_nolen(ST(3));
             RETVAL = new fltk::Preferences( root, vendor, application );
-        }
-        else if ( items == 4 /* && SvPOK(ST(1)) && SvPOK(ST(2)) && SvPOK(ST(3)) */ ) {
+        OUTPUT:
+            RETVAL
+    CASE: ( items == 4 /* && SvPOK(ST(1)) && SvPOK(ST(2)) && SvPOK(ST(3)) */ )
+        CODE:
             /* const char * path, const char * vendor, const char * application */
             const char * path   = (const char *) SvPV_nolen(ST(1));
             const char * vendor = (const char *) SvPV_nolen(ST(2));
             const char * app    = (const char *) SvPV_nolen(ST(3));
             RETVAL = new fltk::Preferences( path, vendor, app );
-        }
-        else if ( items == 3 && sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Preferences") && SvPOK(ST(2)) ) {
+        OUTPUT:
+            RETVAL
+    CASE: ( items == 3 && sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Preferences") && SvPOK(ST(2)) )
+        CODE:
             /* Preferences * prefs, const char *group */
             fltk::Preferences * prefs = INT2PTR( fltk::Preferences *, SvIV( ( SV * ) SvRV( ST(1) ) ) );
             const char        * group = (const char *) SvPV_nolen(ST(2));
             RETVAL = new fltk::Preferences( prefs, group );
-        }
-        else
-            XSRETURN_UNDEF;
-    OUTPUT:
-        RETVAL
+        OUTPUT:
+            RETVAL
 
 =for apidoc |||destroy||
 

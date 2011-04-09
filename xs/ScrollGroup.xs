@@ -93,18 +93,14 @@ Creates a new L<FLTK::ScrollGroup|FLTK::ScrollGroup> widget.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
-fltk::Scrollbar::new( int x, int y, int w, int h, const char * label = 0, bool begin = false )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ScrollGroup>(CLASS,x,y,w,h,label,begin);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal( );
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+fltk::ScrollGroup *
+fltk::ScrollGroup::new( int x, int y, int w, int h, const char * label = 0, bool begin = false )
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::ScrollGroup>(CLASS,x,y,w,h,label,begin);
+    OUTPUT:
+        RETVAL
 
 int
 HORIZONTAL( )

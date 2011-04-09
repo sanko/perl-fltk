@@ -49,6 +49,10 @@ directly access the local member variables using names like C<box_>.
 
 #include <fltk/Style.h>
 
+#include <fltk/LabelType.h>
+
+#include <fltk/Symbol.h>
+
 =begin apidoc
 
 =for apidoc ||FLTK::Style * style|new||

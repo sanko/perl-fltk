@@ -63,18 +63,14 @@ tabs are drawn.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::TabGroup *
 fltk::TabGroup::new( int x, int y, int w, int h, const char * label = 0, bool begin = false )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::TabGroup>(CLASS,x,y,w,h,label,begin);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::TabGroup>(CLASS,x,y,w,h,label,begin);
+    OUTPUT:
+        RETVAL
 
 =for apidoc ||FLTK::NamedStyle * style|default_style||
 

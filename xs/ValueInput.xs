@@ -70,16 +70,12 @@ C<$value_input-E<gt>input-C<gt>static_text('word')>.
 
 =cut
 
-void
+fltk::ValueInput *
 fltk::ValueInput::new( int x, int y, int w, int h, char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ValueInput>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::ValueInput>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 #endif // ifndef DISABLE_VALUEINPUT
 

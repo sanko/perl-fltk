@@ -32,18 +32,14 @@ FLTK::ccValueBox - Part of the FLTK::ColorChooser megawidget
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::ccValueBox *
 fltk::ccValueBox::new( int x, int y, int w, int h )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::ccValueBox>(CLASS,x,y,w,h);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::ccValueBox>(CLASS,x,y,w,h);
+    OUTPUT:
+        RETVAL
 
 #endif // #ifndef DISABLE_CCVALUEBOX
 

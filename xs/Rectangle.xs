@@ -57,47 +57,42 @@ Constructor that calls L<C<set( )>|FLTK::Rectangle/"set">.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
-fltk::Rectangle::new( ... )
-    PREINIT:
-        void * RETVAL = NULL;
-    PPCODE:
-        if ( items == 1 )
-            RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS);
-        else if ( items == 5 && SvIOK(ST(1)) && SvIOK(ST(2)) && SvIOK(ST(3)) && SvIOK(ST(4)) )
-            RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS,SvIV(ST(1)),SvIV(ST(2)),SvIV(ST(3)),SvIV(ST(4)));
-        else if ( items == 3 && SvIOK(ST(1)) && SvIOK(ST(2)) )
-            RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS,SvIV(ST(1)),SvIV(ST(2)));
-        else if ( items == 2 ) {
-            fltk::Rectangle * original;
-            if (sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Rectangle")) /* -- hand rolled -- */ //
-                original = INT2PTR( fltk::Rectangle *, SvIV( ( SV * ) SvRV( ST(1) ) ) );
-            else
-                Perl_croak( aTHX_ "%s: %s is not of type %s",
-                    "FLTK::Rectangle::new", "original", "FLTK::Rectangle" );
-            RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS,*original);
-        }
-        else if ( ( ( items == 4 ) || ( items == 5 ) ) && SvIOK(ST(2)) && SvIOK(ST(3)) ) {
-            fltk::Rectangle * original;
+fltk::Rectangle *
+fltk::Rectangle::new( original = NO_INIT, ... )
+    CASE: ( items == 1 )
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::Rectangle>(CLASS);
+        OUTPUT:
+            RETVAL
+    CASE: ( items == 5 && SvIOK(ST(1)) && SvIOK(ST(2)) && SvIOK(ST(3)) && SvIOK(ST(4)) )
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::Rectangle>(CLASS,SvIV(ST(1)),SvIV(ST(2)),SvIV(ST(3)),SvIV(ST(4)));
+        OUTPUT:
+            RETVAL
+    CASE: ( items == 3 && SvIOK(ST(1)) && SvIOK(ST(2)) )
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::Rectangle>(CLASS,SvIV(ST(1)),SvIV(ST(2)));
+        OUTPUT:
+            RETVAL
+    CASE: ( items == 2 )
+        fltk::Rectangle * original
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::Rectangle>(CLASS, *original);
+        OUTPUT:
+            RETVAL
+    CASE: ( ( ( items == 4 ) || ( items == 5 ) ) && SvIOK(ST(2)) && SvIOK(ST(3)) )
+        fltk::Rectangle * original
+        CODE:
             int w = SvIV(ST(2));
             int h = SvIV(ST(3));
             int flags = 0;
             if ( items == 5 )
                 flags = SvIV(ST(4));
-            if (sv_isobject(ST(1)) && sv_derived_from(ST(1), "FLTK::Rectangle")) /* -- hand rolled -- */ //
-                original = INT2PTR( fltk::Rectangle *, SvIV( ( SV * ) SvRV( ST(1) ) ) );
-            else
-                Perl_croak( aTHX_ "%s: %s is not of type %s",
-                    "FLTK::Rectangle::new", "original", "FLTK::Rectangle" );
-            RETVAL = (void *) new WidgetSubclass<fltk::Rectangle>(CLASS,*original,w,h,flags);
-        }
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+            RETVAL = new RectangleSubclass<fltk::Rectangle>(CLASS,*original,w,h,flags);
+        OUTPUT:
+            RETVAL
 
 =for apidoc ||bool can_has|contains|int x|int y|
 
@@ -350,9 +345,5 @@ fltk::Rectangle::merge( fltk::Rectangle * r )
 void
 fltk::Rectangle::intersect( fltk::Rectangle * r )
     C_ARGS: * r
-
-#INCLUDE: Monitor.xsi
-
-#INCLUDE: Widget.xsi
 
 #endif // ifndef DISABLE_RECTANGLE

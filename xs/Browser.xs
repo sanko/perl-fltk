@@ -115,6 +115,8 @@ item like double-click.
 
 #include <fltk/Browser.h>
 
+#include <fltk/Symbol.h>
+
 #ifdef PERL_NORMAL // Undo our workaround
 #define NORMAL PERL_NORMAL
 #endif // ifdef PERL_NORMAL
@@ -126,18 +128,14 @@ Creates a new C<FLTK::Browser> object.
 =cut
 
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::Browser *
 fltk::Browser::new( int x, int y, int w, int h, const char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::Browser>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::Browser>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||layout||
 

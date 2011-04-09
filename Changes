@@ -1,4 +1,10 @@
-Version 0.532007 | 2011-01-30 18:51:54Z (Sun, 30 Jan 2011) | 6090ead
+Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
+
+    Resolved Issues/Bug Fixes:
+     * All internal subclasses of the fltk::Rectangle primative can been
+         subclassed and extended.
+
+Version 0.532007 | 2011-02-02 21:48:26Z (Wed, 02 Feb 2011) | 3d6d95a
 
     Resolved Issues/Bug Fixes:
      * $group->child( $i ) no longer crashes when $group has less than $i kids

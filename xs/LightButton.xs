@@ -41,18 +41,14 @@ Creates a new C<FLTK::LightButton> object. Obviously.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::LightButton *
 fltk::LightButton::new( int x, int y, int w, int h, const char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::LightButton>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::LightButton>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 =for apidoc ||FLTK::NamedStyle * style|default_style||
 

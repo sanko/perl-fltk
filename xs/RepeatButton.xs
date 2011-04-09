@@ -37,18 +37,14 @@ Creates a new C<FLTK::RepeatButton> object. Obviously.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::RepeatButton *
 fltK::RepeatButton::new( int x, int y, int w, int h, const char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::RepeatButton>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::RepeatButton>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 #endif // #ifndef DISABLE_REPEATBUTTON
 

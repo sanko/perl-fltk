@@ -61,18 +61,14 @@ Creates a new C<FLTK::NumericInput> object.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::NumericInput *
 fltk::NumericInput::new( int x, int y, int w, int h, char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::NumericInput>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::NumericInput>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||value|double val|
 

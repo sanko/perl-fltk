@@ -116,32 +116,33 @@ Same but placed by the OS.
 #include <fltk/x.h>
 #endif // ifdef WIN32
 
-void
-fltk::GlWindow::new(package, ...)
-    PPCODE:
-        void * RETVAL = NULL;
-        char * label  = PL_origfilename;
-        if ( items == 3 || items == 4 ) {
+fltk::GlWindow *
+fltk::GlWindow::new( ... )
+    CASE: ( items == 3 || items == 4 )
+        CODE:
+            char * label  = PL_origfilename;
             int w = (int)SvIV(ST(1));
             int h = (int)SvIV(ST(2));
             if (items == 4) label = (char *)SvPV_nolen(ST(3));
-            RETVAL = (void *) new WidgetSubclass<fltk::GlWindow>(CLASS,w,h,label);
-        }
-        else if (items == 5 || items == 6) {
+            RETVAL = new RectangleSubclass<fltk::GlWindow>(CLASS,w,h,label);
+        OUTPUT:
+            RETVAL
+    CASE: (items == 5 || items == 6)
+        CODE:
+            char * label  = PL_origfilename;
             int x = (int)SvIV(ST(1));
             int y = (int)SvIV(ST(2));
             int w = (int)SvIV(ST(3));
             int h = (int)SvIV(ST(4));
             if (items == 6) label = (char *)SvPV_nolen(ST(5));
-            RETVAL = (void *) new WidgetSubclass<fltk::GlWindow>(CLASS,x,y,w,h,label);
-        }
+            RETVAL = new RectangleSubclass<fltk::GlWindow>(CLASS,x,y,w,h,label);
+        OUTPUT:
+            RETVAL
+    CLEANUP:
         if (RETVAL != NULL) {
 #ifdef WIN32
-            ((fltk::Window *)RETVAL)->icon((char *)LoadIcon (dllInstance(), "FLTK" ));
+            RETVAL->icon((char *)LoadIcon (dllInstance(), "FLTK" ));
 #endif // ifdef WIN32
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
         }
 
 =for apidoc |G|char okay|valid||

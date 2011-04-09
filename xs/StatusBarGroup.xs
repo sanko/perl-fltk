@@ -59,6 +59,10 @@ Here's some typical code you can use to create a status bar:
 
 #include <fltk/StatusBarGroup.h>
 
+#include <fltk/Box.h>
+
+#include <fltk/Symbol.h>
+
 =for apidoc ||FLTK::StatusBarGroup * group|new|int x|int y|int w|int h|char * label = ''|bool begin = false|
 
 Constructor. C<x>, C<y>, and C<w> are ignored.
@@ -69,23 +73,20 @@ Constructor.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::StatusBarGroup *
 fltk::StatusBarGroup::new( int x = 24, int y = NO_INIT, int w = NO_INIT, int h = NO_INIT, char * label = 0, bool begin = false )
-    PPCODE:
-        void * RETVAL = NULL;
-        if ( items <= 2 ) {
-            RETVAL = (void *) new WidgetSubclass<fltk::StatusBarGroup>(CLASS,x);
-        }
-        else {
-            RETVAL = (void *) new WidgetSubclass<fltk::StatusBarGroup>(CLASS,x,y,w,h,label,begin);
-        }
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CASE: ( items <= 2 )
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::StatusBarGroup>(CLASS,x);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::StatusBarGroup>(CLASS,x,y,w,h,label,begin);
+        OUTPUT:
+            RETVAL
 
 =for apidoc |||child_box|fltk::Box * b|
 

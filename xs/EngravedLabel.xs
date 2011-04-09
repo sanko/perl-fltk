@@ -38,7 +38,7 @@ This is on my TODO list...
 fltk::EngravedLabel *
 fltk::EngravedLabel::new( char * name, AV * p, ... )
     CODE:
-        croak("FLTK::EngravedLabel is incomplete; Feel free to contribute.");
+        croak("TODO - FLTK::EngravedLabel is incomplete; Feel free to contribute.");
         //RETVAL = new EngravedLabel(const char * n, const int p[][3]);
 
 #endif // ifndef DISABLE_ENGRAVEDLABEL

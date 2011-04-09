@@ -36,18 +36,14 @@ Creates a new C<FLTK::FlatBox> object.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::FlatBox *
 fltk::FlatBox::new( char * name )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::FlatBox>(CLASS,name);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::FlatBox>(CLASS,name);
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||_draw|FLTK::Rectangle * rect|
 

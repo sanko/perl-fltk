@@ -56,6 +56,8 @@ flags on/off.
 
 #include <fltk/Widget.h>
 
+#include <fltk/LabelType.h>
+
 =for apidoc ||FLTK::Widget widget|new|int x|int y|int w|int h|int label = ''|
 
 The default constructor takes a value for L<C<x()>|/"x">, L<C<y()>|/"y">,
@@ -73,18 +75,14 @@ yourself in order to see it.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::Widget *
 fltk::Widget::new( int x, int y, int w, int h, const char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::Widget>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal( );
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::Widget>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 =for apidoc |||destroy|
 

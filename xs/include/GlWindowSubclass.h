@@ -13,7 +13,7 @@
 
 =for seealso xs/GlWindow.xsi
 
-=for seealso xs/include/WidgetSubclass.h
+=for seealso xs/include/RectangleSubclass.h
 
 =for git $Id$
 
@@ -25,12 +25,12 @@
 #include <fltk/GlWindow.h> // Minimum.
 #endif
 
-#ifndef fltk_WidgetSubclass_h
-#include <include/WidgetSubclass.h>
+#ifndef fltk_RectangleSubclass_h
+#include <include/RectangleSubclass.h>
 #endif
 
 template<>
-void WidgetSubclass<fltk::GlWindow>::draw ( ) {
+void RectangleSubclass<fltk::GlWindow>::draw ( ) {
 	int handled = 1; /* safe to assume for now */
 	dTHX;
 	AV * args = newAV();

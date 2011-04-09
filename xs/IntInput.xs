@@ -43,18 +43,14 @@ Creates a new C<FLTK::IntInput> object. Obviously.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
-IntInput::new( int x, int y, int w, int h, const char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::IntInput>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+fltk::IntInput *
+fltk::IntInput::new( int x, int y, int w, int h, const char * label = 0 )
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::IntInput>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 #endif // ifndef DISABLE_INTINPUT
 

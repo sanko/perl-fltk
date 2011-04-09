@@ -53,18 +53,14 @@ Usage:
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::Adjuster *
 fltk::Adjuster::new( int x, int y, int w, int h, char * label = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::Adjuster>(CLASS,x,y,w,h,label);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::Adjuster>(CLASS,x,y,w,h,label);
+    OUTPUT:
+        RETVAL
 
 =head1 Methods
 

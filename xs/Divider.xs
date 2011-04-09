@@ -41,18 +41,14 @@ assummed the container widget will size this correctly.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
-Divider::new( )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new WidgetSubclass<fltk::Divider>(CLASS);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+fltk::Divider *
+fltk::Divider::new( )
+    CODE:
+        RETVAL = new RectangleSubclass<fltk::Divider>(CLASS);
+    OUTPUT:
+        RETVAL
 
 #endif // ifndef DISABLE_DIVIDER
 

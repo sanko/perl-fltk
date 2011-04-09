@@ -71,7 +71,7 @@ Same but window is placed by OS.
 =cut
 
 #include <fltk/Window.h>
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 #ifdef WIN32 // the following is needed for the window icon (WIN32 only)
 #ifndef DISABLE_WINDOW_ICON
 #include <windows.h>
@@ -79,34 +79,35 @@ Same but window is placed by OS.
 #endif // #ifndef DISABLE_WINDOW_ICON
 #endif // ifdef WIN32
 
-void
+fltk::Window *
 fltk::Window::new( ... )
-    PPCODE:
-        void * RETVAL = NULL;
-        char * label  = PL_origfilename;
-        if ( items == 3 || items == 4 ) {
+    CASE: ( items == 3 || items == 4 )
+        CODE:
+            char * label = PL_origfilename;
             int w = (int)SvIV(ST(1));
             int h = (int)SvIV(ST(2));
             if (items == 4) label = (char *)SvPV_nolen(ST(3));
-            RETVAL = (void *) new WidgetSubclass<fltk::Window>(CLASS,w,h,label);
-        }
-        else if (items == 5 || items == 6) {
+            RETVAL = new RectangleSubclass<fltk::Window>(CLASS,w,h,label);
+        OUTPUT:
+            RETVAL
+    CASE: (items == 5 || items == 6)
+        CODE:
+            char * label = PL_origfilename;
             int x = (int)SvIV(ST(1));
             int y = (int)SvIV(ST(2));
             int w = (int)SvIV(ST(3));
             int h = (int)SvIV(ST(4));
             if (items == 6) label = (char *)SvPV_nolen(ST(5));
-            RETVAL = (void *) new WidgetSubclass<fltk::Window>(CLASS,x,y,w,h,label);
-        }
+            RETVAL = new RectangleSubclass<fltk::Window>(CLASS,x,y,w,h,label);
+        OUTPUT:
+            RETVAL
+    POSTCALL:
         if (RETVAL != NULL) {
 #ifdef WIN32
 #ifndef DISABLE_WINDOW_ICON
-            ((fltk::Window *)RETVAL)->icon((char *)LoadIcon (dllInstance( ), "FLTK" ));
+            RETVAL->icon((char *)LoadIcon (dllInstance( ), "FLTK" ));
 #endif // #ifndef DISABLE_WINDOW_ICON
 #endif // ifdef WIN32
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
         }
 
 =for apidoc |||border|bool set|

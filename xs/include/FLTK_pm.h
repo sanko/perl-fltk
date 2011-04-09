@@ -31,7 +31,7 @@
 
 #include <fltk/../config.h>         // created and installed by Alien::FLTK2
 
-#include "WidgetSubclass.h"
+#include "RectangleSubclass.h"
 #include <fltk/Widget.h>
 
 #define DISABLE_DEPRECATED          // Depreciated widgets, and other junk

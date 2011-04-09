@@ -36,6 +36,8 @@ the constructor and calling L<C<end()>|FLTK::Group/"end"> in the destructor:
 
 #include <fltk/ItemGroup.h>
 
+#include <fltk/Symbol.h>
+
 =begin apidoc
 
 =for apidoc ||FLTK::ItemGroup * group|new|char * label = ''|
@@ -49,21 +51,20 @@ This constructor also sets L<C<image()>|FLTK::Widget/"image">.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::MenuSection *
 fltk::MenuSection::new( char * label = 0, fltk::Symbol * symbol = NO_INIT )
-    PPCODE:
-        void * RETVAL = NULL;
-        if ( items == 2)
-            RETVAL = (void *) new WidgetSubclass<fltk::MenuSection>(CLASS,label);
-        else
-	        RETVAL = (void *) new WidgetSubclass<fltk::MenuSection>(CLASS,label,symbol);
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CASE: ( items == 2)
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::MenuSection>(CLASS,label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = new RectangleSubclass<fltk::MenuSection>(CLASS,label,symbol);
+        OUTPUT:
+          RETVAL
 
 =for apidoc H||bool done|DESTROY||
 

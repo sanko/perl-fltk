@@ -46,18 +46,14 @@ hold.
 
 =cut
 
-#include "include/WidgetSubclass.h"
+#include "include/RectangleSubclass.h"
 
-void
+fltk::TextBuffer *
 fltk::TextBuffer::new( int requested_size = 0 )
-    PPCODE:
-        void * RETVAL = NULL;
-        RETVAL = (void *) new fltk::TextBuffer( requested_size );
-        if (RETVAL != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), CLASS, RETVAL); /* -- hand rolled -- */
-            XSRETURN(1);
-        }
+    CODE:
+        RETVAL = new fltk::TextBuffer( requested_size );
+    OUTPUT:
+        RETVAL
 
 =head1 Methods
 

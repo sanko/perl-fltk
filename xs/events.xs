@@ -37,6 +37,8 @@ needs this.
 
 #include <fltk/events.h>
 
+#include <fltk/Window.h>
+
 =head1 Events
 
 FLTK's event system passes numbered arguments to
@@ -1375,7 +1377,7 @@ MODULE = FLTK::events               PACKAGE = FLTK
 bool
 handle( int event, fltk::Window * window )
     CODE:
-        RETVAL = fltk::handle( event, window );
+        RETVAL = fltk::handle( event, (fltk::Window *) window );
     OUTPUT:
         RETVAL
 
