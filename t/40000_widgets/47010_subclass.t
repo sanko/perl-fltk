@@ -34,7 +34,7 @@ use FLTK qw[:events];
 {
 
     package FLTKx::TestButton;
-    our @ISA = qw[FLTK::Button];
+    use parent-norequire, 'FLTK::Button';
 
     sub handle {
         my ($obj, $event) = @_;
@@ -48,10 +48,12 @@ use FLTK qw[:events];
 }
 {
 
-    package FLTKx::Test::HiddenButton;
-    our @ISA = qw[FLTK::Button];
+    package my::Test::HiddenButton;
+    use parent-norequire, 'FLTK::Button';
 
+    sub draw{ ... }
     sub handle {
+        ...;
         my ($obj, $event) = @_;
         ::BAIL_OUT(
             "We should never be in a position to call FLTKx::Test::HiddenButton->handle($event)"
@@ -65,13 +67,13 @@ my $W = new FLTK::Window(200, 100);
 $W || BAIL_OUT('Failed to create window');
 
 #
-my $W0 = new_ok("FLTKx::Test::HiddenButton" => [100, 0, 100, 100],
-                "new FLTKx::Test::HiddenButton ( 100, 0, 100, 100 )");
-isa_ok($W0, "FLTKx::Test::HiddenButton", $W0);
+my $W0 = new_ok('my::Test::HiddenButton' => [100, 0, 100, 100],
+                'new my::Test::HiddenButton ( 100, 0, 100, 100 )');
+isa_ok($W0, 'FLTK::Button');
 $W->begin();    # Inside of the group should be seen
-my $W1 = new_ok("FLTKx::TestButton" => [0, 0, 100, 100],
-                "new FLTKx::TestButton ( 0, 0, 100, 100 )");
-isa_ok($W1, "FLTKx::TestButton", $W1);
+my $W1 = new_ok('FLTKx::TestButton' => [0, 0, 100, 100],
+                'new FLTKx::TestButton ( 0, 0, 100, 100 )');
+isa_ok($W1, 'FLTK::Button');
 $W->end();
 $W->show();     # if $interactive;
 FLTK::wait(1);
