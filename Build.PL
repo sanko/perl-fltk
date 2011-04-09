@@ -37,7 +37,7 @@ my $mb = $class->new(
     requires => {DynaLoader => 0, Exporter => 0, XSLoader => 0},
     configure_requires => {'Module::Build' => 0.36},
     build_requires     => {
-                       'Alien::FLTK2' => 0.08323,
+                       'Alien::FLTK2' => 0.08550,
                        base           => 0,
                        Config         => 0,
                        Cwd            => 0,
