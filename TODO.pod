@@ -66,8 +66,6 @@ FLTK::Todo - TODO list for Perl module FLTK
 
 =item FLTK::StyleSet
 
-=item FLTK::TabGroup
-
 =item FLTK::TabGroupPager
 
 =item FLTK::TextEditor
