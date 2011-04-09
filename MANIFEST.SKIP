@@ -99,3 +99,4 @@ website/.*
 xs/rc/version.rc
 xs/include/FLTK_pm_boot.h
 .+\.cxx
+^MYMETA\.json$
