@@ -15,42 +15,6 @@ package inc::MBX::FLTK::Developer;
     use Cwd qw[cwd];
     use 5.010;
 
-    sub new {
-        my $class = shift;
-        my $self  = $class->SUPER::new(@_);
-        $self->metafile('META.json') if $self->metafile eq 'META.yml';
-        return $self;
-    }
-
-    sub write_metafile {
-        my $s = shift;
-        require CPAN::Meta::Converter;
-        require CPAN::Meta::Validator;
-        require JSON;
-        JSON->VERSION(2);
-        my $data = {};
-        $s->prepare_metadata($data);
-        $data->{'meta-spec'} = {    # In reality, it's probably a hybrid...
-                 url     => 'http://search.cpan.org/perldoc?CPAN::Meta::Spec',
-                 version => 2
-        };
-        my $metafile = $s->metafile;
-        my $cmc      = CPAN::Meta::Converter->new($data);   # ...so we convert
-        $data = $cmc->convert(version => 2);    # ...and clean it up here
-        my $cmv = CPAN::Meta::Validator->new($data);
-        say $_    # ...and double check the result
-            for $cmv->is_valid
-            ? ()
-            : 'Invalid META structure. Errors found:', $cmv->errors;
-        $data->{generated_by} = 'Conversion, Software version 7.0';
-        open my ($fh), '>',    # ...and eventually save it to disk.
-            $metafile || die "can't open $metafile for writing: $!";
-        syswrite $fh, JSON->new->ascii(1)->pretty->canonical(1)->encode($data)
-            || die "can't print metadata to $metafile: $!";
-        close $fh || die "error closing $metafile: $!";
-        $s->{'wrote_metadata'} = 1;
-        $s->_add_to_manifest('MANIFEST', $metafile);
-    }
     {
         my ($cwd, %seen, %packages, @xsi_files);
 
