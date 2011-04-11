@@ -4,6 +4,10 @@ Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
      * All internal subclasses of the fltk::Rectangle primative can been
          subclassed and extended.
 
+    API Changes/Compatibility Information:
+     * New Widgets/Types
+       - TabGroupPager...
+
 Version 0.532007 | 2011-02-02 21:48:26Z (Wed, 02 Feb 2011) | 3d6d95a
 
     Resolved Issues/Bug Fixes:
