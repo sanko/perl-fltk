@@ -83,8 +83,8 @@ fltk::Group::children( )
 
 =for apidoc ||FLTK::Widget kid|child|int index|
 
-Returns a child, C<index E<gt>= 0 && index E<lt> children()>. B<No range
-checking is done!>
+Returns a child, C<index E<gt>= 0 && index E<lt> children()>. B<Range
+checking is done internally!>
 
 =cut
 
@@ -158,13 +158,11 @@ end of this group.
 int
 fltk::Group::find ( fltk::Widget * widget )
 
-RectangleSubclass<fltk::Widget> *
-fltk::Group::add( fltk::Widget * widget )
-    CODE:
+void
+fltk::Group::add ( RectangleSubclass<fltk::Widget> * widget )
+    PPCODE:
         THIS->add( widget );
-        RETVAL = (RectangleSubclass<fltk::Widget> *) widget;
-    OUTPUT:
-        RETVAL
+        EXTEND(SP, 1); PUSHs(ST(1)); // Do this so we don't have to rebless
 
 =for apidoc NA||FLTK::Widget * widget|insert|FLTK::Widget * widget|int index|
 
@@ -183,21 +181,15 @@ fltk::Group::insert( fltk::Widget * widget, before )
         int before
         C_ARGS: * widget, before
     POSTCALL:
-        const char * _class = (( RectangleSubclass<fltk::Widget> * ) widget)->bless_class( );
         if (widget != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), widget); /* -- hand rolled -- */
-            XSRETURN(1);
+            EXTEND(SP, 1); PUSHs(ST(1)); // Do this so we don't have to rebless
         }
     CASE:
         fltk::Widget * before
         C_ARGS: * widget, before
     POSTCALL:
-        const char * _class = (( RectangleSubclass<fltk::Widget> * ) widget)->bless_class( );
         if (widget != NULL) {
-            ST(0) = sv_newmortal();
-            sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), widget); /* -- hand rolled -- */
-            XSRETURN(1);
+            EXTEND(SP, 1); PUSHs(ST(1)); // Do this so we don't have to rebless
         }
 
 =for apidoc |||remove|int index|
@@ -246,21 +238,15 @@ fltk::Group::replace( widget, fltk::Widget * widget_b )
         int widget
         C_ARGS:   widget, * widget_b
         POSTCALL:
-            const char * _class = (( RectangleSubclass<fltk::Widget> * ) widget_b)->bless_class( );
             if (widget_b != NULL) {
-                ST(0) = sv_newmortal();
-                sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), widget_b); /* -- hand rolled -- */
-                XSRETURN(1);
+                EXTEND(SP, 1); PUSHs(ST(2)); // Do this so we don't have to rebless
             }
     CASE:
         fltk::Widget * widget
         C_ARGS: * widget, * widget_b
         POSTCALL:
-            const char * _class = (( RectangleSubclass<fltk::Widget> * ) widget_b)->bless_class( );
             if (widget_b != NULL) {
-                ST(0) = sv_newmortal();
-                sv_setref_pv(ST(0), (_class?_class:"FLTK::Widget"), widget_b); /* -- hand rolled -- */
-                XSRETURN(1);
+                EXTEND(SP, 1); PUSHs(ST(2)); // Do this so we don't have to rebless
             }
 
 =for apidoc |||swap|int indexA|int indexB|
