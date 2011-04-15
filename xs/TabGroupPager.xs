@@ -53,12 +53,12 @@ Creates a new L<TabGroupPager|FLTK::TabGroupPager> object.
 
 =cut
 
-#include "include/TabGroupPagerSubclass.h"
+#include "include/RectangleSubclass.h"
 
 fltk::TabGroupPager *
 fltk::TabGroupPager::new( )
     CODE:
-        RETVAL = new TabGroupPagerSubclass<fltk::TabGroupPager>(CLASS);
+        RETVAL = new RectangleSubclass<fltk::TabGroupPager>(CLASS);
     OUTPUT:
         RETVAL
 
