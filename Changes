@@ -1,8 +1,8 @@
-Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
+Version 0.532008 | 2011-04-15 17:45:48Z (Fri, 15 Apr 2011) | 246971a
 
     Resolved Issues/Bug Fixes:
-     * All internal subclasses of the fltk::Rectangle primative can been
-         subclassed and extended.
+     * Primitive FLTK::Rectangle can now be subclassed and extended to create
+         complete custom widgets in Perl (example to come)
      * FLTK::Group->add( $widget ), et al. correctly return $widget
 
     API Changes/Compatibility Information:
