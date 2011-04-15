@@ -20,7 +20,8 @@ my $automated_testing = $ENV{AUTOMATED_TESTING} || $ENV{PERL_MM_USE_DEFAULT};
 my $is_developer = ($ENV{RELEASE_TESTING} || -d '.git');
 my @tests;
 find \&find_cb, qw[t/10000_basic t/20000_functions t/40000_widgets
-    t/50000_objects t/60000_types], ($is_developer ? 't/90000_author' : ());
+    t/50000_objects t/60000_types t/70000_bugfixes],
+    ($is_developer ? qw[t/80000_experimental t/90000_author] : ());
 @tests = sort @tests;
 my $class = 'inc::MBX::FLTK' . ($is_developer ? '::Developer' : '');
 
@@ -77,19 +78,21 @@ my $mb = $class->new(
             qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
         ],
         resources => {
-             bugtracker => 'http://github.com/sanko/perl-fltk/issues',
-             #{            web => 'http://github.com/sanko/perl-fltk/issues',
-             #             mailto => 'sanko@cpan.org'
-             #}
-             ,
-             repository => 'git://github.com/sanko/perl-fltk.git'
-             #{url  => 'git://github.com/sanko/perl-fltk.git',
-             #               web  => 'http://github.com/sanko/perl-fltk',
-             #               type => 'git'
-             #}
-             ,
-             ChangeLog => 'http://github.com/sanko/perl-fltk/commits/master/',
-             homepage  => 'http://sanko.github.com/perl-fltk/'
+            bugtracker => 'http://github.com/sanko/perl-fltk/issues',
+
+            #{            web => 'http://github.com/sanko/perl-fltk/issues',
+            #             mailto => 'sanko@cpan.org'
+            #}
+            ,
+            repository => 'git://github.com/sanko/perl-fltk.git'
+
+                #{url  => 'git://github.com/sanko/perl-fltk.git',
+                #               web  => 'http://github.com/sanko/perl-fltk',
+                #               type => 'git'
+                #}
+            ,
+            ChangeLog => 'http://github.com/sanko/perl-fltk/commits/master/',
+            homepage  => 'http://sanko.github.com/perl-fltk/'
         }
     },
     needs_compiler => 1,    # adds ExtUtils::CBuilder to build_requires

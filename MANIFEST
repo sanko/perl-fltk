@@ -46,6 +46,7 @@ t/60000_types/60003_damage.t
 t/60000_types/60004_Font.t
 t/60000_types/60006_Image.t
 t/60000_types/60030_Style.t
+t/70000_bugfixes/70001_82f11cc_Group_add_return_value.t
 TODO.pod
 xs/Adjuster.xs
 xs/AlignGroup.xs
