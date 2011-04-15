@@ -14,7 +14,6 @@ package inc::MBX::FLTK::Developer;
     use parent 'inc::MBX::FLTK';
     use Cwd qw[cwd];
     use 5.010;
-
     {
         my ($cwd, %seen, %packages, @xsi_files);
 
@@ -44,8 +43,8 @@ package inc::MBX::FLTK::Developer;
                     chdir $dir;
                     $self->_grab_metadata(canonpath rel2abs $1);
                 }
-                elsif ($line
-                       =~ m[^\s*MODULE\s*=\s*\S+\s+PACKAGE\s*=\s*(\S+)\s*$])
+                elsif ($line =~
+                       m[^\s*MODULE\s*=\s*\S+\s+PACKAGE\s*=\s*(\S+)\s*$])
                 {   $package = $1;
                 }
                 elsif ($line =~ m[^=for version ([\d\.\_]+)$]) {
@@ -163,8 +162,8 @@ package inc::MBX::FLTK::Developer;
 
         # start changing the data around
         $CHANGES_D =~ s[.+(\r?\n)][$dist$1];
-        $CHANGES_D
-            =~ s[(_ -.-. .... .- -. --. . ... _+).*][$1 . sprintf <<'END',
+        $CHANGES_D =~
+            s[(_ -.-. .... .- -. --. . ... _+).*][$1 . sprintf <<'END',
         $self->{'properties'}{'meta_merge'}{'resources'}{'ChangeLog'}||'', '$',
         $self->dist_version , qw[$ $ $ $ $ $ $]
     ]se;
@@ -236,25 +235,26 @@ END
             my $_Commit_short = substr($bits[1], 0, 7);
             my $_Id = sprintf $bits[2], (File::Spec->splitpath($file))[2],
                 $_Date;
-            my $_Repo
-                = $self->{'properties'}{'meta_merge'}{'resources'}
-                {'repository'}{'web'}
-                || $self->{'properties'}{'meta_merge'}{'resources'}
-                {'repository'}{'url'}
-                || $self->{'properties'}{'meta_merge'}{'resources'}
-                {'repository'}
-                || '';
+            my $_Repo = (
+                       ref $self->{'properties'}{'meta_merge'}{'resources'}
+                           {'repository'}
+                       ? $self->{'properties'}{'meta_merge'}{'resources'}
+                           {'repository'}{'web'}
+                           // $self->{'properties'}{'meta_merge'}{'resources'}
+                           {'repository'}{'url'}
+                       : $self->{'properties'}{'meta_merge'}{'resources'}
+                           {'repository'}) // '';
 
             # start changing the data around
             my $CHANGES_O = $CHANGES_D;
             $CHANGES_D =~ s[\$(Id)(:[^\$]*)?\$][\$$1: $_Id \$]ig;
             $CHANGES_D =~ s[\$(Date)(:[^\$]*)?\$][\$$1: $_Date \$]ig;
             $CHANGES_D =~ s[\$(Mod(ified)?)(:[^\$]*)?\$][\$$1: $_Mod \$]ig;
-            $CHANGES_D
-                =~ s[\$(Url)(:[^\$]*)?\$][\$$1: $_Repo/raw/master/$file \$]ig
+            $CHANGES_D =~
+                s[\$(Url)(:[^\$]*)?\$][\$$1: $_Repo/raw/master/$file \$]ig
                 if $_Repo;
-            $CHANGES_D
-                =~ s[\$(Rev(ision)?)(?::[^\$]*)?\$]["\$$1: ". ($2?$_Commit:$_Commit_short)." \$"]ige;
+            $CHANGES_D =~
+                s[\$(Rev(ision)?)(?::[^\$]*)?\$]["\$$1: ". ($2?$_Commit:$_Commit_short)." \$"]ige;
 
             # Skip to the next file if this one wasn't updated
             next FILE if $CHANGES_D eq $CHANGES_O;
@@ -295,8 +295,8 @@ END
         }
         require Perl::Tidy;
         require File::Spec;
-        my $demo_files
-            = -d 'examples' ? $self->rscan_dir('examples', qr[\.pl$]) : [];
+        my $demo_files =
+            -d 'examples' ? $self->rscan_dir('examples', qr[\.pl$]) : [];
         my $inst_files = -d 'inc' ? $self->rscan_dir('inc', qr[\.pm$]) : [];
         for my $files ([keys(%{$self->script_files})],       # scripts first
                        [values(%{$self->find_pm_files})],    # modules
@@ -360,7 +360,8 @@ END
                 my ($self, $command, $paragraph, $lineno) = @_;
                 if ($command eq 'head1') {
                     $paragraph =~ s|\s+$||;
-                    $current = \$self->{'apidoc_modules'}{$package}{'section'}
+                    $current =
+                        \$self->{'apidoc_modules'}{$package}{'section'}
                         {$paragraph};
                     $$current = {line => $lineno,
                                  file => $self->input_file
@@ -371,15 +372,15 @@ END
                 }
                 elsif ($command eq 'for') {
                     if ($paragraph =~ m[^(?:apidoc)\s+(.+)]) {
-                        my ($flags, $prereq, $return, $sub, @args)
-                            = split '\|', $1;
+                        my ($flags, $prereq, $return, $sub, @args) =
+                            split '\|', $1;
                         my $type = $flags =~ m[H] ? '_hide' : 'sub';
                         warn sprintf 'Malformed apidoc at %s line %d',
                             $self->input_file, $lineno
                             if !$sub;
-                        $current
-                            = \$self->{'apidoc_modules'}{$package}{$type}
-                            {$sub}->[
+                        $current =
+                            \$self->{'apidoc_modules'}{$package}{$type}{$sub}
+                            ->[
                             scalar
                             @{$self->{'apidoc_modules'}{$package}{$type}
                                     {$sub}}
@@ -430,8 +431,8 @@ END
                 if ($line =~ m[^INCLUDE: (.+\.xsi?)]) {
                     $self->parse_from_file('xs/' . $1);
                 }
-                elsif ($line
-                    =~ /^MODULE\s*=\s*([\w:]+)(?:\s+PACKAGE\s*=\s*([\w:]+))?(?:\s+PREFIX\s*=\s*(\S+))?\s*$/
+                elsif ($line =~
+                    /^MODULE\s*=\s*([\w:]+)(?:\s+PACKAGE\s*=\s*([\w:]+))?(?:\s+PREFIX\s*=\s*(\S+))?\s*$/
                     )
                 {   $package = $2 || $1;
                 }
@@ -519,8 +520,8 @@ END
                                             }
                                     ) - 1
                                 )
-                            {   my $call
-                                    = $self->_document_function(
+                            {   my $call =
+                                    $self->_document_function(
                                      $package,
                                      $sub,
                                      $self->{'_apidoc_parser'}
@@ -535,11 +536,11 @@ END
                                      ->{'apidoc_modules'}{$package}{'sub'}
                                      {$sub}[$use]{'text'} || '');
                                 {
-                                    my $tags
-                                        = ($self->{'_apidoc_parser'}
-                                           ->{'apidoc_modules'}{$package}
-                                           {'sub'}{$sub}[$use]{'flags'}
-                                           =~ m|T\[(.+?)\]|) ? $1 : '';
+                                    my $tags =
+                                        ($self->{'_apidoc_parser'}
+                                         ->{'apidoc_modules'}{$package}
+                                         {'sub'}{$sub}[$use]{'flags'} =~
+                                         m|T\[(.+?)\]|) ? $1 : '';
                                     if ($tags) {
                                         my @tags
                                             = map {"C<:$_>"} split m[\s*,\s*],
@@ -649,9 +650,9 @@ END
             my ($return, $call, @args) = ('', '', ());
             my %types = ('AV *' => '@', 'CV *' => '\&', 'HV *' => "\%");
             for my $arg (@{$use->{'args'}}) {
-                my ($type, $name, $default)
-                    = ($arg
-                     =~ m[^([\w:\s\*]+)\s+([(?:\w_|\.{3})]+)(?:\s+=\s+(.+))?]s
+                my ($type, $name, $default) =
+                    ($arg =~
+                     m[^([\w:\s\*]+)\s+([(?:\w_|\.{3})]+)(?:\s+=\s+(.+))?]s
                     );
                 if (!(defined $type && defined $name)) {
                     printf
@@ -668,23 +669,22 @@ END
                 }
             }
             if ($use->{'return'}) {
-                my ($type, $name, $default)
-                    = ($use->{'return'}
-                       =~ m[^([\w:\s\*]+)\s+([\w_]+)(?:\s+=\s+(.+))?]s);
+                my ($type, $name, $default) =
+                    ($use->{'return'} =~
+                     m[^([\w:\s\*]+)\s+([\w_]+)(?:\s+=\s+(.+))?]s);
                 if (!(defined $type && defined $name)) {
                     printf
                         "Malformed apidoc: Missing return type in %s at %s line %d\n",
                         $use->{'return'}, $use->{file}, $use->{line};
                 }
                 elsif ($use->{'flags'} !~ m[E]) {
-                    $return
-                        = 'my '
+                    $return = 'my '
                         . ($types{$type} ? $types{$type} : '$')
                         . $name . ' = ';
                 }
             }
-            $call
-                = $use->{'flags'} =~ m[E]
+            $call =
+                $use->{'flags'} =~ m[E]
                 ? ''
                 : $use->{'flags'} =~ m[F] ? 'FLTK::'    #$package . '::'
                 : sub {

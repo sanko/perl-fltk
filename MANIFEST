@@ -167,3 +167,4 @@ xs/Version.xs
 xs/Widget.xs
 xs/Window.xs
 xs/xpmImage.xs
+META.yml
