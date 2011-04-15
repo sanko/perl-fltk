@@ -3,10 +3,11 @@ Version 0.532005001 | 2010-04-17 14:25:12Z (Sat, 17 Apr 2010) | b9f4e5a
     Resolved Issues/Bug Fixes:
      * All internal subclasses of the fltk::Rectangle primative can been
          subclassed and extended.
+     * FLTK::Group->add( $widget ), et al. correctly return $widget
 
     API Changes/Compatibility Information:
      * New Widgets/Types
-       - TabGroupPager...
+       - TabGroupPager
 
 Version 0.532007 | 2011-02-02 21:48:26Z (Wed, 02 Feb 2011) | 3d6d95a
 
