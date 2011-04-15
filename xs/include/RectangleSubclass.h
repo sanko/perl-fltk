@@ -259,11 +259,33 @@ public:
         return;
     };
 
-    // TabGroupPager
-    int which ( fltk::TabGroup * group, int event_x, int event_y ) { };
+    // fltk::TabGroupPager
+    int which ( fltk::TabGroup * group, int event_x, int event_y ) {
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        SV * sv_group = sv_newmortal();
+        sv_setref_pv( sv_group, "FLTK::TabGroup", ( void * ) group ); // XXX - May be a subclass
+        av_push( args, sv_2mortal( newSViv( event_x ) ) );
+        av_push( args, sv_2mortal( newSViv( event_y ) ) );
+        handled = _call_method( "which", args );
+      /*  if ( handled != 1 )
+            handled = this->X::which( group, event_x, event_y );*/
+        return handled;
+    };
     const char * mode_name( ) const { };
-    int id ( ) const { };
+    int id ( ) const {
+        int handled = 1; /* safe to assume for now */
+        dTHX;
+        AV * args = newAV();
+        handled = ((RectangleSubclass<X>*) this)->_call_method( "id", args );
+       /* if ( handled == 0 )
+            handled = this->X::id( );*/
+        return handled ;
+    };
     fltk::TabGroupPager * clone( ) const { };
+
+
 public:
     char * _class;
     int    _okay;

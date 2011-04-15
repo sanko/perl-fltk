@@ -136,15 +136,23 @@ fltk::xpmImage              *   O_FLTK
 AnsiWidget                  *   O_FLTK_SUBCLASSY
 
 # Custom
-RectangleSubclass<fltk::Widget>    * O_FLTK_SUBCLASSY
-RectangleSubclass<fltk::Rectangle> * O_FLTK_SUBCLASSY
+RectangleSubclass<fltk::Widget>    * O_FLTK_RECT_SUBCLASS
+RectangleSubclass<fltk::Rectangle> * O_FLTK_RECT_SUBCLASS
 
 OUTPUT
 O_FLTK_SUBCLASSY
-    //warn( \"${Package}::[$func_name]() -- $var\" );
+    //warn( \"${Package}::[$func_name]() -- $var | %s\", ${var}->bless_class() );
     sv_setref_pv(
         $arg,
         //\"FLTK::${(my $ntt=$ntype)=~s'(Ptr$?|^.*\W)''g;\$ntt}\",
+        ${$func_name =~ m[^new\b] ? \"CLASS" : $func_name eq 'add' ? \"${var}->bless_class()" : ($subtype=~m'<?fltk::(.+)>') ? \qq["FLTK::$1"] : ($subtype=~m'^(?:const\s+)?fltk::(.+)$') ? \qq["FLTK::$1"] : \q["BORKED!!!"]},
+        ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${subtype} | ${ntype} */
+
+O_FLTK_RECT_SUBCLASS
+    //warn( \"${Package}::[$func_name]() -- $var | %s\", ${var}->bless_class() );
+    sv_setref_pv(
+        $arg,
+        //\"FLTK::${(my $ntt=$ntype)=~s'^.*<fltk::(.+)>.*$'$1'eg;\$ntt}\"
         ${$func_name =~ m[^new\b] ? \"CLASS" : $func_name eq 'add' ? \"${var}->bless_class()" : ($subtype=~m'<?fltk::(.+)>') ? \qq["FLTK::$1"] : ($subtype=~m'^(?:const\s+)?fltk::(.+)$') ? \qq["FLTK::$1"] : \q["BORKED!!!"]},
         ( void * ) ${($ntype=~m'Ptr$')?\'':\'&'}$var ); /* ${subtype} | ${ntype} */
 
@@ -156,11 +164,18 @@ O_FLTK
 
 INPUT
 O_FLTK_SUBCLASSY
-    if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )) // Subclassable: ${subtype} |  ${ntype}
+    if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )) // Subclassable: ${subtype} | ${ntype}
         {IV tmp = SvIV((SV*)SvRV($arg)); $var = INT2PTR(RectangleSubclass<${(my $ntt=$type)=~s'\s+?\*''g;\$ntt}> *,tmp);} //$var = INT2PTR( RectangleSubclass<$type>, SvIV( ( SV * ) SvRV( $arg ) ) );
     else
         croak( \"%s: %s is not of type %s\",
             ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )
+
+O_FLTK_RECT_SUBCLASS
+    if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'^.*<fltk::(.+)>.*$'$1'eg;\$ntt}\" )) // Subclass: ${subtype} | ${ntype}
+        $var = INT2PTR( $type, SvIV( ( SV * ) SvRV( $arg ) ) ); // {IV tmp = SvIV((SV*)SvRV($arg)); $var = INT2PTR(RectangleSubclass<${(my $ntt=$type)=~s'\s+?\*''g;\$ntt}> *,tmp);} //$var = INT2PTR( RectangleSubclass<$type>, SvIV( ( SV * ) SvRV( $arg ) ) );
+    else
+        croak( \"%s: %s is not of type %s\",
+            ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]}, \"$var\", \"FLTK::${(my $ntt=$ntype)=~s'^.*<fltk::(.+)>.*$'$1'eg;\$ntt}\" )
 
 O_FLTK
     if (SvROK($arg) && sv_isobject($arg) && sv_derived_from($arg,     \"FLTK::${(my $ntt=$ntype)=~s'(?:Ptr$?|^.*\W)''g;\$ntt}\" )) // Non-subclassable: ${subtype} | ${ntype}
