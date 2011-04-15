@@ -100,8 +100,6 @@ xs/include/FLTK_pm.h
 xs/include/GlWindowSubclass.h
 xs/include/ppport.h
 xs/include/RectangleSubclass.h
-xs/include/TabGroupPagerSubclass.h
-xs/include/WidgetSubclass.h
 xs/Input.xs
 xs/InputBrowser.xs
 xs/IntInput.xs
