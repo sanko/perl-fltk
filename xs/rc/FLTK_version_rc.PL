@@ -11,8 +11,8 @@ exit
                           $file);
 printf 'Generating %s... ', $file;
 my $version = $build->dist_version;
-$version .= "_00" unless $version =~ m/_/;
-$version = sprintf('%.03d,%.03d,%.03d,%.03d',
+$version .= '_00' unless $version =~ m/_/;
+$version = sprintf('%.1d,%.1d,%.1d,%.1d',
                    map {int}
                        $version =~ m[^(\d+)\.(\d\d\d)(\d\d\d)(?:_(\d+))?$]);
 my $first_year      = 2008;
@@ -36,11 +36,11 @@ FILETYPE       VFT_DLL
     {
       VALUE "Comments"         , "FLTK built $build_datetime"
       VALUE "CompanyName"      , "Sanko Robinson"
-      VALUE "FileDescription"  , "FLTK - Perl extension for The Fast Light Toolkit."
+      VALUE "FileDescription"  , "FLTK - Perl extension for The Fast Light Toolkit"
       VALUE "FileVersion"      , "$version"
       VALUE "InternalName"     , "FLTK.dll"
       VALUE "LegalCopyright"   , "Copyright © Sanko Robinson $copyright_years"
-      VALUE "LegalTrademarks"  , "Artistic II licence"
+      VALUE "LegalTrademarks"  , "Artistic 2 licence"
       VALUE "OriginalFilename" , "FLTK.dll"
       VALUE "ProductName"      , "FLTK Perl extension"
       VALUE "ProductVersion"   , "$version"
