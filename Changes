@@ -6,6 +6,7 @@ Version 0.532008 | 2011-04-15 17:45:48Z (Fri, 15 Apr 2011) | 246971a
      * FLTK::Group->add( $widget ), et al. correctly return $widget
 
     API Changes/Compatibility Information:
+     * FLTK::TabGroup->default_pager(0|1) uses built-in pager types
      * New Widgets/Types
        - TabGroupPager
 

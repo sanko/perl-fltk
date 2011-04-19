@@ -21,6 +21,7 @@ lib/FLTK/Notes.pod
 LICENSE
 MANIFEST			This list of files
 META.json
+META.yml
 README
 t/10000_basic/10001_use_ok.t
 t/20000_functions/20010_ask.t
@@ -167,4 +168,3 @@ xs/Version.xs
 xs/Widget.xs
 xs/Window.xs
 xs/xpmImage.xs
-META.yml

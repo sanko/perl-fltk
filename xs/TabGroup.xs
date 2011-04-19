@@ -212,10 +212,38 @@ fltk::TabGroup::pager( fltk::TabGroupPager * value = NO_INIT )
 Sets the default pager for future L<TabGroup|FLTK::TabGroup>s. By design, the
 defualt pager is never undefined.
 
+=for apidoc |||default_pager|int value|
+
+Sets the default pager from the built-in ones.
+
+The current built-in pagers are...
+
+=over
+
+=item Menu
+Displays two left and right buttons and provides 'prev page' and 'next page'
+functionality. This is the new default.
+
+Pass C<0> for this type.
+
+=item Shrink
+Tabs outside the rectangle are shrunken to very small slice to fit. This is
+the original default.
+
+Pass C<1> for this type.
+
+=back
+
 =cut
 
 void
-fltk::TabGroup::default_pager( fltk::TabGroupPager * value )
+fltk::TabGroup::default_pager( value )
+    CASE: SvIOK(ST(1))
+        int value
+        C_ARGS: value
+    CASE:
+        fltk::TabGroupPager * value
+        C_ARGS: value
 
 =for apidoc ||int height|tab_height||
 
