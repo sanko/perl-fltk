@@ -20,7 +20,7 @@ use Socket;
 my $window = FLTK::Window->new(100, 100);
 $window->add(FLTK::Button->new(0, 0, 100, 100, 'Exit'))
     ->callback(sub { $window->hide() });
-    my ($fd_s,$fd_c);
+my ($fd_s, $fd_c);
 {
     my ($port) = @_ ? (shift =~ /^(\d+)$/) : 2345 || die 'invalid port';
     die "socket: $!"

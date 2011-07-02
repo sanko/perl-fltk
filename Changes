@@ -1,20 +1,14 @@
-Version 0.532008 | 2011-07-02 22:44:19Z (Sat, 02 Jul 2011) | 0f9e351
+Version 0.532008 | 2011-07-02 23:05:07Z (Sat, 02 Jul 2011) | 593c8cf
 
     Resolved Issues/Bug Fixes:
      * io watchers, idle watchers, timers, et al. now work correctly
-
-    API Changes/Compatibility Information:
-     * io watchers, etc. return a blessed object which triggers destruction
-         when needed to make life somewhat easier
-
-Version 0.532008 | 2011-04-15 18:41:07Z (Fri, 15 Apr 2011) | 0d661a2
-
-    Resolved Issues/Bug Fixes:
      * Primitive FLTK::Rectangle can now be subclassed and extended to create
          complete custom widgets in Perl (example to come)
      * FLTK::Group->add( $widget ), et al. correctly return $widget
 
     API Changes/Compatibility Information:
+     * io watchers, etc. return a blessed object which triggers destruction
+         when needed to make life somewhat easier
      * FLTK::TabGroup->default_pager(0|1) uses built-in pager types
      * New Widgets/Types
        - TabGroupPager
