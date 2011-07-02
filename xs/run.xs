@@ -593,10 +593,6 @@ the button is released.
 B<NOTE>: To make use of callbacks, your perl must be recent enough to support
 weak references.
 
-=for apidoc FT[fd]||SV * handle|add_fd|int fileno|int events|CV * callback|SV * args|
-
-Adds the handle (if it exists) with the particular fileno.
-
 =cut
 
 BOOT:
@@ -609,55 +605,30 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK
 
-bool
-add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
-    CASE: SvIOK( ST(0) )
-        int fh
-        CODE:
-            RETVAL = true;
-            HV * cb = newHV( );
-            hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
-            if ( items == 4 ) /* Callbacks can be called without arguments */
-                hv_store( cb, "args", 4, newSVsv( args ),   0 );
-            hv_store( cb, "fileno", 6, newSViv( fh ),   0 );
-            PerlIO * _fh;
-            int fd = PerlLIO_dup( fh );
-            /* XXX: user should check errno on undef returns */
-            if (fd < 0)
-                RETVAL = false;
-            else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) )
-                RETVAL = false;
-            else {
-                //hv_store( cb, "fh",     2, newSVsv( (SV *) _fh ),  0 );
-                fltk::add_fd(
-                    _get_osfhandle( fh ), events, _cb_f, ( void * ) cb
-                );
-            }
-        OUTPUT:
-            RETVAL
-    CASE:
-        PerlIO * fh
-        CODE:
-            RETVAL = true;
-            HV * cb = newHV( );
-            hv_store( cb, "coderef", 7, newSVsv( ST( 2 ) ), 0 );
-            if ( items == 4 ) /* Callbacks can be called without arguments */
-                hv_store( cb, "args", 4, newSVsv( args ),  0 );
-            int fileno = PerlIO_fileno( fh );
-            hv_store( cb, "fileno", 6, newSViv( fileno ),  0 );
-            //hv_store( cb, "fh",     2, newSVsv( (SV *) fh ),  0 );
-            fltk::add_fd(
-                _get_osfhandle( fileno ), events, _cb_f, ( void * ) cb
-            );
-        OUTPUT:
-            RETVAL
+SV *
+add_fd( PerlIO * fh, int events, CV * callback, SV * args = NO_INIT )
+    CODE:
+        int fileno = PerlIO_fileno( fh );
+        AV *seg_av;
+        seg_av = newAV();
+        // cb, fileno, events, [, args]
+        av_push(seg_av, newSVsv(ST(2)));
+        av_push(seg_av, newRV_inc(ST(0)));
+        av_push(seg_av, newSViv( events ));
+        if ( items == 2 ) av_push(seg_av, newSVsv(args));
+        RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
+        fltk::add_fd(_get_osfhandle( fileno ), events, _cb_f, ( void * ) seg_av );
+    OUTPUT:
+        RETVAL
+
+MODULE = FLTK::run               PACKAGE = FLTK
 
 BOOT:
     export_tag("add_fd", "fd");
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FT[fd]||bool okay|remove_fd|PerlIO * fh|int when = -1|
+=for apidoc FT[fd]||void|remove_fd|PerlIO * fh|int when = -1|
 
 Removes a handle from the list watched by FLTK.
 
@@ -683,30 +654,31 @@ socket is encounters an exception.
 By default, the filehandle is removed completly which is the same as passing
 C<-1>.
 
-=for apidoc F||bool okay|remove_fd|int fileno|int when = -1|
-
-Removes the handle (if it exists) with the particular fileno.
-
 =cut
 
 MODULE = FLTK::run               PACKAGE = FLTK
 
-bool
+void
 remove_fd( fh, int when = -1 )
-    CASE: SvIOK( ST(0) )
-        int fh
-        CODE:
-            fltk::remove_fd( _get_osfhandle( fh ), when );
-            RETVAL = 1;
-        OUTPUT:
-            RETVAL
-    CASE:
+    CASE: SvROK( ST(0) ) && ( SvTYPE( SvRV( ST( 0 ) ) ) == SVt_PVGV )
         PerlIO * fh
         CODE:
-            fltk::remove_fd( _get_osfhandle( PerlIO_fileno( fh ) ), when );
-            RETVAL = 1;
-        OUTPUT:
-            RETVAL
+            int fileno = PerlIO_fileno( fh );
+            fltk::remove_fd( _get_osfhandle( fileno ), when );
+    CASE:
+        AV * fh
+        CODE:
+            // cb, fileno, fh, events, [, args]
+            AV  * ref = MUTABLE_AV( fh );
+            SV ** fileref = av_fetch(ref, 1, FALSE);
+            if ( fileref == NULL ) XSRETURN_UNDEF;
+            SV ** moderef = av_fetch(ref, 2, FALSE);
+            PerlIO * pio_file = IoIFP( sv_2io( SvRV( * fileref ) ) );
+            fltk::remove_fd( _get_osfhandle( PerlIO_fileno( pio_file ) ), SvIV( * moderef ) );
+            if ( ix != 100 )
+                sv_setsv(ST(0), &PL_sv_undef);
+    ALIAS:
+        FLTK::fd::DESTROY = 100
 
 BOOT:
     export_tag("remove_fd", "fd");

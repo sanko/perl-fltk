@@ -1,4 +1,13 @@
-Version 0.532008 | 2011-04-15 17:45:48Z (Fri, 15 Apr 2011) | 246971a
+Version 0.532009 | 2011-07-02 05:25:43Z (Sat, 02 Jul 2011) | 1501293
+
+    Resolved Issues/Bug Fixes:
+     * io watchers, idle watchers, timers, et al. now work correctly
+
+    API Changes/Compatibility Information:
+     * io watchers, etc. return a blessed object which triggers destruction
+         when needed to make life somewhat easier
+
+Version 0.532008 | 2011-04-15 18:41:07Z (Fri, 15 Apr 2011) | 0d661a2
 
     Resolved Issues/Bug Fixes:
      * Primitive FLTK::Rectangle can now be subclassed and extended to create
