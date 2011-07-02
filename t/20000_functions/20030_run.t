@@ -31,6 +31,6 @@ use FLTK qw[:run];
 {
     FLTK::wait(0.01) for 1 .. 60;
     my $i = 0;
-    add_timeout(2, sub { $i++; pass 'add_timeout called' });
+    my $to = add_timeout(2, sub { $i++; pass 'add_timeout called'; });
     for (1 .. 60) { sleep 1; FLTK::wait(1); last if $i; }
 }
