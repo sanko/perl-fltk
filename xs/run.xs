@@ -17,7 +17,7 @@ MODULE = FLTK::run               PACKAGE = FLTK::run
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532006
+=for version 0.532007
 
 =for git $Id$
 
@@ -311,7 +311,7 @@ Add a one-shot timeout callback. The function will be called by
 L<C<fltk::wait()>|FLTK/"wait"> at C<time> seconds after this function is
 called. The optional C<args> are passed to the callback.
 
-=for apidoc FT[run]|||repeat_timeout|int time|CV * callback|SV * args|
+=for apidoc FT[run]|||repeat_timeout|SV * timeout|
 
 Similar to L<C<add_timeout()>|/"add_timeout">, but rather than the time being
 measured from "now", it is measured from when the system call elapsed that
@@ -326,34 +326,46 @@ Outside a timeout callback this acts like L<C<add_timeout()>|/"add_timeout">.
 This code will print "TICK" each second on C<*STDOUT>, with a fair degree of
 accuracy:
 
-    sub callback {
-        say('TICK');
-        FLTK::repeat_timeout(1, \&callback);
-    }
-    FLTK::add_timeout(1, \&callback);
-    FLTK::wait() while 1
+    my $ticker;
+    $ticker = FLTK::add_timeout(
+        1,
+        sub {
+            say('TICK');
+            FLTK::repeat_timeout(1, $ticker);
+        }
+    );
+    FLTK::wait() while 1;
 
 =cut
 
 MODULE = FLTK::run               PACKAGE = FLTK
 
-void
+SV *
 add_timeout( double time, CV * callback, SV * args = NO_INIT )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 3 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::add_timeout( time, _cb_t, ( void * ) cb );
+        AV *seg_av;
+        seg_av = newAV();
+        av_push(seg_av, newSVsv(ST(1)));
+        if ( items == 3 ) av_push(seg_av, newSVsv(args));
+        RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::timeout", 1));
+        fltk::add_timeout( time, _cb_t, ( void * ) seg_av );
+    OUTPUT:
+        RETVAL
+
+MODULE = FLTK::run               PACKAGE = FLTK::timeout
 
 void
-repeat_timeout( double time, CV * callback, SV * args = NO_INIT )
+DESTROY( SV * timeout )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 3 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::repeat_timeout( time, _cb_t, ( void * ) cb );
+        if (fltk::has_timeout( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_timeout( _cb_t, ( void * ) SvRV(ST(0) ));
+
+MODULE = FLTK::run               PACKAGE = FLTK
+
+void
+repeat_timeout( double time, SV * timeout )
+    CODE:
+        fltk::repeat_timeout( time, _cb_t, ( void * ) SvRV(ST(1) ));
 
 BOOT:
     export_tag("add_timeout",    "run");
@@ -361,7 +373,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FHxT[run]||bool exitsts|has_timeout|CV * coderef|SV * args|
+=for apidoc FHxT[run]||bool exists|has_timeout|SV * timeout|
 
 Returns true if the timeout exists and has not been called yet.
 
@@ -383,50 +395,23 @@ Returns true if the specified idle callback is currently installed.
 MODULE = FLTK::run               PACKAGE = FLTK
 
 bool
-has_timeout( CV * coderef, SV * args = NO_INIT )
+has_timeout( SV * timeout )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Timeout callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        /* for (Timeout* t = first_timeout; t; t = t->next)
-            if (t->cb == _cb &&
-                av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
-            ) {RETVAL = true; break; }
-        }*/
-        RETVAL = fltk::has_timeout( _cb_t, ( void * ) cb ); // XXX
+         RETVAL = fltk::has_timeout( _cb_t, ( void * ) SvRV(ST(0) )) ? 1 : 0;
     OUTPUT:
         RETVAL
 
 bool
-has_check( CV * coderef, SV * args = NO_INIT )
+has_check( SV * check )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Timeout callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        /* for (Timeout* t = first_timeout; t; t = t->next)
-            if (t->cb == _cb &&
-                av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
-            ) {RETVAL = true; break; }
-        }*/
-        RETVAL =   fltk::has_check( _cb_t, ( void * ) cb ); // XXX
+         RETVAL = fltk::has_check( _cb_t, ( void * ) SvRV(ST(0) )) ? 1 : 0;
     OUTPUT:
         RETVAL
 
 bool
-has_idle( CV * coderef, SV * args = NO_INIT )
+has_idle( SV * idle )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Timeout callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        /* for (Timeout* t = first_timeout; t; t = t->next)
-            if (t->cb == _cb &&
-                av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
-            ) {RETVAL = true; break; }
-        }*/
-        RETVAL =    fltk::has_idle( _cb_t, ( void * ) cb ); // XXX
+         RETVAL = fltk::has_idle( _cb_t, ( void * ) SvRV(ST(0) )) ? 1 : 0;
     OUTPUT:
         RETVAL
 
@@ -437,7 +422,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FHxT[run]|||remove_timeout|CV * coderef|SV * args|
+=for apidoc FHxT[run]|||remove_timeout|SV * timeout|
 
 Removes all pending timeout callbacks that match the function and arg. Does
 nothing if there are no matching ones that have not been called yet.
@@ -446,7 +431,7 @@ Like L<C<has_timeout>|/"has_timeout">, this doesn't work yet.
 
 =for apidoc FT[run]|||add_check|CV * coderef|SV * args|
 
-Fltk will call this callback just before it flushes the display and waits for
+FLTK will call this callback just before it flushes the display and waits for
 events. This is different than L<C<add_idle()>|/"add_idle"> because it is only
 called once, then fltk calls the system and tells it not to return until an
 event happens. If several checks have been added fltk calls them all, the most
@@ -504,49 +489,69 @@ Removes the specified idle callback, if it is installed.
 MODULE = FLTK::run               PACKAGE = FLTK
 
 void
-remove_timeout( CV * callback, SV * args = NO_INIT )
+remove_timeout( SV * timeout )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::remove_timeout( _cb_t, ( void * ) cb ); // XXX - meh
+        if (fltk::has_timeout( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_timeout( _cb_t, ( void * ) SvRV(ST(0) ));
+        sv_setsv(ST(0), &PL_sv_undef);
 
-void
+SV *
 add_check( CV * callback, SV * args = NO_INIT )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::add_check( _cb_t, ( void * ) cb );
+        AV *seg_av;
+        seg_av = newAV();
+        av_push(seg_av, newSVsv(ST(0)));
+        if ( items == 2 ) av_push(seg_av, newSVsv(args));
+        RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::check", 1));
+        fltk::add_check( _cb_t, ( void * ) seg_av );
+    OUTPUT:
+        RETVAL
+
+MODULE = FLTK::run               PACKAGE = FLTK::check
 
 void
-remove_check( CV * callback, SV * args = NO_INIT )
+DESTROY( SV * check )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::remove_check( _cb_t, ( void * ) cb ); // XXX - meh
+        if (fltk::has_check( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_check( _cb_t, ( void * ) SvRV(ST(0) ));
+
+MODULE = FLTK::run               PACKAGE = FLTK
 
 void
+remove_check( SV * timeout )
+    CODE:
+        if (fltk::has_check( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_check( _cb_t, ( void * ) SvRV(ST(0) ));
+        sv_setsv(ST(0), &PL_sv_undef);
+
+SV *
 add_idle( CV * callback, SV * args = NO_INIT )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::add_idle( _cb_t, ( void * ) cb );
+        AV *seg_av;
+        seg_av = newAV();
+        av_push(seg_av, newSVsv(ST(0)));
+        if ( items == 2 ) av_push(seg_av, newSVsv(args));
+        RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::idle", 1));
+        fltk::add_idle( _cb_t, ( void * ) seg_av );
+    OUTPUT:
+        RETVAL
 
 void
-remove_idle( CV * callback, SV * args = NO_INIT )
+remove_idle( SV * idle )
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 1 ) ), 0 );
-        if ( items == 2 ) /* Callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( args ),    0 );
-        fltk::remove_idle( _cb_t, ( void * ) cb ); // XXX - meh
+        if (fltk::has_idle( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_idle( _cb_t, ( void * ) SvRV(ST(0) ));
+        sv_setsv(ST(0), &PL_sv_undef);
+
+MODULE = FLTK::run               PACKAGE = FLTK::idle
+
+void
+DESTROY( SV * idle )
+    CODE:
+        if (fltk::has_idle( _cb_t, ( void * ) SvRV(ST(0) )) )
+            fltk::remove_idle( _cb_t, ( void * ) SvRV(ST(0) ));
+
+MODULE = FLTK::run               PACKAGE = FLTK
 
 BOOT:
     export_tag("remove_timeout", "run");
@@ -557,7 +562,7 @@ BOOT:
 
 MODULE = FLTK::run               PACKAGE = FLTK::run
 
-=for apidoc FT[fd]||bool okay|add_fd|PerlIO * fh|int events|CV * callback|SV * args|
+=for apidoc FT[fd]||SV * handle|add_fd|PerlIO * fh|int events|CV * callback|SV * args|
 
 Adds a handle to the list watched by FLTK.
 
@@ -588,7 +593,7 @@ the button is released.
 B<NOTE>: To make use of callbacks, your perl must be recent enough to support
 weak references.
 
-=for apidoc FT[fd]||bool okay|add_fd|int fileno|int events|CV * callback|SV * args|
+=for apidoc FT[fd]||SV * handle|add_fd|int fileno|int events|CV * callback|SV * args|
 
 Adds the handle (if it exists) with the particular fileno.
 

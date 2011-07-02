@@ -4,7 +4,7 @@
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532006
+=for version 0.532007
 
 =for git $Id$
 
@@ -44,7 +44,7 @@ This will eventually replace the AV* based callback system in L<C<_cb_w>>.
 
 void _cb_w ( fltk::Widget * WIDGET, void * CODE ) {
     dTHX;
-    if ( CODE == NULL )     return;
+    if ( CODE == NULL )    return;
     HV * cb       = ( HV * ) CODE;
     if ( cb       == NULL ) return;
     SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
@@ -78,21 +78,20 @@ little like this...
 
 =cut
 
-void _cb_t (void * CODE) { // Callbacks for timers, etc.
+void _cb_t (void * CODE) { // Callbacks for timers, idle watchers, and checks
     dTHX;
     if ( CODE == NULL )     return;
-    HV * cb       = ( HV * ) CODE;
-    if ( cb       == NULL ) return;
-    SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
-    if ( cb_code  == ( SV ** ) NULL ) return;
-    SV ** cb_args  = hv_fetch( cb, "args",    4, FALSE );
+    AV  * ref = MUTABLE_AV( CODE );
+    SV ** coderef = av_fetch(ref, 0, FALSE);
+    if ( coderef  == ( SV ** ) NULL ) return; // Be somewhat safe
+    SV ** argsref = av_fetch(ref, 1, FALSE);
     dSP;
     ENTER;
         SAVETMPS;
             PUSHMARK( sp );
-    if ( cb_args != NULL ) XPUSHs( * cb_args );
+    if ( argsref != NULL ) XPUSHs( * argsref );
             PUTBACK;
-    call_sv( * cb_code, G_DISCARD );
+    call_sv( * coderef, G_DISCARD );
         FREETMPS;
     LEAVE;
 }
@@ -113,20 +112,18 @@ parameter which should be an AV* holding data that looks a little like this...
 void _cb_u ( int position, void * CODE) { // Callback for TextDisplay->highlight_data( ... )
     dTHX;
     if ( CODE == NULL )     return;
-    HV * cb       = ( HV * ) CODE;
-    if ( cb       == NULL ) return;
-    SV ** cb_code  = hv_fetch( cb, "coderef", 7, FALSE );
-    if ( cb_code  == ( SV ** ) NULL ) return;
-    SV ** cb_args  = hv_fetch( cb, "args",    4, FALSE );
-    SV ** cb_class = hv_fetch( cb, "class",   5, FALSE );
+    AV  * ref = MUTABLE_AV( CODE );
+    SV ** coderef = av_fetch(ref, 0, FALSE);
+    if ( coderef  == ( SV ** ) NULL ) return; // Avoid silly mistakes
+    SV ** argsref = av_fetch(ref, 1, FALSE);
     dSP;
     ENTER;
         SAVETMPS;
             PUSHMARK( sp );
     XPUSHs(sv_2mortal(newSViv(position)));
-    if ( cb_args != NULL ) XPUSHs( * cb_args );
+    if ( argsref != NULL ) XPUSHs( * argsref );
             PUTBACK;
-    call_sv( * cb_code, G_DISCARD );
+    call_sv( * coderef, G_DISCARD );
         FREETMPS;
     LEAVE;
 }

@@ -10,7 +10,7 @@ MODULE = FLTK::TextDisplay               PACKAGE = FLTK::TextDisplay
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532006
+=for version 0.532007
 
 =for git $Id$
 
@@ -293,7 +293,7 @@ fltk::TextDisplay::linenumber_width( int width = NO_INIT )
     CASE:
         C_ARGS:
 
-=for apidoc |||highlight_data|FLTK::TextBuffer * styleBuffer|FLTK::TextDisplay::StyleTableEntry * styleTable|int nStyles|char unfinishedStyle|CV * unfinishedHighlightCB|SV * cbArg = NO_INIT|
+=for apidoc ||void|highlight_data|FLTK::TextBuffer * styleBuffer|FLTK::TextDisplay::StyleTableEntry * styleTable|int nStyles|char unfinishedStyle|CV * unfinishedHighlightCB|SV * cbArg = NO_INIT|
 
 Attach (or remove) highlight information in text display and redisplay.
 Highlighting information consists of a style buffer which parallels the normal
@@ -311,16 +311,11 @@ Style buffers, tables and their associated memory are managed by the caller.
 void
 fltk::TextDisplay::highlight_data( fltk::TextBuffer * styleBuffer, fltk::TextDisplay::StyleTableEntry * styleTable, int nStyles, char unfinishedStyle, CV * unfinishedHighlightCB, SV * cbArg = NO_INIT)
     CODE:
-        HV   * cb    = newHV( );
-        hv_store( cb, "coderef",  7, newSVsv( ST( 5 ) ), 0 );
-        if ( items == 6 ) /* Timeout callbacks can be called without arguments */
-            hv_store( cb, "args", 4, newSVsv( cbArg ),    0 );
-        /* for (Timeout* t = first_timeout; t; t = t->next)
-            if (t->cb == _cb &&
-                av_fetch(*(AV*)t->arg, 0, 0) == newSVsv((SV*)ST(0))
-            ) {RETVAL = true; break; }
-        }*/
-        THIS->highlight_data( styleBuffer, styleTable, nStyles, unfinishedStyle, _cb_u, ( void * ) cb );
+        AV *seg_av;
+        seg_av = newAV();
+        av_push(seg_av, newSVsv(ST(5)));
+        if ( items == 2 ) av_push(seg_av, newSVsv(cbArg));
+        THIS->highlight_data( styleBuffer, styleTable, nStyles, unfinishedStyle, _cb_u, ( void * ) seg_av );
 
 =for apidoc ||bool okay|move_right||
 
