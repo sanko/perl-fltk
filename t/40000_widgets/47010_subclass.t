@@ -50,13 +50,16 @@ use FLTK qw[:events];
 
     package my::Test::HiddenButton;
     use parent-norequire, 'FLTK::Button';
+    sub draw {
+        ::BAIL_OUT(
+            "We should never be in a position to call my::Test::HiddenButton->draw([...])"
+        );
+        }
 
-    sub draw{ ... }
     sub handle {
-        ...;
         my ($obj, $event) = @_;
         ::BAIL_OUT(
-            "We should never be in a position to call FLTKx::Test::HiddenButton->handle($event)"
+            "We should never be in a position to call my::Test::HiddenButton->handle($event)"
         );
         return 0;
     }
