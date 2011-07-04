@@ -17,7 +17,7 @@ MODULE = FLTK::run               PACKAGE = FLTK::run
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532009
+=for version 0.532007
 
 =for git $Id$
 
@@ -617,7 +617,7 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
             int fileno = PerlIO_fileno( fh );
             AV *seg_av;
             seg_av = newAV();
-            // cb, filehandle, events, [, args]
+            // cb, fileno, events, [, args]
             av_push(seg_av, newSVsv(ST(2)));
             av_push(seg_av, newRV_inc(ST(0)));
             av_push(seg_av, newSViv( events ));
@@ -629,32 +629,26 @@ add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
     CASE: SvIOK( ST(0) )
         int fh
         CODE:
-            PerlIO * _fh;
-            GV *gv;
-            SV * sv_fh;
-            int fd = PerlLIO_dup( fh );
-            /* XXX: user should check errno on undef returns */
             AV *seg_av;
-            if (fd < 0)                                      XSRETURN_UNDEF;
-            else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) ) XSRETURN_UNDEF;
-            else {
-                sv_fh = sv_newmortal();
-	   const char * _class = "FLTK";
-        GV *gv = newGVgen(_class);
-        /* XXX - reopen fd to the correct mode */
-	    if ( do_open(gv, "+<&", 3, FALSE, 0, 0, _fh) )
-            sv_setsv(sv_fh, sv_bless(newRV((SV*)gv), gv_stashpv(_class,1)));
-	    else
-            sv_fh = &PL_sv_undef;
-                seg_av = newAV();
-            // cb, filehandle, events, [, args]
-            av_push(seg_av, newSVsv(ST(2)));
-        av_push(seg_av, newSVsv( sv_fh ));
-                av_push(seg_av, newSViv( events ));
-                if ( items == 2 ) av_push(seg_av, newSVsv(args));
-                RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
-                fltk::add_fd(_get_osfhandle( fd ), events, _cb_f, ( void * ) seg_av );
+            seg_av = newAV();
+            // cb, fileno, events, [, args]
+            av_push( seg_av, newSVsv( ST(2) ) );
+            PerlIO * _fh = PerlIO_fdopen( fh, "rb" );
+            SV * svfh;
+            svfh = sv_newmortal();
+            {   const char * _class = "FLTK";
+                GV *gv = newGVgen(_class);
+                /* XXX - reopen fd to the correct mode */
+                if ( do_open(gv, "+<&", 3, FALSE, 0, 0, _fh) )
+                    sv_setsv(svfh, sv_bless(newRV((SV*)gv), gv_stashpv(_class,1)));
+                else
+                    svfh = &PL_sv_undef;
             }
+            av_push(seg_av,  newSVsv(svfh) );
+            av_push(seg_av, newSViv( events ));
+            if ( items == 2 ) av_push(seg_av, newSVsv(args));
+            RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
+            fltk::add_fd(_get_osfhandle( fh ), events, _cb_f, ( void * ) seg_av );
         OUTPUT:
             RETVAL
 

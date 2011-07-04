@@ -105,7 +105,7 @@ SKIP: {
                 remove_fd($fd{c_p});
                 note 'removed $client from watch list';
                 $fd{c_p_p} = add_fd(
-                    $client, WRITE,
+                   fileno ($client), WRITE,
                     sub {
                         is syswrite(shift, "quit\n"), 5,
                             'wrote 5 bytes to client (quit\\n)';
