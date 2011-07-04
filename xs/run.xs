@@ -17,7 +17,7 @@ MODULE = FLTK::run               PACKAGE = FLTK::run
 
 =for author Sanko Robinson <sanko@cpan.org> - http://sankorobinson.com/
 
-=for version 0.532007
+=for version 0.532009
 
 =for git $Id$
 
@@ -593,6 +593,10 @@ the button is released.
 B<NOTE>: To make use of callbacks, your perl must be recent enough to support
 weak references.
 
+=for apidoc FT[fd]||bool okay|add_fd|int fileno|int events|CV * callback|SV * args|
+
+Adds the handle (if it exists) with the particular fileno.
+
 =cut
 
 BOOT:
@@ -606,20 +610,53 @@ BOOT:
 MODULE = FLTK::run               PACKAGE = FLTK
 
 SV *
-add_fd( PerlIO * fh, int events, CV * callback, SV * args = NO_INIT )
-    CODE:
-        int fileno = PerlIO_fileno( fh );
-        AV *seg_av;
-        seg_av = newAV();
-        // cb, fileno, events, [, args]
-        av_push(seg_av, newSVsv(ST(2)));
-        av_push(seg_av, newRV_inc(ST(0)));
-        av_push(seg_av, newSViv( events ));
-        if ( items == 2 ) av_push(seg_av, newSVsv(args));
-        RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
-        fltk::add_fd(_get_osfhandle( fileno ), events, _cb_f, ( void * ) seg_av );
-    OUTPUT:
-        RETVAL
+add_fd( fh, int events, CV * callback, SV * args = NO_INIT )
+    CASE: SvROK( ST(0) ) && ( SvTYPE( SvRV( ST( 0 ) ) ) == SVt_PVGV )
+        PerlIO * fh
+        CODE:
+            int fileno = PerlIO_fileno( fh );
+            AV *seg_av;
+            seg_av = newAV();
+            // cb, filehandle, events, [, args]
+            av_push(seg_av, newSVsv(ST(2)));
+            av_push(seg_av, newRV_inc(ST(0)));
+            av_push(seg_av, newSViv( events ));
+            if ( items == 2 ) av_push(seg_av, newSVsv(args));
+            RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
+            fltk::add_fd(_get_osfhandle( fileno ), events, _cb_f, ( void * ) seg_av );
+        OUTPUT:
+            RETVAL
+    CASE: SvIOK( ST(0) )
+        int fh
+        CODE:
+            PerlIO * _fh;
+            GV *gv;
+            SV * sv_fh;
+            int fd = PerlLIO_dup( fh );
+            /* XXX: user should check errno on undef returns */
+            AV *seg_av;
+            if (fd < 0)                                      XSRETURN_UNDEF;
+            else if ( !( _fh = PerlIO_fdopen( fd, "rb" ) ) ) XSRETURN_UNDEF;
+            else {
+                sv_fh = sv_newmortal();
+	   const char * _class = "FLTK";
+        GV *gv = newGVgen(_class);
+        /* XXX - reopen fd to the correct mode */
+	    if ( do_open(gv, "+<&", 3, FALSE, 0, 0, _fh) )
+            sv_setsv(sv_fh, sv_bless(newRV((SV*)gv), gv_stashpv(_class,1)));
+	    else
+            sv_fh = &PL_sv_undef;
+                seg_av = newAV();
+            // cb, filehandle, events, [, args]
+            av_push(seg_av, newSVsv(ST(2)));
+        av_push(seg_av, newSVsv( sv_fh ));
+                av_push(seg_av, newSViv( events ));
+                if ( items == 2 ) av_push(seg_av, newSVsv(args));
+                RETVAL = sv_bless(newRV_noinc((SV *)seg_av), gv_stashpv("FLTK::fd", 1));
+                fltk::add_fd(_get_osfhandle( fd ), events, _cb_f, ( void * ) seg_av );
+            }
+        OUTPUT:
+            RETVAL
 
 MODULE = FLTK::run               PACKAGE = FLTK
 
